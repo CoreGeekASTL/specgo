@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Spec-go 的 Claude Code SessionStart hook：读 bootstrap.md，转义后输出 JSON。
+# 平台分支与 superpowers 对齐：
+#   Cursor            → additional_context (snake_case)
+#   Claude Code       → hookSpecificOutput.additionalContext (嵌套)
+#   Copilot CLI/其他  → additionalContext (顶层 SDK 标准)
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+BOOTSTRAP="${PLUGIN_ROOT}/bootstrap.md"
+
+if [ ! -f "$BOOTSTRAP" ]; then
+  echo "spec-go: bootstrap.md 不存在，请先运行 scripts/generate-bootstrap.mjs" >&2
+  exit 0
+fi
+
+content=$(cat "$BOOTSTRAP")
+
+escape_for_json() {
+  local s="$1"
+  s="${s//\\/\\\\}"
+  s="${s//\"/\\\"}"
+  s="${s//$'\n'/\\n}"
+  s="${s//$'\r'/\\r}"
+  s="${s//$'\t'/\\t}"
+  printf '%s' "$s"
+}
+
+escaped=$(escape_for_json "$content")
+
+if [ -n "${CURSOR_PLUGIN_ROOT:-}" ]; then
+  printf '{\n  "additional_context": "%s"\n}\n' "$escaped"
+elif [ -n "${CLAUDE_PLUGIN_ROOT:-}" ] && [ -z "${COPILOT_CLI:-}" ]; then
+  printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$escaped"
+else
+  printf '{\n  "additionalContext": "%s"\n}\n' "$escaped"
+fi
+
+exit 0

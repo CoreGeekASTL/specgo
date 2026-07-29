@@ -1,0 +1,17 @@
+{
+  "name": "spec-go",
+  "description": "spec- 系列代码仓规格化分析 skill：structure/interface/external-call/feature/framework/logic-audit/story-design/asset-refresh",
+  "version": "1.0.0",
+  "author": {
+    "name": "AIAction"
+  },
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "spec",
+    "code-analysis",
+    "interface",
+    "structure",
+    "story-design"
+  ]
+}
