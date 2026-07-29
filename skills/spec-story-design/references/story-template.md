@@ -1,6 +1,6 @@
 # Story 设计文档输出模板
 
-两套模板：README.md 索引 + 每功能一篇 story 设计 md。所有文档归档到 `<repo>/docs/story/`。story 设计文档与存量功能文档同构：L1 功能故事（多彩建模）→ L2 结构地图 → L3 AI 编码指南，共七节。
+两套模板：README.md 索引 + 每功能一篇 story 设计 md。所有文档归档到 `<repo>/docs/story/`。story 设计文档与存量功能文档同构：L1 功能故事（多彩建模）→ L2 结构地图 → L3 AI 编码指南 → 外部文档引用，共七节。
 
 ## 模板一：docs/story/README.md 索引
 
@@ -143,19 +143,25 @@ sequenceDiagram
 - 导入为同步事务，整批失败回滚（需求 §4）
 - 缓存无独立 goroutine，清理在写锁内完成（需求 §2.2.4）
 
-## 6. 框架引用
-
-| 基础框架 | 框架文档 | 本功能中的用途（引用文件） |
-|---|---|---|
-| Beego Web 路由/Controller | [rpc-beego-web.md](../framework-usage/rpc-beego-web.md) | 新 Controller 按 RouteMapping 注册到内部监听（src/routers/beego_router.go） |
-| beego ORM | [storage-beego-orm.md](../framework-usage/storage-beego-orm.md) | 白名单表按三步曲实现，双 DDL 保持一致（src/dao/base_dao.go） |
-
-## 7. AI 编码指南
+## 6. AI 编码指南
 
 只列实现要点，每条 ≤30 字，附依据（需求章节号或存量文件）：
 
 - 新接口注册进内部监听 RouteMapping（src/routers/beego_router.go）
 - 表结构必须双 DDL 同步（src/dao/db_init.go）
+
+## 7. 外部文档引用
+
+本设计参考的仓内规格化资产，五类逐行列出；关键类必须引用，基础框架文档逐个框架一行，其余类确无引用须注明"无引用"及原因：
+
+| 文档类型 | 引用文档 | 引用点 |
+|---|---|---|
+| 关键类（必须） | [docs/key-class/README.md](../key-class/README.md) | 复用 BrowserService 实例分配；在 LoginController 登录链路注入鉴权调用 |
+| 接口文档 | [spec-interface-login.md](../interface/spec-interface-login.md) | gridLoginAuth 既有链路注入点确认 |
+| 外部接口文档 | [external-call-muen-cloud.md](../external-call/external-call-muen-cloud.md) | TikTok 场景 muen 云登录转发契约 |
+| 基础框架文档 | [rpc-beego-web.md](../framework-usage/rpc-beego-web.md) | Beego Web：新 Controller 按 RouteMapping 注册到内部监听（src/routers/beego_router.go） |
+| 基础框架文档 | [storage-beego-orm.md](../framework-usage/storage-beego-orm.md) | beego ORM：白名单表按三步曲实现，双 DDL 保持一致（src/dao/base_dao.go） |
+| struct 结构文档 | [spec-structure.md](../structure/spec-structure.md) | 新模块分层归属（controllers/service/dao）依据 |
 ```
 
 ## 撰写硬性要求
@@ -167,6 +173,6 @@ sequenceDiagram
 - 接口清单只列对外接口（新增 + 注入点），五列表格，不写段落描述；注入点在接口名后标注"（注入）"，状态列注明注入版本。
 - 数据结构只列关键字段与约束；超过 8 个字段的结构只写关键字段。
 - 调用关系每条主链路一张时序图（管理链路、业务链路分开画）；短句补关键分支。
-- 框架引用逐行链接到仓内存在的 framework-usage 文档，无死链；仓内无该目录时整节省略并在索引注明。
 - AI 编码指南每条 ≤30 字（不含依据锚点），1-5 条，禁止空泛表述。
+- 外部文档引用五类逐行列出（关键类/接口文档/外部接口文档/基础框架文档/struct 结构文档）：关键类为必须引用，须列出具体复用/注入的关键类名并链接 docs/key-class/README.md；基础框架文档逐个框架一行，链接到仓内存在的 framework-usage 文档，只列本功能真实需要的框架，禁止按目录全量罗列；链接逐行指向仓内真实文件，无死链；某类确无引用注明"无引用"及原因，仓内无对应目录时注明"仓内无该类文档"（框架文档目录缺失时另在索引 README 注明）；禁止整节省略。
 - "状态"列取值：设计中 / 在用 / 已下线 / 灰度中。

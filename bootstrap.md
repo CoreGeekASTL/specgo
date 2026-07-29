@@ -2,7 +2,7 @@
 # Spec-go — 代码仓规格化分析 skill 体系
 
 <EXTREMELY-IMPORTANT>
-你拥有 spec-go。在执行任何代码仓分析、需求/设计文档解读、对外接口盘点、出站调用/下游依赖盘点、目录结构梳理、框架使用模式梳理、story 设计、MR 资产刷新任务之前——即使你认为只有 1% 的可能某个 spec skill 适用——你也必须先用 Skill 工具加载该 skill 全文并遵循其指引。这不可协商、不可选择、不可用"我先看看代码"为自己开脱。
+你拥有 spec-go。在执行任何代码仓分析、需求/设计文档解读、对外接口盘点、出站调用/下游依赖盘点、目录结构梳理、框架使用模式梳理、story 设计、MR 资产刷新、按 story 设计文档生成代码任务之前——即使你认为只有 1% 的可能某个 spec skill 适用——你也必须先用 Skill 工具加载该 skill 全文并遵循其指引。这不可协商、不可选择、不可用"我先看看代码"为自己开脱。
 
 spec skill 的 description 已包含触发关键词，请用下面的索引判断该调用哪个。
 </EXTREMELY-IMPORTANT>
@@ -19,19 +19,25 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 扫描存量代码仓对外部服务的全部出站调用（HTTP 客户端 / RPC client / IDL client stub / 消息队列生产端 / 进程间通信 / 平台 SDK），按被调用的外部服务维度归类，产出 README 索引 + 每个外部服务一个子文档 external-call-<服务名>.md，每个外部调用接口一个章节（业务场景、接口功能、调用位置、协议信息），归档到代码仓 docs/external-call/ 目录。当需要盘点代码仓依赖哪些下游服务、梳理出站调用清单、做依赖治理/影响分析/新人上手时使用。触发场景包括"外部调用""下游接口""出站调用""调用了哪些外部服务""服务依赖盘点""external call""进程间通信"等。
 
 ### 4. spec-feature-analyze
-基于存量代码仓对外提供的接口（HTTP 路由 / RPC service / 消息订阅 handler / IDL 契约）做业务功能分析，将同一业务的多个接口归纳为一个功能域，按 docs/story/ 既有功能文档格式（L1 多彩建模 + L2 结构地图 + L3 AI 编码指南）每个功能域产出一篇 feature-<功能名>.md。支持指定接口类型只分析某一类接口（IDL 契约 / 框架路由 / 消息订阅定时），默认全代码仓全类型分析。当需要盘点代码仓对外提供哪些接口、按业务功能归纳接口、为接口治理/新人上手/AI 编码沉淀功能文档时使用。触发场景包括"代码仓对外提供什么接口""对外接口盘点""接口按业务功能分组""只分析 HTTP 接口""生成 story 功能文档"等。
+基于存量代码仓对外提供的接口（HTTP 路由 / RPC service / 消息订阅 handler / IDL 契约）做业务功能分析，将同一业务的多个接口归纳为一个功能域，按 docs/story/ 既有功能文档格式（L1 多彩建模 + L2 结构地图 + L3 AI 编码指南 + 外部文档引用章节）每个功能域产出一篇 feature-<功能名>.md。支持指定接口类型只分析某一类接口（IDL 契约 / 框架路由 / 消息订阅定时），默认全代码仓全类型分析。当需要盘点代码仓对外提供哪些接口、按业务功能归纳接口、为接口治理/新人上手/AI 编码沉淀功能文档时使用。触发场景包括"代码仓对外提供什么接口""对外接口盘点""接口按业务功能分组""只分析 HTTP 接口""生成 story 功能文档"等。
 
-### 5. spec-framework-usage-analyze
+### 5. spec-key-class-analyze
+分析存量代码仓中的关键类（核心领域模型、入口 handler、核心服务/编排类、状态机、高被引用类），产出单一 README 清单（仅一个表：类名/类的职责，职责 38 字内描述清楚），归档到代码仓 docs/key-class/README.md。当需要盘点代码仓核心类、梳理关键类清单、理解核心实现、为新人上手/AI 编码沉淀关键类资产时使用。触发场景包括"关键类""核心类""重要类有哪些""类盘点""核心实现类""关键类定位""key class""core class"等。
+
+### 6. spec-framework-usage-analyze
 分析存量代码仓中的基础框架（RPC、线程池、Actor、日志、序列化、配置、依赖注入、存储/ORM、消息队列、调度、资源池、容错治理、监控、基础库、测试框架等）及其使用方式，按部件维度产出框架使用指导——每个框架一篇 md（含初始化与配置、典型使用模式、封装层与扩展点、约定规范、AI 编码指南），统一归档到代码仓 docs/framework-usage/ 目录并附索引 README。当需要盘点代码仓技术栈、梳理框架使用模式与调用点分布、为 AI 代码生成沉淀"框架使用知识"、或为重构/迁移/新人上手提供框架使用文档时使用。
 
-### 6. spec-logic-audit
+### 7. spec-logic-audit
 基于多彩建模方法论审核 Spec/需求/功能设计文档的完备性——业务逻辑断裂点（多彩建模）+ 设计要素（时序图呈现、功能验收用例、外部接口与跨服务调用接口信息），针对缺口 ask-human 补齐，建模结果以 HTML 可视化呈现，审核完成后可按功能实现设计模板输出规范 md。当用户需要解读一篇 Spec/需求/设计文档、检查业务逻辑断点或设计要素是否 ready、校验功能设计文档是否规范时使用。触发场景包括："审核 spec 业务逻辑完备性"、"多彩建模"、"检查需求逻辑断点"、"建模结果生成 HTML 并找人确认"、"功能设计文档校验"、"校验时序图/验收用例/接口是否齐全"等。
 
-### 7. spec-story-design
-当接收到需求设计文档（SR/特性设计），需要为存量代码仓产出新功能的 story 设计文档，且产出格式须与该仓 docs/story/ 下既有功能文档（L1 多彩建模 + L2 结构地图 + L3 AI 编码指南）保持一致时使用。触发场景包括"新增 story 设计"、"根据需求文档生成 story 设计"、"按 story 模板输出新功能设计"等。
+### 8. spec-story-design
+当接收到需求设计文档（SR/特性设计），需要为存量代码仓产出新功能的 story 设计文档，且产出格式须与该仓 docs/story/ 下既有功能文档（L1 多彩建模 + L2 结构地图 + L3 AI 编码指南 + 外部文档引用章节）保持一致时使用。触发场景包括"新增 story 设计"、"根据需求文档生成 story 设计"、"按 story 模板输出新功能设计"等。
 
-### 8. spec-asset-refresh
+### 9. spec-asset-refresh
 基于 MR（merge request / 分支 diff）识别当前需求给代码仓规格化资产带来的变化，并增量刷新五类资产文档——接口（docs/interface/）、框架使用（docs/framework-usage/）、外部接口调用（docs/external-call/）、包的架构关系（docs/structure/）、feature 文档（docs/story/），刷新内容逐类列出交人工审核确认后定稿。当 MR 合入前后需要评估"这个需求改了哪些文档资产""刷新 docs/ 下哪些文档""MR 影响分析""资产同步"时使用。触发场景包括"基于 MR 刷新资产""需求带来哪些资产变化""MR 改了哪些文档""资产文档同步""刷新接口/框架/feature 文档"等。
+
+### 10. specgo
+当需要依据 docs/story/ 下的 story 设计文档（feature-<功能名>.md）为代码仓生成实现代码时使用。触发场景包括"specgo"、"按 story 设计文档生成代码"、"根据 feature-xxx 生成代码"、"按设计文档实现 xx 功能"、"生成 xx 功能的代码"、"照文档编码"等。
 
 ## 推荐工作流（spec 全链路）
 
@@ -40,11 +46,13 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 1. **结构摸底** → spec-structure-analyze：mermaid 依赖图 + 模块说明表
 2. **对外接口盘点** → spec-interface-analyze：主文档 README + 功能域子文档
 3. **出站调用盘点** → spec-external-call-analyze：README 索引 + external-call-*.md（按下游服务归类）
-4. **接口归纳为功能域** → spec-feature-analyze：feature-*.md（L1 多彩建模 + L2 结构地图 + L3 AI 编码指南）
-5. **框架使用模式** → spec-framework-usage-analyze：每框架一篇使用指导，归档 docs/framework-usage/
-6. **需求文档逻辑审核** → spec-logic-audit：多彩建模 + HTML 可视化 + ask-human 补逻辑断点
-7. **需求到 story 设计** → spec-story-design：产出与 docs/story/ 同构的新功能设计文档
-8. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别五类资产变化，增量刷新 + 人工审核
+4. **接口归纳为功能域** → spec-feature-analyze：feature-*.md（L1 多彩建模 + L2 结构地图 + L3 AI 编码指南 + 外部文档引用）
+5. **关键类剖析** → spec-key-class-analyze：docs/key-class/README.md 单文件单表（类名/类的职责，职责 38 字内）
+6. **框架使用模式** → spec-framework-usage-analyze：每框架一篇使用指导，归档 docs/framework-usage/
+7. **需求文档逻辑审核** → spec-logic-audit：多彩建模 + HTML 可视化 + ask-human 补逻辑断点
+8. **需求到 story 设计** → spec-story-design：产出与 docs/story/ 同构的新功能设计文档
+9. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别五类资产变化，增量刷新 + 人工审核
+10. **文档到代码** → specgo：只读 story 设计文档 + 关联 develop-task 任务文档 + 被引用文档，直接生成代码
 
 ## 红线（这些想法意味着你正在跳过 skill）
 
@@ -53,15 +61,17 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 | "我先扫一眼目录" | spec-structure-analyze 定义了"怎么扫"，先加载它 |
 | "列一下接口就行" | spec-interface-analyze 定义了接口盘点格式，先加载它 |
 | "看看调了哪些下游服务" | spec-external-call-analyze 定义了出站调用盘点格式，先加载它 |
+| "核心类我挑几个讲讲" | spec-key-class-analyze 定义了关键类识别与清单格式，先加载它 |
 | "这需求文档我读读就好" | spec-logic-audit 用来查逻辑断点，先加载它 |
 | "这功能我直接写 story" | spec-story-design 定义了 story 模板，先加载它 |
 | "MR 合了，看看文档要不要改" | spec-asset-refresh 定义了 MR 驱动的资产刷新流程，先加载它 |
+| "设计文档有了，我直接写代码" | specgo 定义了按 story + develop-task 文档生成代码的加载与编码纪律，先加载它 |
 | "这个 skill 太重，我快速做" | 如果 skill 存在，就必须用 |
 | "我记得这个 skill 的内容" | skill 会演进，每次都要重新加载当前版本 |
 
 ## 与项目其他 skill 的关系
 
-本项目 .claude/skills/ 下还有 se-harness、code-generation-quality-loop 等非 spec skill。spec- 系列专注"代码仓规格化分析"，不覆盖代码生成/测试。两者可串联：spec 产出设计文档 → 代码生成 skill 据此编码。
+本项目 .claude/skills/ 下还有 se-harness、code-generation-quality-loop 等非 spec skill。spec- 系列覆盖"代码仓规格化分析 → story 设计 → 按文档生成代码"链路；code-generation-quality-loop 提供 CodeCheck 全量规则扫描与 DT/E2E 测试闭环，可在 specgo 生成代码后串联。
 
 ## 优先级
 
