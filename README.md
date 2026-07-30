@@ -1,11 +1,11 @@
-# Spec-go
+# Specgo
 
 面向存量代码仓的规格化分析 skill 体系。包含 10 个 spec skill 和一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前，先加载对应 skill、按统一格式产出文档资产到 `docs/` 下；并能依据 story 设计文档直接生成代码。
 
 ## 组成
 
 ```
-spec-go/
+specgo/
 ├── opencode.js              # OpenCode 插件入口（package.json 的 main）
 ├── bootstrap.md             # 注入指令（由 scripts/generate-bootstrap.mjs 生成，勿手改）
 ├── skills/                  # 10 个 spec skill（每个一个目录，内含 SKILL.md）
@@ -36,7 +36,7 @@ bootstrap.md 是预生成文件，由 `scripts/generate-bootstrap.mjs` 从各 sk
 
 ```json
 {
-  "plugin": ["/绝对路径/spec-go"]
+  "plugin": ["/绝对路径/specgo"]
 }
 ```
 
@@ -51,8 +51,8 @@ bootstrap.md 是预生成文件，由 `scripts/generate-bootstrap.mjs` 从各 sk
 两步：注册本地 marketplace，再安装插件。
 
 ```
-/plugin marketplace add /绝对路径/spec-go
-/plugin install spec-go@spec-go
+/plugin marketplace add /绝对路径/specgo
+/plugin install specgo@specgo
 ```
 
 注意：
@@ -89,7 +89,7 @@ bootstrap.md 是预生成文件，由 `scripts/generate-bootstrap.mjs` 从各 sk
 skill 内容在 `skills/<名称>/SKILL.md`。任一 skill 的 frontmatter description 变更后，重新生成 bootstrap 并重启 agent：
 
 ```bash
-cd /路径/spec-go
+cd /路径/specgo
 bun scripts/generate-bootstrap.mjs    # 或 node scripts/generate-bootstrap.mjs
 ```
 
@@ -98,7 +98,7 @@ bun scripts/generate-bootstrap.mjs    # 或 node scripts/generate-bootstrap.mjs
 ## 卸载
 
 - OpenCode：从 `opencode.json` 的 `plugin` 数组移除条目，重启
-- Claude Code：`/plugin uninstall spec-go@spec-go`
+- Claude Code：`/plugin uninstall specgo@specgo`
 
 ## 许可证
 

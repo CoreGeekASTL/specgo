@@ -1,5 +1,5 @@
 /**
- * Spec-go 的 OpenCode 插件入口。
+ * Specgo 的 OpenCode 插件入口。
  * 1. config hook：注册 skills 目录，让 opencode 发现 9 个 spec-* skill（无需软链或手动配置）
  * 2. messages.transform hook：把 bootstrap.md 注入第一条 user message
  *

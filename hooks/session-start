@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Spec-go 的 Claude Code SessionStart hook：读 bootstrap.md，转义后输出 JSON。
+# Specgo 的 Claude Code SessionStart hook：读 bootstrap.md，转义后输出 JSON。
 # 平台分支与 superpowers 对齐：
 #   Cursor            → additional_context (snake_case)
 #   Claude Code       → hookSpecificOutput.additionalContext (嵌套)
@@ -12,7 +12,7 @@ PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 BOOTSTRAP="${PLUGIN_ROOT}/bootstrap.md"
 
 if [ ! -f "$BOOTSTRAP" ]; then
-  echo "spec-go: bootstrap.md 不存在，请先运行 scripts/generate-bootstrap.mjs" >&2
+  echo "specgo: bootstrap.md 不存在，请先运行 scripts/generate-bootstrap.mjs" >&2
   exit 0
 fi
 

@@ -1,7 +1,7 @@
 /**
  * 从 skills/ 下 10 个 spec skill 的 frontmatter 生成 bootstrap.md。
  * bootstrap.md 是两平台共用的注入源——opencode.js 和 hooks/session-start 都读它。
- * skill 内容变更后重跑：bun .claude/plugins/spec-go/scripts/generate-bootstrap.mjs
+ * skill 内容变更后重跑：bun .claude/plugins/specgo/scripts/generate-bootstrap.mjs
  */
 
 import path from 'path';
@@ -77,10 +77,10 @@ const buildBootstrap = (index) => {
   ).join('\n');
 
   return `<SPEC_GO_BOOTSTRAP>
-# Spec-go — 代码仓规格化分析 skill 体系
+# Specgo — 代码仓规格化分析 skill 体系
 
 <EXTREMELY-IMPORTANT>
-你拥有 spec-go。在执行任何代码仓分析、需求/设计文档解读、对外接口盘点、出站调用/下游依赖盘点、目录结构梳理、框架使用模式梳理、story 设计、MR 资产刷新、按 story 设计文档生成代码任务之前——即使你认为只有 1% 的可能某个 spec skill 适用——你也必须先用 Skill 工具加载该 skill 全文并遵循其指引。这不可协商、不可选择、不可用"我先看看代码"为自己开脱。
+你拥有 specgo。在执行任何代码仓分析、需求/设计文档解读、对外接口盘点、出站调用/下游依赖盘点、目录结构梳理、框架使用模式梳理、story 设计、MR 资产刷新、按 story 设计文档生成代码任务之前——即使你认为只有 1% 的可能某个 spec skill 适用——你也必须先用 Skill 工具加载该 skill 全文并遵循其指引。这不可协商、不可选择、不可用"我先看看代码"为自己开脱。
 
 spec skill 的 description 已包含触发关键词，请用下面的索引判断该调用哪个。
 </EXTREMELY-IMPORTANT>
@@ -125,10 +125,10 @@ ${indexMd}
 ## 优先级
 
 1. 用户的显式指令（AGENTS.md、直接请求）——最高优先级
-2. spec-go 的 spec skill——覆盖默认行为
+2. specgo 的 spec skill——覆盖默认行为
 3. 默认 system prompt——最低优先级
 
-如果 AGENTS.md 说"不用 spec 流程"而 spec-go 说"必须用"，遵循用户指令。用户始终掌控。
+如果 AGENTS.md 说"不用 spec 流程"而 specgo 说"必须用"，遵循用户指令。用户始终掌控。
 </SPEC_GO_BOOTSTRAP>`;
 };
 
