@@ -1,0 +1,17 @@
+{
+  "name": "specgo",
+  "description": "spec- 系列代码仓规格化分析 skill：structure/interface/external-call/feature/key-class/framework/logic-audit/story-design/asset-refresh/specgo（文档驱动代码生成）",
+  "version": "1.0.0",
+  "author": {
+    "name": "AIAction"
+  },
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "spec",
+    "code-analysis",
+    "interface",
+    "structure",
+    "story-design"
+  ]
+}
