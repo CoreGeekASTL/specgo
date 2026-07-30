@@ -61,6 +61,18 @@ description: 基于 MR（merge request / 分支 diff）识别当前需求给代�
 3. 不确定项与待人工裁定项
 4. 明确提示：**逐条确认后再定稿**；用户否决的刷新项回退，用户补充的裁定回填
 
+### 阶段 6：验证 mermaid 图可渲染（收尾必做）
+
+被刷新的文档中凡含 ```mermaid 代码块（含本次改动的与既有的），定稿前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+
+```bash
+node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <被刷新文件...>
+```
+
+- 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
+- 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 spec-mermaid-diagram skill 的「语法红线」。
+
 ## 输出规范
 
 - 全程中文输出

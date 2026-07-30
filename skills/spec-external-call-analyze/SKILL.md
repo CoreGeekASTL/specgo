@@ -66,6 +66,18 @@ description: 扫描存量代码仓对外部服务的全部出站调用（HTTP �
 - **预留死代码单列**：客户端封装存在但无任何业务调用方的（如未被引用的 Redis/OSS client），不计入接口清单，仅在 README 附注说明
 - **配置声明 vs 实际调用差异**：微服务框架依赖声明（如 references）中声明了但代码中无实际调用的下游，在 README 附注列出，避免误导依赖治理
 
+### 阶段 4：验证 mermaid 图可渲染（收尾必做）
+
+产出文档中含 ```mermaid 代码块（下游依赖全景图等），交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+
+```bash
+node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+```
+
+- 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
+- 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 spec-mermaid-diagram skill 的「语法红线」。
+
 ## 输出规范
 
 - 归档目录：代码仓 `docs/external-call/`（README.md + external-call-<服务名>.md 若干）

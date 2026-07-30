@@ -78,6 +78,18 @@ python3 <skill_dir>/scripts/scan_frameworks.py <repo_path> -o scan_result.md
 
 更新策略：目录与文件已存在时，按框架逐篇对比更新（框架被移除则归档标注"已下线"），不要整目录覆盖重写；README.md 索引随框架增删同步更新。
 
+## 第 6 步：验证 mermaid 图可渲染（收尾必做）
+
+产出文档中含 ```mermaid 代码块（框架调用关系图、线程模型图等），交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+
+```bash
+node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+```
+
+- 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
+- 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 spec-mermaid-diagram skill 的「语法红线」。
+
 ## 质量检查清单
 
 交付前逐项确认：
@@ -91,6 +103,7 @@ python3 <skill_dir>/scripts/scan_frameworks.py <repo_path> -o scan_result.md
 - [ ] 已区分封装层使用与裸 API 使用
 - [ ] 每篇 md 文末 AI 编码指南每条规则可执行、有依据、无空泛表述（如"建议合理使用"）
 - [ ] IDL 生成代码未虚增调用点统计
+- [ ] 产出文档中的 mermaid 图已全部通过本地渲染验证（spec-mermaid-diagram 验证脚本全部 VALID）
 
 ## 参考文件索引
 

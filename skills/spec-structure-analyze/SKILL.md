@@ -122,6 +122,18 @@ description: >-
 - `docs/structure/` 不存在则创建（连同 `docs/` 一起创建）。
 - 若同名文件已存在，覆盖前提示用户确认。
 
+### 第 8 步：验证 mermaid 图可渲染（收尾必做）
+
+产出文档中含 ```mermaid 代码块，交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本校验：
+
+```bash
+node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件>
+```
+
+- 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
+- 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 spec-mermaid-diagram skill 的「语法红线」。
+
 ## 输出模板
 
 成品文档严格按以下骨架填充。模板顶部的写作指令、blockquote 提示、占位符说明均为规则，不复制进成品——只填占位符、表格行、图。

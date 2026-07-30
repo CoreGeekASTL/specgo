@@ -83,6 +83,18 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 - 与既有功能存在注入关系的，在被注入功能文档的接口清单中将对应接口状态补充标注（如"27.0 起注入终端鉴权"）；无既有文档时跳过本项。
 - **产出抛弃式 develop-task 文档** `docs/develop-task/<功能名>-develop-task.md`：按 references/develop-task-template.md 模板输出。定位是"辅助出代码的抛弃式文档"——不写设计论证，只回答代码怎么改，可以写得比 story 设计文档更细；同名文件已存在时直接覆盖（抛弃式，不维护历史），也不进 README 索引。
 
+### 第 6 步：验证 mermaid 图可渲染（收尾必做）
+
+产出文档中含 ```mermaid 代码块（L1 四色建模图、调用关系时序图等），交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+
+```bash
+node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+```
+
+- 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
+- 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 spec-mermaid-diagram skill 的「语法红线」。
+
 ## 质量检查清单
 
 - [ ] 第 3 步多彩建模先于 L2/L3 完成，图中每个粉色事件四要素齐全、无文件名/函数名/行号
@@ -98,6 +110,7 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 - [ ] 每条调用链时序图下方已补实现说明，多句话逐步说明，每句 ≤30 字
 - [ ] develop-task 文档已按模板产出到 `docs/develop-task/<功能名>-develop-task.md`，六节齐全，修改文件清单写到函数级
 - [ ] README.md 索引已同步（新增场景加行 / 修改场景更新对应行；不存在时已从头生成），无死链
+- [ ] 产出文档中的 mermaid 图已全部通过本地渲染验证（spec-mermaid-diagram 验证脚本全部 VALID）
 
 ## 参考文件索引
 

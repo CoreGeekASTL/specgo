@@ -63,6 +63,18 @@ python3 <skill_dir>/scripts/scan_interfaces.py <repo_path> -o scan_result.md
 - 更新 `docs/story/README.md`：功能全景表（功能域 | 接口数 | 核心模块 | 文档链接）、接口统计（按类型分列）、未归类接口；README 不存在时按 references/report-template.md 模板一从头生成。
 - 更新策略：功能文档已存在时逐节对比更新（接口已下线则状态列标"已下线"保留记录），不要整篇覆盖重写；既有文档含旧版「框架引用」节时，其内容并入「外部文档引用」的基础框架文档行类并删除原节。
 
+### 第 6 步：验证 mermaid 图可渲染（收尾必做）
+
+产出文档中含 ```mermaid 代码块（功能故事四色图、调用关系时序图等），交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+
+```bash
+node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+```
+
+- 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
+- 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 spec-mermaid-diagram skill 的「语法红线」。
+
 ## 质量检查清单
 
 - [ ] 接口类型范围已确认（指定类型 or 默认全类型），指定类型时其余类型未混入
@@ -79,6 +91,7 @@ python3 <skill_dir>/scripts/scan_interfaces.py <repo_path> -o scan_result.md
 - [ ] AI 编码指南每条 ≤30 字、有证据，无"建议合理设计"类空泛表述
 - [ ] README.md 索引已同步（功能全景/接口统计/未归类接口），无死链
 - [ ] 未产出 `docs/interface/external-interfaces.md`（本 skill 不再输出该文件）
+- [ ] 产出文档中的 mermaid 图已全部通过本地渲染验证（spec-mermaid-diagram 验证脚本全部 VALID）
 
 ## 参考文件索引
 

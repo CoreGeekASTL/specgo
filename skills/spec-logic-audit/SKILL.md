@@ -61,6 +61,18 @@ description: 基于多彩建模方法论审核 Spec/需求/功能设计文档的
 3. 模板中的可选章节无对应内容时标注"不涉及"并裁剪；原文档与裁定都未覆盖的内容标"待确认"，**禁止脑补**。
 4. 输出到原文档同目录，文件名 `<原文件名>-规范版.md`。
 
+### 阶段 6：验证产出物中的 mermaid 图（收尾必做）
+
+若产出的规范版 md（或 HTML 内嵌）中含 ```mermaid 代码块（用例时序图等），交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+
+```bash
+node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+```
+
+- 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
+- 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 spec-mermaid-diagram skill 的「语法红线」。
+
 ## 输出规范
 
 - HTML 为单文件、无外部依赖，可直接在浏览器打开。

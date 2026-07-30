@@ -107,6 +107,18 @@ python3 <skill_dir>/scripts/scan_interfaces.py <repo_path> -o scan_result.md
 4. **文件维度反查**：列出第 2 步命中过注册点模式的全部源码文件，确认每个文件至少被一个功能域子文档的"所在文件"列引用；未被引用的文件逐个追查——要么有接口漏记，要么在自检结论里写明该文件无对外接口的理由（如纯内部 helper）。
 5. **自检结论写入 README**：在功能域索引表后加一行自检结论，格式：`自检：扫描 N 个接口，已记录 N 个，未归类 M 个（见上表），差集已清零（YYYY-MM-DD）`。差集未清零的禁止交付。
 
+## 第 5 步：验证 mermaid 图可渲染（收尾必做）
+
+产出文档中含 ```mermaid 代码块（接口全景图等），交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+
+```bash
+node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+```
+
+- 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
+- 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 spec-mermaid-diagram skill 的「语法红线」。
+
 ## 质量检查清单
 
 交付前逐项确认：
@@ -126,6 +138,7 @@ python3 <skill_dir>/scripts/scan_interfaces.py <repo_path> -o scan_result.md
 - [ ] 数据结构只列关键字段与约束，未整段搬运 struct 定义
 - [ ] 功能域按业务功能命名，无"controller 层""service 层"等技术层命名
 - [ ] 子文档文件名符合 `spec-interface-<功能名>.md`，功能名英文 kebab-case
+- [ ] 产出文档中的 mermaid 图已全部通过本地渲染验证（spec-mermaid-diagram 验证脚本全部 VALID）
 
 ## 参考文件索引
 

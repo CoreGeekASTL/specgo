@@ -1,0 +1,9 @@
+{
+  "name": "spec-mermaid-diagram-scripts",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "linkedom": "^0.18.0",
+    "mermaid": "^11.0.0"
+  }
+}

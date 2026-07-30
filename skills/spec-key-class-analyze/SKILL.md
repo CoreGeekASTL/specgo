@@ -44,6 +44,16 @@ description: 分析存量代码仓中的关键类（核心领域模型、入口 
 - 每个关键类一行，职责**不超过 38 个字**描述清楚（承担什么角色 + 为什么关键，凝练不堆砌，禁止抄类注释原文）
 - 表前可用一行纯文本标注分析基准（分支 + 日期 + 类总数），除此之外不加任何表、图、章节
 
+### 阶段 4：验证 mermaid 图（条件触发）
+
+本 skill 默认只产出一个表、不画图。若例外情况下产出物中含 ```mermaid 代码块，交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本校验：
+
+```bash
+node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+```
+
+全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。首次使用需先在脚本目录执行 `npm install`。
+
 ## 输出规范
 
 - 归档文件：代码仓 `docs/key-class/README.md`（唯一产出文件，不产子文档、不分组、不画图）
