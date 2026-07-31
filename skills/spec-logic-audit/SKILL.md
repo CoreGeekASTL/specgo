@@ -21,7 +21,7 @@ description: 基于多彩建模方法论审核 Spec/需求/功能设计文档的
 
 ### 阶段 2：生成初版 HTML，检查逻辑断裂点，ask-human
 
-1. 复制 [assets/model-template.html](assets/model-template.html) 为初版 HTML，将建模结果填入。
+1. 复制 [assets/model-template.html](assets/model-template.html) 为初版 HTML，将建模结果填入；保存到 `docs/audit/{需求或功能名}/` 目录（若不存在则创建），文件名 `{需求或功能名}-建模结果.html`。
 2. 对照 [references/gap-checklist.md](references/gap-checklist.md) 逐项检查逻辑断裂点与逻辑不全，在 HTML 中用红色虚线「断点卡片」高亮每一处。
 3. **每发现一处断点，立即用交互提问工具 ask-human**，一次提问聚焦一个断点；提供 2-4 个具体候选答案选项（不允许"其他"类兜底选项由自己提供），并推荐最可能的一项。
 4. 将用户的答复记录为断点的「人工裁定」，标注来源。
@@ -52,14 +52,14 @@ description: 基于多彩建模方法论审核 Spec/需求/功能设计文档的
 - 审核要点清单：已补齐的断点裁定是否符合真实业务、仍存疑项、建模中缺失但编码时必须的细节（异常处理、并发、边界值）
 - 明确提示：**HTML 未经编码人员确认前，不得进入编码阶段**
 
-### 阶段 5：可选——按模板输出规范功能实现设计 md
+### 阶段 5：按模板输出规范功能实现设计 md（必须先询问用户确认）
 
-审核完成后，**询问用户**是否按 [references/functional-design-template.md](references/functional-design-template.md) 输出一篇规范的功能实现设计 md。用户确认后：
+审核完成后，**必须询问用户**是否按 [references/functional-design-template.md](references/functional-design-template.md) 输出一篇规范的功能实现设计 md——不得跳过询问、不得自行决定输出。用户明确确认后：
 
 1. 按模板章节结构生成：功能概述 / SR 设计 / 实现思路 / 实现设计（含用例时序图）/ 用户接口设计 / 实现接口设计 / 安全配置设计 / 功能规格 / DFX 分析 / 分配需求。
 2. 内容来源=原文档已有内容 + 本次审核的人工裁定；实现设计章节的用例必须含时序图（mermaid sequenceDiagram），把补齐后的分支/异常流程画全。
 3. 模板中的可选章节无对应内容时标注"不涉及"并裁剪；原文档与裁定都未覆盖的内容标"待确认"，**禁止脑补**。
-4. 输出到原文档同目录，文件名 `<原文件名>-规范版.md`。
+4. 输出到 `docs/audit/{需求或功能名}/` 目录（与建模 HTML 同目录），文件名 `<原文件名>-规范版.md`。
 
 ### 阶段 6：验证产出物中的 mermaid 图（收尾必做）
 
