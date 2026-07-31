@@ -152,7 +152,7 @@ sequenceDiagram
 
 ## 7. 外部文档引用
 
-本设计参考的仓内规格化资产，五类逐行列出；关键类必须引用，基础框架文档逐个框架一行，其余类确无引用须注明"无引用"及原因：
+本设计参考的仓内规格化资产，六类逐行列出；关键类必须引用，基础框架文档逐个框架一行，其余类确无引用须注明"无引用"及原因：
 
 | 文档类型 | 引用文档 | 引用点 |
 |---|---|---|
@@ -162,6 +162,7 @@ sequenceDiagram
 | 基础框架文档 | [rpc-beego-web.md](../framework-usage/rpc-beego-web.md) | Beego Web：新 Controller 按 RouteMapping 注册到内部监听（src/routers/beego_router.go） |
 | 基础框架文档 | [storage-beego-orm.md](../framework-usage/storage-beego-orm.md) | beego ORM：白名单表按三步曲实现，双 DDL 保持一致（src/dao/base_dao.go） |
 | struct 结构文档 | [spec-structure.md](../structure/spec-structure.md) | 新模块分层归属（controllers/service/dao）依据 |
+| 数据结构文档 | [spec-data-structure-map.md](../data-structure/spec-data-structure-map.md) | 白名单集合（map 当 set）实例对照（src/models/whitelist.go） |
 ```
 
 ## 撰写硬性要求
@@ -174,5 +175,5 @@ sequenceDiagram
 - 数据结构只列关键字段与约束；超过 8 个字段的结构只写关键字段。
 - 调用关系每条主链路一张时序图（管理链路、业务链路分开画）；短句补关键分支。
 - AI 编码指南每条 ≤30 字（不含依据锚点），1-5 条，禁止空泛表述。
-- 外部文档引用五类逐行列出（关键类/接口文档/外部接口文档/基础框架文档/struct 结构文档）：关键类为必须引用，须列出具体复用/注入的关键类名并链接 docs/key-class/README.md；基础框架文档逐个框架一行，链接到仓内存在的 framework-usage 文档，只列本功能真实需要的框架，禁止按目录全量罗列；链接逐行指向仓内真实文件，无死链；某类确无引用注明"无引用"及原因，仓内无对应目录时注明"仓内无该类文档"（框架文档目录缺失时另在索引 README 注明）；禁止整节省略。
+- 外部文档引用六类逐行列出（关键类/接口文档/外部接口文档/基础框架文档/struct 结构文档/数据结构文档）：关键类为必须引用，须列出具体复用/注入的关键类名并链接 docs/key-class/README.md；基础框架文档逐个框架一行，链接到仓内存在的 framework-usage 文档，只列本功能真实需要的框架，禁止按目录全量罗列；链接逐行指向仓内真实文件，无死链；某类确无引用注明"无引用"及原因，仓内无对应目录时注明"仓内无该类文档"（框架文档目录缺失时另在索引 README 注明）；禁止整节省略。
 - "状态"列取值：设计中 / 在用 / 已下线 / 灰度中。

@@ -24,22 +24,25 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 ### 5. spec-key-class-analyze
 分析存量代码仓中的关键类（核心领域模型、入口 handler、核心服务/编排类、状态机、高被引用类），产出单一 README 清单（仅一个表：类名/类的职责，职责 38 字内描述清楚），归档到代码仓 docs/key-class/README.md。当需要盘点代码仓核心类、梳理关键类清单、理解核心实现、为新人上手/AI 编码沉淀关键类资产时使用。触发场景包括"关键类""核心类""重要类有哪些""类盘点""核心实现类""关键类定位""key class""core class"等。
 
-### 6. spec-framework-usage-analyze
+### 6. spec-data-structure-analyze
+分析存量代码仓中的关键数据结构（数组、列表/切片、map、集合、链表、队列、栈、树、环形缓冲、自定义容器等），按数据结构类型分组，产出**一个主文档 + 多个子文档**：主文档 `README.md` 含数据结构全景图与类型索引，每个类型一个子文档 `spec-data-structure-<类型名>.md`，说明该类型在仓内的作用与定位、关键实例表（实例名/作用/定义位置）、使用模式与 AI 编码指南，归档到 `docs/data-structure/`。当需要盘点代码仓用了哪些关键数据结构、梳理数据结构的作用与定位、识别自定义容器/缓存/队列等核心数据载体、为重构/迁移/新人上手/AI 编码沉淀数据结构资产时使用。触发场景包括"关键数据结构""数据结构盘点""用了哪些容器""map 用法""自定义数据结构""缓存结构""队列/链表/集合"等。
+
+### 7. spec-framework-usage-analyze
 分析存量代码仓中的基础框架（RPC、线程池、Actor、日志、序列化、配置、依赖注入、存储/ORM、消息队列、调度、资源池、容错治理、监控、基础库、测试框架等）及其使用方式，按部件维度产出框架使用指导——每个框架一篇 md（含初始化与配置、典型使用模式、封装层与扩展点、约定规范、AI 编码指南），统一归档到代码仓 docs/framework-usage/ 目录并附索引 README。当需要盘点代码仓技术栈、梳理框架使用模式与调用点分布、为 AI 代码生成沉淀"框架使用知识"、或为重构/迁移/新人上手提供框架使用文档时使用。
 
-### 7. spec-logic-audit
+### 8. spec-logic-audit
 基于多彩建模方法论审核 Spec/需求/功能设计文档的完备性——业务逻辑断裂点（多彩建模）+ 设计要素（时序图呈现、功能验收用例、外部接口与跨服务调用接口信息），针对缺口 ask-human 补齐，建模结果以 HTML 可视化呈现，审核完成后可按功能实现设计模板输出规范 md。当用户需要解读一篇 Spec/需求/设计文档、检查业务逻辑断点或设计要素是否 ready、校验功能设计文档是否规范时使用。触发场景包括："审核 spec 业务逻辑完备性"、"多彩建模"、"检查需求逻辑断点"、"建模结果生成 HTML 并找人确认"、"功能设计文档校验"、"校验时序图/验收用例/接口是否齐全"等。
 
-### 8. spec-mermaid-diagram
+### 9. spec-mermaid-diagram
 指导如何编写可被正确渲染的 mermaid 图，并在本地验证渲染结果。当用户提到"mermaid"、"画图"、"流程图"、"时序图"、"架构图"、"依赖图"、"图渲染失败"、"图渲染不出来"、"验证 mermaid"、"mermaid 报错"时使用；任何产出物（文档/HTML）中包含 ```mermaid 代码块时，必须用本 skill 的验证流程确认每张图可被解析渲染后才能宣称完成。
 
-### 9. spec-story-design
+### 10. spec-story-design
 当接收到需求设计文档（SR/特性设计），需要为存量代码仓产出新功能的 story 设计文档，且产出格式须与该仓 docs/story/ 下既有功能文档（L1 多彩建模 + L2 结构地图 + L3 AI 编码指南 + 外部文档引用章节）保持一致时使用。触发场景包括"新增 story 设计"、"根据需求文档生成 story 设计"、"按 story 模板输出新功能设计"等。
 
-### 10. spec-asset-refresh
-基于 MR（merge request / 分支 diff）识别当前需求给代码仓规格化资产带来的变化，并增量刷新五类资产文档——接口（docs/interface/）、框架使用（docs/framework-usage/）、外部接口调用（docs/external-call/）、包的架构关系（docs/structure/）、feature 文档（docs/story/），刷新内容逐类列出交人工审核确认后定稿。当 MR 合入前后需要评估"这个需求改了哪些文档资产""刷新 docs/ 下哪些文档""MR 影响分析""资产同步"时使用。触发场景包括"基于 MR 刷新资产""需求带来哪些资产变化""MR 改了哪些文档""资产文档同步""刷新接口/框架/feature 文档"等。
+### 11. spec-asset-refresh
+基于 MR（merge request / 分支 diff）识别当前需求给代码仓规格化资产带来的变化，并增量刷新七类资产文档——接口（docs/interface/）、框架使用（docs/framework-usage/）、外部接口调用（docs/external-call/）、包的架构关系（docs/structure/）、关键类（docs/key-class/）、关键数据结构（docs/data-structure/）、feature 文档（docs/story/），刷新内容逐类列出交人工审核确认后定稿。当 MR 合入前后需要评估"这个需求改了哪些文档资产""刷新 docs/ 下哪些文档""MR 影响分析""资产同步"时使用。触发场景包括"基于 MR 刷新资产""需求带来哪些资产变化""MR 改了哪些文档""资产文档同步""刷新接口/框架/feature 文档"等。
 
-### 11. specgo
+### 12. specgo
 当需要依据 docs/story/ 下的 story 设计文档（feature-<功能名>.md）为代码仓生成实现代码时使用。触发场景包括"specgo"、"按 story 设计文档生成代码"、"根据 feature-xxx 生成代码"、"按设计文档实现 xx 功能"、"生成 xx 功能的代码"、"照文档编码"等。
 
 ## 推荐工作流（spec 全链路）
@@ -51,12 +54,13 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 3. **出站调用盘点** → spec-external-call-analyze：README 索引 + external-call-*.md（按下游服务归类）
 4. **接口归纳为功能域** → spec-feature-analyze：feature-*.md（L1 多彩建模 + L2 结构地图 + L3 AI 编码指南 + 外部文档引用）
 5. **关键类剖析** → spec-key-class-analyze：docs/key-class/README.md 单文件单表（类名/类的职责，职责 38 字内）
-6. **框架使用模式** → spec-framework-usage-analyze：每框架一篇使用指导，归档 docs/framework-usage/
-7. **需求文档逻辑审核** → spec-logic-audit：多彩建模 + HTML 可视化 + ask-human 补逻辑断点
-8. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
-9. **需求到 story 设计** → spec-story-design：产出与 docs/story/ 同构的新功能设计文档
-10. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别五类资产变化，增量刷新 + 人工审核
-11. **文档到代码** → specgo：只读 story 设计文档 + 关联 develop-task 任务文档 + 被引用文档，直接生成代码
+6. **关键数据结构** → spec-data-structure-analyze：README + 按类型分篇，归档 docs/data-structure/
+7. **框架使用模式** → spec-framework-usage-analyze：每框架一篇使用指导，归档 docs/framework-usage/
+8. **需求文档逻辑审核** → spec-logic-audit：多彩建模 + HTML 可视化 + ask-human 补逻辑断点
+9. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
+10. **需求到 story 设计** → spec-story-design：产出与 docs/story/ 同构的新功能设计文档
+11. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别七类资产变化，增量刷新 + 人工审核
+12. **文档到代码** → specgo：只读 story 设计文档 + 关联 develop-task 任务文档 + 被引用文档，直接生成代码
 
 ## 红线（这些想法意味着你正在跳过 skill）
 
@@ -66,6 +70,7 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 | "列一下接口就行" | spec-interface-analyze 定义了接口盘点格式，先加载它 |
 | "看看调了哪些下游服务" | spec-external-call-analyze 定义了出站调用盘点格式，先加载它 |
 | "核心类我挑几个讲讲" | spec-key-class-analyze 定义了关键类识别与清单格式，先加载它 |
+| "数据结构我随便列列" | spec-data-structure-analyze 定义了关键数据结构识别与分组格式，先加载它 |
 | "这需求文档我读读就好" | spec-logic-audit 用来查逻辑断点，先加载它 |
 | "这 mermaid 图我直接画/看着没问题" | spec-mermaid-diagram 定义了语法红线与本地验证流程，先加载它 |
 | "这功能我直接写 story" | spec-story-design 定义了 story 模板，先加载它 |

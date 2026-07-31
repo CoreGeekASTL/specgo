@@ -145,7 +145,7 @@ sequenceDiagram
 
 ## 7. 外部文档引用
 
-本功能关联的仓内规格化资产，五类逐行列出；关键类必须引用（类名须有代码事实依据），基础框架文档逐个框架一行，其余类确无引用须注明"无引用"及原因：
+本功能关联的仓内规格化资产，六类逐行列出；关键类必须引用（类名须有代码事实依据），基础框架文档逐个框架一行，其余类确无引用须注明"无引用"及原因：
 
 | 文档类型 | 引用文档 | 引用点 |
 |---|---|---|
@@ -154,6 +154,7 @@ sequenceDiagram
 | 外部接口文档 | [external-call-browser-gateway.md](../external-call/external-call-browser-gateway.md) | （出向）userdata/delete 调用契约，与第 3 节出向行对应 |
 | 基础框架文档 | [rpc-beego-web.md](../framework-usage/rpc-beego-web.md) | Beego Web：路由注册与请求处理（src/routers/beego_router.go、src/controllers/cache_controller.go） |
 | struct 结构文档 | [spec-structure.md](../structure/spec-structure.md) | 本功能模块在 controllers/service/common 分层中的位置 |
+| 数据结构文档 | [spec-data-structure-map.md](../data-structure/spec-data-structure-map.md) | 本功能依赖的会话缓存实例（src/models/session.go） |
 ```
 
 ## 撰写硬性要求
@@ -166,5 +167,5 @@ sequenceDiagram
 - 数据结构只列"理解该功能必须知道"的结构与关键字段；超过 8 个字段的结构只写关键字段。
 - 调用关系必须先 mermaid 时序图，再用短句补关键分支/异步/明确不走的链路；同接口多实现的选择机制在模块划分表或关键分支中说明。
 - AI 编码指南每条 ≤30 字（不含证据锚点），1-5 条，禁止"建议合理设计""注意代码质量"类空泛表述。
-- **外部文档引用**：五类逐行列出（关键类/接口文档/外部接口文档/基础框架文档/struct 结构文档）；关键类为必须引用，类名须有代码事实依据（类在本功能链路上被调用或承载核心状态），禁止仅按 docs/key-class/ 清单全量罗列；基础框架文档逐个框架一行，逐行必须有代码事实依据（import/调用点所在文件），链接到仓内存在的 framework-usage 文档，禁止按目录全量罗列；链接逐行指向仓内真实文件，相对路径，无死链；某类确无引用注明"无引用"及原因，仓内无对应目录时注明"仓内无该类文档"（框架文档目录缺失时另在索引 README 注明）；禁止整节省略。
+- **外部文档引用**：六类逐行列出（关键类/接口文档/外部接口文档/基础框架文档/struct 结构文档/数据结构文档）；关键类为必须引用，类名须有代码事实依据（类在本功能链路上被调用或承载核心状态），禁止仅按 docs/key-class/ 清单全量罗列；基础框架文档逐个框架一行，逐行必须有代码事实依据（import/调用点所在文件），链接到仓内存在的 framework-usage 文档，禁止按目录全量罗列；链接逐行指向仓内真实文件，相对路径，无死链；某类确无引用注明"无引用"及原因，仓内无对应目录时注明"仓内无该类文档"（框架文档目录缺失时另在索引 README 注明）；禁止整节省略。
 - "状态"列只取：在用 / 已下线 / 灰度中。
