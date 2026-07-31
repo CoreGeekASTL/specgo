@@ -1,6 +1,6 @@
 /**
  * Specgo 的 OpenCode 插件入口。
- * 1. config hook：注册 skills 目录，让 opencode 发现 9 个 spec-* skill（无需软链或手动配置）
+ * 1. config hook：注册 skills 目录，让 opencode 发现 11 个 skill（10 个 spec-* + specgo，无需软链或手动配置）
  * 2. messages.transform hook：把 bootstrap.md 注入第一条 user message
  *
  * bootstrap.md 由 scripts/generate-bootstrap.mjs 预生成，skill 内容变更后重跑生成脚本即可。

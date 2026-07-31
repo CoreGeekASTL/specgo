@@ -1,7 +1,7 @@
 {
   "name": "specgo",
   "version": "1.0.0",
-  "description": "spec- 系列代码仓规格化分析 skill 主动注入：structure/interface/external-call/feature/key-class/framework/logic-audit/story-design/asset-refresh 九个分析 skill + specgo 文档驱动代码生成 skill，session 启动时注入 bootstrap，强制 AI 做分析/编码任务前先加载对应 skill",
+  "description": "spec- 系列代码仓规格化分析 skill 体系：structure/interface/external-call/feature/key-class/framework/logic-audit/mermaid-diagram/story-design/asset-refresh 十个分析 skill + specgo 文档驱动代码生成 skill，session 启动时注入 bootstrap，强制 AI 做分析/编码任务前先加载对应 skill",
   "main": "opencode.js",
   "type": "module",
   "author": {

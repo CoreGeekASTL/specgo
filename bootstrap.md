@@ -2,7 +2,7 @@
 # Specgo — 代码仓规格化分析 skill 体系
 
 <EXTREMELY-IMPORTANT>
-你拥有 specgo。在执行任何代码仓分析、需求/设计文档解读、对外接口盘点、出站调用/下游依赖盘点、目录结构梳理、框架使用模式梳理、story 设计、MR 资产刷新、按 story 设计文档生成代码任务之前——即使你认为只有 1% 的可能某个 spec skill 适用——你也必须先用 Skill 工具加载该 skill 全文并遵循其指引。这不可协商、不可选择、不可用"我先看看代码"为自己开脱。
+你拥有 specgo。在执行任何代码仓分析、需求/设计文档解读、对外接口盘点、出站调用/下游依赖盘点、目录结构梳理、框架使用模式梳理、story 设计、MR 资产刷新、mermaid 图验证、按 story 设计文档生成代码任务之前——即使你认为只有 1% 的可能某个 spec skill 适用——你也必须先用 Skill 工具加载该 skill 全文并遵循其指引。这不可协商、不可选择、不可用"我先看看代码"为自己开脱。
 
 spec skill 的 description 已包含触发关键词，请用下面的索引判断该调用哪个。
 </EXTREMELY-IMPORTANT>
@@ -30,13 +30,16 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 ### 7. spec-logic-audit
 基于多彩建模方法论审核 Spec/需求/功能设计文档的完备性——业务逻辑断裂点（多彩建模）+ 设计要素（时序图呈现、功能验收用例、外部接口与跨服务调用接口信息），针对缺口 ask-human 补齐，建模结果以 HTML 可视化呈现，审核完成后可按功能实现设计模板输出规范 md。当用户需要解读一篇 Spec/需求/设计文档、检查业务逻辑断点或设计要素是否 ready、校验功能设计文档是否规范时使用。触发场景包括："审核 spec 业务逻辑完备性"、"多彩建模"、"检查需求逻辑断点"、"建模结果生成 HTML 并找人确认"、"功能设计文档校验"、"校验时序图/验收用例/接口是否齐全"等。
 
-### 8. spec-story-design
+### 8. spec-mermaid-diagram
+指导如何编写可被正确渲染的 mermaid 图，并在本地验证渲染结果。当用户提到"mermaid"、"画图"、"流程图"、"时序图"、"架构图"、"依赖图"、"图渲染失败"、"图渲染不出来"、"验证 mermaid"、"mermaid 报错"时使用；任何产出物（文档/HTML）中包含 ```mermaid 代码块时，必须用本 skill 的验证流程确认每张图可被解析渲染后才能宣称完成。
+
+### 9. spec-story-design
 当接收到需求设计文档（SR/特性设计），需要为存量代码仓产出新功能的 story 设计文档，且产出格式须与该仓 docs/story/ 下既有功能文档（L1 多彩建模 + L2 结构地图 + L3 AI 编码指南 + 外部文档引用章节）保持一致时使用。触发场景包括"新增 story 设计"、"根据需求文档生成 story 设计"、"按 story 模板输出新功能设计"等。
 
-### 9. spec-asset-refresh
+### 10. spec-asset-refresh
 基于 MR（merge request / 分支 diff）识别当前需求给代码仓规格化资产带来的变化，并增量刷新五类资产文档——接口（docs/interface/）、框架使用（docs/framework-usage/）、外部接口调用（docs/external-call/）、包的架构关系（docs/structure/）、feature 文档（docs/story/），刷新内容逐类列出交人工审核确认后定稿。当 MR 合入前后需要评估"这个需求改了哪些文档资产""刷新 docs/ 下哪些文档""MR 影响分析""资产同步"时使用。触发场景包括"基于 MR 刷新资产""需求带来哪些资产变化""MR 改了哪些文档""资产文档同步""刷新接口/框架/feature 文档"等。
 
-### 10. specgo
+### 11. specgo
 当需要依据 docs/story/ 下的 story 设计文档（feature-<功能名>.md）为代码仓生成实现代码时使用。触发场景包括"specgo"、"按 story 设计文档生成代码"、"根据 feature-xxx 生成代码"、"按设计文档实现 xx 功能"、"生成 xx 功能的代码"、"照文档编码"等。
 
 ## 推荐工作流（spec 全链路）
@@ -50,9 +53,10 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 5. **关键类剖析** → spec-key-class-analyze：docs/key-class/README.md 单文件单表（类名/类的职责，职责 38 字内）
 6. **框架使用模式** → spec-framework-usage-analyze：每框架一篇使用指导，归档 docs/framework-usage/
 7. **需求文档逻辑审核** → spec-logic-audit：多彩建模 + HTML 可视化 + ask-human 补逻辑断点
-8. **需求到 story 设计** → spec-story-design：产出与 docs/story/ 同构的新功能设计文档
-9. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别五类资产变化，增量刷新 + 人工审核
-10. **文档到代码** → specgo：只读 story 设计文档 + 关联 develop-task 任务文档 + 被引用文档，直接生成代码
+8. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
+9. **需求到 story 设计** → spec-story-design：产出与 docs/story/ 同构的新功能设计文档
+10. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别五类资产变化，增量刷新 + 人工审核
+11. **文档到代码** → specgo：只读 story 设计文档 + 关联 develop-task 任务文档 + 被引用文档，直接生成代码
 
 ## 红线（这些想法意味着你正在跳过 skill）
 
@@ -63,6 +67,7 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 | "看看调了哪些下游服务" | spec-external-call-analyze 定义了出站调用盘点格式，先加载它 |
 | "核心类我挑几个讲讲" | spec-key-class-analyze 定义了关键类识别与清单格式，先加载它 |
 | "这需求文档我读读就好" | spec-logic-audit 用来查逻辑断点，先加载它 |
+| "这 mermaid 图我直接画/看着没问题" | spec-mermaid-diagram 定义了语法红线与本地验证流程，先加载它 |
 | "这功能我直接写 story" | spec-story-design 定义了 story 模板，先加载它 |
 | "MR 合了，看看文档要不要改" | spec-asset-refresh 定义了 MR 驱动的资产刷新流程，先加载它 |
 | "设计文档有了，我直接写代码" | specgo 定义了按 story + develop-task 文档生成代码的加载与编码纪律，先加载它 |

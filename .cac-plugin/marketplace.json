@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "specgo",
-      "description": "spec- 系列代码仓规格化分析 skill：structure/interface/external-call/feature/key-class/framework/logic-audit/story-design/asset-refresh/specgo（文档驱动代码生成）",
+      "description": "spec- 系列代码仓规格化分析 skill 体系：structure/interface/external-call/feature/key-class/framework/logic-audit/mermaid-diagram/story-design/asset-refresh 十个分析 skill + specgo 文档驱动代码生成 skill，session 启动时注入 bootstrap，强制 AI 做分析/编码任务前先加载对应 skill",
       "version": "1.0.0",
       "source": "./",
       "author": {
