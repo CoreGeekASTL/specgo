@@ -102,7 +102,3 @@ bun scripts/generate-bootstrap.mjs    # 或 node scripts/generate-bootstrap.mjs
 
 - OpenCode：从 `opencode.json` 的 `plugin` 数组移除条目，重启
 - Claude Code：`/plugin uninstall specgo@specgo`
-
-## 许可证
-
-MIT License。
