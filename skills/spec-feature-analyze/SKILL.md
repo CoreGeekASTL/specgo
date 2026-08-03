@@ -5,7 +5,7 @@ description: 基于存量代码仓对外提供的接口（HTTP 路由 / RPC serv
 
 # 存量接口业务功能分析
 
-从存量代码仓的对外接口出发，按**业务功能**归纳接口，每个功能域产出一篇与 `docs/story/` 既有功能文档（如 `docs/story/feature-cache-manage.md`）同构的 markdown：**L1 功能故事（多彩建模）→ L2 结构地图 → L3 AI 编码指南 → 外部文档引用**，共七节。
+从存量代码仓的对外接口出发，按**业务功能**归纳接口，每个功能域产出一篇与 `docs/story/` 既有功能文档同构的 markdown：**L1 功能故事（多彩建模）→ L2 结构地图 → L3 AI 编码指南 → 外部文档引用**，共七节。
 
 > 核心职责：不是罗列接口清单，而是把一类接口总结成一类业务。接口是线索，业务功能才是产出物。
 
@@ -45,7 +45,7 @@ python3 <skill_dir>/scripts/scan_interfaces.py <repo_path> -o scan_result.md
 
 ### 第 4 步：逐功能域精读代码，产出功能文档
 
-**每个功能域一篇** `docs/story/feature-<功能名>.md`（英文短名 kebab-case），按 references/report-template.md 模板二产出，与 `docs/story/feature-cache-manage.md` 同构七节：
+**每个功能域一篇** `docs/story/feature-<功能名>.md`（英文短名 kebab-case），按 references/report-template.md 模板二产出，与 `docs/story/` 既有功能文档同构七节：
 
 1. **功能故事（多彩建模）**：先做本节。实现逻辑速览（1~3 句，每句 ≤30 字）+ 四色建模 mermaid 图（方法论见 references/color-modeling.md）+ 术语表。代码推断不出的业务背景标注"代码中未体现"，禁止脑补。
 2. **模块划分**：mermaid 依赖图 + 承载功能表（模块 | 承载功能（引用文件））。

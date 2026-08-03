@@ -18,7 +18,7 @@ description: 扫描存量代码仓对外部服务的全部出站调用（HTTP �
 - **消息队列生产端**：Kafka producer、RocketMQ producer、RabbitMQ publish、Pulsar producer
 - **进程间通信**：Unix domain socket、命名管道、共享内存、本地 RPC/signal 调用
 - **平台/公司内部 SDK 出站**：告警 SDK、监控/话统 SDK、证书 SDK、日志 SDK、注册发现 client 等——封装在 stubs/vendor 内但**调用点在业务代码**的也算出站调用，记录业务调用位置
-- **外部存储**：外部 DB 连接（GaussDB/MySQL 等，含连接串获取方式）、Redis/OSS 等中间件 client 调用
+- **外部存储**：外部 DB 连接（MySQL/PostgreSQL 等，含连接串获取方式）、Redis/OSS 等中间件 client 调用
 - **配置辅助定位**：yaml / properties / 配置中心中的下游服务地址（host:port、服务发现名）、代理/网关封装层；微服务框架的 `references`/依赖声明清单
 
 每个调用点记录：协议类型、接口标识（URL path / RPC 方法 / topic）、调用位置（所在文件，**不带行号**）、所在函数与业务模块。

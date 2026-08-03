@@ -83,7 +83,7 @@ const buildBootstrap = (index) => {
 # Specgo — 代码仓规格化分析 skill 体系
 
 <EXTREMELY-IMPORTANT>
-你拥有 specgo。在执行任何代码仓分析、需求/设计文档解读、对外接口盘点、出站调用/下游依赖盘点、目录结构梳理、框架使用模式梳理、story 设计、MR 资产刷新、mermaid 图验证、按 story 设计文档生成代码任务之前——即使你认为只有 1% 的可能某个 spec skill 适用——你也必须先用 Skill 工具加载该 skill 全文并遵循其指引。这不可协商、不可选择、不可用"我先看看代码"为自己开脱。
+你拥有 specgo。在执行任何代码仓分析、需求/设计文档解读、对外接口盘点、出站调用/下游依赖盘点、目录结构梳理、框架使用模式梳理、story 设计、MR 资产刷新、mermaid 图验证、功能端到端开发任务之前——即使你认为只有 1% 的可能某个 spec skill 适用——你也必须先用 Skill 工具加载该 skill 全文并遵循其指引。这不可协商、不可选择、不可用"我先看看代码"为自己开脱。
 
 spec skill 的 description 已包含触发关键词，请用下面的索引判断该调用哪个。
 </EXTREMELY-IMPORTANT>
@@ -105,9 +105,9 @@ ${indexMd}
 8. **需求文档逻辑审核** → spec-logic-audit：多彩建模 + HTML 可视化 + ask-human 补逻辑断点
 9. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
 10. **需求到 story 设计** → spec-story-design：产出与 docs/story/ 同构的新功能设计文档
-11. **文档到代码** → specgo：只读 story 设计文档 + 关联 develop-task 任务文档 + 被引用文档，直接生成代码
-12. **代码检查（资产刷新前质量闸门）** → spec-code-check：需求 commit 增量 clean code 检查（内置 27 条+语言特则）+ 架构变更分析，报告问题并询问是否修复，产出 docs/code-check/ 检查文档
-13. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别七类资产变化，增量刷新 + 人工审核
+11. **代码检查（资产刷新前质量闸门）** → spec-code-check：需求 commit 增量 clean code 检查（内置 27 条+语言特则）+ 架构变更分析，报告问题并询问是否修复，产出 docs/code-check/ 检查文档
+12. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别七类资产变化，增量刷新 + 人工审核
+13. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 代码检查 → 资产维护，主代理编排与用户确认、各步骤派子代理执行
 
 ## 红线（这些想法意味着你正在跳过 skill）
 
@@ -122,7 +122,7 @@ ${indexMd}
 | "这 mermaid 图我直接画/看着没问题" | spec-mermaid-diagram 定义了语法红线与本地验证流程，先加载它 |
 | "这功能我直接写 story" | spec-story-design 定义了 story 模板，先加载它 |
 | "MR 合了，看看文档要不要改" | spec-asset-refresh 定义了 MR 驱动的资产刷新流程，先加载它 |
-| "设计文档有了，我直接写代码" | specgo 定义了按 story + develop-task 文档生成代码的加载与编码纪律，先加载它 |
+| "从需求到交付，一条龙做了" | specgo 定义了六步全链路编排与子代理分工，先加载它 |
 | "代码写完了，直接刷新资产/提交" | spec-code-check 定义了资产刷新前的 clean code + 架构变更检查流程，先加载它 |
 | "这个 skill 太重，我快速做" | 如果 skill 存在，就必须用 |
 | "我记得这个 skill 的内容" | skill 会演进，每次都要重新加载当前版本 |

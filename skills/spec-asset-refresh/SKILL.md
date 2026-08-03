@@ -53,7 +53,7 @@ description: 基于 MR（merge request / 分支 diff）识别当前需求给代�
 对判定"受影响"的资产逐类刷新，遵循各资产的既有格式与更新策略：
 
 1. **增量更新，禁止整篇覆盖**：接口表格加行/改行、feature 文档按节更新、README 索引同步对应行。
-2. **变更处标注来源**：在刷新内容处注明来源 MR/分支与日期（如"（27.0 MR#123 变更）"），便于回溯与审核定位。
+2. **变更处标注来源**：在刷新内容处注明来源 MR/分支与日期（如"（X.Y MR#123 变更）"），便于回溯与审核定位。
 3. **资产文档不存在**：该资产从未生成过时，不借本 skill 从零生成——提示用户先运行对应的分析类 skill（spec-interface-analyze / spec-framework-usage-analyze / spec-external-call-analyze / spec-structure-analyze / spec-key-class-analyze / spec-data-structure-analyze / spec-feature-analyze），本 skill 只做增量。
 4. **元信息同步**：被刷新文档的固定元信息表"更新时间"刷新为当天。
 

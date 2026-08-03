@@ -81,11 +81,11 @@ bootstrap.md 是预生成文件，由 `scripts/generate-bootstrap.mjs` 从各 sk
 | 需求审核 | spec-logic-audit | 多彩建模 + 设计要素（时序图/验收用例/接口）完备性校验 | 建模 HTML；可选输出规范功能实现设计 md |
 | 图验证 | spec-mermaid-diagram | mermaid 语法红线 + 本地渲染验证 | 含图产出物跑 validate-mermaid.mjs 全部 VALID |
 | 设计 | spec-story-design | 需求文档 → story 设计文档 | `docs/story/` + `docs/develop-task/`（抛弃式编码辅助文档） |
-| 代码生成 | specgo | 只读 story 设计文档 + 同名关联 develop-task 任务文档 + 被引用文档，不自主探索，直接生成代码 | 按修改文件清单落地的代码 + 验证命令结果 |
+| 全链路编排 | specgo | 六步端到端主流程：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 代码检查 → 资产维护；主代理编排与用户确认，各步骤派子代理执行 | 从需求到交付的全部产出物 |
 | 代码检查 | spec-code-check | 资产刷新前质量闸门：需求 commit 增量 clean code 检查（内置 27 条通用规则 + Go/Java/Python/C++ 语言特则）+ 架构变更分析，报告问题并询问是否修复 | `docs/code-check/{需求名}代码检查.md`（修复前/修复后双形态） |
 | 资产维护 | spec-asset-refresh | 基于 MR diff 识别七类资产变化，增量刷新 | 刷新上述全部 `docs/` 资产，人工审核定稿 |
 
-推荐全链路顺序：structure → interface → external-call → feature → key-class → data-structure → framework-usage →（有需求时）logic-audit → mermaid-diagram → story-design → specgo → code-check →（MR 后）asset-refresh。每步也可单独触发。
+推荐全链路顺序：structure → interface → external-call → feature → key-class → data-structure → framework-usage →（有需求时）logic-audit → mermaid-diagram → story-design → code-check →（MR 后）asset-refresh。每步也可单独触发；或直接加载 specgo 走六步端到端编排主流程（自动串联上述各步，子代理执行）。
 
 ## 修改 skill 后如何更新
 

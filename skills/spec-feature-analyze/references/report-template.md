@@ -1,6 +1,8 @@
 # 输出模板
 
-两套模板：README.md 索引 + 每功能一篇 feature md。所有文档归档到 `<repo>/docs/story/`。功能文档与 `docs/story/feature-cache-manage.md` 同构：L1 功能故事（多彩建模）→ L2 结构地图 → L3 AI 编码指南 → 外部文档引用，共七节。
+两套模板：README.md 索引 + 每功能一篇 feature md。所有文档归档到 `<repo>/docs/story/`。功能文档与 `docs/story/` 既有功能文档同构：L1 功能故事（多彩建模）→ L2 结构地图 → L3 AI 编码指南 → 外部文档引用，共七节。
+
+> 本模板中所有具体内容（功能名、文件路径、接口、框架文档链接等）均为**格式示例**，取自一个 Go/Beego 仓的案例；产出时替换为目标仓实际内容。
 
 ## 模板一：docs/story/README.md 索引
 
