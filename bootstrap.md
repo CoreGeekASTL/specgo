@@ -39,10 +39,13 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 ### 10. spec-story-design
 当接收到需求设计文档（SR/特性设计），需要为存量代码仓产出新功能的 story 设计文档，且产出格式须与该仓 docs/story/ 下既有功能文档（L1 多彩建模 + L2 结构地图 + L3 AI 编码指南 + 外部文档引用章节）保持一致时使用。触发场景包括"新增 story 设计"、"根据需求文档生成 story 设计"、"按 story 模板输出新功能设计"等。
 
-### 11. spec-asset-refresh
+### 11. spec-code-check
+在需求代码实现完成后、资产刷新（spec-asset-refresh）前，基于需求 commit 对新增/修改代码做 clean code 逐项检查（内置 27 条通用规则 + Go/Java/Python/C++ 语言特则，用户给定外部规范文档时以用户文档为准），并同步分析本次需求引入的架构变更（新增组件/既有织入/依赖/数据表/资产同步状态），产出**一篇代码检查文档**归档到 `docs/code-check/{需求名}代码检查.md`——章节固定为：一、架构变更检查（含颜色区分新增/织入组件的 mermaid 图）→ 二、Clean Code 逐项检查（合规项/提示豁免项/修改文件专项检查）→ 三、结论与验证。当需要"检查这个需求的代码整洁""clean code 检查""代码检查文档""需求代码评审""架构变更说明""这个 commit 改了哪些架构"时使用。触发场景包括"按规范检查代码""输出代码检查文档""检查新代码 clean code""需求实现后架构变了什么""资产刷新前先做代码检查"等。
+
+### 12. spec-asset-refresh
 基于 MR（merge request / 分支 diff）识别当前需求给代码仓规格化资产带来的变化，并增量刷新七类资产文档——接口（docs/interface/）、框架使用（docs/framework-usage/）、外部接口调用（docs/external-call/）、包的架构关系（docs/structure/）、关键类（docs/key-class/）、关键数据结构（docs/data-structure/）、feature 文档（docs/story/），刷新内容逐类列出交人工审核确认后定稿。当 MR 合入前后需要评估"这个需求改了哪些文档资产""刷新 docs/ 下哪些文档""MR 影响分析""资产同步"时使用。触发场景包括"基于 MR 刷新资产""需求带来哪些资产变化""MR 改了哪些文档""资产文档同步""刷新接口/框架/feature 文档"等。
 
-### 12. specgo
+### 13. specgo
 当需要依据 docs/story/ 下的 story 设计文档（feature-<功能名>.md）为代码仓生成实现代码时使用。触发场景包括"specgo"、"按 story 设计文档生成代码"、"根据 feature-xxx 生成代码"、"按设计文档实现 xx 功能"、"生成 xx 功能的代码"、"照文档编码"等。
 
 ## 推荐工作流（spec 全链路）
@@ -59,8 +62,9 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 8. **需求文档逻辑审核** → spec-logic-audit：多彩建模 + HTML 可视化 + ask-human 补逻辑断点
 9. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
 10. **需求到 story 设计** → spec-story-design：产出与 docs/story/ 同构的新功能设计文档
-11. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别七类资产变化，增量刷新 + 人工审核
-12. **文档到代码** → specgo：只读 story 设计文档 + 关联 develop-task 任务文档 + 被引用文档，直接生成代码
+11. **文档到代码** → specgo：只读 story 设计文档 + 关联 develop-task 任务文档 + 被引用文档，直接生成代码
+12. **代码检查（资产刷新前质量闸门）** → spec-code-check：需求 commit 增量 clean code 检查（内置 27 条+语言特则）+ 架构变更分析，报告问题并询问是否修复，产出 docs/code-check/ 检查文档
+13. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别七类资产变化，增量刷新 + 人工审核
 
 ## 红线（这些想法意味着你正在跳过 skill）
 
@@ -76,6 +80,7 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 | "这功能我直接写 story" | spec-story-design 定义了 story 模板，先加载它 |
 | "MR 合了，看看文档要不要改" | spec-asset-refresh 定义了 MR 驱动的资产刷新流程，先加载它 |
 | "设计文档有了，我直接写代码" | specgo 定义了按 story + develop-task 文档生成代码的加载与编码纪律，先加载它 |
+| "代码写完了，直接刷新资产/提交" | spec-code-check 定义了资产刷新前的 clean code + 架构变更检查流程，先加载它 |
 | "这个 skill 太重，我快速做" | 如果 skill 存在，就必须用 |
 | "我记得这个 skill 的内容" | skill 会演进，每次都要重新加载当前版本 |
 

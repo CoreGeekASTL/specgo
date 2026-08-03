@@ -9,6 +9,8 @@ description: 基于 MR（merge request / 分支 diff）识别当前需求给代�
 
 与七个分析类 skill 的关系：分析类 skill 负责"从零生成"或"全量重刷"，本 skill 负责"MR 驱动的增量同步"——复用各类资产的既有格式与更新策略，不重写整篇。
 
+与 spec-code-check 的关系：spec-code-check 是"代码实现完成 → 资产刷新"之间的质量闸门（clean code 检查 + 架构变更分析，产出 `docs/code-check/` 检查文档）。若需求代码刚实现完成且尚未经过 spec-code-check，先执行 spec-code-check 再做本 skill 的资产刷新；spec-code-check 检查文档中列出的资产缺口（如 key-class 清单缺失条目）是本 skill 刷新的直接输入。
+
 ## 工作流程（五阶段，严格按序执行）
 
 ### 阶段 1：获取 MR 变更清单

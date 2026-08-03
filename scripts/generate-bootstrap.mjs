@@ -1,5 +1,5 @@
 /**
- * 从 skills/ 下 12 个 spec skill 的 frontmatter 生成 bootstrap.md。
+ * 从 skills/ 下 13 个 spec skill 的 frontmatter 生成 bootstrap.md。
  * bootstrap.md 是两平台共用的注入源——opencode.js 和 hooks/session-start 都读它。
  * skill 内容变更后重跑：bun .claude/plugins/specgo/scripts/generate-bootstrap.mjs
  */
@@ -24,6 +24,7 @@ const SPEC_SKILLS = [
   'spec-logic-audit',
   'spec-mermaid-diagram',
   'spec-story-design',
+  'spec-code-check',
   'spec-asset-refresh',
   'specgo',
 ];
@@ -104,8 +105,9 @@ ${indexMd}
 8. **需求文档逻辑审核** → spec-logic-audit：多彩建模 + HTML 可视化 + ask-human 补逻辑断点
 9. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
 10. **需求到 story 设计** → spec-story-design：产出与 docs/story/ 同构的新功能设计文档
-11. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别七类资产变化，增量刷新 + 人工审核
-12. **文档到代码** → specgo：只读 story 设计文档 + 关联 develop-task 任务文档 + 被引用文档，直接生成代码
+11. **文档到代码** → specgo：只读 story 设计文档 + 关联 develop-task 任务文档 + 被引用文档，直接生成代码
+12. **代码检查（资产刷新前质量闸门）** → spec-code-check：需求 commit 增量 clean code 检查（内置 27 条+语言特则）+ 架构变更分析，报告问题并询问是否修复，产出 docs/code-check/ 检查文档
+13. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别七类资产变化，增量刷新 + 人工审核
 
 ## 红线（这些想法意味着你正在跳过 skill）
 
@@ -121,6 +123,7 @@ ${indexMd}
 | "这功能我直接写 story" | spec-story-design 定义了 story 模板，先加载它 |
 | "MR 合了，看看文档要不要改" | spec-asset-refresh 定义了 MR 驱动的资产刷新流程，先加载它 |
 | "设计文档有了，我直接写代码" | specgo 定义了按 story + develop-task 文档生成代码的加载与编码纪律，先加载它 |
+| "代码写完了，直接刷新资产/提交" | spec-code-check 定义了资产刷新前的 clean code + 架构变更检查流程，先加载它 |
 | "这个 skill 太重，我快速做" | 如果 skill 存在，就必须用 |
 | "我记得这个 skill 的内容" | skill 会演进，每次都要重新加载当前版本 |
 

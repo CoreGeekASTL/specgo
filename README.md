@@ -64,8 +64,8 @@ bootstrap.md 是预生成文件，由 `scripts/generate-bootstrap.mjs` 从各 sk
 
 重启后确认两点：
 
-1. skill 列表中出现 11 个 `spec-` 开头的 skill 和 1 个 `specgo` skill（OpenCode 中可查看可用 skill；Claude Code 中 `/plugin` 查看已装插件）
-2. 会话启动时 bootstrap 已注入：直接问 agent "你有哪些 spec skill"，应能列出下表 12 个
+1. skill 列表中出现 12 个 `spec-` 开头的 skill 和 1 个 `specgo` skill（OpenCode 中可查看可用 skill；Claude Code 中 `/plugin` 查看已装插件）
+2. 会话启动时 bootstrap 已注入：直接问 agent "你有哪些 spec skill"，应能列出下表 13 个
 
 ## 内含 skill
 
@@ -81,10 +81,11 @@ bootstrap.md 是预生成文件，由 `scripts/generate-bootstrap.mjs` 从各 sk
 | 需求审核 | spec-logic-audit | 多彩建模 + 设计要素（时序图/验收用例/接口）完备性校验 | 建模 HTML；可选输出规范功能实现设计 md |
 | 图验证 | spec-mermaid-diagram | mermaid 语法红线 + 本地渲染验证 | 含图产出物跑 validate-mermaid.mjs 全部 VALID |
 | 设计 | spec-story-design | 需求文档 → story 设计文档 | `docs/story/` + `docs/develop-task/`（抛弃式编码辅助文档） |
-| 资产维护 | spec-asset-refresh | 基于 MR diff 识别七类资产变化，增量刷新 | 刷新上述全部 `docs/` 资产，人工审核定稿 |
 | 代码生成 | specgo | 只读 story 设计文档 + 同名关联 develop-task 任务文档 + 被引用文档，不自主探索，直接生成代码 | 按修改文件清单落地的代码 + 验证命令结果 |
+| 代码检查 | spec-code-check | 资产刷新前质量闸门：需求 commit 增量 clean code 检查（内置 27 条通用规则 + Go/Java/Python/C++ 语言特则）+ 架构变更分析，报告问题并询问是否修复 | `docs/code-check/{需求名}代码检查.md`（修复前/修复后双形态） |
+| 资产维护 | spec-asset-refresh | 基于 MR diff 识别七类资产变化，增量刷新 | 刷新上述全部 `docs/` 资产，人工审核定稿 |
 
-推荐全链路顺序：structure → interface → external-call → feature → key-class → data-structure → framework-usage →（有需求时）logic-audit → mermaid-diagram → story-design → specgo →（MR 后）asset-refresh。每步也可单独触发。
+推荐全链路顺序：structure → interface → external-call → feature → key-class → data-structure → framework-usage →（有需求时）logic-audit → mermaid-diagram → story-design → specgo → code-check →（MR 后）asset-refresh。每步也可单独触发。
 
 ## 修改 skill 后如何更新
 
