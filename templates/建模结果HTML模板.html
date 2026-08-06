@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{DOC_TITLE}} — 多彩建模审核报告</title>
+<style>
+  :root {
+    --pink:#f9c8d8;   --pink-border:#e0658f;
+    --yellow:#fdf0c0; --yellow-border:#d4a017;
+    --green:#cdeccc;  --green-border:#3e9e4f;
+    --blue:#c9defa;   --blue-border:#3a76c4;
+    --gap-border:#d93025;
+    --text:#1f2329; --muted:#646a73; --bg:#f5f6f7;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:"PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--text); padding:24px; }
+  header { margin-bottom:16px; }
+  h1 { font-size:22px; }
+  .meta { color:var(--muted); font-size:13px; margin-top:6px; }
+  .legend { display:flex; gap:12px; flex-wrap:wrap; background:#fff; border-radius:10px; padding:12px 16px; margin:14px 0; font-size:13px; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; border:2px solid; }
+  section { background:#fff; border-radius:10px; padding:16px 20px; margin-bottom:16px; }
+  h2 { font-size:16px; margin-bottom:12px; }
+  .flow { display:flex; flex-direction:column; gap:10px; }
+  .row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .card { border-radius:8px; padding:10px 14px; font-size:14px; border:2px solid; max-width:340px; }
+  .card .tag { font-size:11px; color:var(--muted); display:block; margin-bottom:2px; }
+  .card .src { font-size:11px; color:var(--muted); display:block; margin-top:4px; }
+  .mi  { background:var(--pink);   border-color:var(--pink-border); }
+  .role{ background:var(--yellow); border-color:var(--yellow-border); }
+  .ppt { background:var(--green);  border-color:var(--green-border); }
+  .desc{ background:var(--blue);   border-color:var(--blue-border); }
+  .arrow { color:var(--muted); font-size:18px; }
+  .gap { border:2px dashed var(--gap-border); background:#fff5f4; border-radius:8px; padding:10px 14px; font-size:14px; }
+  .gap .q { color:var(--gap-border); font-weight:600; }
+  .resolved { border:2px solid var(--green-border); background:#f3faf3; border-radius:8px; padding:10px 14px; font-size:14px; }
+  .resolved .v { color:var(--green-border); font-weight:600; }
+  .doubt { border:2px dashed #d4a017; background:#fffbec; border-radius:8px; padding:10px 14px; font-size:14px; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th, td { border:1px solid #e5e6eb; padding:8px 10px; text-align:left; }
+  th { background:#f5f6f7; }
+  .sev-block { color:#d93025; } .sev-risk { color:#d4a017; } .sev-tip { color:#8f959e; }
+  .banner { background:#fff7e6; border:1px solid #ffd591; border-radius:10px; padding:14px 18px; font-size:14px; margin-bottom:16px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>{{DOC_TITLE}} — 多彩建模审核报告</h1>
+  <div class="meta">生成时间：{{DATE}} ｜ 建模状态：{{STATUS}} ｜ 断点：{{GAP_TOTAL}} 处（已补齐 {{GAP_RESOLVED}} / 仍存疑 {{GAP_OPEN}}）</div>
+</header>
+
+<!-- 审核提醒横幅：阶段4填充 -->
+<div class="banner">
+  ⚠️ <b>编码前必读：</b>本报告需编码人员审核确认后方可进入编码阶段。审核重点：已补齐断点的人工裁定是否符合真实业务、仍存疑项的处理方案、以及建模未覆盖的编码细节（异常处理、并发、边界值）。
+</div>
+
+<div class="legend">
+  <span><i class="dot" style="background:var(--pink);border-color:var(--pink-border)"></i>粉·事件：需要记账的业务活动</span>
+  <span><i class="dot" style="background:var(--yellow);border-color:var(--yellow-border)"></i>黄·角色：谁以什么身份参与</span>
+  <span><i class="dot" style="background:var(--green);border-color:var(--green-border)"></i>绿·实体：客观存在的业务对象</span>
+  <span><i class="dot" style="background:var(--blue);border-color:var(--blue-border)"></i>蓝·描述：规则/分类/约束</span>
+</div>
+
+<!-- 主流程建模：用 .row 表达链路，元素间用 <span class="arrow">→</span> 连接 -->
+<section>
+  <h2>一、主流程建模</h2>
+  <div class="flow">
+    <!-- 示例行，替换为实际建模结果 -->
+    <div class="row">
+      <div class="card role"><span class="tag">角色</span>{{示例：买家}}<span class="src">出处：§2.1</span></div>
+      <span class="arrow">→</span>
+      <div class="card mi"><span class="tag">事件</span>{{示例：提交订单}}<span class="src">出处：§2.1</span></div>
+      <span class="arrow">→</span>
+      <div class="card ppt"><span class="tag">实体·状态变更</span>{{示例：订单（草稿→待支付）}}<span class="src">出处：§2.2</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>二、规则与约束（蓝色描述）</h2>
+  <div class="row">
+    <div class="card desc"><span class="tag">描述/规则</span>{{示例：风控拦截规则}}<span class="src">出处：§3.4</span></div>
+  </div>
+</section>
+
+<!-- 断点区：阶段2生成红色 .gap，人工补齐后改写为 .resolved，未确认改为 .doubt -->
+<section>
+  <h2>三、逻辑断裂点与人工裁定</h2>
+  <div class="flow">
+    <div class="gap">
+      <span class="q">🔴 断点{{N}}（{{断点类型}}）：</span>{{断点描述}}<br>
+      <b>待确认：</b>{{提问内容}}
+    </div>
+    <!-- 补齐后的形态：
+    <div class="resolved">
+      <span class="v">✅ 断点{{N}}（{{断点类型}}）已补齐：</span>{{断点描述}}<br>
+      <b>人工裁定：</b>{{裁定内容}}（{{答复时间}}）
+    </div>
+    -->
+  </div>
+</section>
+
+<!-- 审核清单：阶段4填充 -->
+<section>
+  <h2>四、编码人员审核清单</h2>
+  <table>
+    <tr><th>#</th><th>审核项</th><th>严重程度</th><th>状态</th><th>审核意见</th></tr>
+    <tr><td>1</td><td>{{断点裁定是否符合真实业务}}</td><td class="sev-block">阻塞级</td><td>待审核</td><td></td></tr>
+  </table>
+</section>
+
+</body>
+</html>

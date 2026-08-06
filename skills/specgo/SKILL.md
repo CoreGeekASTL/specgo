@@ -33,6 +33,8 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
    - framework-usage → spec-framework-usage-analyze
 4. 验收：产出文档落位对应目录；含 mermaid 的文档全部通过 spec-mermaid-diagram 验证脚本（VALID）。
 
+> 注：业务流程文档（docs/business-flow/）不属于本步自动检查的七类资产——它由用户主动指定流程后经 spec-business-flow-analyze 梳理产出，不派全量子代理。
+
 ## 第 2 步：需求与功能审核（spec-logic-audit）
 
 - 派**审核子代理**：加载 spec-logic-audit 全文，输入=需求/SR/功能设计文档，完成多彩建模翻译 + 逻辑断点扫描 + HTML 初版。

@@ -1,5 +1,5 @@
 /**
- * 从 skills/ 下 13 个 spec skill 的 frontmatter 生成 bootstrap.md。
+ * 从 skills/ 下 14 个 spec skill 的 frontmatter 生成 bootstrap.md。
  * bootstrap.md 是两平台共用的注入源——opencode.js 和 hooks/session-start 都读它。
  * skill 内容变更后重跑：bun .claude/plugins/specgo/scripts/generate-bootstrap.mjs
  */
@@ -21,6 +21,7 @@ const SPEC_SKILLS = [
   'spec-key-class-analyze',
   'spec-data-structure-analyze',
   'spec-framework-usage-analyze',
+  'spec-business-flow-analyze',
   'spec-logic-audit',
   'spec-mermaid-diagram',
   'spec-story-design',
@@ -102,12 +103,13 @@ ${indexMd}
 5. **关键类剖析** → spec-key-class-analyze：docs/key-class/README.md 单文件单表（类名/类的职责，职责 38 字内）
 6. **关键数据结构** → spec-data-structure-analyze：README + 按类型分篇，归档 docs/data-structure/
 7. **框架使用模式** → spec-framework-usage-analyze：每框架一篇使用指导，归档 docs/framework-usage/
-8. **需求文档逻辑审核** → spec-logic-audit：多彩建模 + HTML 可视化 + ask-human 补逻辑断点
-9. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
-10. **需求到 story 设计** → spec-story-design：产出与 docs/story/ 同构的新功能设计文档
-11. **代码检查（资产刷新前质量闸门）** → spec-code-check：需求 commit 增量 clean code 检查（内置 27 条+语言特则）+ 架构变更分析，报告问题并询问是否修复，产出 docs/code-check/ 检查文档
-12. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别七类资产变化，增量刷新 + 人工审核
-13. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 代码检查 → 资产维护，主代理编排与用户确认、各步骤派子代理执行
+8. **业务流程梳理（用户指定流程）** → spec-business-flow-analyze：按模板深度梳理单个业务流程，归档 docs/business-flow/
+9. **需求文档逻辑审核** → spec-logic-audit：表述质量扫描 + 多彩建模 + HTML 可视化 + ask-human 补逻辑断点
+10. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
+11. **需求到 story 设计** → spec-story-design：产出与 docs/story/ 同构的新功能设计文档
+12. **代码检查（资产刷新前质量闸门）** → spec-code-check：需求 commit 增量 clean code 检查（内置 27 条+语言特则）+ 架构变更分析，报告问题并询问是否修复，产出 docs/code-check/ 检查文档
+13. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别七类资产变化，增量刷新 + 人工审核
+14. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 代码检查 → 资产维护，主代理编排与用户确认、各步骤派子代理执行
 
 ## 红线（这些想法意味着你正在跳过 skill）
 
@@ -118,7 +120,8 @@ ${indexMd}
 | "看看调了哪些下游服务" | spec-external-call-analyze 定义了出站调用盘点格式，先加载它 |
 | "核心类我挑几个讲讲" | spec-key-class-analyze 定义了关键类识别与清单格式，先加载它 |
 | "数据结构我随便列列" | spec-data-structure-analyze 定义了关键数据结构识别与分组格式，先加载它 |
-| "这需求文档我读读就好" | spec-logic-audit 用来查逻辑断点，先加载它 |
+| "这需求文档我读读就好" | spec-logic-audit 用来查表述质量与逻辑断点，先加载它 |
+| "给我讲讲 XX 流程怎么走的" | spec-business-flow-analyze 定义了业务流程梳理模板，先加载它 |
 | "这 mermaid 图我直接画/看着没问题" | spec-mermaid-diagram 定义了语法红线与本地验证流程，先加载它 |
 | "这功能我直接写 story" | spec-story-design 定义了 story 模板，先加载它 |
 | "MR 合了，看看文档要不要改" | spec-asset-refresh 定义了 MR 驱动的资产刷新流程，先加载它 |
