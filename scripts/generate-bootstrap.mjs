@@ -99,15 +99,15 @@ ${indexMd}
 1. **结构摸底** → spec-structure-analyze：mermaid 依赖图 + 模块说明表
 2. **对外接口盘点** → spec-interface-analyze：主文档 README + 功能域子文档
 3. **出站调用盘点** → spec-external-call-analyze：README 索引 + external-call-*.md（按下游服务归类）
-4. **接口归纳为功能域** → spec-feature-analyze：feature-*.md（L1 多彩建模 + L2 结构地图 + L3 AI 编码指南 + 外部文档引用）
-5. **关键类剖析** → spec-key-class-analyze：docs/key-class/README.md 单文件单表（类名/类的职责，职责 38 字内）
-6. **关键数据结构** → spec-data-structure-analyze：README + 按类型分篇，归档 docs/data-structure/
-7. **框架使用模式** → spec-framework-usage-analyze：每框架一篇使用指导，归档 docs/framework-usage/
-8. **业务流程梳理（用户指定流程）** → spec-business-flow-analyze：按模板深度梳理单个业务流程，归档 docs/business-flow/
+4. **接口归纳为功能域** → spec-feature-analyze：feature-*.md（功能故事多彩建模 + 实现方案 + 接口清单 + 关键数据结构 + 调用关系 + 外部文档引用，共六节）
+5. **关键类剖析** → spec-key-class-analyze：docs/business/key-class/README.md 单文件单表（类名/类的职责，职责 38 字内）
+6. **关键数据结构** → spec-data-structure-analyze：README + 按用途分篇，归档 docs/business/data-structure/
+7. **框架使用模式** → spec-framework-usage-analyze：每框架一篇使用指导，归档 docs/technical/framework-usage/
+8. **业务流程梳理（用户指定流程）** → spec-business-flow-analyze：按模板深度梳理单个业务流程，归档 docs/architecture/business-flow/
 9. **需求文档逻辑审核** → spec-logic-audit：表述质量扫描 + 多彩建模 + HTML 可视化 + ask-human 补逻辑断点
 10. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
-11. **需求到 story 设计** → spec-story-design：产出与 docs/story/ 同构的新功能设计文档
-12. **代码检查（资产刷新前质量闸门）** → spec-code-check：需求 commit 增量 clean code 检查（内置 27 条+语言特则）+ 架构变更分析，报告问题并询问是否修复，产出 docs/code-check/ 检查文档
+11. **需求到 story 设计** → spec-story-design：产出与 docs/business/story/ 同构的新功能设计文档
+12. **代码检查（资产刷新前质量闸门）** → spec-code-check：需求 commit 增量 clean code 检查（内置 27 条+语言特则）+ 架构变更分析，报告问题并询问是否修复，产出 docs/engineering/code-check/ 检查文档
 13. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别七类资产变化，增量刷新 + 人工审核
 14. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 代码检查 → 资产维护，主代理编排与用户确认、各步骤派子代理执行
 

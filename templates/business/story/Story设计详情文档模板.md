@@ -96,9 +96,9 @@ sequenceDiagram
 
 | 文档类型 | 引用文档 | 引用点 |
 |---|---|---|
-| 关键类（必须） | [docs/key-class/README.md](../key-class/README.md) | 本功能链路涉及关键类 BrowserService（取就绪实例，src/service/cache_service.go）、https.Builder（下游调用构造） |
+| 关键类（必须） | [docs/business/key-class/README.md](../key-class/README.md) | 本功能链路涉及关键类 BrowserService（取就绪实例，src/service/cache_service.go）、https.Builder（下游调用构造） |
 | 接口文档 | [spec-interface-cache.md](../interface/spec-interface-cache.md) | deleteCache 对外接口契约对照 |
-| 外部接口文档 | [external-call-browser-gateway.md](../external-call/external-call-browser-gateway.md) | （出向）userdata/delete 调用契约，与第 3 节出向行对应 |
-| 基础框架文档 | [rpc-beego-web.md](../framework-usage/rpc-beego-web.md) | Beego Web：路由注册与请求处理（src/routers/beego_router.go、src/controllers/cache_controller.go） |
-| struct 结构文档 | [spec-structure-<仓库名>.md](../structure/spec-structure-<仓库名>.md) | 本功能模块在 controllers/service/common 分层中的位置 |
+| 外部接口文档 | [external-call-browser-gateway.md](../../technical/external-call/external-call-browser-gateway.md) | （出向）userdata/delete 调用契约，与第 3 节出向行对应 |
+| 基础框架文档 | [rpc-beego-web.md](../../technical/framework-usage/rpc-beego-web.md) | Beego Web：路由注册与请求处理（src/routers/beego_router.go、src/controllers/cache_controller.go） |
+| struct 结构文档 | [spec-structure-<仓库名>.md](../../architecture/module-structure/spec-structure-<仓库名>.md) | 本功能模块在 controllers/service/common 分层中的位置 |
 | 数据结构文档 | [spec-data-structure-map.md](../data-structure/spec-data-structure-map.md) | 本功能依赖的会话缓存实例（src/models/session.go） |

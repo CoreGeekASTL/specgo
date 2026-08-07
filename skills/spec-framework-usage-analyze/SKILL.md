@@ -1,6 +1,6 @@
 ---
 name: spec-framework-usage-analyze
-description: 分析存量代码仓中的基础框架（RPC、线程池、Actor、日志、序列化、配置、依赖注入、存储/ORM、消息队列、调度、资源池、容错治理、监控、基础库、测试框架等）及其使用方式，按部件维度产出框架使用指导——每个框架一篇 md（含初始化与配置、典型使用模式、封装层与扩展点、约定规范、AI 编码指南），统一归档到代码仓 docs/framework-usage/ 目录并附索引 README。当需要盘点代码仓技术栈、梳理框架使用模式与调用点分布、为 AI 代码生成沉淀"框架使用知识"、或为重构/迁移/新人上手提供框架使用文档时使用。
+description: 分析存量代码仓中的基础框架（RPC、线程池、Actor、日志、序列化、配置、依赖注入、存储/ORM、消息队列、调度、资源池、容错治理、监控、基础库、测试框架等）及其使用方式，按部件维度产出框架使用指导——每个框架一篇 md（含用途定位、使用模式），统一归档到代码仓 docs/technical/framework-usage/ 目录并附索引 README。当需要盘点代码仓技术栈、梳理框架使用模式与调用点分布、为 AI 代码生成沉淀"框架使用知识"、或为重构/迁移/新人上手提供框架使用文档时使用。
 ---
 
 # 存量代码基础框架分析
@@ -13,7 +13,7 @@ description: 分析存量代码仓中的基础框架（RPC、线程池、Actor�
 2. 框架探测（依赖清单 + 扫描脚本）
 3. 使用点定位与聚类
 4. 用法模式分析
-5. 生成框架使用指导文档（按部件维度归档到 docs/framework-usage/）
+5. 生成框架使用指导文档（按部件维度归档到 docs/technical/framework-usage/）
 
 ## 第 1 步：明确范围与目的
 
@@ -58,11 +58,11 @@ python3 <skill_dir>/scripts/scan_frameworks.py <repo_path> -o scan_result.md
 
 ## 第 5 步：生成框架使用指导文档（按部件维度归档）
 
-按部件（框架）维度拆分输出，**每个框架一篇 md**，统一归档到代码仓 `docs/framework-usage/` 目录：
+按部件（框架）维度拆分输出，**每个框架一篇 md**，统一归档到代码仓 `docs/technical/framework-usage/` 目录：
 
 ```
-<repo>/docs/framework-usage/
-├── README.md                        # 索引：框架全景清单 + 风险汇总 + 文件导航
+<repo>/docs/technical/framework-usage/
+├── README.md                        # 索引：元信息 + 框架全景导航表
 ├── rpc-grpc.md                      # 每框架一篇使用指导
 ├── concurrency-task-executor.md
 ├── actor-caf.md
@@ -71,10 +71,10 @@ python3 <skill_dir>/scripts/scan_frameworks.py <repo_path> -o scan_result.md
 
 文件命名规则：`<类别缩写>-<框架名>.md`，全小写 kebab-case。类别缩写：rpc（RPC/通信）、concurrency（并发/线程池）、actor（Actor 模型）、log（日志）、codec（序列化）、config（配置管理）、di（依赖注入/组件）、storage（存储/ORM）、mq（消息队列）、schedule（定时/调度）、eventloop（网络/事件循环）、pool（资源池）、resilience（容错/服务治理）、metrics（监控/可观测）、base（基础库）、test（测试框架）。自研框架同样按此规则命名。
 
-两个模板均见 references/report-template.md：
+两个模板：
 
-1. **索引 README.md**：开头为固定元信息表（代码仓/分析基准/更新时间/Skill/主要语言/分析深度，表格形式，行结构固定，模板见 references/report-template.md）；其后是框架全景清单（每行链接到对应框架 md）、不一致与风险汇总、使用说明（AI 编码时如何按部件查阅）。未命中的类别也要列一行标注"未发现"，证明排查过。
-2. **每框架一篇 `<类别缩写>-<框架名>.md`**：八维档案（用途定位、初始化与配置、核心使用模式、封装层与扩展点、并发与线程模型、错误处理、约定与规范、已知问题）+ 文末「AI 编码指南」——1-3 条可执行规则（新代码该怎么用、禁止什么），每条标注依据。AI 编码指南是资产级产出的核心，禁止空泛表述。
+1. **索引 README.md**：按 references/readme-template.md 填充——固定三行元信息表（分支/更新日期/Skill）+ 框架全景清单表（# | 类别 | 框架 | 使用指导链接，无死链）。README 只起导航作用，不加其他章节；未命中的类别列一行标注"未发现"，证明排查过。
+2. **每框架一篇 `<类别缩写>-<框架名>.md`**：按 references/usage-template.md 填充，只含两节——**用途定位**（该框架在系统中承担什么角色、用在哪些模块）+ **使用模式**（典型调用序列骨架，真实代码片段注明来源）。
 
 更新策略：目录与文件已存在时，按框架逐篇对比更新（框架被移除则归档标注"已下线"），不要整目录覆盖重写；README.md 索引随框架增删同步更新。
 
@@ -97,11 +97,11 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - [ ] 十六类框架全部排查过（含未命中的）
 - [ ] 依赖清单版本与代码实际使用一致（已交叉核对）
 - [ ] 自研/内部框架已识别并纳入分析
-- [ ] 每个框架一篇 md，全部归档在 `docs/framework-usage/`，命名符合 `<类别缩写>-<框架名>.md`
-- [ ] README.md 索引中每个清单条目都能链接到存在的框架 md，无死链
+- [ ] 每个框架一篇 md，全部归档在 `docs/technical/framework-usage/`，命名符合 `<类别缩写>-<框架名>.md`
+- [ ] README.md 开头为固定三行元信息表（分支/更新日期/Skill），索引中每个清单条目都能链接到存在的框架 md，无死链
+- [ ] 每篇 md 只含「用途定位」「使用模式」两节，使用模式附真实代码片段并注明来源 `文件:行号`
 - [ ] 每框架结论均有 `文件:行号` 证据
 - [ ] 已区分封装层使用与裸 API 使用
-- [ ] 每篇 md 文末 AI 编码指南每条规则可执行、有依据、无空泛表述（如"建议合理使用"）
 - [ ] IDL 生成代码未虚增调用点统计
 - [ ] 产出文档中的 mermaid 图已全部通过本地渲染验证（spec-mermaid-diagram 验证脚本全部 VALID）
 
@@ -109,5 +109,6 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 
 - references/framework-catalog.md — 十六类框架清单、探测线索、易遗漏项（第 2 步用）
 - references/analysis-dimensions.md — 八维用法分析、深度分级、抽样策略（第 3、4 步用）
-- references/report-template.md — 输出模板：README.md 索引 + 每框架一篇使用指导 md（第 5 步用）
+- references/readme-template.md — 索引 README 模板（第 5 步用）
+- references/usage-template.md — 每框架一篇使用指导模板（第 5 步用）
 - scripts/scan_frameworks.py — 框架使用点扫描脚本，内置常见开源框架模式库（第 2 步用）

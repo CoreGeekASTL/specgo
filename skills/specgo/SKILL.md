@@ -18,7 +18,7 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 ## 第 1 步：资产检查与录入/刷新
 
-1. 探测 `docs/` 下七类资产目录：`interface/`、`framework-usage/`、`external-call/`、`structure/`、`key-class/`、`data-structure/`、`story/`。
+1. 探测 `docs/` 下七类资产目录：`business/interface/`、`technical/framework-usage/`、`technical/external-call/`、`architecture/module-structure/`、`business/key-class/`、`business/data-structure/`、`business/story/`。
 2. 分支：
    - **存在** → 询问用户是否需要刷新资产
    - **不存在** → 询问用户是否需要录入资产
@@ -33,7 +33,7 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
    - framework-usage → spec-framework-usage-analyze
 4. 验收：产出文档落位对应目录；含 mermaid 的文档全部通过 spec-mermaid-diagram 验证脚本（VALID）。
 
-> 注：业务流程文档（docs/business-flow/）不属于本步自动检查的七类资产——它由用户主动指定流程后经 spec-business-flow-analyze 梳理产出，不派全量子代理。
+> 注：业务流程文档（docs/architecture/business-flow/）不属于本步自动检查的七类资产——它由用户主动指定流程后经 spec-business-flow-analyze 梳理产出，不派全量子代理。
 
 ## 第 2 步：需求与功能审核（spec-logic-audit）
 
@@ -45,9 +45,9 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 ## 第 3 步：story 设计（spec-story-design）
 
 - 派**设计子代理**：加载 spec-story-design 全文，输入=第 2 步审核通过的 Spec + 第 1 步资产文档（framework-usage 框架指导 + story 既有文档为格式基准）。
-- 产出 `docs/story/feature-<功能名>.md` + `docs/develop-task/<功能名>-develop-task.md`。
+- 产出 `docs/business/story/feature-<功能名>.md` + `docs/develop-task/<功能名>-develop-task.md`。
 - 子代理在 develop-task 第 5.2 步返回疑问清单 → 主代理批量向用户澄清 → 回传子代理定稿。
-- 主代理验收：story 七节齐全、develop-task 修改文件清单到函数级、mermaid 全部 VALID；然后**交用户确认设计**再进下一步。
+- 主代理验收：story 六节齐全、develop-task 修改文件清单到函数级、mermaid 全部 VALID；然后**交用户确认设计**再进下一步。
 
 ## 第 4 步：代码实现与测试
 
@@ -68,7 +68,7 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 1. 派**检查子代理**：加载 spec-code-check 全文，对本需求 commit 增量执行 clean code 检查（27 条+语言特则）+ 架构变更分析。
 2. 子代理返回问题清单与架构变更分析；**主代理向用户报告并询问是否修复**。
-3. 选是 → 派**修复子代理**逐项修复 + 回归（构建/vet/单测/E2E 存在则跑），产出修复后检查文档；选否 → 产出修复前检查文档（保留违规项）。文档落 `docs/code-check/`。
+3. 选是 → 派**修复子代理**逐项修复 + 回归（构建/vet/单测/E2E 存在则跑），产出修复后检查文档；选否 → 产出修复前检查文档（保留违规项）。文档落 `docs/engineering/code-check/`。
 4. 检查文档含 mermaid 必须全部 VALID。
 
 ## 第 6 步：资产维护（spec-asset-refresh）

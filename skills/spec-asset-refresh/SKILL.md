@@ -1,6 +1,6 @@
 ---
 name: spec-asset-refresh
-description: 基于 MR（merge request / 分支 diff）识别当前需求给代码仓规格化资产带来的变化，并增量刷新七类资产文档——接口（docs/interface/）、框架使用（docs/framework-usage/）、外部接口调用（docs/external-call/）、包的架构关系（docs/structure/）、关键类（docs/key-class/）、关键数据结构（docs/data-structure/）、feature 文档（docs/story/），刷新内容逐类列出交人工审核确认后定稿。当 MR 合入前后需要评估"这个需求改了哪些文档资产""刷新 docs/ 下哪些文档""MR 影响分析""资产同步"时使用。触发场景包括"基于 MR 刷新资产""需求带来哪些资产变化""MR 改了哪些文档""资产文档同步""刷新接口/框架/feature 文档"等。
+description: 基于 MR（merge request / 分支 diff）识别当前需求给代码仓规格化资产带来的变化，并增量刷新七类资产文档——接口（docs/business/interface/）、框架使用（docs/technical/framework-usage/）、外部接口调用（docs/technical/external-call/）、包的架构关系（docs/architecture/module-structure/）、关键类（docs/business/key-class/）、关键数据结构（docs/business/data-structure/）、feature 文档（docs/business/story/），刷新内容逐类列出交人工审核确认后定稿。当 MR 合入前后需要评估"这个需求改了哪些文档资产""刷新 docs/ 下哪些文档""MR 影响分析""资产同步"时使用。触发场景包括"基于 MR 刷新资产""需求带来哪些资产变化""MR 改了哪些文档""资产文档同步""刷新接口/框架/feature 文档"等。
 ---
 
 # Spec 资产刷新（基于 MR 的资产变化识别与同步）
@@ -9,7 +9,7 @@ description: 基于 MR（merge request / 分支 diff）识别当前需求给代�
 
 与七个分析类 skill 的关系：分析类 skill 负责"从零生成"或"全量重刷"，本 skill 负责"MR 驱动的增量同步"——复用各类资产的既有格式与更新策略，不重写整篇。
 
-与 spec-code-check 的关系：spec-code-check 是"代码实现完成 → 资产刷新"之间的质量闸门（clean code 检查 + 架构变更分析，产出 `docs/code-check/` 检查文档）。若需求代码刚实现完成且尚未经过 spec-code-check，先执行 spec-code-check 再做本 skill 的资产刷新；spec-code-check 检查文档中列出的资产缺口（如 key-class 清单缺失条目）是本 skill 刷新的直接输入。
+与 spec-code-check 的关系：spec-code-check 是"代码实现完成 → 资产刷新"之间的质量闸门（clean code 检查 + 架构变更分析，产出 `docs/engineering/code-check/` 检查文档）。若需求代码刚实现完成且尚未经过 spec-code-check，先执行 spec-code-check 再做本 skill 的资产刷新；spec-code-check 检查文档中列出的资产缺口（如 key-class 清单缺失条目）是本 skill 刷新的直接输入。
 
 ## 工作流程（五阶段，严格按序执行）
 
@@ -27,13 +27,13 @@ description: 基于 MR（merge request / 分支 diff）识别当前需求给代�
 
 | # | 资产 | 目录 | 触发信号 |
 |---|------|------|---------|
-| 1 | 对外接口 | `docs/interface/` | 路由注册/IDL 契约/消息订阅 handler 的增删改；接口请求响应结构变化；接口下线 |
-| 2 | 框架使用 | `docs/framework-usage/` | 依赖清单（go.mod/pom.xml/package.json 等）增删框架；框架初始化/配置方式变化；新封装层出现 |
-| 3 | 外部接口调用 | `docs/external-call/` | 出站调用（HTTP/RPC client、MQ 生产端、平台 SDK）的增删改；下游服务地址/协议变化 |
-| 4 | 包的架构关系 | `docs/structure/` | 第一层目录增删；跨模块 import 方向变化（含新增依赖边、依赖移除、循环依赖出现） |
-| 5 | 关键类 | `docs/key-class/` | 关键类的增删（核心领域模型/入口 handler/编排类/状态机/高被引用类的增删改）；关键类职责漂移 |
-| 6 | 关键数据结构 | `docs/data-structure/` | 关键数据结构增删（自定义容器/缓存/队列/注册表/核心 map·slice·chan 实例的增删改）；并发模型变化 |
-| 7 | feature 文档 | `docs/story/` | 业务行为变化：接口语义、处理流程、状态机、数据结构的实质修改（不是重构式改名） |
+| 1 | 对外接口 | `docs/business/interface/` | 路由注册/IDL 契约/消息订阅 handler 的增删改；接口请求响应结构变化；接口下线 |
+| 2 | 框架使用 | `docs/technical/framework-usage/` | 依赖清单（go.mod/pom.xml/package.json 等）增删框架；框架初始化/配置方式变化；新封装层出现 |
+| 3 | 外部接口调用 | `docs/technical/external-call/` | 出站调用（HTTP/RPC client、MQ 生产端、平台 SDK）的增删改；下游服务地址/协议变化 |
+| 4 | 包的架构关系 | `docs/architecture/module-structure/` | 第一层目录增删；跨模块 import 方向变化（含新增依赖边、依赖移除、循环依赖出现） |
+| 5 | 关键类 | `docs/business/key-class/` | 关键类的增删（核心领域模型/入口 handler/编排类/状态机/高被引用类的增删改）；关键类职责漂移 |
+| 6 | 关键数据结构 | `docs/business/data-structure/` | 关键数据结构增删（自定义容器/缓存/队列/注册表/核心 map·slice·chan 实例的增删改）；并发模型变化 |
+| 7 | feature 文档 | `docs/business/story/` | 业务行为变化：接口语义、处理流程、状态机、数据结构的实质修改（不是重构式改名） |
 
 每类资产输出三态判定：**受影响（需刷新）/ 不受影响 / 不确定**，不确定项列出疑点交人工裁定——禁止把"不确定"静默归为"不受影响"。
 

@@ -1,11 +1,11 @@
 ---
 name: spec-feature-analyze
-description: 基于存量代码仓对外提供的接口（HTTP 路由 / RPC service / 消息订阅 handler / IDL 契约）做业务功能分析，将同一业务的多个接口归纳为一个功能域，按 docs/story/ 既有功能文档格式（L1 多彩建模 + L2 结构地图 + L3 AI 编码指南 + 外部文档引用章节）每个功能域产出一篇 feature-<功能名>.md。支持指定接口类型只分析某一类接口（IDL 契约 / 框架路由 / 消息订阅定时），默认全代码仓全类型分析。当需要盘点代码仓对外提供哪些接口、按业务功能归纳接口、为接口治理/新人上手/AI 编码沉淀功能文档时使用。触发场景包括"代码仓对外提供什么接口""对外接口盘点""接口按业务功能分组""只分析 HTTP 接口""生成 story 功能文档"等。
+description: 基于存量代码仓对外提供的接口（HTTP 路由 / RPC service / 消息订阅 handler / IDL 契约）做业务功能分析，将同一业务的多个接口归纳为一个功能域，按 docs/business/story/ 既有功能文档格式（功能故事多彩建模 + 实现方案 + 接口清单 + 关键数据结构 + 调用关系 + 外部文档引用，共六节）每个功能域产出一篇 feature-<功能名>.md。支持指定接口类型只分析某一类接口（IDL 契约 / 框架路由 / 消息订阅定时），默认全代码仓全类型分析。当需要盘点代码仓对外提供哪些接口、按业务功能归纳接口、为接口治理/新人上手/AI 编码沉淀功能文档时使用。触发场景包括"代码仓对外提供什么接口""对外接口盘点""接口按业务功能分组""只分析 HTTP 接口""生成 story 功能文档"等。
 ---
 
 # 存量接口业务功能分析
 
-从存量代码仓的对外接口出发，按**业务功能**归纳接口，每个功能域产出一篇与 `docs/story/` 既有功能文档同构的 markdown：**L1 功能故事（多彩建模）→ L2 结构地图 → L3 AI 编码指南 → 外部文档引用**，共七节。
+从存量代码仓的对外接口出发，按**业务功能**归纳接口，每个功能域产出一篇与 `docs/business/story/` 既有功能文档同构的 markdown：**功能故事（多彩建模）→ 实现方案 → 接口清单 → 关键数据结构 → 调用关系 → 外部文档引用**，共六节。
 
 > 核心职责：不是罗列接口清单，而是把一类接口总结成一类业务。接口是线索，业务功能才是产出物。
 
@@ -41,26 +41,25 @@ python3 <skill_dir>/scripts/scan_interfaces.py <repo_path> -o scan_result.md
 
 ### 第 3 步：按业务功能聚类
 
-将扫描到的接口按业务功能聚类（如"用户认证""白名单管理""缓存管理"），**禁止按技术层命名**（如"controller 层"）。聚类依据按优先级：路由路径前缀 → controller/service 归属 → IDL service 分组 → 业务语义相近。每功能一般 2~10 个接口；超过 10 个考虑拆分子功能。探测到但无法归入任何业务功能的接口，记入 README 索引的"未归类接口"节并逐条说明原因。
+将扫描到的接口按业务功能聚类（如"用户认证""白名单管理""缓存管理"），**禁止按技术层命名**（如"controller 层"）。聚类依据按优先级：路由路径前缀 → controller/service 归属 → IDL service 分组 → 业务语义相近。每功能一般 2~10 个接口；超过 10 个考虑拆分子功能。探测到但无法归入任何业务功能的接口，在 README 索引表下方逐条列出并说明原因。
 
 ### 第 4 步：逐功能域精读代码，产出功能文档
 
-**每个功能域一篇** `docs/story/feature-<功能名>.md`（英文短名 kebab-case），按 references/report-template.md 模板二产出，与 `docs/story/` 既有功能文档同构七节：
+**每个功能域一篇** `docs/business/story/feature-<功能名>.md`（英文短名 kebab-case），按 references/feature-template.md 产出，与 `docs/business/story/` 既有功能文档同构六节：
 
 1. **功能故事（多彩建模）**：先做本节。实现逻辑速览（1~3 句，每句 ≤30 字）+ 四色建模 mermaid 图（方法论见 references/color-modeling.md）+ 术语表。代码推断不出的业务背景标注"代码中未体现"，禁止脑补。
-2. **模块划分**：mermaid 依赖图 + 承载功能表（模块 | 承载功能（引用文件））。
+2. **实现方案**：mermaid 依赖图 + 承载功能表（模块 | 承载功能（引用文件））。
 3. **接口清单**：五列表格（接口 | 路径/入口 | 请求结构 | 响应结构 | 状态），含对外接口与本功能的出向调用（出向接口单独标注"（出向）"）；状态取 在用 / 已下线 / 灰度中。
 4. **关键数据结构**：表格（结构 | 定义位置 | 关键字段+约束），只列理解该功能必须知道的结构。
 5. **调用关系**：每条主链路一张 mermaid 时序图 + 短句补关键分支/异步/不走的链路。
-6. **AI 编码指南**：1-5 条，每条 ≤30 字，面向"改动本功能时"的落地规则，附证据文件。
-7. **外部文档引用**：三列表（文档类型 | 引用文档 | 引用点），六类逐行列出本功能关联的仓内规格化资产——**关键类（必须引用）**：列出本功能实现涉及的具体关键类名（以代码事实为依据：类在功能链路上被调用/承载核心状态）并链接 docs/key-class/README.md；**接口文档**：链接 docs/interface/ 对应功能域子文档；**外部接口文档**：链接 docs/external-call/ 相关子文档（与接口清单中"（出向）"行对应）；**基础框架文档**：逐个框架一行，逐行有代码事实依据（import/调用点所在文件），链接到 docs/framework-usage/ 真实存在的文档，禁止按目录全量罗列；**struct 结构文档**：链接 docs/structure/ 文档；**数据结构文档**：链接 docs/data-structure/ 对应子文档（本功能依赖的缓存/队列/注册表等关键数据结构实例）。链接必须指向仓内真实存在的文件，无死链；某类确无引用须注明"无引用"及原因；仓内无对应目录时对应行注明"仓内无该类文档"（docs/key-class/ 缺失时另在回复中提示可先跑 spec-key-class-analyze 补齐；框架文档目录缺失时在 README 索引注明）；禁止整节省略。
+6. **外部文档引用**：三列表（文档类型 | 引用文档 | 引用点），六类逐行列出本功能关联的仓内规格化资产——**关键类（必须引用）**：列出本功能实现涉及的具体关键类名（以代码事实为依据：类在功能链路上被调用/承载核心状态）并链接 docs/business/key-class/README.md；**接口文档**：链接 docs/business/interface/ 对应功能域子文档；**外部接口文档**：链接 docs/technical/external-call/ 相关子文档（与接口清单中"（出向）"行对应）；**基础框架文档**：逐个框架一行，逐行有代码事实依据（import/调用点所在文件），链接到 docs/technical/framework-usage/ 真实存在的文档，禁止按目录全量罗列；**struct 结构文档**：链接 docs/architecture/module-structure/ 文档；**数据结构文档**：链接 docs/business/data-structure/ 对应子文档（本功能依赖的缓存/队列/注册表等关键数据结构实例）。链接必须指向仓内真实存在的文件，无死链；某类确无引用须注明"无引用"及原因；仓内无对应目录时对应行注明"仓内无该类文档"（docs/business/key-class/ 缺失时另在回复中提示可先跑 spec-key-class-analyze 补齐；框架文档目录缺失时在 README 索引注明）；禁止整节省略。
 
 精读方式：以接口注册点为入口，沿 controller → service → dao/下游调用逐层读真实代码，禁止只凭扫描结果猜测。
 
 ### 第 5 步：归档与索引
 
-- 产出到 `<repo>/docs/story/`；目录不存在时新建。
-- 更新 `docs/story/README.md`：功能全景表（功能域 | 接口数 | 核心模块 | 文档链接）、接口统计（按类型分列）、未归类接口；README 不存在时按 references/report-template.md 模板一从头生成。
+- 产出到 `<repo>/docs/business/story/`；目录不存在时新建。
+- 更新 `docs/business/story/README.md`：功能全景表（功能域 | 接口数 | 核心模块 | 文档链接）；README 不存在时按 references/readme-template.md 从头生成（三行元信息表 + 功能全景表，导航作用不加其他章节）。
 - 更新策略：功能文档已存在时逐节对比更新（接口已下线则状态列标"已下线"保留记录），不要整篇覆盖重写；既有文档含旧版「框架引用」节时，其内容并入「外部文档引用」的基础框架文档行类并删除原节。
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
@@ -81,25 +80,25 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - [ ] 范围内每类接口都排查过，未命中类目已确认"确实没有"而非"没找到"
 - [ ] IDL 契约与代码实现已交叉核对，生成代码未虚增接口统计
 - [ ] 同接口多实现已全部列出并标注选择机制
-- [ ] 每个功能域一篇 `docs/story/feature-<功能名>.md`，七节齐全（功能故事/模块划分/接口清单/关键数据结构/调用关系/AI 编码指南/外部文档引用）
+- [ ] 每个功能域一篇 `docs/business/story/feature-<功能名>.md`，六节齐全（功能故事/实现方案/接口清单/关键数据结构/调用关系/外部文档引用）
 - [ ] 「外部文档引用」章节六类齐全：关键类已必须引用且类名有代码事实依据；基础框架文档逐个框架一行、有代码事实依据、未全量罗列；其余类无引用时已注明"无引用"及原因（仓内无对应目录时已注明）；引用链接均指向仓内真实文件，无死链
 - [ ] 功能域按业务功能命名，无"controller 层""service 层"等技术层命名
 - [ ] 功能故事：速览 1~3 句每句 ≤30 字；四色图每个粉色事件具备触发者/输入/输出/后继四要素；事件名无文件名/函数名/行号；推断不出的背景标注"代码中未体现"
 - [ ] 接口清单为五列表格，无散文段落；出向调用标注"（出向）"
 - [ ] 所有结论附文件级证据（相对代码仓根目录），无臆造路径
 - [ ] 数据结构只列关键字段与约束，超 8 字段只列关键
-- [ ] AI 编码指南每条 ≤30 字、有证据，无"建议合理设计"类空泛表述
-- [ ] README.md 索引已同步（功能全景/接口统计/未归类接口），无死链
-- [ ] 未产出 `docs/interface/external-interfaces.md`（本 skill 不再输出该文件）
+- [ ] README.md 索引已同步（功能全景表 + 表下方未归类接口说明），无死链
+- [ ] 未产出 `docs/business/interface/external-interfaces.md`（本 skill 不再输出该文件）
 - [ ] 产出文档中的 mermaid 图已全部通过本地渲染验证（spec-mermaid-diagram 验证脚本全部 VALID）
 
 ## 参考文件索引
 
 - references/interface-catalog.md — 三类对外接口的探测线索、模式示例、易遗漏项（第 2 步用）
 - references/color-modeling.md — 多彩建模方法论（第 4 步功能故事用）
-- references/report-template.md — 输出模板：README 索引 + 功能文档七节结构（第 4、5 步用）
+- references/readme-template.md — README 索引模板（第 5 步用）
+- references/feature-template.md — 功能文档六节结构模板（第 4 步用）
 - scripts/scan_interfaces.py — 接口注册点扫描脚本，支持 --type 限定接口类型（第 2 步用）
-- docs/key-class/README.md — 关键类清单（第 4 步外部文档引用章节必须引用；不存在时按降级规则注明）
-- docs/interface/README.md — 对外接口文档索引（第 4 步用）
-- docs/external-call/README.md — 出站调用文档索引（第 4 步用）
-- docs/structure/ — 包级结构文档目录（第 4 步用）
+- docs/business/key-class/README.md — 关键类清单（第 4 步外部文档引用章节必须引用；不存在时按降级规则注明）
+- docs/business/interface/README.md — 对外接口文档索引（第 4 步用）
+- docs/technical/external-call/README.md — 出站调用文档索引（第 4 步用）
+- docs/architecture/module-structure/ — 包级结构文档目录（第 4 步用）

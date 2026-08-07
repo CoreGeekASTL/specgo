@@ -1,6 +1,6 @@
 ---
 name: spec-key-class-analyze
-description: 分析存量代码仓中的关键类（核心领域模型、入口 handler、核心服务/编排类、状态机、高被引用类），产出单一 README 清单（仅一个表：类名/类的职责，职责 38 字内描述清楚），归档到代码仓 docs/key-class/README.md。当需要盘点代码仓核心类、梳理关键类清单、理解核心实现、为新人上手/AI 编码沉淀关键类资产时使用。触发场景包括"关键类""核心类""重要类有哪些""类盘点""核心实现类""关键类定位""key class""core class"等。
+description: 分析存量代码仓中的关键类（核心领域模型、入口 handler、核心服务/编排类、状态机、高被引用类），产出单一 README 清单（仅一个表：类名/类的职责，职责 38 字内描述清楚），归档到代码仓 docs/business/key-class/README.md。当需要盘点代码仓核心类、梳理关键类清单、理解核心实现、为新人上手/AI 编码沉淀关键类资产时使用。触发场景包括"关键类""核心类""重要类有哪些""类盘点""核心实现类""关键类定位""key class""core class"等。
 ---
 
 # Spec 关键类分析
@@ -38,11 +38,11 @@ description: 分析存量代码仓中的关键类（核心领域模型、入口 
 
 ### 阶段 3：生成清单
 
-输出到代码仓 `docs/key-class/README.md`，**全文件只有一个表**：
+输出到代码仓 `docs/business/key-class/README.md`，骨架见 references/key-class-template.md，**全文件只有一个表**：
 
 - 表头固定：`| 类名 | 类的职责 |`
 - 每个关键类一行，职责**不超过 38 个字**描述清楚（承担什么角色 + 为什么关键，凝练不堆砌，禁止抄类注释原文）
-- 表前可用一行纯文本标注分析基准（分支 + 日期 + 类总数），除此之外不加任何表、图、章节
+- 表前用一行 blockquote 标注分析基准（分支 + 日期 + 类总数），除此之外不加任何表、图、章节
 
 ### 阶段 4：验证 mermaid 图（条件触发）
 
@@ -56,9 +56,9 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 
 ## 输出规范
 
-- 归档文件：代码仓 `docs/key-class/README.md`（唯一产出文件，不产子文档、不分组、不画图）
+- 归档文件：代码仓 `docs/business/key-class/README.md`（唯一产出文件，不产子文档、不分组、不画图）
 - 全程中文输出
-- 与其他 spec 产出互补：结构看 docs/structure/，入站接口看 docs/interface/，出站调用看 docs/external-call/，关键类看 docs/key-class/
+- 与其他 spec 产出互补：结构看 docs/architecture/module-structure/，入站接口看 docs/business/interface/，出站调用看 docs/technical/external-call/，关键类看 docs/business/key-class/
 - 更新策略：README 已存在时逐行对比更新（类被移除则删行、职责漂移则改行），不整表重写
 
 ## 质量检查清单

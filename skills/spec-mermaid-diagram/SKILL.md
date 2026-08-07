@@ -69,7 +69,7 @@ cd <本skill目录>/scripts && npm install   # 安装 mermaid + linkedom
 
 ```bash
 # 校验整个 markdown 文档里的所有 mermaid 图
-node <本skill目录>/scripts/validate-mermaid.mjs docs/story/feature-xxx.md
+node <本skill目录>/scripts/validate-mermaid.mjs docs/business/story/feature-xxx.md
 
 # 校验单个 .mmd 文件
 node <本skill目录>/scripts/validate-mermaid.mjs diagram.mmd

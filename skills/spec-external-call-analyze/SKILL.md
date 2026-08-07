@@ -1,6 +1,6 @@
 ---
 name: spec-external-call-analyze
-description: 扫描存量代码仓对外部服务的全部出站调用（HTTP 客户端 / RPC client / IDL client stub / 消息队列生产端 / 进程间通信 / 平台 SDK），按被调用的外部服务维度归类，产出 README 索引 + 每个外部服务一个子文档 external-call-<服务名>.md，每个外部调用接口一个章节（业务场景、接口功能、调用位置、协议信息），归档到代码仓 docs/external-call/ 目录。当需要盘点代码仓依赖哪些下游服务、梳理出站调用清单、做依赖治理/影响分析/新人上手时使用。触发场景包括"外部调用""下游接口""出站调用""调用了哪些外部服务""服务依赖盘点""external call""进程间通信"等。
+description: 扫描存量代码仓对外部服务的全部出站调用（HTTP 客户端 / RPC client / IDL client stub / 消息队列生产端 / 进程间通信 / 平台 SDK），按被调用的外部服务维度归类，产出 README 索引 + 每个外部服务一个子文档 external-call-<服务名>.md，每个外部调用接口一个章节（业务场景、接口功能、调用位置、协议信息），归档到代码仓 docs/technical/external-call/ 目录。当需要盘点代码仓依赖哪些下游服务、梳理出站调用清单、做依赖治理/影响分析/新人上手时使用。触发场景包括"外部调用""下游接口""出站调用""调用了哪些外部服务""服务依赖盘点""external call""进程间通信"等。
 ---
 
 # Spec 外部调用分析（出站接口盘点）
@@ -34,75 +34,16 @@ description: 扫描存量代码仓对外部服务的全部出站调用（HTTP �
 
 ### 阶段 3：生成文档
 
-输出到代码仓 `docs/external-call/` 目录：1 个主文档 `README.md` + 每个外部服务一个子文档 `external-call-<服务名>.md`（服务名英文 kebab-case）。
+输出到代码仓 `docs/technical/external-call/` 目录：1 个主文档 `README.md` + 每个外部服务一个子文档 `external-call-<服务名>.md`（服务名英文 kebab-case）。
 
-主文档 README.md 骨架：
-
-````markdown
-# 外部接口调用
-
-| 元信息 | 值 |
-|--------|-----|
-| 代码仓 | <仓库名> |
-| 分析基准 | <分支名> 分支 (<YYYY-MM-DD>) |
-| 更新时间 | <YYYY-MM-DD> |
-| Skill | spec-external-call-analyze |
-| 主要语言 | <语言> |
-| 出站协议 | <命中的协议类型，如 HTTP / gRPC / Kafka> |
-
-## 外部服务全景
-
-```mermaid
-flowchart LR
-    本服务 --> 下游服务A
-    本服务 --> 下游服务B
-```
-
-| 服务名 | 协议 | 接口数 | 主要业务域 | 归属判定依据 |
-|---|---|---|---|---|
-| <服务名> | <协议> | <N> | <业务域> | <显式服务名 / 配置映射 / 上下文推断> |
-
-## 附注
-
-- 死代码（客户端封装存在但无任何业务调用方）：<逐条列出，无则写"无">
-- 配置声明但代码中无实际调用的下游：<逐条列出，无则写"无">
-````
-
-子文档 external-call-<服务名>.md 骨架（按协议分二级小节，每个外部调用接口一个三级章节）：
-
-````markdown
-# <服务名>
-
-## 接口清单（可选，章节较多时在文档开头加）
-
-| 接口名 | 协议 | 调用位置 | 业务场景 |
-|---|---|---|---|
-| <接口名> | <协议> | <文件（函数）> | <一句话> |
-
-## HTTP
-
-### <接口名：方法+路径>
-
-- 协议：HTTP POST /auth/v1/authIMEI
-- 调用位置：service/instance_service.go（GetInstanceAuth 函数）
-- 业务场景：<什么业务流程中发起该调用，从调用点所在函数/模块/注释推断；推断不出标「待确认」>
-- 接口功能：<该调用完成什么功能，请求什么、返回什么>
-
-## <RPC / MQ / IPC>
-
-### <RPC 方法 / topic / IPC 方式名>
-
-- 协议：<gRPC 方法 / MQ topic / IPC 方式>
-- 调用位置：<文件（函数）>
-- 业务场景：<同上>
-- 接口功能：<同上>
-````
+主文档按 references/report-template.md 填充（元信息表 + 外部服务全景表）；子文档按 references/service-template.md 填充（按协议分二级小节，每个外部调用接口一个三级章节）。
 
 规则：
 - **业务场景不得臆造**：从调用点上下文推断；推断不出标「待确认」
 - 同一接口多处调用：合并为一个章节，调用位置列出全部文件
-- **预留死代码单列**：客户端封装存在但无任何业务调用方的（如未被引用的 Redis/OSS client），不计入接口清单，仅在 README 附注说明
-- **配置声明 vs 实际调用差异**：微服务框架依赖声明（如 references）中声明了但代码中无实际调用的下游，在 README 附注列出，避免误导依赖治理
+- **预留死代码单列**：客户端封装存在但无任何业务调用方的（如未被引用的 Redis/OSS client），不计入接口清单，有此类情况时在 README 表格后追加「附注」节逐条列出
+- **配置声明 vs 实际调用差异**：微服务框架依赖声明（如 references）中声明了但代码中无实际调用的下游，同上在「附注」节列出，避免误导依赖治理
+- 需要下游依赖全景图时，可在 README 表格前加 mermaid flowchart（可选，非必需）
 
 ### 阶段 4：验证 mermaid 图可渲染（收尾必做）
 
@@ -118,6 +59,6 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 
 ## 输出规范
 
-- 归档目录：代码仓 `docs/external-call/`（README.md + external-call-<服务名>.md 若干）
+- 归档目录：代码仓 `docs/technical/external-call/`（README.md + external-call-<服务名>.md 若干）
 - 全程中文输出
-- 与 spec-interface-analyze 产出互补：入站看 docs/interface/，出站看 docs/external-call/
+- 与 spec-interface-analyze 产出互补：入站看 docs/business/interface/，出站看 docs/technical/external-call/

@@ -1,11 +1,11 @@
 ---
 name: spec-code-check
-description: 在需求代码实现完成后、资产刷新（spec-asset-refresh）前，基于需求 commit 对新增/修改代码做 clean code 逐项检查（内置 27 条通用规则 + Go/Java/Python/C++ 语言特则，用户给定外部规范文档时以用户文档为准），并同步分析本次需求引入的架构变更（新增组件/既有织入/依赖/数据表/资产同步状态），产出**一篇代码检查文档**归档到 `docs/code-check/{需求名}代码检查.md`——章节固定为：一、架构变更检查（含颜色区分新增/织入组件的 mermaid 图）→ 二、Clean Code 逐项检查（合规项/提示豁免项/修改文件专项检查）→ 三、结论与验证。当需要"检查这个需求的代码整洁""clean code 检查""代码检查文档""需求代码评审""架构变更说明""这个 commit 改了哪些架构"时使用。触发场景包括"按规范检查代码""输出代码检查文档""检查新代码 clean code""需求实现后架构变了什么""资产刷新前先做代码检查"等。
+description: 在需求代码实现完成后、资产刷新（spec-asset-refresh）前，基于需求 commit 对新增/修改代码做 clean code 逐项检查（内置 27 条通用规则 + Go/Java/Python/C++ 语言特则，用户给定外部规范文档时以用户文档为准），并同步分析本次需求引入的架构变更（新增组件/既有织入/依赖/数据表/资产同步状态），产出**一篇代码检查文档**归档到 `docs/engineering/code-check/{需求名}代码检查.md`——章节固定为：一、架构变更检查（含颜色区分新增/织入组件的 mermaid 图）→ 二、Clean Code 逐项检查（合规项/提示豁免项/修改文件专项检查）→ 三、结论与验证。当需要"检查这个需求的代码整洁""clean code 检查""代码检查文档""需求代码评审""架构变更说明""这个 commit 改了哪些架构"时使用。触发场景包括"按规范检查代码""输出代码检查文档""检查新代码 clean code""需求实现后架构变了什么""资产刷新前先做代码检查"等。
 ---
 
 # 需求代码检查（clean code + 架构变更）
 
-在需求代码实现完成后、资产刷新（spec-asset-refresh）前执行，回答两个问题：**"这次需求改的代码符不符合整洁规范"** 和 **"这次需求给架构带来了什么变更"**，产出一篇检查文档归档到 `docs/code-check/{需求名}代码检查.md`。
+在需求代码实现完成后、资产刷新（spec-asset-refresh）前执行，回答两个问题：**"这次需求改的代码符不符合整洁规范"** 和 **"这次需求给架构带来了什么变更"**，产出一篇检查文档归档到 `docs/engineering/code-check/{需求名}代码检查.md`。
 
 > 定位：本 skill 是"代码实现完成 → 资产刷新"之间的质量闸门。检查对象是**需求 commit 的增量代码**，不是全仓扫描；架构结论以 `docs/` 下已产出的资产（interface/story/data-structure/key-class/structure）为比对基线。
 
@@ -46,7 +46,7 @@ description: 在需求代码实现完成后、资产刷新（spec-asset-refresh�
 | 可用性/安全策略 | 引入的架构级取舍（逃生态、fail-open、降级），决策是否显式（注释+日志），运维影响是否需知悉；**敏感信息保护**：新增日志禁止输出密码/密钥/token/连接串，新增代码禁止硬编码密钥 |
 | 并发模型 | 锁保护/goroutine 模型是否清晰，与仓内既有并发隐患模式（见 data-structure 资产全局风险）有无重蹈 |
 
-另需核对**架构资产同步状态**：对照 `docs/interface/`、`docs/story/`、`docs/data-structure/`、`docs/key-class/`、`docs/structure/`，逐类标注"已同步 / 缺口（缺什么）"。缺口写入检查文档，供后续 spec-asset-refresh 处理。
+另需核对**架构资产同步状态**：对照 `docs/business/interface/`、`docs/business/story/`、`docs/business/data-structure/`、`docs/business/key-class/`、`docs/architecture/module-structure/`，逐类标注"已同步 / 缺口（缺什么）"。缺口写入检查文档，供后续 spec-asset-refresh 处理。
 
 **架构变更图硬性要求**：
 
@@ -95,7 +95,7 @@ description: 在需求代码实现完成后、资产刷新（spec-asset-refresh�
 
 ### 5.3 产出检查文档（两种形态）
 
-输出**一篇** `docs/code-check/{需求名}代码检查.md`，章节结构固定如下，模板见 [references/report-template.md](references/report-template.md)：
+输出**一篇** `docs/engineering/code-check/{需求名}代码检查.md`，章节结构固定如下，模板见 [references/report-template.md](references/report-template.md)：
 
 ```
 # {需求名} 需求代码检查报告
@@ -136,7 +136,7 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - [ ] 架构变更覆盖八个维度（分层/接口/数据表/数据结构/织入方式/依赖/可用性策略/并发模型）
 - [ ] mermaid 变更图用绿色=新增、橙色=既有织入、加粗边=织入边，图例齐全，渲染后一眼可辨变更点
 - [ ] 架构资产同步状态已逐类核对（interface/story/data-structure/key-class/structure），缺口已列出
-- [ ] 文档归档 `docs/code-check/{需求名}代码检查.md`，章节顺序：架构变更 → Clean Code → 结论与验证
+- [ ] 文档归档 `docs/engineering/code-check/{需求名}代码检查.md`，章节顺序：架构变更 → Clean Code → 结论与验证
 - [ ] 文档头部无元信息表格；违规项章节按用户选择去留（未修复保留 / 修复后并入合规项），无过期违规描述
 - [ ] mermaid 图已通过 validate-mermaid.mjs 验证全部 VALID
 - [ ]（若修复）修复仅限本需求增量代码；build/vet/单测/E2E 回归全部通过并写入验证结果表；未改测试断言凑通过
