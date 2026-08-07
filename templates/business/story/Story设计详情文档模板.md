@@ -1,7 +1,8 @@
 # <功能名>
 
 > 功能域概述：一两句话说明该功能解决什么业务问题。
-> 接口数：N（外部 X / 内部 Y）　核心模块：a, b, c
+> 接口数：N 个新增（设计中）+ M 个注入点　核心模块：a, b, c
+> 来源：<需求文档路径>（下称"需求"）
 
 ## 1. 功能故事（多彩建模）
 
@@ -34,7 +35,7 @@ flowchart LR
 |---|---|---|
 | 就绪实例 | 插件装完、容量有余、健康在线的实例 | src/service/browser_service.go |
 
-## 2. 模块划分
+## 2. 实现方案
 
 ```mermaid
 graph LR
@@ -89,14 +90,7 @@ sequenceDiagram
 - 解析/校验失败返回 code=-2（src/controllers/controller.go）
 - 单实例失败不中断、不上抛，整体仍报成功（src/service/cache_service.go）
 
-## 6. AI 编码指南
-
-只列实现要点，每条 ≤30 字，附证据文件：
-
-- 路由改动只动 RouteInfo()，两侧监听同步生效（src/controllers/cache_controller.go）
-- 下游调用沿用 5s 超时与 200 判定约定（src/service/cache_service.go）
-
-## 7. 外部文档引用
+## 6. 外部文档引用
 
 本功能关联的仓内规格化资产，六类逐行列出；关键类必须引用（类名须有代码事实依据），基础框架文档逐个框架一行，其余类确无引用须注明"无引用"及原因：
 
