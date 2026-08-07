@@ -23,7 +23,7 @@
 | Story设计README文档模板.md | spec-story-design | skills/spec-story-design/references/story-template.md | docs/story/ 索引 README（story 设计版） |
 | Story设计详情文档模板.md | spec-story-design | 同上 | feature-<功能名>.md story 设计文档七节结构 |
 | DevelopTask文档模板.md | spec-story-design | skills/spec-story-design/references/develop-task-template.md | develop-task 抛弃式文档（修改文件清单 + 澄清问题列表） |
-| 功能实现设计规范模板.md | spec-logic-audit | skills/spec-logic-audit/references/functional-design-template.md | 功能实现设计规范 md（审核完成后的可选输出） |
+| 功能设计规范模板.md | spec-logic-audit | skills/spec-logic-audit/references/functional-design-template.md | 功能设计规范 md（含多彩建模章节，审核完成后的可选输出） |
 | 建模结果HTML模板.html | spec-logic-audit | skills/spec-logic-audit/assets/model-template.html | 多彩建模结果 HTML（四色卡片 + 断点高亮 + 人工裁定区） |
 
 ## 无独立模板的 skill

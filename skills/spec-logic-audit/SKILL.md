@@ -1,6 +1,6 @@
 ---
 name: spec-logic-audit
-description: 基于多彩建模方法论审核 Spec/需求/功能设计文档的完备性——表述质量扫描（句子成分残缺/弱表述/术语失范/语义多解）+ 业务逻辑断裂点（多彩建模）+ 设计要素（时序图呈现、功能验收用例、外部接口与跨服务调用接口信息），三类问题一次扫描、统一 ask-human 澄清补齐，建模结果以 HTML 可视化呈现，审核完成后可按功能实现设计模板输出规范 md。当用户需要解读一篇 Spec/需求/设计文档、检查业务逻辑断点或设计要素是否 ready、校验功能设计文档是否规范时使用。触发场景包括："审核 spec 业务逻辑完备性"、"多彩建模"、"检查需求逻辑断点"、"需求表述质量检查"、"需求歧义扫描"、"建模结果生成 HTML 并找人确认"、"功能设计文档校验"、"校验时序图/验收用例/接口是否齐全"等。
+description: 基于多彩建模方法论审核 Spec/需求/功能设计文档的完备性——表述质量扫描（句子成分残缺/弱表述/术语失范/语义多解）+ 业务逻辑断裂点（多彩建模）+ 设计要素（时序图呈现、功能验收用例、外部接口与跨服务调用接口信息），三类问题一次扫描、统一 ask-human 澄清补齐，建模结果以 HTML 可视化呈现，审核完成后可按功能设计模板输出规范 md。当用户需要解读一篇 Spec/需求/设计文档、检查业务逻辑断点或设计要素是否 ready、校验功能设计文档是否规范时使用。触发场景包括："审核 spec 业务逻辑完备性"、"多彩建模"、"检查需求逻辑断点"、"需求表述质量检查"、"需求歧义扫描"、"建模结果生成 HTML 并找人确认"、"功能设计文档校验"、"校验时序图/验收用例/接口是否齐全"等。
 ---
 
 # Spec 业务逻辑完备性审核（多彩建模）
@@ -59,9 +59,9 @@ description: 基于多彩建模方法论审核 Spec/需求/功能设计文档的
 - 审核要点清单：已补齐的断点裁定是否符合真实业务、仍存疑项（表述质量类单独列出）、建模中缺失但编码时必须的细节（异常处理、并发、边界值）
 - 明确提示：**HTML 未经编码人员确认前，不得进入编码阶段**
 
-### 阶段 6：按模板输出规范功能实现设计 md（必须先询问用户确认）
+### 阶段 6：按模板输出规范功能设计 md（必须先询问用户确认）
 
-审核完成后，**必须询问用户**是否按 [references/functional-design-template.md](references/functional-design-template.md) 输出一篇规范的功能实现设计 md——不得跳过询问、不得自行决定输出。用户明确确认后：
+审核完成后，**必须询问用户**是否按 [references/functional-design-template.md](references/functional-design-template.md) 输出一篇规范的功能设计 md——不得跳过询问、不得自行决定输出。用户明确确认后：
 
 1. 按模板章节结构生成：功能概述 / SR 设计 / 实现思路 / 实现设计（含用例时序图）/ 用户接口设计 / 实现接口设计 / 安全配置设计 / 功能规格 / DFX 分析 / 分配需求。
 2. 内容来源=原文档已有内容 + 本次审核的人工裁定；实现设计章节的用例必须含时序图（mermaid sequenceDiagram），把补齐后的分支/异常流程画全。
@@ -93,4 +93,4 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - [references/requirement-quality-checklist.md](references/requirement-quality-checklist.md) — 需求表述质量检查清单：5 大类别（句子成分残缺/弱表述/术语失范/语义多解/带病放行）与默认弱词黑名单（阶段 2 用）
 - [references/gap-checklist.md](references/gap-checklist.md) — 逻辑断裂点检查清单：12 类断点模式（断点 1-9 逻辑校验，断点 10/11/12 设计要素校验）、严重程度分级与 ask-human 提问话术（阶段 2、3 用）
 - [assets/model-template.html](assets/model-template.html) — 建模结果 HTML 模板（四色卡片 + 断点高亮 + 人工裁定区）（阶段 2、4 用）
-- [references/functional-design-template.md](references/functional-design-template.md) — 功能实现设计规范模板（阶段 6 可选输出用）
+- [references/functional-design-template.md](references/functional-design-template.md) — 功能设计规范模板（阶段 6 可选输出用）
