@@ -1,6 +1,6 @@
 # Specgo
 
-面向存量代码仓的规格化分析 skill 体系。包含 12 个 spec skill 和一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前，先加载对应 skill、按统一格式产出文档资产到 `docs/` 下；并能依据 story 设计文档直接生成代码。
+面向存量代码仓的规格化分析 skill 体系。包含 13 个 spec skill 和一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前，先加载对应 skill、按统一格式产出文档资产到 `docs/` 下；并能依据 story 设计文档直接生成代码。
 
 ## 组成
 
@@ -8,7 +8,7 @@
 specgo/
 ├── opencode.js              # OpenCode 插件入口（package.json 的 main）
 ├── bootstrap.md             # 注入指令（由 scripts/generate-bootstrap.mjs 生成，勿手改）
-├── skills/                  # 12 个 skill（每个一个目录，内含 SKILL.md）
+├── skills/                  # 14 个 skill（每个一个目录，内含 SKILL.md）
 ├── hooks/                   # Claude Code SessionStart hook
 │   ├── hooks.json           # hook 注册（SessionStart → run-hook.cmd session-start）
 │   ├── run-hook.cmd         # 跨平台 wrapper（Windows 走 Git Bash，Unix 直接 exec）
@@ -23,7 +23,7 @@ specgo/
 
 ## 工作原理
 
-两个平台都只做两件事：**让 agent 发现 skills/ 下的 skill**、**会话启动时注入 bootstrap.md**（内容是一段"做分析任务前必须先加载对应 skill"的指令 + 12 个 skill 的索引）。
+两个平台都只做两件事：**让 agent 发现 skills/ 下的 skill**、**会话启动时注入 bootstrap.md**（内容是一段"做分析任务前必须先加载对应 skill"的指令 + 13 个 skill 的索引）。
 
 - **OpenCode**：`opencode.js` 的 `config` hook 把 `skills/` 注册进 `config.skills.paths`；`experimental.chat.messages.transform` hook 把 bootstrap 注入第一条 user message（注入 user message 而非 system message，避免每轮重复消耗 token）。
 - **Claude Code**：`hooks/hooks.json` 在 SessionStart 执行 `session-start` 脚本，把 bootstrap 作为 `additionalContext` 输出；`skills/` 目录由 Claude Code 插件机制自动发现。
@@ -64,7 +64,7 @@ bootstrap.md 是预生成文件，由 `scripts/generate-bootstrap.mjs` 从各 sk
 
 重启后确认两点：
 
-1. skill 列表中出现 12 个 `spec-` 开头的 skill 和 1 个 `specgo` skill（OpenCode 中可查看可用 skill；Claude Code 中 `/plugin` 查看已装插件）
+1. skill 列表中出现 13 个 `spec-` 开头的 skill 和 1 个 `specgo` skill（OpenCode 中可查看可用 skill；Claude Code 中 `/plugin` 查看已装插件）
 2. 会话启动时 bootstrap 已注入：直接问 agent "你有哪些 spec skill"，应能列出下表 13 个
 
 ## 内含 skill
@@ -78,7 +78,8 @@ bootstrap.md 是预生成文件，由 `scripts/generate-bootstrap.mjs` 从各 sk
 | 关键类 | spec-key-class-analyze | 关键类识别与职责凝练 | `docs/business/key-class/README.md`：单文件单表（类名/类的职责，职责 38 字内） |
 | 数据结构 | spec-data-structure-analyze | 关键数据结构识别与按用途分组 | `docs/business/data-structure/`：README + 按用途分篇 |
 | 框架 | spec-framework-usage-analyze | 基础框架使用模式分析 | `docs/technical/framework-usage/`：每框架一篇使用指导 |
-| 需求审核 | spec-logic-audit | 多彩建模 + 设计要素（时序图/验收用例/接口）完备性校验 | 建模 HTML；可选输出规范功能实现设计 md |
+| 业务流 | spec-business-flow-analyze | 用户指定流程的深度梳理（主动触发，不做全仓扫描） | `docs/architecture/business-flow/`：README + 每流程一篇（概述+主流程图） |
+| 需求审核 | spec-logic-audit | 多彩建模 + 设计要素（时序图/验收用例/接口）完备性校验 | 建模 HTML（`docs/audit/`）；可选输出规范功能设计 md（`docs/business/story/`） |
 | 图验证 | spec-mermaid-diagram | mermaid 语法红线 + 本地渲染验证 | 含图产出物跑 validate-mermaid.mjs 全部 VALID |
 | 设计 | spec-story-design | 需求文档 → story 设计文档 | `docs/business/story/` + `docs/develop-task/`（抛弃式编码辅助文档） |
 | 全链路编排 | specgo | 六步端到端主流程：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 代码检查 → 资产维护；主代理编排与用户确认，各步骤派子代理执行 | 从需求到交付的全部产出物 |
