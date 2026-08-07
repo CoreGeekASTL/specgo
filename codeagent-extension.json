@@ -1,5 +1,5 @@
 {
   "name": "specgo",
   "description": "spec- 系列代码仓规格化分析 skill 体系：structure/interface/external-call/feature/key-class/data-structure/framework/logic-audit/mermaid-diagram/story-design/code-check/asset-refresh 十二个分析 skill + specgo 全链路编排主 skill，session 启动时注入 bootstrap，强制 AI 做分析/编码任务前先加载对应 skill",
-  "version": "1.4.1"
+  "version": "1.5.0"
 }
