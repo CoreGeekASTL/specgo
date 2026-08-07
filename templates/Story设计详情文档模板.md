@@ -1,51 +1,3 @@
-# Story 设计文档输出模板
-
-两套模板：README.md 索引 + 每功能一篇 story 设计 md。所有文档归档到 `<repo>/docs/story/`。story 设计文档与存量功能文档同构：L1 功能故事（多彩建模）→ L2 结构地图 → L3 AI 编码指南 → 外部文档引用，共七节。
-
-> 本模板中所有具体内容（功能名、文件路径、接口、框架文档链接等）均为**格式示例**，取自一个 Go/Beego 仓的案例；产出时替换为目标仓实际内容。
-
-## 模板一：docs/story/README.md 索引
-
-```markdown
-# 功能软件要素文档
-
-| 元信息 | 值 |
-|--------|-----|
-| 代码仓 | <仓库名> |
-| 分析基准 | <分支名> 分支 (<YYYY-MM-DD>) |
-| 更新时间 | <YYYY-MM-DD> |
-| Skill | spec-story-design |
-| 主要语言 | <语言> |
-
-> 由 spec-story-design 生成/更新，面向人与 AI 共同消费。
-
-## 功能全景
-
-| 功能域 | 接口数 | 核心模块 | 文档 |
-|---|---|---|---|
-| 终端鉴权 | 3 新增（设计中）+ 4 注入点 | controllers(auth), service(auth) | [feature-terminal-auth.md](feature-terminal-auth.md) |
-
-## 接口统计
-
-- 对外接口：N 个（框架路由 X / 消息订阅 Y）
-- 设计中：N 个（见各功能文档接口表"状态"列）
-- 已下线：N 个
-
-## 未归类接口
-
-以下接口探测到但未纳入任何功能域，原因逐条说明：
-
-- `GET /test/v1/get`（测试桩，非业务功能）
-
-## 使用说明
-
-- **新人上手**：每篇先读第 1 节「功能故事」（多彩建模图+术语表），再按需深入 L2 结构地图。
-- **AI 编码时**：L1 建立业务认知后重点读「AI 编码指南」，再按"接口清单 → 调用关系"定位改动点。
-```
-
-## 模板二：feature-<功能名>.md（七节结构）
-
-```markdown
 # <功能名>
 
 > 功能域概述：一两句话说明该功能解决什么业务问题。
@@ -58,7 +10,7 @@
 
 登录先建档，再按绑定有效性复用或重分实例。
 
-​```mermaid
+```mermaid
 flowchart LR
   classDef mi fill:#ffd1dc,stroke:#c2185b,color:#000
   classDef role fill:#fff3b0,stroke:#f9a825,color:#000
@@ -77,7 +29,7 @@ flowchart LR
   E1 --> E2
   R1 -.有效期判定.-> E2
   E2 -->|状态变更为生效| UB
-​```
+```
 
 术语表：
 
@@ -87,13 +39,13 @@ flowchart LR
 
 ## 2. 模块划分
 
-​```mermaid
+```mermaid
 graph LR
   R[routers<br/>beego_router.go 复用] --> C[controllers<br/>auth_controller.go 规划]
   C --> S[service<br/>auth_service.go 规划]
   S --> D[dao<br/>white_list.go 规划]
   D --> DB[(t_white_list)]
-​```
+```
 
 | 模块 | 承载功能 |
 |---|---|
@@ -122,7 +74,7 @@ graph LR
 
 每条主链路一张 mermaid 时序图，需求中的分支用 alt/opt 表达：
 
-​```mermaid
+```mermaid
 sequenceDiagram
   participant DEV as 终端设备
   participant C as AuthController(规划)
@@ -138,7 +90,7 @@ sequenceDiagram
     S-->>C: 放行 / 拒绝
   end
   C-->>DEV: 200 / 401
-​```
+```
 
 关键分支与异步环节（各一句，带依据）：
 
@@ -165,17 +117,3 @@ sequenceDiagram
 | 基础框架文档 | [storage-beego-orm.md](../framework-usage/storage-beego-orm.md) | beego ORM：白名单表按三步曲实现，双 DDL 保持一致（src/dao/base_dao.go） |
 | struct 结构文档 | [spec-structure.md](../structure/spec-structure.md) | 新模块分层归属（controllers/service/dao）依据 |
 | 数据结构文档 | [spec-data-structure-map.md](../data-structure/spec-data-structure-map.md) | 白名单集合（map 当 set）实例对照（src/models/whitelist.go） |
-```
-
-## 撰写硬性要求
-
-- 证据两源：需求文档章节号（如"需求 §2.2.3"）与存量代码文件（复用点/注入点）；规划文件一律标注"（规划）"；全文证据粒度到文件级，不写行号。
-- **L1 功能故事**：开头 1~3 句实现逻辑速览，每句 ≤30 字；mermaid 四色用 classDef 固定配色（粉 #ffd1dc / 黄 #fff3b0 / 绿 #c8e6c9 / 蓝 #bbdefb）；每个粉色事件必须具备 触发者(黄)/输入(绿/蓝)/输出(绿)/后继(粉) 四要素；事件名用人话业务动作，禁止文件名/函数名/行号；实体标注状态变更（X→Y）；规则用虚线挂到实体；需求未明确处标注"需求未明确，待详设确认"，禁止脑补。
-- **术语表**：覆盖需求词汇表与全文黑话；每条=一句话人话解释+出处（需求章节号或存量文件），禁止只写英文全称。
-- 模块划分先 mermaid 图后表格；新模块标"（规划）"，复用模块标"（复用，<文件>）"；职责边界遵循需求文档的模块职责约束。
-- 接口清单只列对外接口（新增 + 注入点），五列表格，不写段落描述；注入点在接口名后标注"（注入）"，状态列注明注入版本。
-- 数据结构只列关键字段与约束；超过 8 个字段的结构只写关键字段。
-- 调用关系每条主链路一张时序图（管理链路、业务链路分开画）；短句补关键分支。
-- AI 编码指南每条 ≤30 字（不含依据锚点），1-5 条，禁止空泛表述。
-- 外部文档引用六类逐行列出（关键类/接口文档/外部接口文档/基础框架文档/struct 结构文档/数据结构文档）：关键类为必须引用，须列出具体复用/注入的关键类名并链接 docs/key-class/README.md；基础框架文档逐个框架一行，链接到仓内存在的 framework-usage 文档，只列本功能真实需要的框架，禁止按目录全量罗列；链接逐行指向仓内真实文件，无死链；某类确无引用注明"无引用"及原因，仓内无对应目录时注明"仓内无该类文档"（框架文档目录缺失时另在索引 README 注明）；禁止整节省略。
-- "状态"列取值：设计中 / 在用 / 已下线 / 灰度中。
