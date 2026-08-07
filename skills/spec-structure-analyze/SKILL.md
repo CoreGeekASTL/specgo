@@ -156,8 +156,8 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 
 ```mermaid
 flowchart LR
-    {moduleA}[模块A名] --> {moduleB}[模块B名]
-    {moduleB}[模块B名] --> {moduleC}[模块C名]
+    moduleA["{模块A名}"] --> moduleB["{模块B名}"]
+    moduleB["{模块B名}"] --> moduleC["{模块C名}"]
 ```
 
 ## 模块说明

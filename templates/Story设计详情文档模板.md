@@ -115,5 +115,5 @@ sequenceDiagram
 | 外部接口文档 | [external-call-muen-cloud.md](../external-call/external-call-muen-cloud.md) | TikTok 场景 muen 云登录转发契约 |
 | 基础框架文档 | [rpc-beego-web.md](../framework-usage/rpc-beego-web.md) | Beego Web：新 Controller 按 RouteMapping 注册到内部监听（src/routers/beego_router.go） |
 | 基础框架文档 | [storage-beego-orm.md](../framework-usage/storage-beego-orm.md) | beego ORM：白名单表按三步曲实现，双 DDL 保持一致（src/dao/base_dao.go） |
-| struct 结构文档 | [spec-structure.md](../structure/spec-structure.md) | 新模块分层归属（controllers/service/dao）依据 |
+| struct 结构文档 | [spec-structure-<仓库名>.md](../structure/spec-structure-<仓库名>.md) | 新模块分层归属（controllers/service/dao）依据 |
 | 数据结构文档 | [spec-data-structure-map.md](../data-structure/spec-data-structure-map.md) | 白名单集合（map 当 set）实例对照（src/models/whitelist.go） |
