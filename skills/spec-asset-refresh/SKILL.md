@@ -1,6 +1,6 @@
 ---
 name: spec-asset-refresh
-description: 基于 MR（merge request / 分支 diff）识别当前需求给代码仓规格化资产带来的变化，并增量刷新七类资产文档——接口（docs/business/interface/）、框架使用（docs/technical/framework-usage/）、外部接口调用（docs/technical/external-call/）、包的架构关系（docs/architecture/module-structure/）、关键类（docs/business/key-class/）、关键数据结构（docs/business/data-structure/）、feature 文档（docs/business/story/），刷新内容逐类列出交人工审核确认后定稿。当 MR 合入前后需要评估"这个需求改了哪些文档资产""刷新 docs/ 下哪些文档""MR 影响分析""资产同步"时使用。触发场景包括"基于 MR 刷新资产""需求带来哪些资产变化""MR 改了哪些文档""资产文档同步""刷新接口/框架/feature 文档"等。
+description: 基于 MR（merge request / 分支 diff）识别当前需求给代码仓规格化资产带来的变化，并增量刷新七类资产文档——接口（docs/biz/interface/）、框架使用（docs/tech/usage/）、外部接口调用（docs/tech/comm-guidelines/）、结构模型（docs/arch/structure-model/）、关键类（docs/business/key-class/）、关键数据结构（docs/business/data-structure/）、feature 文档（docs/business/story/），刷新内容逐类列出交人工审核确认后定稿。当 MR 合入前后需要评估"这个需求改了哪些文档资产""刷新 docs/ 下哪些文档""MR 影响分析""资产同步"时使用。触发场景包括"基于 MR 刷新资产""需求带来哪些资产变化""MR 改了哪些文档""资产文档同步""刷新接口/框架/feature 文档"等。
 ---
 
 # Spec 资产刷新（基于 MR 的资产变化识别与同步）
@@ -19,7 +19,7 @@ description: 基于 MR（merge request / 分支 diff）识别当前需求给代�
 2. 执行 `git diff --stat <base>...<head>` 与 `git diff <base>...<head>`，提取：
    - 变更文件清单（新增/修改/删除）
    - 每个文件的关键 diff 片段（函数级）
-3. 排除噪声变更：格式化、注释、测试数据、文档自身（docs/）变更不触发资产刷新，但要确认 docs/ 变更是否已覆盖本次需求。
+3. 排除噪声变更：格式化、注释、测试数据、文档自身（docs/、doc/）变更不触发资产刷新，但要确认这些文档变更是否已覆盖本次需求。
 
 ### 阶段 2：变更映射到七类资产
 
@@ -27,10 +27,10 @@ description: 基于 MR（merge request / 分支 diff）识别当前需求给代�
 
 | # | 资产 | 目录 | 触发信号 |
 |---|------|------|---------|
-| 1 | 对外接口 | `docs/business/interface/` | 路由注册/IDL 契约/消息订阅 handler 的增删改；接口请求响应结构变化；接口下线 |
-| 2 | 框架使用 | `docs/technical/framework-usage/` | 依赖清单（go.mod/pom.xml/package.json 等）增删框架；框架初始化/配置方式变化；新封装层出现 |
-| 3 | 外部接口调用 | `docs/technical/external-call/` | 出站调用（HTTP/RPC client、MQ 生产端、平台 SDK）的增删改；下游服务地址/协议变化 |
-| 4 | 包的架构关系 | `docs/architecture/module-structure/` | 第一层目录增删；跨模块 import 方向变化（含新增依赖边、依赖移除、循环依赖出现） |
+| 1 | 对外接口 | `docs/biz/interface/` | 路由注册/IDL 契约/消息订阅 handler 的增删改；接口请求响应结构变化；接口下线 |
+| 2 | 框架使用 | `docs/tech/usage/` | 依赖清单（go.mod/pom.xml/package.json 等）增删框架；框架初始化/配置方式变化；新封装层出现 |
+| 3 | 外部接口调用 | `docs/tech/comm-guidelines/` | 出站调用（HTTP/RPC client、MQ 生产端、平台 SDK）的增删改；下游服务地址/协议变化 |
+| 4 | 结构模型 | `docs/arch/structure-model/` | 第一层目录增删；跨模块 import 方向变化（含新增依赖边、依赖移除、循环依赖出现） |
 | 5 | 关键类 | `docs/business/key-class/` | 关键类的增删（核心领域模型/入口 handler/编排类/状态机/高被引用类的增删改）；关键类职责漂移 |
 | 6 | 关键数据结构 | `docs/business/data-structure/` | 关键数据结构增删（自定义容器/缓存/队列/注册表/核心 map·slice·chan 实例的增删改）；并发模型变化 |
 | 7 | feature 文档 | `docs/business/story/` | 业务行为变化：接口语义、处理流程、状态机、数据结构的实质修改（不是重构式改名） |
@@ -54,7 +54,7 @@ description: 基于 MR（merge request / 分支 diff）识别当前需求给代�
 
 1. **增量更新，禁止整篇覆盖**：接口表格加行/改行、feature 文档按节更新、README 索引同步对应行。
 2. **变更处标注来源**：在刷新内容处注明来源 MR/分支与日期（如"（X.Y MR#123 变更）"），便于回溯与审核定位。
-3. **资产文档不存在**：该资产从未生成过时，不借本 skill 从零生成——提示用户先运行对应的分析类 skill（spec-interface-analyze / spec-framework-usage-analyze / spec-external-call-analyze / spec-structure-analyze / spec-key-class-analyze / spec-data-structure-analyze / spec-feature-analyze），本 skill 只做增量。
+3. **资产文档不存在**：该资产从未生成过时，不借本 skill 从零生成——提示用户先运行对应的分析类 skill（biz-interface-analyze / tech-usage-analyze / tech-comm-guidelines-analyze / arch-structure-model-analyze / spec-key-class-analyze / spec-data-structure-analyze / spec-feature-analyze），本 skill 只做增量。
 4. **元信息同步**：被刷新文档的固定元信息表"更新时间"刷新为当天。
 
 ### 阶段 5：人工审核刷新内容

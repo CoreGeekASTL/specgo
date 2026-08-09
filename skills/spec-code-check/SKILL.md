@@ -46,7 +46,7 @@ description: 在需求代码实现完成后、资产刷新（spec-asset-refresh�
 | 可用性/安全策略 | 引入的架构级取舍（逃生态、fail-open、降级），决策是否显式（注释+日志），运维影响是否需知悉；**敏感信息保护**：新增日志禁止输出密码/密钥/token/连接串，新增代码禁止硬编码密钥 |
 | 并发模型 | 锁保护/goroutine 模型是否清晰，与仓内既有并发隐患模式（见 data-structure 资产全局风险）有无重蹈 |
 
-另需核对**架构资产同步状态**：对照 `docs/business/interface/`、`docs/business/story/`、`docs/business/data-structure/`、`docs/business/key-class/`、`docs/architecture/module-structure/`，逐类标注"已同步 / 缺口（缺什么）"。缺口写入检查文档，供后续 spec-asset-refresh 处理。
+另需核对**架构资产同步状态**：对照 `docs/biz/interface/`、`docs/business/story/`、`docs/business/data-structure/`、`docs/business/key-class/`、`docs/arch/structure-model/`，逐类标注"已同步 / 缺口（缺什么）"。缺口写入检查文档，供后续 spec-asset-refresh 处理。
 
 **架构变更图硬性要求**：
 

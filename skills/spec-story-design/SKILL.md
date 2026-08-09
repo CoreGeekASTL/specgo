@@ -5,7 +5,7 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 
 # Story 设计：从需求文档到 story 设计文档
 
-接收一篇需求设计文档，结合存量架构资产（framework-usage 框架指导 + story 功能文档），产出一篇**与 docs/business/story/ 既有功能文档格式与内容一致**的新 story 设计文档。
+接收一篇需求设计文档，结合存量架构资产（usage 框架指导 + story 功能文档），产出一篇**与 docs/business/story/ 既有功能文档格式与内容一致**的新 story 设计文档。
 
 与存量接口分析类 skill 的本质区别：本 skill 面向**尚未实现的新功能**，证据两源为「需求文档章节」与「存量代码文件（复用点/注入点）」，规划中的文件路径标注"（规划）"；存量分析类 skill 面向存量代码的事实归纳。
 
@@ -19,10 +19,10 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 
 ### 第 2 步：分析存量资产
 
-1. **docs/technical/framework-usage/**：确定新功能应使用哪些基础框架及其约定（路由怎么注册、DAO 怎么继承、缓存怎么写、测试怎么搭），候选框架逐条核对，只保留新功能真实需要的。
+1. **docs/tech/usage/**：确定新功能应使用哪些基础框架及其约定（路由怎么注册、DAO 怎么继承、缓存怎么写、测试怎么搭），候选框架逐条核对，只保留新功能真实需要的。
 2. **docs/business/story/**：确定新功能与既有功能的关系——复用哪些模块（如统一响应封装、ORM 基座）、在哪些既有链路上注入（如登录/事件上报）、格式基准以哪篇为准。
 3. **docs/business/key-class/（必须）**：确定新功能复用哪些关键类、在哪些关键类上注入行为（如登录链路注入鉴权）——「外部文档引用」章节关键类行的素材来源，仓内无此目录时在回复中提示可先跑 spec-key-class-analyze 补齐。
-4. **docs/business/interface/、docs/technical/external-call/、docs/architecture/module-structure/**：分别确认既有接口注入点、新功能需调用的外部服务契约、新模块的分层归属依据——同为「外部文档引用」章节素材来源。
+4. **docs/biz/interface/、docs/tech/comm-guidelines/、docs/arch/structure-model/**：分别确认既有接口注入点、新功能需调用的外部服务契约、新模块的分层归属依据——同为「外部文档引用」章节素材来源。
 5. **目标功能文档存在性判定（决定第 6 步是修改还是新增）**：检查 `docs/business/story/` 下是否已有**同功能域**文档。判定依据按优先级：需求文档所述功能名与既有文档功能名一致 → 业务语义相同（解决同一业务问题）→ 核心模块高度重叠。判定结果二选一：
    - **已有同功能域文档** → 本需求是对该功能的增强/迭代，第 6 步走「修改既有文档」分支
    - **无同功能域文档** → 第 6 步走「新增文档」分支
@@ -32,9 +32,9 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 **存量资产缺失时的降级（任一缺失不阻断流程）：**
 
 - `docs/business/story/` 不存在或为空：跳过关系分析（无复用/注入对象），格式基准直接采用 references/story-template.md；归档时新建目录并从模板一生成 README.md 索引。
-- `docs/technical/framework-usage/` 不存在：跳过框架分析，「外部文档引用」章节基础框架文档类注明"仓内无框架使用文档"，并在 README 索引注明。
+- `docs/tech/usage/` 不存在：跳过框架分析，「外部文档引用」章节基础框架文档类注明"仓内无框架使用文档"，并在 README 索引注明。
 - `docs/business/key-class/` 不存在：「外部文档引用」章节关键类行注明"仓内无关键类文档"，并在回复中提示可先跑 spec-key-class-analyze 补齐。
-- `docs/business/interface/`、`docs/technical/external-call/`、`docs/architecture/module-structure/` 不存在：「外部文档引用」章节对应行注明"仓内无该类文档"。
+- `docs/biz/interface/`、`docs/tech/comm-guidelines/`、`docs/arch/structure-model/` 不存在：「外部文档引用」章节对应行注明"仓内无该类文档"。
 - 两者均不存在（全新仓首篇 story 设计）：格式基准与多彩建模方法论仍以本目录两个参考文件为准（story-template.md、color-modeling.md），产出物形态不变。
 
 ### 第 3 步：先完成多彩建模（L1 功能故事）
@@ -54,7 +54,7 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 2. **接口清单**：只列对外接口（含新增接口与既有链路的注入点，注入点单独标注"注入"），五列表格：接口 | 路径/入口 | 请求结构 | 响应结构 | 状态（新功能接口状态取"设计中"）。
 3. **关键数据结构**：表格，含表结构需求（字段/约束/索引）、内存结构（缓存项）、文件格式（如 CSV 列定义），定义位置标"（规划，<文件>）"。
 4. **调用关系**：每条主链路一张 mermaid 时序图（如管理链路、业务链路分开画），需求中的分支（逃生态、缓存命中/未命中、校验失败整批拒绝）用 alt/opt 表达。**每条调用链补充实现说明**：时序图下方用多句话逐步说明该链路的实现逻辑，每句话 ≤30 字、表达一个完整实现点，业务语言、可落到编码。
-5. **外部文档引用**：三列表（文档类型 | 引用文档 | 引用点），六类逐行列出本设计参考的仓内规格化资产——**关键类（必须引用）**：列出本设计复用/注入的具体关键类名并链接 docs/business/key-class/README.md；**接口文档**：链接 docs/business/interface/ 相关子文档（既有链路注入点依据）；**外部接口文档**：链接 docs/technical/external-call/ 相关子文档（外部服务调用契约）；**基础框架文档**：逐个框架一行，链接到 docs/technical/framework-usage/ 真实存在的文档，用途注明"按该文档 <某约定> 执行"，只列新功能真实需要的框架，禁止按目录全量罗列；**struct 结构文档**：链接 docs/architecture/module-structure/ 文档（分层归属依据）；**数据结构文档**：链接 docs/business/data-structure/ 对应子文档（本设计依赖的缓存/队列/注册表等关键数据结构实例）。链接必须指向仓内真实存在的文件，无死链；某类确无引用须注明"无引用"及原因（仓内无对应目录时按第 2 步降级规则注明），禁止整节省略。
+5. **外部文档引用**：三列表（文档类型 | 引用文档 | 引用点），六类逐行列出本设计参考的仓内规格化资产——**关键类（必须引用）**：列出本设计复用/注入的具体关键类名并链接 docs/business/key-class/README.md；**接口文档**：链接 docs/biz/interface/ 相关子文档（既有链路注入点依据）；**外部接口文档**：链接 docs/tech/comm-guidelines/ 相关子文档（外部服务调用契约）；**基础框架文档**：逐个框架一行，链接到 docs/tech/usage/ 真实存在的文档，用途注明"按该文档 <某约定> 执行"，只列新功能真实需要的框架，禁止按目录全量罗列；**struct 结构文档**：链接 docs/arch/structure-model/ 下 structure-model*.md 文档（分层归属依据）；**数据结构文档**：链接 docs/business/data-structure/ 对应子文档（本设计依赖的缓存/队列/注册表等关键数据结构实例）。链接必须指向仓内真实存在的文件，无死链；某类确无引用须注明"无引用"及原因（仓内无对应目录时按第 2 步降级规则注明），禁止整节省略。
 
 产出上述五节后（连同功能故事共六节），按 references/orthogonality-principles.md 执行**正交四原则自检**：逐条核对实现方案/接口清单/关键数据结构/调用关系是否符合 DRY（无重复实现）、SoC（无错位分层）、最小化依赖（无多余框架/库/字段）、稳定依赖方向（无下层反向依赖、无循环依赖）。违规处直接修改设计；确有理由必须违规的，标注理由提交用户确认，禁止悄悄违规。
 
@@ -147,7 +147,7 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - [ ] 实现逻辑速览 1~3 句、每句 ≤30 字
 - [ ] 产出文档为六节结构（功能故事/实现方案/接口清单/关键数据结构/调用关系/外部文档引用），与 docs/business/story/ 既有文档同构
 - [ ] 已按正交四原则自检（DRY 无重复实现 / SoC 无错位分层 / 最小化依赖 / 稳定依赖方向无反向与循环依赖），违规已修正或经用户确认
-- [ ] 「外部文档引用」章节六类齐全：关键类已必须引用且列出具体类名；基础框架文档逐个框架一行、链接到存在的 framework-usage 文档、未全量罗列；其余类无引用时已注明"无引用"及原因（仓内无对应目录时已按降级规则注明）；引用链接均指向仓内真实文件，无死链
+- [ ] 「外部文档引用」章节六类齐全：关键类已必须引用且列出具体类名；基础框架文档逐个框架一行、链接到存在的 usage 文档、未全量罗列；其余类无引用时已注明"无引用"及原因（仓内无对应目录时已按降级规则注明）；引用链接均指向仓内真实文件，无死链
 - [ ] 规划文件均标注"（规划）"，复用/注入点均指向真实存量文件，无臆造路径
 - [ ] 接口清单只含对外接口；注入点在表格中单独标注
 - [ ] 术语表覆盖需求词汇表与全文黑话；需求未明确处标注"需求未明确"而非脑补
@@ -165,9 +165,9 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - references/story-readme-template.md — docs/business/story/README.md 索引模板（第 6 步用）
 - references/develop-task-template.md — develop-task 抛弃式文档模板（第 5 步用）
 - references/orthogonality-principles.md — 软件正交四原则（DRY/SoC/最小化依赖/稳定依赖方向）：第 4 步自检与第 5 步修改点设计约束
-- docs/technical/framework-usage/README.md — 框架使用文档索引（第 2、4 步用）
+- docs/tech/usage/README.md — 框架使用文档索引（第 2、4 步用）
 - docs/business/key-class/README.md — 关键类清单（第 2、4 步用，外部文档引用章节必须引用）
-- docs/business/interface/README.md — 对外接口文档索引（第 2、4 步用）
-- docs/technical/external-call/README.md — 出站调用文档索引（第 2、4 步用）
-- docs/architecture/module-structure/ — 包级结构文档目录（第 2、4 步用）
+- docs/biz/interface/README.md — 对外接口文档索引（第 2、4 步用）
+- docs/tech/comm-guidelines/README.md — 出站调用文档索引（第 2、4 步用）
+- docs/arch/structure-model/ — 结构模型文档目录（structure-model*.md，第 2、4 步用）
 - docs/business/story/README.md — 既有功能文档索引与格式实例（第 2、6 步用）

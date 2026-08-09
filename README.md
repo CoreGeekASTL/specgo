@@ -1,6 +1,6 @@
 # Specgo
 
-面向存量代码仓的规格化分析 skill 体系。包含 13 个 spec skill 和一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前，先加载对应 skill、按统一格式产出文档资产到 `docs/` 下；并能依据 story 设计文档直接生成代码。
+面向存量代码仓的四分类资产治理 skill 体系（arch 结构 / biz 业务 / tech 技术 / qual 工程四域 + all 横向共 18 个治理 skill，另保留 9 个旧体系 spec-* skill 支撑需求到交付链路）。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前，先加载对应 skill、按 HELP.MD  taxonomy 与统一格式产出文档资产到 `docs/{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
 
 ## 组成
 
@@ -8,7 +8,7 @@
 specgo/
 ├── opencode.js              # OpenCode 插件入口（package.json 的 main）
 ├── bootstrap.md             # 注入指令（由 scripts/generate-bootstrap.mjs 生成，勿手改）
-├── skills/                  # 14 个 skill（每个一个目录，内含 SKILL.md）
+├── skills/                  # 27 个 skill（每个一个目录，内含 SKILL.md）
 ├── hooks/                   # Claude Code SessionStart hook
 │   ├── hooks.json           # hook 注册（SessionStart → run-hook.cmd session-start）
 │   ├── run-hook.cmd         # 跨平台 wrapper（Windows 走 Git Bash，Unix 直接 exec）
@@ -23,7 +23,7 @@ specgo/
 
 ## 工作原理
 
-两个平台都只做两件事：**让 agent 发现 skills/ 下的 skill**、**会话启动时注入 bootstrap.md**（内容是一段"做分析任务前必须先加载对应 skill"的指令 + 13 个 skill 的索引）。
+两个平台都只做两件事：**让 agent 发现 skills/ 下的 skill**、**会话启动时注入 bootstrap.md**（内容是一段"做分析任务前必须先加载对应 skill"的指令 + 27 个 skill 的索引）。
 
 - **OpenCode**：`opencode.js` 的 `config` hook 把 `skills/` 注册进 `config.skills.paths`；`experimental.chat.messages.transform` hook 把 bootstrap 注入第一条 user message（注入 user message 而非 system message，避免每轮重复消耗 token）。
 - **Claude Code**：`hooks/hooks.json` 在 SessionStart 执行 `session-start` 脚本，把 bootstrap 作为 `additionalContext` 输出；`skills/` 目录由 Claude Code 插件机制自动发现。
@@ -64,29 +64,73 @@ bootstrap.md 是预生成文件，由 `scripts/generate-bootstrap.mjs` 从各 sk
 
 重启后确认两点：
 
-1. skill 列表中出现 13 个 `spec-` 开头的 skill 和 1 个 `specgo` skill（OpenCode 中可查看可用 skill；Claude Code 中 `/plugin` 查看已装插件）
-2. 会话启动时 bootstrap 已注入：直接问 agent "你有哪些 spec skill"，应能列出下表 13 个
+1. skill 列表中出现 18 个新体系治理 skill（`arch-`/`biz-`/`tech-`/`qual-`/`all-` 开头）与 9 个旧体系保留 skill（`spec-` 开头及 `specgo`），共 27 个（OpenCode 中可查看可用 skill；Claude Code 中 `/plugin` 查看已装插件）
+2. 会话启动时 bootstrap 已注入：直接问 agent "你有哪些 spec skill"，应能列出下表全部 skill
 
 ## 内含 skill
 
-| 分类 | Skill | 作用 | 产出 |
-|------|-------|------|------|
-| 结构 | spec-structure-analyze | 代码仓结构摸底 | `docs/architecture/module-structure/`：mermaid 依赖图 + 模块说明表 |
-| 接口（入站） | spec-interface-analyze | 对外接口盘点（HTTP 路由/RPC/消息订阅/IDL） | `docs/business/interface/`：README + 功能域子文档 |
-| 接口（出站） | spec-external-call-analyze | 出站调用盘点（HTTP/RPC client、MQ 生产端、SDK） | `docs/technical/external-call/`：README + 按下游服务归类子文档 |
-| 功能 | spec-feature-analyze | 对外接口按业务功能归纳 | `docs/business/story/`：feature-*.md（功能故事多彩建模 + 实现方案 + 接口清单 + 关键数据结构 + 调用关系 + 外部文档引用，共六节） |
-| 关键类 | spec-key-class-analyze | 关键类识别与职责凝练 | `docs/business/key-class/README.md`：单文件单表（类名/类的职责，职责 38 字内） |
-| 数据结构 | spec-data-structure-analyze | 关键数据结构识别与按用途分组 | `docs/business/data-structure/`：README + 按用途分篇 |
-| 框架 | spec-framework-usage-analyze | 基础框架使用模式分析 | `docs/technical/framework-usage/`：每框架一篇使用指导 |
-| 业务流 | spec-business-flow-analyze | 用户指定流程的深度梳理（主动触发，不做全仓扫描） | `docs/architecture/business-flow/`：README + 每流程一篇（概述+主流程图） |
-| 需求审核 | spec-logic-audit | 多彩建模 + 设计要素（时序图/验收用例/接口）完备性校验 | 建模 HTML（`docs/audit/`）；可选输出规范功能设计 md（`docs/business/story/`） |
-| 图验证 | spec-mermaid-diagram | mermaid 语法红线 + 本地渲染验证 | 含图产出物跑 validate-mermaid.mjs 全部 VALID |
-| 设计 | spec-story-design | 需求文档 → story 设计文档 | `docs/business/story/` + `docs/develop-task/`（抛弃式编码辅助文档） |
-| 全链路编排 | specgo | 六步端到端主流程：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 代码检查 → 资产维护；主代理编排与用户确认，各步骤派子代理执行 | 从需求到交付的全部产出物 |
-| 代码检查 | spec-code-check | 资产刷新前质量闸门：需求 commit 增量 clean code 检查（内置 27 条通用规则 + Go/Java/Python/C++ 语言特则）+ 架构变更分析，报告问题并询问是否修复 | `docs/engineering/code-check/{需求名}代码检查.md`（修复前/修复后双形态） |
-| 资产维护 | spec-asset-refresh | 基于 MR diff 识别七类资产变化，增量刷新 | 刷新上述全部 `docs/` 资产，人工审核定稿 |
+skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arch / biz / tech / qual）+ 横向（all）共 18 个治理 skill；另有 9 个旧体系 spec-* skill 保留支撑需求到交付链路。命名公式 `{域}-{资产}-{形态}-analyze`，输出统一落盘 `docs/{域}/{资产}/`（每类资产一个单独目录）。
 
-推荐全链路顺序：structure → interface → external-call → feature → key-class → data-structure → framework-usage →（有需求时）logic-audit → mermaid-diagram → story-design → code-check →（MR 后）asset-refresh。每步也可单独触发；或直接加载 specgo 走六步端到端编排主流程（自动串联上述各步，子代理执行）。
+### 架构要素（arch）—— 定结构：代码往哪放
+
+| Skill | 作用 | 产出 |
+|-------|------|------|
+| arch-structure-model-analyze | 结构模型：模块划分、分层、职责与依赖关系（UML 包图 + 依赖矩阵），提取型 | `docs/arch/structure-model/`：structure-model.md 仓级总览 + structure-model-{module}.md 每模块一篇 |
+| arch-interaction-model-analyze | 交互模型：模块间主业务流程、消息走向（UML 时序图），只画主链路，分支逻辑归业务规则；未指明流程时默认全量逐篇产出 | `docs/arch/interaction-model/`：interaction-model-{flow}.md 每业务流程一篇 |
+
+### 业务要素（biz）—— 定业务：对象怎么建、数据存什么
+
+| Skill | 作用 | 产出 |
+|-------|------|------|
+| biz-interface-analyze | 接口：服务对外接口清单（HTTP 路由/RPC/消息订阅/IDL），按功能域聚类 | `docs/biz/interface/`：README 全景主文档 + interface-{feature}.md 每功能域一篇 |
+| biz-rules-analyze | 业务规则：条件分支/参数校验/状态迁移/阈值/错误码等规则点，按需求类整理"条件 → 动作 + 依据"规则条目 | `docs/biz/rules/`：rules-{feature}.md 每需求类一篇 |
+| biz-object-model-analyze | 对象模型：实体、值对象、聚合、领域服务、领域事件（UML 类图），只画聚合内结构与聚合间引用方向 | `docs/biz/object-model/`：object-model-{aggregate}.md 每聚合一篇 |
+| biz-data-model-analyze | 数据模型：持久态表结构、缓存数据结构、字段关系与数据生命周期（UML-ER） | `docs/biz/data-model/`：data-model-{entity}.md 每数据实体一篇 |
+| biz-lexicon-analyze | 领域词典：业务与代码共用的受控词汇集（术语释义、语境边界、代码命名映射），按功能域子域分节 | `docs/biz/lexicon/lexicon.md`：全仓一篇 |
+
+### 技术要素（tech）—— 定用法：机制怎么用、调用怎么跑
+
+| Skill | 作用 | 产出 |
+|-------|------|------|
+| tech-usage-analyze | 框架使用现状：基础框架清单与使用方式盘点（纯现状提取，无规范文档） | `docs/tech/usage/`：README 索引 + usage-{framework}.md 每框架一篇 |
+| tech-comm-guidelines-analyze | 通信规范：RPC/HTTP/MQ 跨服务调用指导（协议与封装归此，故障策略归韧性）；双模式：提取 + 差距分析 | `docs/tech/comm-guidelines/`：README + comm-guidelines-{service}.md 每外部服务一篇；差距报告 report/{YYYYMMDD}-comm-guidelines.md |
+| tech-concurrency-guidelines-analyze | 并发规范：线程池选型、池间隔离、容量/队列配置、拒绝策略；双模式 | `docs/tech/concurrency-guidelines/`：concurrency-guidelines-{pool}.md 每线程池/原语一篇 + report/ |
+| tech-data-access-guidelines-analyze | 数据访问规范：Redis/DB 等中间件访问指导（连接管理、事务、分页批量、SQL 注入防护、缓存读写模式）；双模式 | `docs/tech/data-access-guidelines/`：data-access-guidelines-{mw}.md 每中间件一篇 + report/ |
+| tech-resilience-guidelines-analyze | 韧性规范：超时/重试/熔断降级/异常处理等故障策略；双模式 | `docs/tech/resilience-guidelines/`：resilience-guidelines.md 仓级单篇 + report/ |
+| tech-foundation-guidelines-analyze | 基础规范：日志/配置/告警等横切编码机制的编码指导；双模式 | `docs/tech/foundation-guidelines/`：foundation-guidelines.md 仓级单篇 + report/ |
+
+### 工程要素（qual）—— 定规矩：写到什么程度才算合格
+
+| Skill | 作用 | 产出 |
+|-------|------|------|
+| qual-code-standards-analyze | 编码规范：命名、注释、函数长度/圈复杂度、安全编码红线、禁止项清单（规则分红线/建议两级，红线供 CI 门禁）；双模式 + 门禁 | `docs/qual/code-standards/`：code-standards.md 仓级单篇 + report/ 门禁差距报告 |
+| qual-dt-guidelines-analyze | DT 规范：测试金字塔与覆盖基线、用例设计方法、自测报告要求、新增代码覆盖率门禁；双模式 + 门禁 | `docs/qual/dt-guidelines/`：dt-guidelines.md 仓级单篇 + report/ |
+| qual-branch-guidelines-analyze | 分支与变更规范：分支模型、commit/MR 规范、评审要求；双模式 | `docs/qual/branch-guidelines/`：branch-guidelines.md 仓级单篇 + report/ |
+
+### 横向能力（all）
+
+| Skill | 作用 | 产出 |
+|-------|------|------|
+| all-init | 初始化仓级 `docs/` 资产目录骨架（每类资产一个单独目录），一次性迁移既有产出到新布局（迁移映射清单先交用户确认） | 目录骨架 + 迁移执行摘要 |
+| all-index | 生成各域索引 README + 总索引 + 服务依赖全景图（Mermaid flowchart，从通信规范资产提取依赖边）；只聚合真实存在的文件 | `docs/README.md` 总索引 + 各域 `docs/{域}/README.md` |
+
+### 旧体系保留（spec-*）
+
+以下 9 个 skill 为旧体系保留，继续支撑"需求审核 → story 设计 → 代码检查 → 资产刷新"的需求到交付链路；其中旧的接口/出站调用/框架使用三个盘点 skill 已删除，分别由 biz-interface-analyze、tech-comm-guidelines-analyze、tech-usage-analyze 取代。
+
+| Skill | 作用 | 产出 |
+|-------|------|------|
+| spec-logic-audit | 需求/设计文档完备性审核：表述质量扫描 + 多彩建模查逻辑断裂点 + 设计要素校验，ask-human 澄清补齐 | 建模 HTML（`docs/audit/`）；可选输出规范功能设计 md（`docs/business/story/`） |
+| spec-mermaid-diagram | mermaid 语法红线 + 本地渲染验证 | 含图产出物跑 validate-mermaid.mjs 全部 VALID |
+| spec-story-design | 需求文档 → story 设计文档（与 `docs/business/story/` 既有格式同构，六节） | `docs/business/story/` + `docs/develop-task/`（抛弃式编码辅助文档） |
+| spec-feature-analyze | 对外接口按业务功能归纳为功能域，产出六节 feature 文档 | `docs/business/story/`：feature-*.md |
+| spec-key-class-analyze | 关键类识别与职责凝练 | `docs/business/key-class/README.md`：单文件单表（类名/类的职责，职责 38 字内） |
+| spec-data-structure-analyze | 关键数据结构识别与按用途分组 | `docs/business/data-structure/`：README + 按用途分篇 |
+| spec-code-check | 资产刷新前质量闸门：需求 commit 增量 clean code 检查（内置 27 条通用规则 + Go/Java/Python/C++ 语言特则）+ 架构变更分析，报告问题并询问是否修复 | `docs/engineering/code-check/{需求名}代码检查.md`（修复前/修复后双形态） |
+| spec-asset-refresh | 基于 MR diff 识别资产变化，增量刷新七类资产文档 | 刷新上述 `docs/` 资产，人工审核定稿 |
+| specgo | 全链路编排：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 代码检查 → 资产维护，六步端到端；主代理编排与用户确认，各步骤派子代理执行 | 从需求到交付的全部产出物 |
+
+推荐全链路顺序：all-init（一次性建骨架/迁移）→ arch-structure-model-analyze → arch-interaction-model-analyze → biz 五件（interface → rules → object-model → data-model → lexicon）→ tech 六件（usage → comm/concurrency/data-access/resilience/foundation-guidelines）→ qual 三件（code-standards / dt-guidelines / branch-guidelines）→ all-index（索引与依赖全景）；（有需求时）spec-logic-audit → spec-mermaid-diagram → spec-story-design → 代码实现 → spec-code-check →（MR 后）spec-asset-refresh。每步也可单独触发；或直接加载 specgo 走六步端到端编排主流程（自动串联上述各步，子代理执行）。
 
 ## 修改 skill 后如何更新
 

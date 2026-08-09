@@ -9,9 +9,9 @@
 
 | 模板文件 | 来源 Skill | 原文件路径 | 用途 |
 | --- | --- | --- | --- |
-| architecture/module-structure/代码仓结构文档模板.md | spec-structure-analyze | skills/spec-structure-analyze/references/structure-template.md | 代码仓结构文档骨架（概览 + mermaid 依赖图 + 模块说明表） |
-| architecture/business-flow/业务流程README文档模板.md | spec-business-flow-analyze | skills/spec-business-flow-analyze/references/readme-template.md | docs/architecture/business-flow/ 索引 README |
-| architecture/business-flow/业务流程详情文档模板.md | 同上 | skills/spec-business-flow-analyze/references/business-flow-template.md | <流程名>.md 业务流程精简结构（概述 + 主流程图） |
+| architecture/structure-model/结构模型总览文档模板.md | arch-structure-model-analyze | skills/arch-structure-model-analyze/references/structure-model-template.md | 结构模型总览骨架（概览 + UML 包图 + 依赖矩阵 + 分层特征） |
+| architecture/structure-model/结构模型模块文档模板.md | 同上 | skills/arch-structure-model-analyze/references/structure-model-module-template.md | structure-model-{module}.md 每模块文档骨架（职责 + 目录构成 + 对外依赖/被依赖证据表） |
+| architecture/interaction-model/交互模型文档模板.md | arch-interaction-model-analyze | skills/arch-interaction-model-analyze/references/interaction-model-template.md | interaction-model-{flow}.md 交互模型骨架（概述 + 主链路时序图 + 参与方说明 + 补充说明；只画主链路，分支逻辑归业务规则资产） |
 
 ## business 业务要素
 

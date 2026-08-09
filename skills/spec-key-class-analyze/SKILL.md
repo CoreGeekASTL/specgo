@@ -58,7 +58,7 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 
 - 归档文件：代码仓 `docs/business/key-class/README.md`（唯一产出文件，不产子文档、不分组、不画图）
 - 全程中文输出
-- 与其他 spec 产出互补：结构看 docs/architecture/module-structure/，入站接口看 docs/business/interface/，出站调用看 docs/technical/external-call/，关键类看 docs/business/key-class/
+- 与其他 spec 产出互补：结构模型看 docs/arch/structure-model/，入站接口看 docs/biz/interface/，出站调用看 docs/tech/comm-guidelines/，关键类看 docs/business/key-class/
 - 更新策略：README 已存在时逐行对比更新（类被移除则删行、职责漂移则改行），不整表重写
 
 ## 质量检查清单

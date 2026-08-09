@@ -27,18 +27,18 @@
 
 | 框架 | 文档链接 | 按哪条约定执行 |
 |------|---------|---------------|
-| Beego ORM | [storage-beego-orm.md](../technical/framework-usage/storage-beego-orm.md) | DAO 继承 BaseInterface，EntityType 设置，ContextDo 传 context.TODO() |
-| HTTP 客户端 | [rpc-http-client.md](../technical/framework-usage/rpc-http-client.md) | 请求用 https.NewRequest().WithRetry() builder |
+| Beego ORM | [usage-beego-orm.md](../tech/usage/usage-beego-orm.md) | DAO 继承 BaseInterface，EntityType 设置，ContextDo 传 context.TODO() |
+| HTTP 客户端 | [usage-http-client.md](../tech/usage/usage-http-client.md) | 请求用 https.NewRequest().WithRetry() builder |
 
-每条必须链到 docs/technical/framework-usage/ 真实存在的文档；仓内无该目录时按记忆列框架名并注明"无框架文档，待核实"。
+每条必须链到 docs/tech/usage/ 真实存在的文档；仓内无该目录时按记忆列框架名并注明"无框架文档，待核实"。
 
 ## 4. 要调用的外部接口
 
 | 外部服务 | 接口 | 本功能中的调用位置 | 文档链接 |
 |---------|------|-------------------|---------|
-| 沐恩云服务 | POST /auth/v1/verify | service/remote_service.go VerifyDevice | [external-call-munen.md](../technical/external-call/external-call-munen.md#auth-verify) |
+| 沐恩云服务 | POST /auth/v1/verify | service/remote_service.go VerifyDevice | [comm-guidelines-munen.md](../tech/comm-guidelines/comm-guidelines-munen.md#auth-verify) |
 
-每条链到 docs/technical/external-call/ 对应文档的接口章节；仓内无该目录时按需求文档列接口并注明"无出站调用文档，待核实"。本功能无出站调用时本节写"无"。
+每条链到 docs/tech/comm-guidelines/ 对应文档的接口章节；仓内无该目录时按需求文档列接口并注明"无出站调用文档，待核实"。本功能无出站调用时本节写"无"。
 
 ## 5. 验证方式
 

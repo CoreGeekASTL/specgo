@@ -19,7 +19,7 @@ description: >-
 
 - 用户要求画任何 mermaid 图（流程图、时序图、类图、ER 图、状态图、架构图等）。
 - 用户反馈某文档里的 mermaid 图渲染失败、报错、显示异常。
-- 任何资产整理/设计类 skill（spec-structure-analyze、spec-feature-analyze、spec-story-design、spec-interface-analyze、spec-external-call-analyze、spec-framework-usage-analyze、spec-logic-audit、spec-asset-refresh 等）执行到收尾阶段，产出物中含 mermaid 图。
+- 任何资产整理/设计类 skill（arch-structure-model-analyze、arch-interaction-model-analyze、biz-object-model-analyze、biz-data-model-analyze、all-index、spec-feature-analyze、spec-story-design、spec-logic-audit、spec-asset-refresh 等）执行到收尾阶段，产出物中含 mermaid 图。
 
 ## 图类型速查
 

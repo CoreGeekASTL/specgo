@@ -18,22 +18,22 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 ## 第 1 步：资产检查与录入/刷新
 
-1. 探测 `docs/` 下七类资产目录：`business/interface/`、`technical/framework-usage/`、`technical/external-call/`、`architecture/module-structure/`、`business/key-class/`、`business/data-structure/`、`business/story/`。
+1. 探测七类资产目录：`docs/` 下六类——`biz/interface/`、`tech/usage/`、`tech/comm-guidelines/`、`business/key-class/`、`business/data-structure/`、`business/story/`；外加 `docs/arch/structure-model/` 下的结构模型资产（structure-model*.md）。
 2. 分支：
    - **存在** → 询问用户是否需要刷新资产
    - **不存在** → 询问用户是否需要录入资产
    - **选否** → 跳过本步；后续步骤的"外部文档引用"章节按"无引用"处理
 3. **选是** → 同一条消息**并行**派发 7 个子代理，每个加载一个分析 skill 全文后执行（可让用户勾选子集，默认全量）：
-   - structure → spec-structure-analyze
-   - interface → spec-interface-analyze
-   - external-call → spec-external-call-analyze
+   - structure → arch-structure-model-analyze
+   - interface → biz-interface-analyze
+   - comm-guidelines → tech-comm-guidelines-analyze
    - feature → spec-feature-analyze
    - key-class → spec-key-class-analyze
    - data-structure → spec-data-structure-analyze
-   - framework-usage → spec-framework-usage-analyze
+   - usage → tech-usage-analyze
 4. 验收：产出文档落位对应目录；含 mermaid 的文档全部通过 spec-mermaid-diagram 验证脚本（VALID）。
 
-> 注：业务流程文档（docs/architecture/business-flow/）不属于本步自动检查的七类资产——它由用户主动指定流程后经 spec-business-flow-analyze 梳理产出，不派全量子代理。
+> 注：交互模型文档（docs/arch/interaction-model/interaction-model-*.md）不属于本步自动检查的七类资产——它由用户主动指定流程后经 arch-interaction-model-analyze 提取产出，不派全量子代理。
 
 ## 第 2 步：需求与功能审核（spec-logic-audit）
 
@@ -44,7 +44,7 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 ## 第 3 步：story 设计（spec-story-design）
 
-- 派**设计子代理**：加载 spec-story-design 全文，输入=第 2 步审核通过的 Spec + 第 1 步资产文档（framework-usage 框架指导 + story 既有文档为格式基准）。
+- 派**设计子代理**：加载 spec-story-design 全文，输入=第 2 步审核通过的 Spec + 第 1 步资产文档（usage 框架指导 + story 既有文档为格式基准）。
 - 产出 `docs/business/story/feature-<功能名>.md` + `docs/develop-task/<功能名>-develop-task.md`。
 - 子代理在 develop-task 第 5.2 步返回疑问清单 → 主代理批量向用户澄清 → 回传子代理定稿。
 - 主代理验收：story 六节齐全、develop-task 修改文件清单到函数级、mermaid 全部 VALID；然后**交用户确认设计**再进下一步。
@@ -108,4 +108,4 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 ## 与其它 skill 的关系
 
-本 skill 是纯编排层，六个步骤分别调用：7 个 spec-*-analyze（第 1 步）、spec-logic-audit（第 2 步）、spec-story-design（第 3 步）、spec-code-check（第 5 步）、spec-asset-refresh（第 6 步）；mermaid 验证贯穿各步（spec-mermaid-diagram）。各 skill 也可脱离本流程单独触发。
+本 skill 是纯编排层，六个步骤分别调用：7 个分析 skill（arch-structure-model-analyze、biz-interface-analyze、tech-comm-guidelines-analyze、tech-usage-analyze + spec-feature-analyze、spec-key-class-analyze、spec-data-structure-analyze，第 1 步）、spec-logic-audit（第 2 步）、spec-story-design（第 3 步）、spec-code-check（第 5 步）、spec-asset-refresh（第 6 步）；mermaid 验证贯穿各步（spec-mermaid-diagram）。各 skill 也可脱离本流程单独触发。

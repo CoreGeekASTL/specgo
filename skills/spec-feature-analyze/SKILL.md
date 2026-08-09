@@ -52,7 +52,7 @@ python3 <skill_dir>/scripts/scan_interfaces.py <repo_path> -o scan_result.md
 3. **接口清单**：五列表格（接口 | 路径/入口 | 请求结构 | 响应结构 | 状态），含对外接口与本功能的出向调用（出向接口单独标注"（出向）"）；状态取 在用 / 已下线 / 灰度中。
 4. **关键数据结构**：表格（结构 | 定义位置 | 关键字段+约束），只列理解该功能必须知道的结构。
 5. **调用关系**：每条主链路一张 mermaid 时序图 + 短句补关键分支/异步/不走的链路。
-6. **外部文档引用**：三列表（文档类型 | 引用文档 | 引用点），六类逐行列出本功能关联的仓内规格化资产——**关键类（必须引用）**：列出本功能实现涉及的具体关键类名（以代码事实为依据：类在功能链路上被调用/承载核心状态）并链接 docs/business/key-class/README.md；**接口文档**：链接 docs/business/interface/ 对应功能域子文档；**外部接口文档**：链接 docs/technical/external-call/ 相关子文档（与接口清单中"（出向）"行对应）；**基础框架文档**：逐个框架一行，逐行有代码事实依据（import/调用点所在文件），链接到 docs/technical/framework-usage/ 真实存在的文档，禁止按目录全量罗列；**struct 结构文档**：链接 docs/architecture/module-structure/ 文档；**数据结构文档**：链接 docs/business/data-structure/ 对应子文档（本功能依赖的缓存/队列/注册表等关键数据结构实例）。链接必须指向仓内真实存在的文件，无死链；某类确无引用须注明"无引用"及原因；仓内无对应目录时对应行注明"仓内无该类文档"（docs/business/key-class/ 缺失时另在回复中提示可先跑 spec-key-class-analyze 补齐；框架文档目录缺失时在 README 索引注明）；禁止整节省略。
+6. **外部文档引用**：三列表（文档类型 | 引用文档 | 引用点），六类逐行列出本功能关联的仓内规格化资产——**关键类（必须引用）**：列出本功能实现涉及的具体关键类名（以代码事实为依据：类在功能链路上被调用/承载核心状态）并链接 docs/business/key-class/README.md；**接口文档**：链接 docs/biz/interface/ 对应功能域子文档；**外部接口文档**：链接 docs/tech/comm-guidelines/ 相关子文档（与接口清单中"（出向）"行对应）；**基础框架文档**：逐个框架一行，逐行有代码事实依据（import/调用点所在文件），链接到 docs/tech/usage/ 真实存在的文档，禁止按目录全量罗列；**struct 结构文档**：链接 docs/arch/structure-model/ 下 structure-model*.md 文档；**数据结构文档**：链接 docs/business/data-structure/ 对应子文档（本功能依赖的缓存/队列/注册表等关键数据结构实例）。链接必须指向仓内真实存在的文件，无死链；某类确无引用须注明"无引用"及原因；仓内无对应目录时对应行注明"仓内无该类文档"（docs/business/key-class/ 缺失时另在回复中提示可先跑 spec-key-class-analyze 补齐；框架文档目录缺失时在 README 索引注明）；禁止整节省略。
 
 精读方式：以接口注册点为入口，沿 controller → service → dao/下游调用逐层读真实代码，禁止只凭扫描结果猜测。
 
@@ -88,7 +88,7 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - [ ] 所有结论附文件级证据（相对代码仓根目录），无臆造路径
 - [ ] 数据结构只列关键字段与约束，超 8 字段只列关键
 - [ ] README.md 索引已同步（功能全景表 + 表下方未归类接口说明），无死链
-- [ ] 未产出 `docs/business/interface/external-interfaces.md`（本 skill 不再输出该文件）
+- [ ] 未产出 `docs/biz/interface/external-interfaces.md`（本 skill 不再输出该文件）
 - [ ] 产出文档中的 mermaid 图已全部通过本地渲染验证（spec-mermaid-diagram 验证脚本全部 VALID）
 
 ## 参考文件索引
@@ -99,6 +99,6 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - references/feature-template.md — 功能文档六节结构模板（第 4 步用）
 - scripts/scan_interfaces.py — 接口注册点扫描脚本，支持 --type 限定接口类型（第 2 步用）
 - docs/business/key-class/README.md — 关键类清单（第 4 步外部文档引用章节必须引用；不存在时按降级规则注明）
-- docs/business/interface/README.md — 对外接口文档索引（第 4 步用）
-- docs/technical/external-call/README.md — 出站调用文档索引（第 4 步用）
-- docs/architecture/module-structure/ — 包级结构文档目录（第 4 步用）
+- docs/biz/interface/README.md — 对外接口文档索引（第 4 步用）
+- docs/tech/comm-guidelines/README.md — 出站调用文档索引（第 4 步用）
+- docs/arch/structure-model/ — 结构模型文档目录（structure-model*.md，第 4 步用）

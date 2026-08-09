@@ -53,11 +53,11 @@ flowchart LR
 
 | 资产 | 路径 | 状态 |
 | --- | --- | --- |
-| 接口文档 | `docs/business/interface/...` | ✅/❌ {已同步内容或缺口} |
+| 接口文档 | `docs/biz/interface/...` | ✅/❌ {已同步内容或缺口} |
 | feature 文档 | `docs/business/story/...` | ✅/❌ |
 | 数据结构文档 | `docs/business/data-structure/...` | ✅/❌ |
 | 关键类清单 | `docs/business/key-class/README.md` | ✅/❌ |
-| 包结构文档 | `docs/architecture/module-structure/` | ✅/❌（无新增包则注明无需变更） |
+| 结构模型文档 | `docs/arch/structure-model/` | ✅/❌（无新增模块则注明无需变更） |
 
 **后续代码架构判断以 `docs/` 下资产为准**；缺口在下次资产刷新（spec-asset-refresh）时补齐。
 
