@@ -14,7 +14,7 @@
 
 - 全小写 kebab-case；
 - 四段式，缺一不可（豁免项见 1.3）；
-- 横向能力不受四段式约束，仅 `all-init` / `all-index` 两个。
+- 横向与编排能力不受四段式约束：`all-init` / `all-index` / `all-update` / `all-analyze` / `code-generate` 五个。
 
 ### 1.2 受控词汇表
 
@@ -91,6 +91,8 @@
 |---|---|---|
 | `all-init` | 初始化仓级 `docs/` 资产目录骨架（每类资产一个单独目录）；一次性迁移既有产出（external-call/AR/framework-usage 及扁平布局历史产出） | 目录骨架 |
 | `all-index` | 生成各域索引 README + 总索引 + 服务依赖全景图（Mermaid） | `docs/README.md` 及各域 `README.md` |
+| `all-update` | 基于 git 变更识别代码变化对 docs/ 资产的影响，按最新要素定义增量刷新受影响文档（刷新清单人工确认后定稿） | 受影响 docs/ 文档就地刷新（同名覆盖） |
+| `all-analyze` | 一键全量资产分析编排：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），all-index 收口索引 | `docs/` 全套资产 + 各域索引与总索引 |
 
 ---
 

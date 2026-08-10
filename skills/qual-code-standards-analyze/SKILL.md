@@ -125,7 +125,7 @@ node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/spec-mer
 - **语言无关**：不预设被分析仓的语言与框架，按第 2 步实际探测结果选取语言特则。
 - **文档语言**：输出文档用中文，技术术语（lint / CI / error / defer / mutex / RAII 等）保留英文。
 - **索引分工**：域索引 `docs/qual/README.md` 与总索引 `docs/README.md` 由 all-index 生成，本 skill 不维护。
-- **与相邻资产互补**：需求级增量代码检查走 spec-code-check（对需求 commit 逐项检查并出检查文档）；本 skill 治理的是仓级规范基线本身及其全量差距。日志/配置/告警等编码指导归 tech-foundation-guidelines-analyze，DT/测试规范归 qual-dt-guidelines-analyze。
+- **与相邻资产互补**：本 skill 治理的是仓级规范基线本身及其全量差距；代码变更后 docs 资产是否需要刷新走 all-update。日志/配置/告警等编码指导归 tech-foundation-guidelines-analyze，DT/测试规范归 qual-dt-guidelines-analyze。
 
 ## 参考文件索引
 

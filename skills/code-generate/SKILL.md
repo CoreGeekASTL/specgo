@@ -1,9 +1,9 @@
 ---
-name: specgo
-description: 规格化全链路主流程编排 skill——资产检查/录入 → 需求审核(spec-logic-audit) → story 设计(spec-story-design) → 代码实现与测试 → 代码检查(spec-code-check) → 资产维护(spec-asset-refresh)，六步端到端。主代理只做编排与用户确认，各步骤派子代理执行。触发场景包括"specgo"、"端到端开发 xx 功能"、"从需求到交付"、"全流程开发"等。
+name: code-generate
+description: 规格化全链路主流程编排 skill——资产检查/录入 → 需求审核(spec-audit 场景 1) → story 设计(spec-story-design) → 代码实现与测试 → 资产刷新(all-update)，五步端到端。主代理只做编排与用户确认，各步骤派子代理执行。触发场景包括"code-generate"、"代码生成"、"端到端开发 xx 功能"、"从需求到交付"、"全流程开发"等。
 ---
 
-# specgo — 规格化全链路编排（主流程）
+# code-generate — 规格化全链路编排（主流程）
 
 新功能从需求到交付的唯一编排入口。主代理不亲自分析、设计、编码——只做流程推进、用户确认、子代理派发与验收。
 
@@ -18,36 +18,35 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 ## 第 1 步：资产检查与录入/刷新
 
-1. 探测七类资产目录：`docs/` 下六类——`biz/interface/`、`tech/usage/`、`tech/comm-guidelines/`、`business/key-class/`、`business/data-structure/`、`business/story/`；外加 `docs/arch/structure-model/` 下的结构模型资产（structure-model*.md）。
+1. 探测四类核心资产目录：`docs/` 下——`biz/interface/`、`tech/usage/`、`tech/comm-guidelines/`、`arch/structure-model/`（structure-model*.md）。
+   - 需要全套 16 类资产（含 rules/object-model/data-model/lexicon 等）时，改派 all-analyze 子代理做一键全量分析，本步后续小步跳过。
+   - `docs/business/` 旧体系资产目录（story/key-class/data-structure 等）如存在仅作"外部文档引用"素材，不再探测录入（对应旧分析 skill 已删除）。
 2. 分支：
    - **存在** → 询问用户是否需要刷新资产
    - **不存在** → 询问用户是否需要录入资产
    - **选否** → 跳过本步；后续步骤的"外部文档引用"章节按"无引用"处理
-3. **选是** → 同一条消息**并行**派发 7 个子代理，每个加载一个分析 skill 全文后执行（可让用户勾选子集，默认全量）：
+3. **选是** → 同一条消息**并行**派发 4 个子代理，每个加载一个分析 skill 全文后执行（可让用户勾选子集，默认全量）：
    - structure → arch-structure-model-analyze
    - interface → biz-interface-analyze
    - comm-guidelines → tech-comm-guidelines-analyze
-   - feature → spec-feature-analyze
-   - key-class → spec-key-class-analyze
-   - data-structure → spec-data-structure-analyze
    - usage → tech-usage-analyze
 4. 验收：产出文档落位对应目录；含 mermaid 的文档全部通过 spec-mermaid-diagram 验证脚本（VALID）。
 
-> 注：交互模型文档（docs/arch/interaction-model/interaction-model-*.md）不属于本步自动检查的七类资产——它由用户主动指定流程后经 arch-interaction-model-analyze 提取产出，不派全量子代理。
+> 注：交互模型文档（docs/arch/interaction-model/interaction-model-*.md）不属于本步自动检查的资产——它由用户主动指定流程后经 arch-interaction-model-analyze 提取产出，不派全量子代理。
 
-## 第 2 步：需求与功能审核（spec-logic-audit）
+## 第 2 步：需求与功能审核（spec-audit 场景 1）
 
-- 派**审核子代理**：加载 spec-logic-audit 全文，输入=需求/SR/功能设计文档，完成多彩建模翻译 + 全面扫描（表述质量/逻辑断点/设计要素）+ HTML 初版。
+- 派**审核子代理**：加载 spec-audit 全文，按场景 1（需求/功能设计审核）执行，输入=需求/SR/功能设计文档，完成多彩建模翻译 + 全面扫描（表述质量/逻辑断点/设计要素）+ HTML 初版。
 - 子代理返回合并断点清单；**主代理**批量抛出全部问题 ask-human（每问给 2-4 个候选答案+推荐项），用户批量回答后核对——未答/含糊/引入新疑点的继续批量追问，无新问题的答案回传子代理补齐，直至建模闭环、HTML 定稿。
 - 审核通过后按 skill 阶段 6 询问用户是否输出规范功能实现设计 md。
 - 用户明确说"需求已确认、不用审核"时可跳过，并在最终报告中注明。
 
 ## 第 3 步：story 设计（spec-story-design）
 
-- 派**设计子代理**：加载 spec-story-design 全文，输入=第 2 步审核通过的 Spec + 第 1 步资产文档（usage 框架指导 + story 既有文档为格式基准）。
-- 产出 `docs/business/story/feature-<功能名>.md` + `docs/develop-task/<功能名>-develop-task.md`。
+- 派**设计子代理**：加载 spec-story-design 全文，输入=第 2 步审核通过的 Spec + 第 1 步资产文档（usage 框架指导 + docs/storys 既有 story 为参照）。
+- 产出 `docs/storys/{功能名}-story.md`（八类核心要素结构，标注新增/变更/不涉及）+ `docs/develop-task/<功能名>-develop-task.md`。
 - 子代理在 develop-task 第 5.2 步返回疑问清单 → 主代理批量向用户澄清 → 回传子代理定稿。
-- 主代理验收：story 六节齐全、develop-task 修改文件清单到函数级、mermaid 全部 VALID；然后**交用户确认设计**再进下一步。
+- 主代理验收：story 八类核心要素判定完整（变更条目写清更改对象与内容）、develop-task 修改文件清单到函数级、mermaid 全部 VALID；然后**交用户确认设计**再进下一步。
 
 ## 第 4 步：代码实现与测试
 
@@ -64,23 +63,17 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 返回：生成/修改文件清单 + 冲突偏差 + 验证命令结果 + 集成测试结果。
 
-## 第 5 步：代码检查（spec-code-check）
+## 第 5 步：资产刷新（all-update）
 
-1. 派**检查子代理**：加载 spec-code-check 全文，对本需求 commit 增量执行 clean code 检查（27 条+语言特则）+ 架构变更分析。
-2. 子代理返回问题清单与架构变更分析；**主代理向用户报告并询问是否修复**。
-3. 选是 → 派**修复子代理**逐项修复 + 回归（构建/vet/单测/E2E 存在则跑），产出修复后检查文档；选否 → 产出修复前检查文档（保留违规项）。文档落 `docs/engineering/code-check/`。
-4. 检查文档含 mermaid 必须全部 VALID。
-
-## 第 6 步：资产维护（spec-asset-refresh）
-
-1. 前置：本需求代码已 commit（asset-refresh 基于 MR/diff 识别变化）；未 commit 时**询问用户是否提交**，不得主动提交。
-2. 派**资产子代理**：加载 spec-asset-refresh 全文，基于 MR diff 识别七类资产变化，增量刷新。
-3. 子代理返回逐类刷新清单；主代理交用户逐类审核确认后定稿。
+1. 前置：本需求代码变更已就绪。all-update 以 git 对比为输入——代码已 commit 时基线最清晰；未 commit 也可基于工作区 diff 执行。**是否提交代码由用户决定，不得主动提交**。
+2. 派**资产子代理**：加载 all-update 全文，基于 diff 识别变更映射到各资产要素的受影响情况，产出刷新清单（受影响/不受影响/资产未建三态判定 + 依据）。
+3. 子代理返回刷新清单；**主代理交用户审核确认（可勾选子集）后**，子代理按最新要素定义执行增量刷新、定稿落盘。
+4. 含 mermaid 的刷新文档必须全部 VALID；资产文档有增删时按 all-index 口径收口索引。
 
 ## 子代理派发通用规则
 
 - prompt 四要素：①加载哪个 skill 全文 ②输入文档/数据路径 ③产出路径与格式 ④返回内容（产出文件清单 + 关键结论 + 待确认清单 + 阻塞项）。
-- 无依赖的子代理同一条消息并行派发（第 1 步 7 个分析、第 6 步各类刷新）；步骤间有依赖严格串行。
+- 无依赖的子代理同一条消息并行派发（第 1 步 4 个分析、第 5 步各资产刷新）；步骤间有依赖严格串行。
 - 主代理验收不过关就打回子代理整改，不亲自代写。
 
 ## 确认门总表
@@ -92,8 +85,7 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 | 第 3 步末 | 设计文档交用户确认 |
 | 第 4 步前 | 是否直接开始实现代码 |
 | 第 4 步中 | 需求未明确处澄清（子代理返回待确认清单时） |
-| 第 5 步 | 检查问题是否修复 |
-| 第 6 步前 | 是否提交代码；资产刷新清单逐类审核 |
+| 第 5 步 | 资产刷新清单审核确认（可勾选子集）；代码是否提交由用户决定 |
 
 ## 红线
 
@@ -103,9 +95,9 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 | "这个断点/疑问我补个合理答案" | 所有需求疑问走待确认清单→主代理问用户，不脑补 |
 | "设计和代码并行跑省时间" | 步骤间严格串行，确认门不过不进下一步 |
 | "集成测试等用户提醒再跑" | 仓里有集成/E2E 测试就必须主动运行 |
-| "代码写完直接刷新资产" | 第 5 步代码检查是质量闸门，不过闸门不进第 6 步 |
+| "代码写完直接交付" | 第 5 步资产刷新是收口闸门，docs 不同步需求不算完成 |
 | "commit 一下方便做 diff" | commit 必须用户明确同意 |
 
 ## 与其它 skill 的关系
 
-本 skill 是纯编排层，六个步骤分别调用：7 个分析 skill（arch-structure-model-analyze、biz-interface-analyze、tech-comm-guidelines-analyze、tech-usage-analyze + spec-feature-analyze、spec-key-class-analyze、spec-data-structure-analyze，第 1 步）、spec-logic-audit（第 2 步）、spec-story-design（第 3 步）、spec-code-check（第 5 步）、spec-asset-refresh（第 6 步）；mermaid 验证贯穿各步（spec-mermaid-diagram）。各 skill 也可脱离本流程单独触发。
+本 skill 是纯编排层，五个步骤分别调用：4 个分析 skill（arch-structure-model-analyze、biz-interface-analyze、tech-comm-guidelines-analyze、tech-usage-analyze，第 1 步；全套 16 类资产录入改用 all-analyze）、spec-audit 场景 1（第 2 步）、spec-story-design（第 3 步）、all-update（第 5 步）；mermaid 验证贯穿各步（spec-mermaid-diagram）。各 skill 也可脱离本流程单独触发。

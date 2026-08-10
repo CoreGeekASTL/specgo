@@ -1,14 +1,13 @@
-# <功能名>
+# {功能名} Story
 
-> 功能域概述：一两句话说明该功能解决什么业务问题。
-> 接口数：N 个新增（设计中）+ M 个注入点　核心模块：a, b, c
-> 来源：<需求文档路径>（下称"需求"）
+> 需求概述：一两句话说明该需求解决什么业务问题。
+> 来源：{需求文档路径}（下称"需求"）　分支：{分支名}（{YYYY-MM-DD}）
 
-## 1. 功能故事（多彩建模）
+## 1. 需求概述（多彩建模）
 
 实现逻辑速览（1~3 句，每句 ≤30 字，业务语言，禁文件名/函数名/行号）：
 
-收到请求后筛出全部健康实例，逐台下发指令，单台失败只记日志。
+{收到请求后先联合鉴权，命中白名单才分配实例，未命中直接拒绝。}
 
 ```mermaid
 flowchart LR
@@ -17,88 +16,171 @@ flowchart LR
   classDef ppt fill:#c8e6c9,stroke:#2e7d32,color:#000
   classDef desc fill:#bbdefb,stroke:#1565c0,color:#000
 
-  Caller[调用方 外部]:::role
-  E1[受理请求]:::mi
-  E2[遍历实例逐个下发]:::mi
-  E3[汇总返回]:::mi
-  Data[(业务数据<br/>状态 X→Y)]:::ppt
-  R1[单点失败不影响整体]:::desc
+  Caller["终端 外部"]:::role
+  E1["受理登录请求"]:::mi
+  E2["联合鉴权"]:::mi
+  E3["分配实例并返回"]:::mi
+  Data[("白名单<br/>状态 无→有")]:::ppt
+  R1["表空一律放行"]:::desc
 
   Caller --> E1 --> E2 --> E3
-  E2 -.读写.-> Data
+  E2 -.读.-> Data
   R1 -.约束.-> E2
 ```
 
 术语表：
 
 | 术语 | 人话解释 | 出处 |
-|---|---|---|
-| 就绪实例 | 插件装完、容量有余、健康在线的实例 | src/service/browser_service.go |
+| --- | --- | --- |
+| {就绪实例} | {插件装完、容量有余、健康在线的实例} | {src/service/browser_service.go} |
 
-## 2. 实现方案
+## 2. 核心要素变更总览
 
-```mermaid
-graph LR
-  Client[客户端] --> Router[routers/beego_router.go]
-  Router --> Ctrl[controllers/cache_controller.go]
-  Ctrl --> Svc[service/cache_service.go]
-  Svc --> GW[下游 BrowserGW]
-```
+八类核心要素逐行判定，变更类型取值：**新增**（本需求引入）/ **变更**（对既有要素的修改，摘要必须写清"对哪个要素做了什么更改"）/ **不涉及**。整篇文档第 3~10 节与该表一一对应，"不涉及"的要素省略对应节。
 
-| 模块 | 承载功能（引用文件） |
-|---|---|
-| controllers/cache_controller.go | 路由表声明与入口、失败审计日志、响应封装（src/controllers/cache_controller.go） |
-| service/cache_service.go | 业务编排与下游调用（src/service/cache_service.go） |
+| 核心要素 | 变更类型 | 变更摘要 |
+| --- | --- | --- |
+| 对外接口 | {新增} | {POST /auth/v1/authIMEI 终端联合鉴权} |
+| 业务规则 | {变更} | {登录链路在实例路由前注入白名单联合鉴权规则} |
+| 数据模型 | {新增} | {t_white_list 表（IMEI+IMSI 组合记录）} |
+| 对象模型 | 不涉及 | - |
+| 领域词典 | {新增} | {术语「联合鉴权」「逃生态」} |
+| 交互流程 | {变更} | {网格登录主链路在路由判定前插入鉴权环节} |
+| 外部服务调用 | 不涉及 | - |
+| 技术要素 | {新增} | {鉴权结果进程内缓存（RWMutex + TTL 30min）} |
 
-## 3. 接口清单
+## 3. 对外接口
 
-只列对外接口与本功能的出向调用，五列表格，不写散文：
+### 新增
 
 | 接口 | 路径/入口（含注册处） | 请求结构 | 响应结构 | 状态 |
-|---|---|---|---|---|
-| DeleteCache | POST /app-api/.../deleteCache；入口 src/controllers/cache_controller.go；注册 src/routers/beego_router.go | DeleteCacheRequest（src/models/req/request_entity.go）：{imei, imsi} 均必填 | DataResponse（src/models/resp/response_entity.go）：{code, message, data} | 在用 |
-| （出向）BrowserGW 删除用户数据 | DELETE http://{endpoint}/browsergw/browser/userdata/delete（src/service/cache_service.go） | JSON {imei, imsi}；超时 5s | 仅接受 HTTP 200 | 在用 |
+| --- | --- | --- | --- | --- |
+| {AuthIMEI} | {POST /auth/v1/authIMEI；入口 controllers/auth_controller.go（规划）；注册 routers/beego_router.go（规划）} | {AuthIMEIRequest：{imei, imsi} 均必填} | {BaseResponse：code=200 通过 / 401 拒绝} | 设计中 |
 
-## 4. 关键数据结构
+### 变更
 
-| 结构 | 定义位置 | 关键字段（含义+约束） |
-|---|---|---|
-| DeleteCacheRequest | src/models/req/request_entity.go | IMEI（json imei，必填，Validate 非空校验）；IMSI（同约束） |
+| 既有接口 | 更改内容（变更前 → 变更后） | 更改位置 | 对调用方影响 |
+| --- | --- | --- | --- |
+| {GridLoginAuth} | {无鉴权直接路由实例 → 路由前注入白名单联合鉴权，未命中返回 401} | {controllers/login_controller.go} | {出入参契约不变，新增 401 失败语义} |
 
-## 5. 调用关系
+<!-- 无"新增"或无"变更"时省略对应小节；整要素"不涉及"时整节省略（第 2 节总览表已标注） -->
 
-每条主链路一张 mermaid 时序图：
+## 4. 业务规则
+
+### 新增
+
+| 规则 | 条件 → 动作 | 依据（需求章节/规划代码位置） |
+| --- | --- | --- |
+| {联合鉴权} | {IMEI+IMSI 同时精确命中白名单 → 放通；任一未命中 → 拒绝} | {需求 §2.2.3} |
+
+### 变更
+
+| 既有规则 | 变更前 → 变更后 | 位置 |
+| --- | --- | --- |
+| {设备登录鉴权} | {直接放通 → AppType=TikTok 时增加沐恩二次登录} | {service/remote_service.go} |
+
+## 5. 数据模型
+
+### 新增
+
+| 结构/表 | 关键字段（含义+约束+索引） | 生命周期 |
+| --- | --- | --- |
+| {t_white_list} | {imei char(15) 设备标识；imsi char(15) 用户身份标识；联合匹配无唯一约束} | {导入写入，覆盖更新整表替换} |
+
+### 变更
+
+| 既有表/结构 | 更改内容（变更前 → 变更后） | 位置 |
+| --- | --- | --- |
+| {t_session_stats} | {无 tcp_unique_id → 增补 tcp_unique_id varchar(36) + UNIQUE 索引} | {dao/db_init.go} |
+
+## 6. 对象模型
+
+### 新增
+
+| 对象 | 关键属性与关联 | 说明 |
+| --- | --- | --- |
+
+### 变更
+
+| 既有对象 | 更改内容（字段/关联，变更前 → 变更后） | 位置 |
+| --- | --- | --- |
+
+## 7. 领域词典
+
+| 术语 | 释义 | 变更类型（新增/释义演进） | 落入子域 | 代码命名映射（规划） |
+| --- | --- | --- | --- | --- |
+| {逃生态} | {白名单表为空时鉴权一律放行} | 新增 | {终端鉴权白名单} | {authFromDB Count==0 分支，service/auth_service.go（规划）} |
+
+## 8. 交互流程
+
+### 新增链路
 
 ```mermaid
 sequenceDiagram
-  participant C as 客户端
-  participant CC as CacheController
-  participant S as CacheService
-  participant GW as 下游实例群
-  C->>CC: POST /app-api/.../deleteCache
-  CC->>S: DeleteCache(imei, imsi)
-  loop 每个就绪实例
-    S->>GW: DELETE /userdata/delete
-    GW-->>S: 200 / 错误(仅记日志)
-  end
-  S-->>CC: nil
-  CC-->>C: {code:200, data:true}
+  participant C as 终端
+  participant AC as AuthController
+  participant AS as AuthService
+  C->>AC: POST /auth/v1/authIMEI
+  AC->>AS: AuthIMEI(imei, imsi)
+  AS-->>AC: true / false
+  AC-->>C: {code:200} / {code:401}
 ```
 
-关键分支与异步环节（各一句，带证据文件）：
+实现说明（多句话逐步说明，每句 ≤30 字，业务语言、可落到编码）：
 
-- 解析/校验失败返回 code=-2（src/controllers/controller.go）
-- 单实例失败不中断、不上抛，整体仍报成功（src/service/cache_service.go）
+- {解析请求取 IMEI/IMSI，格式非法直接拒绝。}
 
-## 6. 外部文档引用
+### 变更链路
 
-本功能关联的仓内规格化资产，六类逐行列出；关键类必须引用（类名须有代码事实依据），基础框架文档逐个框架一行，其余类确无引用须注明"无引用"及原因：
+| 链路 | 变更点（在哪个环节插入/替换/删除什么） |
+| --- | --- |
+| {网格登录} | {在"解析请求"与"实例路由"之间插入白名单联合鉴权环节，未命中中断返回} |
+
+（变更链路须另画变更后主链路时序图，体现插入/替换后的环节顺序）
+
+## 9. 外部服务调用
+
+### 新增
+
+| 调用 | 服务与端点 | 契约（请求/响应/超时） |
+| --- | --- | --- |
+
+### 变更
+
+| 既有调用 | 更改内容 | 位置 |
+| --- | --- | --- |
+
+## 10. 技术要素
+
+| 技术要素（并发/数据访问/韧性/日志配置告警） | 变更类型 | 内容 | 位置 |
+| --- | --- | --- | --- |
+| {鉴权缓存} | 新增 | {进程内 RWMutex 缓存，TTL 30 分钟，超 1000 条惰性清理 500 条} | {service/auth_cache.go（规划）} |
+
+## 11. 实现方案与修改清单
+
+```mermaid
+graph LR
+  Client["终端"] --> Router["routers/beego_router.go（变更：注册鉴权路由）"]
+  Router --> Ctrl["controllers/auth_controller.go（新增，规划）"]
+  Ctrl --> Svc["service/auth_service.go（新增，规划）"]
+  Svc --> Dao["dao/white_list.go（新增，规划）"]
+```
+
+| 模块 | 变更类型 | 承载功能与更改内容 |
+| --- | --- | --- |
+| {controllers/auth_controller.go} | 新增（规划） | {鉴权接口入口、参数校验、响应封装} |
+| {service/browser_service.go} | 变更 | {路由判定前增加鉴权调用，未命中返回错误} |
+| {models/resp/response_entity.go} | 复用 | {统一响应信封 BaseResponse} |
+
+## 12. 外部文档引用
+
+本设计参考的仓内资产，逐类一行；链接必须指向仓内真实存在的文件，无死链；某类确无引用须注明"无引用"及原因，禁止整节省略：
 
 | 文档类型 | 引用文档 | 引用点 |
-|---|---|---|
-| 关键类（必须） | [docs/business/key-class/README.md](../key-class/README.md) | 本功能链路涉及关键类 BrowserService（取就绪实例，src/service/cache_service.go）、https.Builder（下游调用构造） |
-| 接口文档 | [interface-cache.md](../../biz/interface/interface-cache.md) | deleteCache 对外接口契约对照 |
-| 外部接口文档 | [comm-guidelines-browser-gateway.md](../../tech/comm-guidelines/comm-guidelines-browser-gateway.md) | （出向）userdata/delete 调用契约，与第 3 节出向行对应 |
-| 基础框架文档 | [usage-beego-web.md](../../tech/usage/usage-beego-web.md) | Beego Web：路由注册与请求处理（src/routers/beego_router.go、src/controllers/cache_controller.go） |
-| struct 结构文档 | [structure-model.md](../../../docs/arch/structure-model/structure-model.md) | 本功能模块在 controllers/service/common 分层中的位置 |
-| 数据结构文档 | [spec-data-structure-map.md](../data-structure/spec-data-structure-map.md) | 本功能依赖的会话缓存实例（src/models/session.go） |
+| --- | --- | --- |
+| 接口文档 | {[interface-login.md](../biz/interface/interface-login.md)} | {既有登录链路注入点对照} |
+| 外部接口文档 | {[comm-guidelines-muen.md](../tech/comm-guidelines/comm-guidelines-muen.md)} | {沐恩二次登录调用契约} |
+| 基础框架文档 | {[usage-beego.md](../tech/usage/usage-beego.md)} | {Beego 路由注册与 ORM 约定（逐个框架一行，只列真实需要的）} |
+| 结构模型文档 | {[structure-model.md](../arch/structure-model/structure-model.md)} | {新模块 controllers/service/dao 分层归属依据} |
+| 既有 story | {[login-story.md](login-story.md)} | {被注入链路的原始设计} |
+| 其它资产（rules/lexicon/data-model 等，按需） | {…} | {…} |

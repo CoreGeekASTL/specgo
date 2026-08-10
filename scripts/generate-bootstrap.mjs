@@ -1,5 +1,5 @@
 /**
- * 自动扫描 skills/ 下全部 skill 目录（排除 . 开头；specgo 排最后，其余按名字典序），
+ * 自动扫描 skills/ 下全部 skill 目录（排除 . 开头；code-generate 编排排最后，其余按名字典序），
  * 从各 SKILL.md frontmatter 生成 bootstrap.md。
  * bootstrap.md 是两平台共用的注入源——opencode.js 和 hooks/session-start 都读它。
  * skill 内容变更后重跑：node .claude/plugins/specgo/scripts/generate-bootstrap.mjs
@@ -18,8 +18,8 @@ const SPEC_SKILLS = fs.readdirSync(SKILLS_DIR, { withFileTypes: true })
   .filter((e) => e.isDirectory() && !e.name.startsWith('.'))
   .map((e) => e.name)
   .sort((a, b) => {
-    if (a === 'specgo') return 1;
-    if (b === 'specgo') return -1;
+    if (a === 'code-generate') return 1;
+    if (b === 'code-generate') return -1;
     return a < b ? -1 : a > b ? 1 : 0;
   });
 
@@ -98,7 +98,7 @@ ${indexMd}
 5. **业务规则梳理** → biz-rules-analyze：按需求类整理"条件 → 动作 + 依据"规则条目，rules-{feature}.md，落盘 docs/biz/rules/
 6. **对象模型** → biz-object-model-analyze：实体/值对象/聚合/领域服务/领域事件（UML 类图），object-model-{aggregate}.md，落盘 docs/biz/object-model/
 7. **数据模型** → biz-data-model-analyze：持久态表结构/缓存数据结构/字段关系与数据生命周期（UML-ER），data-model-{entity}.md，落盘 docs/biz/data-model/
-8. **领域词典** → biz-lexicon-analyze：业务与代码共用的受控词汇集（术语释义 + 语境边界 + 代码命名映射），lexicon.md 全仓一篇，落盘 docs/biz/lexicon/
+8. **领域词典** → biz-lexicon-analyze：业务与代码共用的受控词汇集（术语释义 + 语境边界 + 代码命名映射），主文档 lexicon.md + 每功能域 1 篇 lexicon-{feature}.md，落盘 docs/biz/lexicon/
 9. **框架使用现状** → tech-usage-analyze：基础框架清单与使用方式盘点（纯现状提取），usage-{framework}.md 每框架一篇，落盘 docs/tech/usage/
 10. **通信规范** → tech-comm-guidelines-analyze：RPC/HTTP/MQ 跨服务调用指导（双模式：现状提取 + 差距分析），comm-guidelines-{service}.md 每外部服务一篇
 11. **并发规范** → tech-concurrency-guidelines-analyze：线程池选型/隔离/拒绝策略，concurrency-guidelines-{pool}.md 每线程池一篇
@@ -109,15 +109,15 @@ ${indexMd}
 16. **DT 规范（门禁）** → qual-dt-guidelines-analyze：测试金字塔与覆盖基线、用例设计、覆盖率门禁，dt-guidelines.md + report/
 17. **分支与变更规范** → qual-branch-guidelines-analyze：分支模型、commit/MR 规范、评审要求，branch-guidelines.md
 18. **索引生成** → all-index：各域 README + docs/README.md 总索引 + 服务依赖全景图（Mermaid）
+19. **资产刷新（git 变更驱动）** → all-update：基于 git diff 识别变更对 docs/ 资产的影响，按最新要素定义增量刷新受影响文档，刷新清单人工确认后定稿
+20. **一键全量资产分析（编排入口）** → all-analyze：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），一次性建齐 docs/ 资产，all-index 收口
+21. **文档质量审核与评估** → spec-audit：场景 1 需求/功能设计审核（多彩建模 + 断点扫描 + ask-human 澄清 + HTML）；场景 2 docs/ 资产质量评估（A 轨 story 类澄清未清零不出分；B 轨 17 类资产要素 Linter 零容忍+专项维度 0-5 分），评分分级，报告归档 docs/report/（README.MD 整体评估 + 每篇一个打分报告，支持单篇更新/通篇全量）
 
 **需求到交付（旧体系保留链路）**
 
-19. **需求文档逻辑审核** → spec-logic-audit：表述质量扫描 + 多彩建模 + HTML 可视化 + ask-human 补逻辑断点
-20. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
-21. **需求到 story 设计** → spec-story-design：产出与 docs/business/story/ 同构的新功能设计文档
-22. **代码检查（资产刷新前质量闸门）** → spec-code-check：需求 commit 增量 clean code 检查（内置 27 条+语言特则）+ 架构变更分析，报告问题并询问是否修复，产出 docs/engineering/code-check/ 检查文档
-23. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别资产变化，增量刷新 + 人工审核
-24. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 代码检查 → 资产维护，主代理编排与用户确认、各步骤派子代理执行
+22. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
+23. **需求到 story 设计** → spec-story-design：产出 docs/storys/{功能名}-story.md（八类核心要素组织，标注新增/变更/不涉及）+ develop-task
+24. **全链路编排（端到端主流程，推荐入口）** → code-generate：资产检查/录入 → 需求审核（spec-audit 场景 1）→ story 设计 → 代码实现与测试 → 资产刷新（all-update），主代理编排与用户确认、各步骤派子代理执行
 
 ## 红线（这些想法意味着你正在跳过 skill）
 
@@ -130,14 +130,15 @@ ${indexMd}
 | "表结构/缓存结构我随便列列" | biz-data-model-analyze 定义了数据模型格式，先加载它 |
 | "框架用法我直接写" | tech-usage-analyze 定义了框架使用现状盘点格式，先加载它 |
 | "线程池这么用没问题" | tech-concurrency-guidelines-analyze 定义了并发规范差距分析，先加载它 |
-| "核心类我挑几个讲讲" | spec-key-class-analyze 定义了关键类识别与清单格式，先加载它 |
-| "这需求文档我读读就好" | spec-logic-audit 用来查表述质量与逻辑断点，先加载它 |
+| "这需求文档我读读就好" | spec-audit 场景 1 用来查表述质量与逻辑断点，先加载它 |
 | "给我讲讲 XX 流程怎么走的" | arch-interaction-model-analyze 定义了交互模型（时序图）提取格式，先加载它 |
 | "这 mermaid 图我直接画/看着没问题" | spec-mermaid-diagram 定义了语法红线与本地验证流程，先加载它 |
 | "这功能我直接写 story" | spec-story-design 定义了 story 模板，先加载它 |
 | "代码写完直接提交" | qual-code-standards-analyze 定义了编码红线与门禁检查，先加载它 |
-| "MR 合了，看看文档要不要改" | spec-asset-refresh 定义了 MR 驱动的资产刷新流程，先加载它 |
-| "从需求到交付，一条龙做了" | specgo 定义了六步全链路编排与子代理分工，先加载它 |
+| "MR 合了，看看文档要不要改" | all-update 定义了 git 变更驱动的资产刷新流程，先加载它 |
+| "把分析 skill 挨个手动跑一遍" | all-analyze 定义了子代理并行的一键全量分析编排，先加载它 |
+| "这批文档质量怎么样" | spec-audit 定义了分轨质量评估与评分分级，先加载它 |
+| "从需求到交付，一条龙做了" | code-generate 定义了五步全链路编排与子代理分工，先加载它 |
 | "这个 skill 太重，我快速做" | 如果 skill 存在，就必须用 |
 | "我记得这个 skill 的内容" | skill 会演进，每次都要重新加载当前版本 |
 
