@@ -7,8 +7,8 @@
   "plugins": [
     {
       "name": "specgo",
-      "description": "四分类资产治理体系：arch 结构 / biz 业务 / tech 技术 / qual 工程四域 + all 横向共 20 个治理 skill（产出落盘 docs/{域}/{资产}/），另保留 3 个旧体系 spec-* skill 与 code-generate 编排 skill 支撑需求到交付链路，session 启动时注入 bootstrap，强制 AI 做分析/编码任务前先加载对应 skill",
-      "version": "1.5.0",
+      "description": "四分类资产治理体系：arch 结构 / biz 业务 / tech 技术 / qual 工程四域 + all 横向共 20 个治理 skill（产出落盘 docs/{域}/{资产}/），另保留 6 个旧体系 spec-* skill 与 code-generate 编排 skill 支撑需求到交付链路，session 启动时注入 bootstrap，强制 AI 做分析/编码任务前先加载对应 skill",
+      "version": "2.0.0",
       "source": "./",
       "author": {
         "name": "AIAction"
