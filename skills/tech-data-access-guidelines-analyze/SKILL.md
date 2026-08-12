@@ -89,7 +89,11 @@ guidelines 形态语义：数据访问规范是**指导性规范**（"应该"遵
 
 ### 第 4 步（起草模式）：生成数据访问规范文档
 
-输出到被分析仓 `docs/tech/data-access-guidelines/` 目录，每个中间件一篇 `data-access-guidelines-{mw}.md`，按 references/data-access-guidelines-template.md 填充：
+输出到被分析仓 `docs/tech/data-access-guidelines/` 目录：主文档 `README.md` + 每个中间件一篇 `data-access-guidelines-{mw}.md`。
+
+主文档 `README.md`（活文档，同名覆盖）内容仅两项：元信息表（分支/更新日期/Skill/运行模式）+ 中间件导航表（中间件 → `data-access-guidelines-{mw}.md` 链接 + 一句话用途定位，从各文档首行标题/用途定位提取）。
+
+中间件文档按 references/data-access-guidelines-template.md 填充：
 
 1. **元信息表**：分支 / 更新日期 / Skill / 运行模式。
 2. **用途定位**：该中间件在系统中承担什么角色（存什么数据、服务哪些业务模块、实例与库/bucket 划分），1~3 句，从配置与访问点分布归纳。
@@ -140,7 +144,7 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - **成品纯净**：最终文档只含成品内容。扫描过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格。
 - **语言无关**：不预设被分析仓的语言与框架，按第 2 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（ORM / DSN / TTL / Cache-Aside / pipeline / connection pool 等）保留英文。
-- **索引分工**：域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 all-index 生成，本 skill 不维护。
+- **索引分工**：本资产目录的 `README.md`（中间件导航主文档）由本 skill 产出，活文档同名覆盖；域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 all-index 生成，本 skill 不维护。
 - **与相邻资产互补**：中间件存什么数据（表结构/字段/生命周期）看 biz-data-model-analyze 产出的 `docs/biz/data-model/`；框架用法骨架（无规范、纯现状）看 tech-usage-analyze 产出的 `docs/tech/usage/`；纯故障策略（熔断/降级/重试）的专项规范归 tech-resilience-guidelines-analyze，本 skill 只记录数据访问点的错误处理事实与合规性。
 - **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 spec-mermaid-diagram 的 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
 

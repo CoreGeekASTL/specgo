@@ -53,29 +53,29 @@
 
 | Skill | 治理资产 | 资产内涵 | 产出粒度 | 输出文件 | 模式 | 优先级 |
 |---|---|---|---|---|---|---|
-| `arch-structure-model-analyze` | 结构模型 | 模块划分、分层、职责与依赖关系（UML 包图 + 依赖矩阵） | 仓级总览 1 篇 + 每模块 1 篇 | `structure-model.md`<br>`structure-model-{module}.md` | 提取 | P0 |
-| `arch-interaction-model-analyze` | 交互模型 | 模块间主业务流程、消息走向（UML 时序图），只画主链路，分支逻辑归业务规则 | 每业务类型 1 篇 | `interaction-model-{flow}.md` | 提取 | P0 |
+| `arch-structure-model-analyze` | 结构模型 | 模块划分、分层、职责与依赖关系（UML 包图 + 依赖矩阵） | 仓级总览 1 篇 + 每模块 1 篇 | `README.md`<br>`structure-model-{module}.md` | 提取 | P0 |
+| `arch-interaction-model-analyze` | 交互模型 | 模块间主业务流程、消息走向（UML 时序图），只画主链路，分支逻辑归业务规则 | 主文档 + 每业务类型 1 篇 | `README.md`<br>`interaction-model-{flow}.md` | 提取 | P0 |
 
 ### 2.2 业务要素（biz）—— 定业务：对象怎么建、数据存什么
 
 | Skill | 治理资产 | 资产内涵 | 产出粒度 | 输出文件 | 模式 | 优先级 |
 |---|---|---|---|---|---|---|
-| `biz-interface-analyze` | 接口 | 服务对外接口清单，按功能域聚类（业务能力归此，协议/错误码归通信规范） | 每功能域 1 篇 | `interface-{feature}.md` | 提取 | P0 |
-| `biz-rules-analyze` | 业务规则 | 按需求类整理"条件 → 动作 + 依据"规则条目（表格） | 每需求类 1 篇 | `rules-{feature}.md` | 提取 | P0 |
-| `biz-object-model-analyze` | 对象模型 | 实体、值对象、聚合、领域服务、领域事件（UML 类图） | 每聚合 1 篇 | `object-model-{aggregate}.md` | 提取 | P0 |
-| `biz-data-model-analyze` | 数据模型 | 持久态表结构、缓存数据结构、字段关系与数据生命周期（UML-ER） | 每数据实体 1 篇 | `data-model-{entity}.md` | 提取 | P0 |
-| `biz-lexicon-analyze` | 领域词典 | 业务与代码共用的受控词汇集：术语释义、语境边界、代码命名映射 | 主文档 + 每功能域 1 篇（按业务子域拆分，子域×术语类型两级组织） | `lexicon.md`、`lexicon-{feature}.md` | 提取 | P1 |
+| `biz-interface-analyze` | 接口 | 服务对外接口清单，按功能域聚类（业务能力归此，协议/错误码归通信规范） | 主文档 + 每功能域 1 篇 | `README.md`<br>`interface-{feature}.md` | 提取 | P0 |
+| `biz-rules-analyze` | 业务规则 | 按需求类整理"条件 → 动作 + 依据"规则条目（表格） | 主文档 + 每需求类 1 篇 | `README.md`<br>`rules-{feature}.md` | 提取 | P0 |
+| `biz-object-model-analyze` | 对象模型 | 实体、值对象、聚合、领域服务、领域事件（UML 类图） | 主文档 + 每聚合 1 篇 | `README.md`<br>`object-model-{aggregate}.md` | 提取 | P0 |
+| `biz-data-model-analyze` | 数据模型 | 持久态表结构、缓存数据结构、字段关系与数据生命周期（UML-ER） | 主文档 + 每数据实体 1 篇 | `README.md`<br>`data-model-{entity}.md` | 提取 | P0 |
+| `biz-lexicon-analyze` | 领域词典 | 业务与代码共用的受控词汇集：术语释义、语境边界、代码命名映射 | 主文档 + 每功能域 1 篇（按业务子域拆分，子域×术语类型两级组织） | `README.md`<br>`lexicon-{feature}.md` | 提取 | P1 |
 
 ### 2.3 技术要素（tech）—— 定用法：机制怎么用、调用怎么跑
 
 | Skill | 治理资产 | 资产内涵 | 产出粒度 | 输出文件 | 模式 | 优先级 |
 |---|---|---|---|---|---|---|
-| `tech-comm-guidelines-analyze` | 通信规范 | RPC/HTTP/MQ 跨服务调用指导（协议与封装归此；故障策略归韧性） | 每外部服务 1 篇 | `comm-guidelines-{service}.md` | 双模式 | P0 |
-| `tech-usage-analyze` | 框架使用现状 | 基础框架清单与使用方式盘点（无规范文档，纯现状） | 每框架 1 篇 | `usage-{framework}.md` | 提取 | P0 |
-| `tech-concurrency-guidelines-analyze` | 并发规范 | 线程池选型、隔离、拒绝策略 | 每线程池 1 篇 | `concurrency-guidelines-{pool}.md` | 双模式 | P0 |
-| `tech-data-access-guidelines-analyze` | 数据访问规范 | Redis/DB 等中间件访问指导 | 每中间件 1 篇 | `data-access-guidelines-{mw}.md` | 双模式 | P1 |
-| `tech-resilience-guidelines-analyze` | 韧性规范 | 超时/重试/熔断/异常处理（只管故障策略） | 每维度 1 篇 | `resilience-guidelines-{dimension}.md` | 双模式 | P1 |
-| `tech-foundation-guidelines-analyze` | 基础规范 | 日志/配置/告警等编码指导 | 每维度 1 篇 | `foundation-guidelines-{dimension}.md` | 双模式 | P1 |
+| `tech-comm-guidelines-analyze` | 通信规范 | RPC/HTTP/MQ 跨服务调用指导（协议与封装归此；故障策略归韧性） | 主文档 + 每外部服务 1 篇 | `README.md`<br>`comm-guidelines-{service}.md` | 双模式 | P0 |
+| `tech-usage-analyze` | 框架使用现状 | 基础框架清单与使用方式盘点（无规范文档，纯现状） | 主文档 + 每框架 1 篇 | `README.md`<br>`usage-{framework}.md` | 提取 | P0 |
+| `tech-concurrency-guidelines-analyze` | 并发规范 | 线程池选型、隔离、拒绝策略 | 主文档 + 每线程池 1 篇 | `README.md`<br>`concurrency-guidelines-{pool}.md` | 双模式 | P0 |
+| `tech-data-access-guidelines-analyze` | 数据访问规范 | Redis/DB 等中间件访问指导 | 主文档 + 每中间件 1 篇 | `README.md`<br>`data-access-guidelines-{mw}.md` | 双模式 | P1 |
+| `tech-resilience-guidelines-analyze` | 韧性规范 | 超时/重试/熔断/异常处理（只管故障策略） | 主文档 + 每维度 1 篇 | `README.md`<br>`resilience-guidelines-{dimension}.md` | 双模式 | P1 |
+| `tech-foundation-guidelines-analyze` | 基础规范 | 日志/配置/告警等编码指导 | 主文档 + 每维度 1 篇 | `README.md`<br>`foundation-guidelines-{dimension}.md` | 双模式 | P1 |
 
 ### 2.4 工程要素（qual）—— 定规矩：写到什么程度才算合格
 
@@ -104,7 +104,7 @@
 
 ```
 docs/{域}/{资产}/{资产}-{形态}-{实例}.md           ← 模型/规范文档（活文档，覆盖更新；形态豁免资产无形态段）
-docs/{域}/{资产}/README.md                         ← 多文件资产的主文档/索引（按各 SKILL.md 约定产出）
+docs/{域}/{资产}/README.md                         ← 多文件资产的主文档/索引（必产出，内容口径按各 SKILL.md 约定）
 docs/{域}/{资产}/report/{YYYYMMDD}-{资产}-{形态}.md ← 差距报告（次抛，带日期）
 docs/{域}/README.md                                ← 域索引（all-index 产出）
 docs/README.md                                     ← 总索引 + 依赖全景图（all-index 产出）
@@ -113,8 +113,8 @@ docs/README.md                                     ← 总索引 + 依赖全景�
 规则：
 
 1. **同域不同资产不混放**：资产目录内只放本资产的文档及其 `report/` 子目录；
-2. **单文件资产同样独占目录**（lexicon、code-standards、dt-guidelines、branch-guidelines），目录内仅一个同名 md——目录即资产身份，新增多实例时无需迁移；
-3. **多文件资产**可在目录内置 `README.md` 作为主文档/索引（如接口资产的全景图主文档），是否产出按各 SKILL.md 约定；
+2. **单文件资产同样独占目录**（code-standards、dt-guidelines、branch-guidelines），目录内仅一个同名 md——目录即资产身份，新增多实例时无需迁移；
+3. **多文件资产必须在目录内置 `README.md` 作为主文档/索引**（如接口资产的全景主文档、韧性规范的扫描范围总览），由各资产 analyze skill 产出、活文档同名覆盖；域索引与总索引仍归 all-index；
 4. **文件名不变**：本次仅调整目录层级，各资产文件名沿用第 2 章表格「输出文件」列，保证既有链接与重跑同名覆盖语义不断代。
 
 ### 3.2 目录树
@@ -125,9 +125,10 @@ docs/
 ├── arch/
 │   ├── README.md                            ← 域索引（all-index 产出）
 │   ├── structure-model/
-│   │   ├── structure-model.md               ← 仓级总览
+│   │   ├── README.md                        ← 仓级总览（资产主文档）
 │   │   └── structure-model-{module}.md      ← 每模块 1 篇
 │   └── interaction-model/
+│       ├── README.md                        ← 流程导航主文档
 │       └── interaction-model-{flow}.md      ← 每业务流程 1 篇
 ├── biz/
 │   ├── README.md
@@ -135,23 +136,30 @@ docs/
 │   │   ├── README.md                        ← 接口全景主文档
 │   │   └── interface-{feature}.md           ← 每功能域 1 篇
 │   ├── rules/
+│   │   ├── README.md                        ← 功能域导航主文档
 │   │   └── rules-{feature}.md               ← 每需求类 1 篇
 │   ├── object-model/
+│   │   ├── README.md                        ← 聚合导航主文档
 │   │   └── object-model-{aggregate}.md      ← 每聚合 1 篇
 │   ├── data-model/
+│   │   ├── README.md                        ← 实体导航主文档
 │   │   └── data-model-{entity}.md           ← 每数据实体 1 篇
 │   └── lexicon/
-│       ├── lexicon.md                       ← 主文档（说明/待确认清单/子域导航/通用节）
+│       ├── README.md                        ← 主文档（说明/待确认清单/子域导航/通用节）
 │       └── lexicon-{feature}.md             ← 每功能域 1 篇（按业务子域拆分）
 ├── tech/
 │   ├── README.md
 │   ├── usage/
+│   │   ├── README.md                        ← 框架清单索引
 │   │   └── usage-{framework}.md             ← 每框架 1 篇
 │   ├── comm-guidelines/
+│   │   ├── README.md                        ← 外部服务导航主文档
 │   │   └── comm-guidelines-{service}.md     ← 每外部服务 1 篇
 │   ├── concurrency-guidelines/
+│   │   ├── README.md                        ← 实例导航主文档
 │   │   └── concurrency-guidelines-{pool}.md ← 每线程池 1 篇
 │   ├── data-access-guidelines/
+│   │   ├── README.md                        ← 中间件导航主文档
 │   │   └── data-access-guidelines-{mw}.md   ← 每中间件 1 篇
 │   ├── resilience-guidelines/
 │   │   ├── README.md                        ← 扫描范围总览 + 维度导航

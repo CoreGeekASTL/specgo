@@ -76,7 +76,8 @@ description: >-
 
 - 输出到**被分析代码仓根目录**的 `docs/biz/rules/rules-{feature}.md`；目录不存在则创建（连同 `docs/` 一起创建）。
 - 同名文件已存在**直接覆盖更新**——规则文档是活文档，固定名、覆盖更新，git diff 即演进史。
-- 本 skill 不维护索引：`docs/biz/README.md` 域索引与 `docs/README.md` 总索引由 all-index 统一生成。
+- **资产主文档 `README.md` 必产出**：同目录落 `README.md`（活文档，同名覆盖），内容仅两项——元信息表（分支/更新日期/Skill）+ 功能域导航表（功能域 → `rules-{feature}.md` 链接 + 规则条目数 + 一句话说明，从各文档首行标题提取）；单功能域模式（用户指明功能域）时同样刷新该 README，只增改对应行。
+- 索引分工：本资产目录的 `README.md` 由本 skill 产出；域索引 `docs/biz/README.md` 与总索引 `docs/README.md` 由 all-index 统一生成，本 skill 不维护。
 
 ### 第 5 步：收尾汇总（全量模式）
 

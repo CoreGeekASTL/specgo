@@ -82,9 +82,11 @@ guidelines 形态语义：并发规范是**指导性规范**（"应该"遵守）
 
 ### 第 4 步（起草模式）：生成并发规范文档
 
-输出到被分析仓 `docs/tech/concurrency-guidelines/` 目录：每个池/原语实例一篇 `concurrency-guidelines-{pool}.md`，按 references/concurrency-guidelines-template.md 填充。
+输出到被分析仓 `docs/tech/concurrency-guidelines/` 目录：主文档 `README.md` + 每个池/原语实例一篇 `concurrency-guidelines-{pool}.md`，实例文档按 references/concurrency-guidelines-template.md 填充。
 
-规则：
+主文档 `README.md`（活文档，同名覆盖）内容仅两项：元信息表（分支/更新日期/Skill/运行模式）+ 实例导航表（池/原语实例 → `concurrency-guidelines-{pool}.md` 链接 + 实例类型（线程池/锁/channel/定时任务等）+ 一句话用途定位）。
+
+实例文档规则：
 
 - **现状与建议分区**：「容量/队列/拒绝策略现状」节只写代码事实、逐条附证据文件路径；「应有约定建议」节是规范初稿，必须标注为建议、给出理由，禁止把建议写成现状。
 - **用途定位不得臆造**：从定义处注释/提交点所在函数/模块推断；推断不出标「待确认」。
@@ -130,7 +132,7 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - **成品纯净**：最终文档只含成品内容。扫描过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格。
 - **语言无关**：不预设被分析仓的语言与框架，按第 2 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（ThreadPool / Executor / goroutine / Mutex / RWMutex / channel / Actor / CallerRunsPolicy 等）保留英文。
-- **索引分工**：域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 all-index 生成，本 skill 不维护；本资产目录不产出 README，多实例靠文件名自描述。
+- **索引分工**：本资产目录的 `README.md`（实例导航主文档）由本 skill 产出，活文档同名覆盖；域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 all-index 生成，本 skill 不维护。
 - **与相邻资产互补**：并发框架使用事实清单看 tech-usage-analyze 产出的 `docs/tech/usage/`；超时/重试/熔断等故障策略归 tech-resilience-guidelines-analyze；跨服务调用指导归 tech-comm-guidelines-analyze。
 - **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
 

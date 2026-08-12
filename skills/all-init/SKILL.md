@@ -35,7 +35,7 @@ description: >-
 
 | 源文件 | 目标文件 | 处置 |
 | --- | --- | --- |
-| docs/arch/structure-model.md | docs/arch/structure-model/structure-model.md | 迁移 |
+| docs/arch/structure-model.md | docs/arch/structure-model/README.md | 迁移（仓级总览即资产主文档） |
 | docs/business/interface/spec-interface-login.md | docs/biz/interface/interface-login.md | 迁移+改名 |
 | docs/tech/usage/usage-grpc.md | （已存在） | 冲突，待裁决 |
 | docs/business/key-class/README.md | （不动） | 跳过：不在新 taxonomy |

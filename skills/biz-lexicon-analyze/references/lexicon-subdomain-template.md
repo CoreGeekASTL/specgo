@@ -1,6 +1,6 @@
 # {子域名} 领域词典
 
-> 子文档 of [lexicon.md](lexicon.md)；词汇口径、来源说明与全仓待确认清单见主文档。子域锚点 `{子域锚点}`，功能域口径与 docs/biz/interface/ 一致。
+> 子文档 of [README.md](README.md)；词汇口径、来源说明与全仓待确认清单见主文档。子域锚点 `{子域锚点}`，功能域口径与 docs/biz/interface/ 一致。
 
 ## 实体与业务概念
 

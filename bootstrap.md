@@ -25,7 +25,7 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 分析存量代码仓业务流程的交互模型（模块间主业务流程、消息走向），产出 UML 时序图（mermaid），落盘被分析仓的 docs/arch/interaction-model/interaction-model-{flow}.md（每业务流程 1 篇）。用户指明流程时只梳理该流程；未指明时默认枚举仓内全部业务流程逐篇产出，不阻塞式询问。只画主链路，分支与异常逻辑不画入图——归业务规则资产承载。当用户提到"交互模型"、"模块交互"、"消息走向"、"时序图"、"调用链"、"梳理 XX 业务流程"、"XX 流程是怎么走的"、"画一下 XX 流程"、"把 XX 流程落成文档"、"梳理全部业务流程"、"interaction model"、"sequence diagram"时使用。务必在生成任何模块交互/流程时序文档之前使用此 skill。
 
 ### 6. arch-structure-model-analyze
-分析存量代码仓的结构模型（模块划分、分层、职责与依赖关系），产出 UML 包图（mermaid）+ 依赖矩阵，落盘被分析仓的 docs/arch/structure-model/：仓级总览 structure-model.md + 每模块 structure-model-{module}.md。当用户提到"代码仓结构"、"结构模型"、"目录关系"、"模块依赖图"、"画一下项目结构"、"梳理目录关系"、"生成结构文档"、"第一层目录"、"包之间依赖"、"repo structure"、"structure model"、"module relationship"、"项目摸底"、"架构摸底"时使用。即使用户没明说"结构模型"，只要意图是"看清一个代码仓第一层目录之间、或某目录下包与包之间的依赖关系并出图"，都应触发。务必在生成任何代码仓结构文档之前使用此 skill。
+分析存量代码仓的结构模型（模块划分、分层、职责与依赖关系），产出 UML 包图（mermaid）+ 依赖矩阵，落盘被分析仓的 docs/arch/structure-model/：仓级总览 README.md + 每模块 structure-model-{module}.md。当用户提到"代码仓结构"、"结构模型"、"目录关系"、"模块依赖图"、"画一下项目结构"、"梳理目录关系"、"生成结构文档"、"第一层目录"、"包之间依赖"、"repo structure"、"structure model"、"module relationship"、"项目摸底"、"架构摸底"时使用。即使用户没明说"结构模型"，只要意图是"看清一个代码仓第一层目录之间、或某目录下包与包之间的依赖关系并出图"，都应触发。务必在生成任何代码仓结构文档之前使用此 skill。
 
 ### 7. biz-data-model-analyze
 分析存量代码仓的数据模型资产（持久态表结构、缓存数据结构、字段关系与数据生命周期），产出 UML-ER 图（mermaid erDiagram）+ 字段表 + 生命周期说明，落盘被分析仓的 docs/biz/data-model/data-model-{entity}.md（每数据实体 1 篇）。用户指明实体时只梳理该实体；未指明时默认全量——扫描建表 SQL（CREATE TABLE）、ORM entity 注册（TableName/RegisterModel）与关键缓存结构体，逐实体产出，不阻塞式询问。逻辑关联无 DB 约束时标注"代码未体现物理外键"。当用户提到"数据模型"、"表结构"、"ER 图"、"数据库设计"、"字段说明"、"数据字典"、"梳理 XX 表"、"数据生命周期"、"缓存数据结构"、"TTL"、"data model"、"ER diagram"、"schema 文档"时使用。务必在生成任何表结构/ER 图/数据字典类文档之前使用此 skill。
@@ -34,7 +34,7 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 扫描存量代码仓**对外提供的接口**（服务自己暴露给外部调用的入口：HTTP 路由注册 / RPC service 注册 / 消息订阅 handler / IDL 契约），按功能域聚类，产出**一个主文档 + 多个子文档**：主文档 `README.md` 含接口全景与功能域索引，每个功能域一个子文档 `interface-{feature}.md`，子文档内列接口表格（接口名/作用/所在文件/方法/路径，**所在文件不带行号**），表格下方逐个说明该接口相关的请求与响应数据结构。落盘被分析仓的 `docs/biz/interface/`。当需要盘点代码仓对外提供哪些接口、梳理对外接口清单、为接口治理/接口文档/新人上手提供文档时使用。触发场景包括"代码仓对外提供什么接口""对外接口""外部接口""服务暴露的接口""接口清单""接口盘点""接口文档"等。
 
 ### 9. biz-lexicon-analyze
-提取存量代码仓的领域词典资产——业务与代码共用的受控词汇集（术语释义、语境边界、代码命名映射），从对外接口文档/请求响应模型、DB 实体注释、事件模型、错误码定义、常量定义五类来源归集术语，按「子域 × 术语类型」两级组织（一级按代码功能域划分子域、子域内按实体与业务概念/常量与状态枚举/错误码/事件四类分组），**按业务子域拆分多篇成文**：主文档 lexicon.md（说明/全仓待确认清单/子域导航/「通用」节）+ 每功能域 1 篇 lexicon-{子域锚点}.md，落盘被分析仓的 docs/biz/lexicon/。当需要统一业务与代码的术语口径、沉淀受控词汇、梳理同名异义与同义异名、为新人上手/需求评审/AI 编码提供词汇基线时使用。触发场景包括"领域词典"、"术语表"、"词汇表"、"统一语言"、"术语口径"、"名词解释"、"这个业务词在代码里叫什么"、"lexicon"、"glossary"、"ubiquitous language"等。
+提取存量代码仓的领域词典资产——业务与代码共用的受控词汇集（术语释义、语境边界、代码命名映射），从对外接口文档/请求响应模型、DB 实体注释、事件模型、错误码定义、常量定义五类来源归集术语，按「子域 × 术语类型」两级组织（一级按代码功能域划分子域、子域内按实体与业务概念/常量与状态枚举/错误码/事件四类分组），**按业务子域拆分多篇成文**：主文档 README.md（说明/全仓待确认清单/子域导航/「通用」节）+ 每功能域 1 篇 lexicon-{子域锚点}.md，落盘被分析仓的 docs/biz/lexicon/。当需要统一业务与代码的术语口径、沉淀受控词汇、梳理同名异义与同义异名、为新人上手/需求评审/AI 编码提供词汇基线时使用。触发场景包括"领域词典"、"术语表"、"词汇表"、"统一语言"、"术语口径"、"名词解释"、"这个业务词在代码里叫什么"、"lexicon"、"glossary"、"ubiquitous language"等。
 
 ### 10. biz-object-model-analyze
 分析存量代码仓的对象模型（实体、值对象、聚合、领域服务、领域事件），产出 UML 类图（mermaid classDiagram），落盘被分析仓的 docs/biz/object-model/object-model-{aggregate}.md（每聚合 1 篇）。用户指定聚合时只梳理该聚合；未指定时默认全量——扫描模型层与核心 service，按聚合根归集后逐聚合产出，不阻塞式询问。类图只画聚合内结构（关键属性与关联，方法省略）与聚合间引用方向，以代码中的结构体/类为准，禁止把 DB 表字段机械照抄成类图。当用户提到"对象模型"、"领域模型"、"实体"、"值对象"、"聚合"、"聚合根"、"领域服务"、"领域事件"、"类图"、"class diagram"、"object model"、"domain model"、"DDD"、"梳理 XX 聚合"、"画一下领域对象"、"实体建模"时使用。务必在生成任何领域对象/实体类图文档之前使用此 skill。
@@ -79,7 +79,7 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 分析存量代码仓中的基础框架（RPC、线程池、Actor、日志、序列化、配置、依赖注入、存储/ORM、消息队列、调度、资源池、容错治理、监控、基础库、测试框架等）及其使用方式，提取"框架使用现状"资产（基础框架清单与使用方式盘点，纯现状、无规范文档），落盘被分析仓的 docs/tech/usage/：索引 README.md + 每框架一篇 usage-{framework}.md（含用途定位、使用模式）。当需要盘点代码仓技术栈、梳理框架使用模式与调用点分布、为 AI 代码生成沉淀"框架使用知识"、或为重构/迁移/新人上手提供框架使用文档时使用。触发场景包括"框架使用现状"、"技术栈盘点"、"框架使用"、"用了哪些框架"、"XX 框架怎么用"、"线程池怎么用"、"RPC 怎么调的"、"framework usage"、"tech stack"等。
 
 ### 24. code-generate
-规格化全链路主流程编排 skill——资产检查/录入 → 需求审核(spec-audit 场景 1) → story 设计(spec-story-design) → 代码实现与测试 → 资产刷新(all-update)，五步端到端。主代理只做编排与用户确认，各步骤派子代理执行。触发场景包括"code-generate"、"代码生成"、"端到端开发 xx 功能"、"从需求到交付"、"全流程开发"等。
+规格化全链路主流程编排 skill——资产检查/录入 → 需求审核(spec-audit 场景 1) → story 设计(spec-story-design) → 代码实现与测试 → 资产刷新(all-update) → 全链路分析报告（docs/code-generate-report/），六步端到端。主代理只做编排与用户确认，各步骤派子代理执行。触发场景包括"code-generate"、"代码生成"、"端到端开发 xx 功能"、"从需求到交付"、"全流程开发"等。
 
 ## 推荐工作流（spec 全链路）
 
@@ -88,13 +88,13 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 **四域资产治理（arch / biz / tech / qual + 横向 all，新体系）**
 
 1. **资产骨架初始化（一次性）** → all-init：初始化 docs/{域}/{资产}/ 目录骨架（每类资产一个单独目录），一次性迁移既有产出，迁移映射清单先交用户确认
-2. **结构摸底** → arch-structure-model-analyze：UML 包图 + 依赖矩阵 + 分层特征，落盘 docs/arch/structure-model/（仓级总览 structure-model.md + 每模块 structure-model-{module}.md）
+2. **结构摸底** → arch-structure-model-analyze：UML 包图 + 依赖矩阵 + 分层特征，落盘 docs/arch/structure-model/（仓级总览 README.md + 每模块 structure-model-{module}.md）
 3. **交互模型提取（默认全部流程，可指定单流程）** → arch-interaction-model-analyze：UML 时序图呈现模块间主业务流程与消息走向，只画主链路，落盘 docs/arch/interaction-model/interaction-model-{flow}.md
 4. **对外接口盘点** → biz-interface-analyze：按功能域聚类，主文档 README + interface-{feature}.md，落盘 docs/biz/interface/
 5. **业务规则梳理** → biz-rules-analyze：按需求类整理"条件 → 动作 + 依据"规则条目，rules-{feature}.md，落盘 docs/biz/rules/
 6. **对象模型** → biz-object-model-analyze：实体/值对象/聚合/领域服务/领域事件（UML 类图），object-model-{aggregate}.md，落盘 docs/biz/object-model/
 7. **数据模型** → biz-data-model-analyze：持久态表结构/缓存数据结构/字段关系与数据生命周期（UML-ER），data-model-{entity}.md，落盘 docs/biz/data-model/
-8. **领域词典** → biz-lexicon-analyze：业务与代码共用的受控词汇集（术语释义 + 语境边界 + 代码命名映射），主文档 lexicon.md + 每功能域 1 篇 lexicon-{feature}.md，落盘 docs/biz/lexicon/
+8. **领域词典** → biz-lexicon-analyze：业务与代码共用的受控词汇集（术语释义 + 语境边界 + 代码命名映射），主文档 README.md + 每功能域 1 篇 lexicon-{feature}.md，落盘 docs/biz/lexicon/
 9. **框架使用现状** → tech-usage-analyze：基础框架清单与使用方式盘点（纯现状提取），usage-{framework}.md 每框架一篇，落盘 docs/tech/usage/
 10. **通信规范** → tech-comm-guidelines-analyze：RPC/HTTP/MQ 跨服务调用指导（双模式：现状提取 + 差距分析），comm-guidelines-{service}.md 每外部服务一篇
 11. **并发规范** → tech-concurrency-guidelines-analyze：线程池选型/隔离/拒绝策略，concurrency-guidelines-{pool}.md 每线程池一篇
@@ -113,7 +113,7 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 
 22. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
 23. **需求到 story 设计** → spec-story-design：产出 docs/storys/{功能名}-story.md（八类核心要素组织，标注新增/变更/不涉及）+ develop-task
-24. **全链路编排（端到端主流程，推荐入口）** → code-generate：资产检查/录入 → 需求审核（spec-audit 场景 1）→ story 设计 → 代码实现与测试 → 资产刷新（all-update），主代理编排与用户确认、各步骤派子代理执行
+24. **全链路编排（端到端主流程，推荐入口）** → code-generate：资产检查/录入 → 需求审核（spec-audit 场景 1）→ story 设计 → 代码实现与测试 → 资产刷新（all-update）→ 全链路分析报告（docs/code-generate-report/ 归档加载文档清单/代码修改清单/闭环核对/环节健康度），主代理编排与用户确认、各步骤派子代理执行
 
 ## 红线（这些想法意味着你正在跳过 skill）
 
@@ -134,7 +134,7 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 | "MR 合了，看看文档要不要改" | all-update 定义了 git 变更驱动的资产刷新流程，先加载它 |
 | "把分析 skill 挨个手动跑一遍" | all-analyze 定义了子代理并行的一键全量分析编排，先加载它 |
 | "这批文档质量怎么样" | spec-audit 定义了分轨质量评估与评分分级，先加载它 |
-| "从需求到交付，一条龙做了" | code-generate 定义了五步全链路编排与子代理分工，先加载它 |
+| "从需求到交付，一条龙做了" | code-generate 定义了六步全链路编排与子代理分工，先加载它 |
 | "这个 skill 太重，我快速做" | 如果 skill 存在，就必须用 |
 | "我记得这个 skill 的内容" | skill 会演进，每次都要重新加载当前版本 |
 

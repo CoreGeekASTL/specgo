@@ -94,7 +94,8 @@ description: >-
 - 输出到**被分析代码仓根目录**的 `docs/biz/object-model/object-model-{aggregate}.md`；目录不存在则创建（连同 `docs/` 一起创建）。
 - `{aggregate}` 实例 slug **从代码标识符派生**：取聚合根类名/结构体名转 kebab-case，如 `Order` → `order`、`AuthSession` → `auth-session`；禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。聚合的中文名只进文档标题，不进文件名。
 - 同名文件已存在**直接覆盖更新**——模型文档是活文档，固定名、覆盖更新，git diff 即演进史。
-- 本 skill 不维护索引：`docs/biz/README.md` 域索引与总索引 `docs/README.md` 由 all-index 统一生成。
+- **资产主文档 `README.md` 必产出**：同目录落 `README.md`（活文档，同名覆盖），内容仅两项——元信息表（分支/更新日期/Skill）+ 聚合导航表（聚合名 → `object-model-{aggregate}.md` 链接 + 聚合根 + 一句话说明，从各文档首行标题提取）；单聚合模式（用户指定聚合）时同样刷新该 README，只增改对应行。
+- 索引分工：本资产目录的 `README.md` 由本 skill 产出；域索引 `docs/biz/README.md` 与总索引 `docs/README.md` 由 all-index 统一生成，本 skill 不维护。
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
 
@@ -123,7 +124,7 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - **语言无关**：不预设被分析仓的语言/框架，按第 1 步实际探测结果走。
 - **实例 slug 从代码标识符派生**：`{aggregate}` 取聚合根类名/结构体名转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
 - **活文档覆盖更新**：`docs/biz/object-model/` 下模型文档同名直接覆盖，不保留历史副本、不加日期后缀——差距报告才带日期，模型文档不带。
-- **不维护索引**：本 skill 不产出 README/索引文件——域索引 `docs/biz/README.md` 与总索引 `docs/README.md` 由 all-index skill 统一生成。
+- **索引分工**：本资产目录的 `README.md`（聚合导航主文档）由本 skill 产出，活文档同名覆盖；域索引 `docs/biz/README.md` 与总索引 `docs/README.md` 由 all-index skill 统一生成，本 skill 不维护。
 - **成品纯净**：最终文档只含成品内容（标题、概述、图、表格、补充说明）。模板顶部的元说明、写作指令行、占位符说明均为规则，不复制进成品。第 1~2 步的探测过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格，且**证据不得含代码行号**。
 - **文档语言**：输出文档用中文，技术术语（Entity / Value Object / Aggregate Root / Domain Service / Domain Event 等）保留英文。
 
