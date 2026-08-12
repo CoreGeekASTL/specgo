@@ -6,7 +6,7 @@
 | 检查日期 | <YYYY-MM-DD> |
 | Skill | tech-foundation-guidelines-analyze |
 | 运行模式 | 差距分析模式 |
-| 对照规范 | <规范文档路径：docs/tech/foundation-guidelines/foundation-guidelines.md，或用户提供的规范文件路径> |
+| 对照规范 | <规范文档路径：docs/tech/foundation-guidelines/（README.md + foundation-guidelines-*.md），或用户提供的规范文件路径> |
 
 ## 结论概览
 
@@ -95,4 +95,4 @@
 |---|---|
 | <规范条目编号 + 摘要> | <代码中找不到对应该条目的任何实现点> |
 
-<!-- 增补机制按同样结构追加「## <机制名>」一节，核查维度取该机制规范条目对应的维度；某类无内容时该小节写「无」而非删除标题。 -->
+<!-- 增补维度按同样结构追加「## <维度名>」一节，核查维度取该维度规范条目对应的维度；某类无内容时该小节写「无」而非删除标题。差距报告为仓级单篇次抛件，不按维度拆分文件。 -->

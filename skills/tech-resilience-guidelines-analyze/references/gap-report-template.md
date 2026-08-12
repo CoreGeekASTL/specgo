@@ -6,7 +6,7 @@
 | 检查日期 | <YYYY-MM-DD> |
 | Skill | tech-resilience-guidelines-analyze |
 | 运行模式 | 差距分析模式 |
-| 对照规范 | <规范文档路径：docs/tech/resilience-guidelines/resilience-guidelines.md，或用户提供的规范文件路径> |
+| 对照规范 | <规范文档路径：docs/tech/resilience-guidelines/（README.md + resilience-guidelines-*.md），或用户提供的规范文件路径> |
 
 ## 结论概览
 
@@ -44,4 +44,4 @@
 |---|---|
 | <规范条目摘要> | <代码中找不到对应该条目的任何点位> |
 
-<!-- 逐策略重复「## <策略名>」一节，顺序固定为：超时 → 重试 → 熔断与降级 → panic/recover 兜底 → 错误 swallowing；某小节无内容时写「无」而非删除标题。 -->
+<!-- 逐维度重复「## <维度名>」一节，顺序固定为：超时 → 重试 → 熔断与降级 → panic/recover 兜底 → 错误 swallowing；某小节无内容时写「无」而非删除标题。差距报告为仓级单篇次抛件，不按维度拆分文件。 -->

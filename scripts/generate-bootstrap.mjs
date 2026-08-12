@@ -103,8 +103,8 @@ ${indexMd}
 10. **通信规范** → tech-comm-guidelines-analyze：RPC/HTTP/MQ 跨服务调用指导（双模式：现状提取 + 差距分析），comm-guidelines-{service}.md 每外部服务一篇
 11. **并发规范** → tech-concurrency-guidelines-analyze：线程池选型/隔离/拒绝策略，concurrency-guidelines-{pool}.md 每线程池一篇
 12. **数据访问规范** → tech-data-access-guidelines-analyze：Redis/DB 等中间件访问指导，data-access-guidelines-{mw}.md 每中间件一篇
-13. **韧性规范** → tech-resilience-guidelines-analyze：超时/重试/熔断/异常处理，resilience-guidelines.md 仓级单篇
-14. **基础规范** → tech-foundation-guidelines-analyze：日志/配置/告警等编码指导，foundation-guidelines.md 仓级单篇
+13. **韧性规范** → tech-resilience-guidelines-analyze：超时/重试/熔断/异常处理，README 索引 + resilience-guidelines-{dimension}.md 每维度一篇
+14. **基础规范** → tech-foundation-guidelines-analyze：日志/配置/告警等编码指导，README 索引 + foundation-guidelines-{dimension}.md 每维度一篇
 15. **编码规范（门禁）** → qual-code-standards-analyze：命名/注释/函数长度/圈复杂度/安全编码红线/禁止项清单，code-standards.md + report/ 门禁差距报告
 16. **DT 规范（门禁）** → qual-dt-guidelines-analyze：测试金字塔与覆盖基线、用例设计、覆盖率门禁，dt-guidelines.md + report/
 17. **分支与变更规范** → qual-branch-guidelines-analyze：分支模型、commit/MR 规范、评审要求，branch-guidelines.md

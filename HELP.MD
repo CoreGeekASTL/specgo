@@ -74,8 +74,8 @@
 | `tech-usage-analyze` | 框架使用现状 | 基础框架清单与使用方式盘点（无规范文档，纯现状） | 每框架 1 篇 | `usage-{framework}.md` | 提取 | P0 |
 | `tech-concurrency-guidelines-analyze` | 并发规范 | 线程池选型、隔离、拒绝策略 | 每线程池 1 篇 | `concurrency-guidelines-{pool}.md` | 双模式 | P0 |
 | `tech-data-access-guidelines-analyze` | 数据访问规范 | Redis/DB 等中间件访问指导 | 每中间件 1 篇 | `data-access-guidelines-{mw}.md` | 双模式 | P1 |
-| `tech-resilience-guidelines-analyze` | 韧性规范 | 超时/重试/熔断/异常处理（只管故障策略） | 仓级单篇 | `resilience-guidelines.md` | 双模式 | P1 |
-| `tech-foundation-guidelines-analyze` | 基础规范 | 日志/配置/告警等编码指导 | 仓级单篇 | `foundation-guidelines.md` | 双模式 | P1 |
+| `tech-resilience-guidelines-analyze` | 韧性规范 | 超时/重试/熔断/异常处理（只管故障策略） | 每维度 1 篇 | `resilience-guidelines-{dimension}.md` | 双模式 | P1 |
+| `tech-foundation-guidelines-analyze` | 基础规范 | 日志/配置/告警等编码指导 | 每维度 1 篇 | `foundation-guidelines-{dimension}.md` | 双模式 | P1 |
 
 ### 2.4 工程要素（qual）—— 定规矩：写到什么程度才算合格
 
@@ -113,7 +113,7 @@ docs/README.md                                     ← 总索引 + 依赖全景�
 规则：
 
 1. **同域不同资产不混放**：资产目录内只放本资产的文档及其 `report/` 子目录；
-2. **单文件资产同样独占目录**（lexicon、resilience-guidelines、foundation-guidelines、code-standards、dt-guidelines、branch-guidelines），目录内仅一个同名 md——目录即资产身份，新增多实例时无需迁移；
+2. **单文件资产同样独占目录**（lexicon、code-standards、dt-guidelines、branch-guidelines），目录内仅一个同名 md——目录即资产身份，新增多实例时无需迁移；
 3. **多文件资产**可在目录内置 `README.md` 作为主文档/索引（如接口资产的全景图主文档），是否产出按各 SKILL.md 约定；
 4. **文件名不变**：本次仅调整目录层级，各资产文件名沿用第 2 章表格「输出文件」列，保证既有链接与重跑同名覆盖语义不断代。
 
@@ -154,9 +154,11 @@ docs/
 │   ├── data-access-guidelines/
 │   │   └── data-access-guidelines-{mw}.md   ← 每中间件 1 篇
 │   ├── resilience-guidelines/
-│   │   └── resilience-guidelines.md         ← 仓级单篇
+│   │   ├── README.md                        ← 扫描范围总览 + 维度导航
+│   │   └── resilience-guidelines-{dimension}.md ← 每维度 1 篇
 │   └── foundation-guidelines/
-│       └── foundation-guidelines.md         ← 仓级单篇
+│       ├── README.md                        ← 机制全景索引
+│       └── foundation-guidelines-{dimension}.md ← 每维度 1 篇
 └── qual/
     ├── README.md
     ├── code-standards/

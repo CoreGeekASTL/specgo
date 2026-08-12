@@ -96,8 +96,8 @@ skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arc
 | tech-comm-guidelines-analyze | 通信规范：RPC/HTTP/MQ 跨服务调用指导（协议与封装归此，故障策略归韧性）；双模式：提取 + 差距分析 | `docs/tech/comm-guidelines/`：README + comm-guidelines-{service}.md 每外部服务一篇；差距报告 report/{YYYYMMDD}-comm-guidelines.md |
 | tech-concurrency-guidelines-analyze | 并发规范：线程池选型、池间隔离、容量/队列配置、拒绝策略；双模式 | `docs/tech/concurrency-guidelines/`：concurrency-guidelines-{pool}.md 每线程池/原语一篇 + report/ |
 | tech-data-access-guidelines-analyze | 数据访问规范：Redis/DB 等中间件访问指导（连接管理、事务、分页批量、SQL 注入防护、缓存读写模式）；双模式 | `docs/tech/data-access-guidelines/`：data-access-guidelines-{mw}.md 每中间件一篇 + report/ |
-| tech-resilience-guidelines-analyze | 韧性规范：超时/重试/熔断降级/异常处理等故障策略；双模式 | `docs/tech/resilience-guidelines/`：resilience-guidelines.md 仓级单篇 + report/ |
-| tech-foundation-guidelines-analyze | 基础规范：日志/配置/告警等横切编码机制的编码指导；双模式 | `docs/tech/foundation-guidelines/`：foundation-guidelines.md 仓级单篇 + report/ |
+| tech-resilience-guidelines-analyze | 韧性规范：超时/重试/熔断降级/异常处理等故障策略；双模式 | `docs/tech/resilience-guidelines/`：README 索引 + resilience-guidelines-{dimension}.md 每维度一篇 + report/ |
+| tech-foundation-guidelines-analyze | 基础规范：日志/配置/告警等横切编码机制的编码指导；双模式 | `docs/tech/foundation-guidelines/`：README 索引 + foundation-guidelines-{dimension}.md 每维度一篇 + report/ |
 
 ### 工程要素（qual）—— 定规矩：写到什么程度才算合格
 
