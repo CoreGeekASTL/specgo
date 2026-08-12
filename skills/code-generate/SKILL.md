@@ -18,7 +18,7 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 ## 第 1 步：资产检查与录入/刷新
 
-1. 探测四类核心资产目录：`docs/` 下——`biz/interface/`、`tech/usage/`、`tech/comm-guidelines/`、`arch/structure-model/`（structure-model*.md）。
+1. 探测四类核心资产目录：`docs/` 下——`biz/interface/`、`tech/usage/`、`tech/comm-guidelines/`、`arch/structure-model/`（README.md 仓级总览 + structure-model-*.md）。
    - 需要全套 16 类资产（含 rules/object-model/data-model/lexicon 等）时，改派 all-analyze 子代理做一键全量分析，本步后续小步跳过。
    - `docs/business/` 旧体系资产目录（story/key-class/data-structure 等）如存在仅作"外部文档引用"素材，不再探测录入（对应旧分析 skill 已删除）。
 2. 分支：

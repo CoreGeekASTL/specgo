@@ -1,6 +1,6 @@
 ---
 name: tech-data-access-guidelines-analyze
-description: 治理存量代码仓的数据访问规范资产（Redis/DB 等数据访问中间件的访问指导：连接与客户端管理、事务使用、分页与批量、SQL 拼接与注入防护、缓存读写模式、错误处理），双模式运行——起草模式识别仓内数据访问中间件（关系库/ORM、Redis、本地嵌入式存储、对象存储、文件系统等），逐中间件盘点访问方式并起草规范（用途定位 + 访问点分布表 + 现状描述与应有约定）；差距分析模式对照既有规范扫描实际访问的合规差距。产出落盘被分析仓的 docs/tech/data-access-guidelines/：每中间件一篇 data-access-guidelines-{mw}.md；差距报告落盘 docs/tech/data-access-guidelines/report/{YYYYMMDD}-data-access-guidelines.md。当用户提到"数据访问规范"、"Redis 使用规范"、"DB 访问指导"、"数据库访问规范"、"缓存读写模式"、"缓存穿透"、"SQL 注入防护"、"事务使用盘点"、"ORM 怎么用"、"data access guidelines"、"数据访问差距分析"、"对照数据访问规范检查"时使用。
+description: 治理存量代码仓的数据访问规范资产（Redis/DB 等数据访问中间件的访问指导：连接与客户端管理、事务使用、分页与批量、SQL 拼接与注入防护、缓存读写模式、错误处理），双模式运行——起草模式识别仓内数据访问中间件（关系库/ORM、Redis、本地嵌入式存储、对象存储、文件系统等），逐中间件盘点访问方式并起草规范（用途定位 + 访问点分布表 + 现状描述与应有约定）；差距分析模式对照既有规范扫描实际访问的合规差距。产出落盘被分析仓的 docs/tech/data-access-guidelines/：README.md 中间件导航主文档 + 每中间件一篇 data-access-guidelines-{mw}.md；差距报告落盘 docs/tech/data-access-guidelines/report/{YYYYMMDD}-data-access-guidelines.md。当用户提到"数据访问规范"、"Redis 使用规范"、"DB 访问指导"、"数据库访问规范"、"缓存读写模式"、"缓存穿透"、"SQL 注入防护"、"事务使用盘点"、"ORM 怎么用"、"data access guidelines"、"数据访问差距分析"、"对照数据访问规范检查"时使用。
 ---
 
 # 数据访问规范分析（tech-data-access-guidelines-analyze）

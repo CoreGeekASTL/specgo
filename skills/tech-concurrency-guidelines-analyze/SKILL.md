@@ -1,6 +1,6 @@
 ---
 name: tech-concurrency-guidelines-analyze
-description: 治理存量代码仓的并发规范资产（线程池选型、池间隔离、容量/队列配置、拒绝策略——仓内有哪些线程池与并发原语、每个池怎么用、是否符合既定并发规范），双模式运行——起草模式（仓内无规范时）盘点仓内并发原语（线程池/ExecutorService、goroutine 启动点、锁 Mutex/RWMutex、channel、Actor 模型、定时任务并发），按池/原语实例归集成文，每篇含用途定位、容量/队列/拒绝策略现状、线程模型图（可选 mermaid）与应有约定建议（严格区分"建议"与"代码现状"）；差距分析模式（仓内已有规范或用户给定规范文档时）对照规范逐项核查实际并发用法的合规差距。产出落盘被分析仓的 docs/tech/concurrency-guidelines/：每线程池/原语实例一篇 concurrency-guidelines-{pool}.md；差距报告落盘 docs/tech/concurrency-guidelines/report/{YYYYMMDD}-concurrency-guidelines.md。当用户提到"并发规范"、"线程池"、"线程池选型"、"池隔离"、"拒绝策略"、"并发原语盘点"、"goroutine 启动点"、"锁使用"、"channel"、"Actor"、"定时任务并发"、"concurrency guidelines"、"thread pool"时使用。
+description: 治理存量代码仓的并发规范资产（线程池选型、池间隔离、容量/队列配置、拒绝策略——仓内有哪些线程池与并发原语、每个池怎么用、是否符合既定并发规范），双模式运行——起草模式（仓内无规范时）盘点仓内并发原语（线程池/ExecutorService、goroutine 启动点、锁 Mutex/RWMutex、channel、Actor 模型、定时任务并发），按池/原语实例归集成文，每篇含用途定位、容量/队列/拒绝策略现状、线程模型图（可选 mermaid）与应有约定建议（严格区分"建议"与"代码现状"）；差距分析模式（仓内已有规范或用户给定规范文档时）对照规范逐项核查实际并发用法的合规差距。产出落盘被分析仓的 docs/tech/concurrency-guidelines/：README.md 实例导航主文档 + 每线程池/原语实例一篇 concurrency-guidelines-{pool}.md；差距报告落盘 docs/tech/concurrency-guidelines/report/{YYYYMMDD}-concurrency-guidelines.md。当用户提到"并发规范"、"线程池"、"线程池选型"、"池隔离"、"拒绝策略"、"并发原语盘点"、"goroutine 启动点"、"锁使用"、"channel"、"Actor"、"定时任务并发"、"concurrency guidelines"、"thread pool"时使用。
 ---
 
 # 并发规范分析（tech-concurrency-guidelines-analyze）

@@ -22,13 +22,13 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 基于 git 变更（工作区未提交改动 / 指定 commit / 分支或 MR diff）识别代码原始内容变化，结合新增代码审视 docs/ 资产体系中对应文档是否需要刷新，并按最新要素定义（arch/biz/tech/qual 各 analyze skill 的目录布局、文件命名、模板骨架、组织规则）增量刷新受影响文档——变更文件映射到资产要素、逐资产判定影响（受影响 / 不受影响 / 资产未建），刷新清单先交人工确认再动笔定稿；索引资产（docs/{域}/README.md、docs/README.md）随资产增删按 all-index 口径收口。当代码提交或 MR 合入后需要评估"这次变更要更新哪些 docs 文档""资产是否过期""按最新定义同步文档"时使用。触发场景包括"all-update"、"资产刷新"、"刷新 docs"、"代码改了哪些文档要更新"、"变更影响分析"、"文档同步"、"docs 与代码不同步"、"MR 后刷新文档"、"git diff 刷新资产"等。
 
 ### 5. arch-interaction-model-analyze
-分析存量代码仓业务流程的交互模型（模块间主业务流程、消息走向），产出 UML 时序图（mermaid），落盘被分析仓的 docs/arch/interaction-model/interaction-model-{flow}.md（每业务流程 1 篇）。用户指明流程时只梳理该流程；未指明时默认枚举仓内全部业务流程逐篇产出，不阻塞式询问。只画主链路，分支与异常逻辑不画入图——归业务规则资产承载。当用户提到"交互模型"、"模块交互"、"消息走向"、"时序图"、"调用链"、"梳理 XX 业务流程"、"XX 流程是怎么走的"、"画一下 XX 流程"、"把 XX 流程落成文档"、"梳理全部业务流程"、"interaction model"、"sequence diagram"时使用。务必在生成任何模块交互/流程时序文档之前使用此 skill。
+分析存量代码仓业务流程的交互模型（模块间主业务流程、消息走向），产出 UML 时序图（mermaid），落盘被分析仓的 docs/arch/interaction-model/：README.md 流程导航主文档 + interaction-model-{flow}.md（每业务流程 1 篇）。用户指明流程时只梳理该流程；未指明时默认枚举仓内全部业务流程逐篇产出，不阻塞式询问。只画主链路，分支与异常逻辑不画入图——归业务规则资产承载。当用户提到"交互模型"、"模块交互"、"消息走向"、"时序图"、"调用链"、"梳理 XX 业务流程"、"XX 流程是怎么走的"、"画一下 XX 流程"、"把 XX 流程落成文档"、"梳理全部业务流程"、"interaction model"、"sequence diagram"时使用。务必在生成任何模块交互/流程时序文档之前使用此 skill。
 
 ### 6. arch-structure-model-analyze
 分析存量代码仓的结构模型（模块划分、分层、职责与依赖关系），产出 UML 包图（mermaid）+ 依赖矩阵，落盘被分析仓的 docs/arch/structure-model/：仓级总览 README.md + 每模块 structure-model-{module}.md。当用户提到"代码仓结构"、"结构模型"、"目录关系"、"模块依赖图"、"画一下项目结构"、"梳理目录关系"、"生成结构文档"、"第一层目录"、"包之间依赖"、"repo structure"、"structure model"、"module relationship"、"项目摸底"、"架构摸底"时使用。即使用户没明说"结构模型"，只要意图是"看清一个代码仓第一层目录之间、或某目录下包与包之间的依赖关系并出图"，都应触发。务必在生成任何代码仓结构文档之前使用此 skill。
 
 ### 7. biz-data-model-analyze
-分析存量代码仓的数据模型资产（持久态表结构、缓存数据结构、字段关系与数据生命周期），产出 UML-ER 图（mermaid erDiagram）+ 字段表 + 生命周期说明，落盘被分析仓的 docs/biz/data-model/data-model-{entity}.md（每数据实体 1 篇）。用户指明实体时只梳理该实体；未指明时默认全量——扫描建表 SQL（CREATE TABLE）、ORM entity 注册（TableName/RegisterModel）与关键缓存结构体，逐实体产出，不阻塞式询问。逻辑关联无 DB 约束时标注"代码未体现物理外键"。当用户提到"数据模型"、"表结构"、"ER 图"、"数据库设计"、"字段说明"、"数据字典"、"梳理 XX 表"、"数据生命周期"、"缓存数据结构"、"TTL"、"data model"、"ER diagram"、"schema 文档"时使用。务必在生成任何表结构/ER 图/数据字典类文档之前使用此 skill。
+分析存量代码仓的数据模型资产（持久态表结构、缓存数据结构、字段关系与数据生命周期），产出 UML-ER 图（mermaid erDiagram）+ 字段表 + 生命周期说明，落盘被分析仓的 docs/biz/data-model/：README.md 实体导航主文档 + data-model-{entity}.md（每数据实体 1 篇）。用户指明实体时只梳理该实体；未指明时默认全量——扫描建表 SQL（CREATE TABLE）、ORM entity 注册（TableName/RegisterModel）与关键缓存结构体，逐实体产出，不阻塞式询问。逻辑关联无 DB 约束时标注"代码未体现物理外键"。当用户提到"数据模型"、"表结构"、"ER 图"、"数据库设计"、"字段说明"、"数据字典"、"梳理 XX 表"、"数据生命周期"、"缓存数据结构"、"TTL"、"data model"、"ER diagram"、"schema 文档"时使用。务必在生成任何表结构/ER 图/数据字典类文档之前使用此 skill。
 
 ### 8. biz-interface-analyze
 扫描存量代码仓**对外提供的接口**（服务自己暴露给外部调用的入口：HTTP 路由注册 / RPC service 注册 / 消息订阅 handler / IDL 契约），按功能域聚类，产出**一个主文档 + 多个子文档**：主文档 `README.md` 含接口全景与功能域索引，每个功能域一个子文档 `interface-{feature}.md`，子文档内列接口表格（接口名/作用/所在文件/方法/路径，**所在文件不带行号**），表格下方逐个说明该接口相关的请求与响应数据结构。落盘被分析仓的 `docs/biz/interface/`。当需要盘点代码仓对外提供哪些接口、梳理对外接口清单、为接口治理/接口文档/新人上手提供文档时使用。触发场景包括"代码仓对外提供什么接口""对外接口""外部接口""服务暴露的接口""接口清单""接口盘点""接口文档"等。
@@ -37,10 +37,10 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 提取存量代码仓的领域词典资产——业务与代码共用的受控词汇集（术语释义、语境边界、代码命名映射），从对外接口文档/请求响应模型、DB 实体注释、事件模型、错误码定义、常量定义五类来源归集术语，按「子域 × 术语类型」两级组织（一级按代码功能域划分子域、子域内按实体与业务概念/常量与状态枚举/错误码/事件四类分组），**按业务子域拆分多篇成文**：主文档 README.md（说明/全仓待确认清单/子域导航/「通用」节）+ 每功能域 1 篇 lexicon-{子域锚点}.md，落盘被分析仓的 docs/biz/lexicon/。当需要统一业务与代码的术语口径、沉淀受控词汇、梳理同名异义与同义异名、为新人上手/需求评审/AI 编码提供词汇基线时使用。触发场景包括"领域词典"、"术语表"、"词汇表"、"统一语言"、"术语口径"、"名词解释"、"这个业务词在代码里叫什么"、"lexicon"、"glossary"、"ubiquitous language"等。
 
 ### 10. biz-object-model-analyze
-分析存量代码仓的对象模型（实体、值对象、聚合、领域服务、领域事件），产出 UML 类图（mermaid classDiagram），落盘被分析仓的 docs/biz/object-model/object-model-{aggregate}.md（每聚合 1 篇）。用户指定聚合时只梳理该聚合；未指定时默认全量——扫描模型层与核心 service，按聚合根归集后逐聚合产出，不阻塞式询问。类图只画聚合内结构（关键属性与关联，方法省略）与聚合间引用方向，以代码中的结构体/类为准，禁止把 DB 表字段机械照抄成类图。当用户提到"对象模型"、"领域模型"、"实体"、"值对象"、"聚合"、"聚合根"、"领域服务"、"领域事件"、"类图"、"class diagram"、"object model"、"domain model"、"DDD"、"梳理 XX 聚合"、"画一下领域对象"、"实体建模"时使用。务必在生成任何领域对象/实体类图文档之前使用此 skill。
+分析存量代码仓的对象模型（实体、值对象、聚合、领域服务、领域事件），产出 UML 类图（mermaid classDiagram），落盘被分析仓的 docs/biz/object-model/：README.md 聚合导航主文档 + object-model-{aggregate}.md（每聚合 1 篇）。用户指定聚合时只梳理该聚合；未指定时默认全量——扫描模型层与核心 service，按聚合根归集后逐聚合产出，不阻塞式询问。类图只画聚合内结构（关键属性与关联，方法省略）与聚合间引用方向，以代码中的结构体/类为准，禁止把 DB 表字段机械照抄成类图。当用户提到"对象模型"、"领域模型"、"实体"、"值对象"、"聚合"、"聚合根"、"领域服务"、"领域事件"、"类图"、"class diagram"、"object model"、"domain model"、"DDD"、"梳理 XX 聚合"、"画一下领域对象"、"实体建模"时使用。务必在生成任何领域对象/实体类图文档之前使用此 skill。
 
 ### 11. biz-rules-analyze
-从存量代码仓提取业务规则资产——条件分支/参数校验/状态迁移/阈值常量/错误码/事务回滚等规则点，按需求类（功能域）整理"条件 → 动作 + 依据"规则条目表格，产出 rules-{feature}.md（每需求类 1 篇），落盘被分析仓的 docs/biz/rules/。用户指明功能域时只提取该域；未指明时默认以对外入口注册点（HTTP 路由/消息订阅/定时任务/IDL 契约）归集全部功能域逐域产出，不阻塞式询问。与交互模型互补：交互模型只画主链路，分支与异常逻辑归本资产承载。当用户提到"业务规则"、"规则提取"、"分支逻辑"、"校验规则"、"状态迁移"、"状态机"、"错误码规则"、"阈值"、"梳理 XX 的规则"、"XX 流程有哪些分支"、"XX 流程的异常处理"、"规则文档"、"business rules"时使用。务必在生成任何业务规则文档之前使用此 skill。
+从存量代码仓提取业务规则资产——条件分支/参数校验/状态迁移/阈值常量/错误码/事务回滚等规则点，按需求类（功能域）整理"条件 → 动作 + 依据"规则条目表格，产出 README.md 功能域导航主文档 + rules-{feature}.md（每需求类 1 篇），落盘被分析仓的 docs/biz/rules/。用户指明功能域时只提取该域；未指明时默认以对外入口注册点（HTTP 路由/消息订阅/定时任务/IDL 契约）归集全部功能域逐域产出，不阻塞式询问。与交互模型互补：交互模型只画主链路，分支与异常逻辑归本资产承载。当用户提到"业务规则"、"规则提取"、"分支逻辑"、"校验规则"、"状态迁移"、"状态机"、"错误码规则"、"阈值"、"梳理 XX 的规则"、"XX 流程有哪些分支"、"XX 流程的异常处理"、"规则文档"、"business rules"时使用。务必在生成任何业务规则文档之前使用此 skill。
 
 ### 12. qual-branch-guidelines-analyze
 治理存量代码仓的分支与变更规范资产（分支模型、commit/MR 规范、评审要求），双模式运行——起草模式从 git 历史提取现状（git branch -a 采样归纳分支命名形态、merge commit / squash / rebase 证据判定 merge 策略、git log 采样归纳 commit message 类型前缀/语言/长度分布、MR 评审痕迹），归纳现状后起草规范文档（现状描述与应有约定分节，约定标注「建议，待团队确认」）；差距分析模式对照规范检查近期 N 个 commit/分支的差距。产出落盘被分析仓的 docs/qual/branch-guidelines/：仓级单篇 branch-guidelines.md（活文档，同名覆盖更新）；差距报告落盘 docs/qual/branch-guidelines/report/{YYYYMMDD}-branch-guidelines.md（次抛，带日期）。当用户提到"分支规范"、"分支模型"、"分支命名规范"、"git flow"、"commit 规范"、"commit message 规范"、"MR 规范"、"合并请求规范"、"评审要求"、"merge 策略"、"squash merge"、"rebase 还是 merge"、"branch guidelines"、"分支规范差距分析"、"对照分支规范检查"时使用。
@@ -52,7 +52,7 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 治理存量代码仓的 DT 规范资产（开发者测试规范：测试金字塔与覆盖基线、用例设计方法（等价类/边界值）、自测报告要求、新增代码覆盖率门禁），双模式运行——起草模式盘点仓内测试现状（测试文件分布：单测/集成/E2E，测试框架、Mock 工具、覆盖率工具与当前覆盖率，CI 测试关卡）并据此起草规范，新增代码覆盖率门禁线从现状实测给建议值并标注"建议值，待团队确认"；差距分析模式对照规范扫描差距（重点：新增代码无测试、覆盖率低于门禁线），覆盖率红线违反单独成节供 CI 门禁。产出落盘被分析仓的 docs/qual/dt-guidelines/dt-guidelines.md（仓级单篇活文档）；差距报告落盘 docs/qual/dt-guidelines/report/{YYYYMMDD}-dt-guidelines.md。当用户提到"DT 规范"、"开发者测试规范"、"测试金字塔"、"覆盖率基线"、"新增代码覆盖率门禁"、"覆盖率门禁线"、"用例设计方法"、"等价类"、"边界值"、"自测报告"、"测试现状盘点"、"单元测试覆盖率"、"DT guidelines"、"测试覆盖率差距分析"、"对照 DT 规范检查"时使用。
 
 ### 15. spec-audit
-双场景文档质量 skill——场景 1「需求/功能设计审核」：基于多彩建模方法论审核 Spec/需求/功能设计文档的完备性（表述质量扫描：句子成分残缺/弱表述/术语失范/语义多解 + 业务逻辑断裂点 + 设计要素：时序图/验收用例/接口信息），三类问题一次扫描、统一 ask-human 批量澄清补齐，建模结果以 HTML 可视化呈现，审核完成后可选输出规范功能设计 md；场景 2「四类资产质量审核」：审核 docs/{arch,biz,tech,qual}/ 资产文档与索引，只做两个维度——表达质量（文字表达连续、人能读懂）与代码一致性（重点：锚点反查、接口/数据结构/出站调用与代码事实比对、mermaid 渲染校验），结论三档（失实/待修订/可信），报告归档 docs/report/（README.MD 总览 + 每篇一个 {文档基名}-audit.md，镜像 docs/ 相对路径，同名覆盖）；范围三种模式：指定单篇 / 增量（默认，只审受 git 变更影响的资产）/ 全量（四类资产全审）。触发场景包括"spec-audit"、"审核 spec 业务逻辑完备性"、"多彩建模"、"检查需求逻辑断点"、"需求表述质量检查"、"需求歧义扫描"、"建模结果生成 HTML 并找人确认"、"功能设计文档校验"、"资产质量评估"、"评估 docs 文档质量"、"文档与代码一致性检查"、"资产失实检查"等。
+双场景文档质量 skill——场景 1「需求/功能设计审核」：基于多彩建模方法论审核 Spec/需求/功能设计文档的完备性（表述质量扫描：句子成分残缺/弱表述/术语失范/语义多解 + 业务逻辑断裂点 + 设计要素：时序图/验收用例/接口信息），三类问题一次扫描、统一 ask-human 批量澄清补齐，建模结果以 HTML 可视化呈现，审核完成后可选输出规范功能设计 md；场景 2「四类资产质量审核」：审核 docs/{arch,biz,tech,qual}/ 资产文档与索引，只做两个维度——表达质量（文字表达连续、人能读懂）与代码一致性（重点：锚点反查、接口/数据结构/出站调用与代码事实比对、mermaid 渲染校验），结论三档（失实/待修订/可信），报告归档 docs/report/（README.md 总览 + 每篇一个 {文档基名}-audit.md，镜像 docs/ 相对路径，同名覆盖）；范围三种模式：指定单篇 / 增量（默认，只审受 git 变更影响的资产）/ 全量（四类资产全审）。触发场景包括"spec-audit"、"审核 spec 业务逻辑完备性"、"多彩建模"、"检查需求逻辑断点"、"需求表述质量检查"、"需求歧义扫描"、"建模结果生成 HTML 并找人确认"、"功能设计文档校验"、"资产质量评估"、"评估 docs 文档质量"、"文档与代码一致性检查"、"资产失实检查"等。
 
 ### 16. spec-mermaid-diagram
 指导如何编写可被正确渲染的 mermaid 图，并在本地验证渲染结果。当用户提到"mermaid"、"画图"、"流程图"、"时序图"、"架构图"、"依赖图"、"图渲染失败"、"图渲染不出来"、"验证 mermaid"、"mermaid 报错"时使用；任何产出物（文档/HTML）中包含 ```mermaid 代码块时，必须用本 skill 的验证流程确认每张图可被解析渲染后才能宣称完成。
@@ -64,10 +64,10 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 治理存量代码仓的通信规范资产（RPC/HTTP/MQ 等跨服务调用指导：本服务调用了哪些外部服务、协议与封装方式、超时重试与错误码处理），双模式运行——提取模式扫描仓内全部出站调用（HTTP 客户端 / RPC client / IDL client stub / 消息队列生产端 / 进程间通信 / 平台 SDK），按被调外部服务归类成文；差距分析模式对照既有通信规范文档核查实际调用的合规差距。产出落盘被分析仓的 docs/tech/comm-guidelines/：README 索引 + 每外部服务一篇 comm-guidelines-{service}.md；差距报告落盘 docs/tech/comm-guidelines/report/{YYYYMMDD}-comm-guidelines.md。当用户提到"通信规范"、"外部调用"、"下游接口"、"出站调用"、"调用了哪些外部服务"、"服务依赖盘点"、"跨服务调用指导"、"调用规范差距分析"、"对照通信规范检查"、"external call"、"comm guidelines"时使用。
 
 ### 19. tech-concurrency-guidelines-analyze
-治理存量代码仓的并发规范资产（线程池选型、池间隔离、容量/队列配置、拒绝策略——仓内有哪些线程池与并发原语、每个池怎么用、是否符合既定并发规范），双模式运行——起草模式（仓内无规范时）盘点仓内并发原语（线程池/ExecutorService、goroutine 启动点、锁 Mutex/RWMutex、channel、Actor 模型、定时任务并发），按池/原语实例归集成文，每篇含用途定位、容量/队列/拒绝策略现状、线程模型图（可选 mermaid）与应有约定建议（严格区分"建议"与"代码现状"）；差距分析模式（仓内已有规范或用户给定规范文档时）对照规范逐项核查实际并发用法的合规差距。产出落盘被分析仓的 docs/tech/concurrency-guidelines/：每线程池/原语实例一篇 concurrency-guidelines-{pool}.md；差距报告落盘 docs/tech/concurrency-guidelines/report/{YYYYMMDD}-concurrency-guidelines.md。当用户提到"并发规范"、"线程池"、"线程池选型"、"池隔离"、"拒绝策略"、"并发原语盘点"、"goroutine 启动点"、"锁使用"、"channel"、"Actor"、"定时任务并发"、"concurrency guidelines"、"thread pool"时使用。
+治理存量代码仓的并发规范资产（线程池选型、池间隔离、容量/队列配置、拒绝策略——仓内有哪些线程池与并发原语、每个池怎么用、是否符合既定并发规范），双模式运行——起草模式（仓内无规范时）盘点仓内并发原语（线程池/ExecutorService、goroutine 启动点、锁 Mutex/RWMutex、channel、Actor 模型、定时任务并发），按池/原语实例归集成文，每篇含用途定位、容量/队列/拒绝策略现状、线程模型图（可选 mermaid）与应有约定建议（严格区分"建议"与"代码现状"）；差距分析模式（仓内已有规范或用户给定规范文档时）对照规范逐项核查实际并发用法的合规差距。产出落盘被分析仓的 docs/tech/concurrency-guidelines/：README.md 实例导航主文档 + 每线程池/原语实例一篇 concurrency-guidelines-{pool}.md；差距报告落盘 docs/tech/concurrency-guidelines/report/{YYYYMMDD}-concurrency-guidelines.md。当用户提到"并发规范"、"线程池"、"线程池选型"、"池隔离"、"拒绝策略"、"并发原语盘点"、"goroutine 启动点"、"锁使用"、"channel"、"Actor"、"定时任务并发"、"concurrency guidelines"、"thread pool"时使用。
 
 ### 20. tech-data-access-guidelines-analyze
-治理存量代码仓的数据访问规范资产（Redis/DB 等数据访问中间件的访问指导：连接与客户端管理、事务使用、分页与批量、SQL 拼接与注入防护、缓存读写模式、错误处理），双模式运行——起草模式识别仓内数据访问中间件（关系库/ORM、Redis、本地嵌入式存储、对象存储、文件系统等），逐中间件盘点访问方式并起草规范（用途定位 + 访问点分布表 + 现状描述与应有约定）；差距分析模式对照既有规范扫描实际访问的合规差距。产出落盘被分析仓的 docs/tech/data-access-guidelines/：每中间件一篇 data-access-guidelines-{mw}.md；差距报告落盘 docs/tech/data-access-guidelines/report/{YYYYMMDD}-data-access-guidelines.md。当用户提到"数据访问规范"、"Redis 使用规范"、"DB 访问指导"、"数据库访问规范"、"缓存读写模式"、"缓存穿透"、"SQL 注入防护"、"事务使用盘点"、"ORM 怎么用"、"data access guidelines"、"数据访问差距分析"、"对照数据访问规范检查"时使用。
+治理存量代码仓的数据访问规范资产（Redis/DB 等数据访问中间件的访问指导：连接与客户端管理、事务使用、分页与批量、SQL 拼接与注入防护、缓存读写模式、错误处理），双模式运行——起草模式识别仓内数据访问中间件（关系库/ORM、Redis、本地嵌入式存储、对象存储、文件系统等），逐中间件盘点访问方式并起草规范（用途定位 + 访问点分布表 + 现状描述与应有约定）；差距分析模式对照既有规范扫描实际访问的合规差距。产出落盘被分析仓的 docs/tech/data-access-guidelines/：README.md 中间件导航主文档 + 每中间件一篇 data-access-guidelines-{mw}.md；差距报告落盘 docs/tech/data-access-guidelines/report/{YYYYMMDD}-data-access-guidelines.md。当用户提到"数据访问规范"、"Redis 使用规范"、"DB 访问指导"、"数据库访问规范"、"缓存读写模式"、"缓存穿透"、"SQL 注入防护"、"事务使用盘点"、"ORM 怎么用"、"data access guidelines"、"数据访问差距分析"、"对照数据访问规范检查"时使用。
 
 ### 21. tech-foundation-guidelines-analyze
 治理存量代码仓的基础规范资产（日志/配置/告警等横切编码机制的编码指导：日志级别使用/敏感信息脱敏/审计日志、配置读取方式/默认值处理/环境变量、告警 ID 使用/上报与恢复配对），双模式运行——起草模式盘点仓内基础编码机制使用现状，产出 README 索引 + 每维度一篇 foundation-guidelines-{dimension}.md（每篇含使用模式、调用点分布、应有约定建议）；差距分析模式对照既有基础规范逐维度逐条目核查合规差距。产出落盘被分析仓的 docs/tech/foundation-guidelines/：README.md + foundation-guidelines-{dimension}.md；差距报告落盘 docs/tech/foundation-guidelines/report/{YYYYMMDD}-foundation-guidelines.md。当用户提到"基础规范"、"日志规范"、"日志级别使用"、"敏感信息脱敏"、"审计日志"、"配置规范"、"配置读取方式"、"默认值处理"、"环境变量"、"告警规范"、"告警 ID"、"告警上报与恢复配对"、"对照基础规范检查"、"编码指导"、"foundation guidelines"时使用。
@@ -89,16 +89,16 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 
 1. **资产骨架初始化（一次性）** → all-init：初始化 docs/{域}/{资产}/ 目录骨架（每类资产一个单独目录），一次性迁移既有产出，迁移映射清单先交用户确认
 2. **结构摸底** → arch-structure-model-analyze：UML 包图 + 依赖矩阵 + 分层特征，落盘 docs/arch/structure-model/（仓级总览 README.md + 每模块 structure-model-{module}.md）
-3. **交互模型提取（默认全部流程，可指定单流程）** → arch-interaction-model-analyze：UML 时序图呈现模块间主业务流程与消息走向，只画主链路，落盘 docs/arch/interaction-model/interaction-model-{flow}.md
+3. **交互模型提取（默认全部流程，可指定单流程）** → arch-interaction-model-analyze：UML 时序图呈现模块间主业务流程与消息走向，只画主链路，落盘 docs/arch/interaction-model/（README.md 流程导航 + interaction-model-{flow}.md）
 4. **对外接口盘点** → biz-interface-analyze：按功能域聚类，主文档 README + interface-{feature}.md，落盘 docs/biz/interface/
-5. **业务规则梳理** → biz-rules-analyze：按需求类整理"条件 → 动作 + 依据"规则条目，rules-{feature}.md，落盘 docs/biz/rules/
-6. **对象模型** → biz-object-model-analyze：实体/值对象/聚合/领域服务/领域事件（UML 类图），object-model-{aggregate}.md，落盘 docs/biz/object-model/
-7. **数据模型** → biz-data-model-analyze：持久态表结构/缓存数据结构/字段关系与数据生命周期（UML-ER），data-model-{entity}.md，落盘 docs/biz/data-model/
+5. **业务规则梳理** → biz-rules-analyze：按需求类整理"条件 → 动作 + 依据"规则条目，README.md 功能域导航 + rules-{feature}.md，落盘 docs/biz/rules/
+6. **对象模型** → biz-object-model-analyze：实体/值对象/聚合/领域服务/领域事件（UML 类图），README.md 聚合导航 + object-model-{aggregate}.md，落盘 docs/biz/object-model/
+7. **数据模型** → biz-data-model-analyze：持久态表结构/缓存数据结构/字段关系与数据生命周期（UML-ER），README.md 实体导航 + data-model-{entity}.md，落盘 docs/biz/data-model/
 8. **领域词典** → biz-lexicon-analyze：业务与代码共用的受控词汇集（术语释义 + 语境边界 + 代码命名映射），主文档 README.md + 每功能域 1 篇 lexicon-{feature}.md，落盘 docs/biz/lexicon/
 9. **框架使用现状** → tech-usage-analyze：基础框架清单与使用方式盘点（纯现状提取），usage-{framework}.md 每框架一篇，落盘 docs/tech/usage/
 10. **通信规范** → tech-comm-guidelines-analyze：RPC/HTTP/MQ 跨服务调用指导（双模式：现状提取 + 差距分析），comm-guidelines-{service}.md 每外部服务一篇
-11. **并发规范** → tech-concurrency-guidelines-analyze：线程池选型/隔离/拒绝策略，concurrency-guidelines-{pool}.md 每线程池一篇
-12. **数据访问规范** → tech-data-access-guidelines-analyze：Redis/DB 等中间件访问指导，data-access-guidelines-{mw}.md 每中间件一篇
+11. **并发规范** → tech-concurrency-guidelines-analyze：线程池选型/隔离/拒绝策略，README.md 实例导航 + concurrency-guidelines-{pool}.md 每线程池一篇
+12. **数据访问规范** → tech-data-access-guidelines-analyze：Redis/DB 等中间件访问指导，README.md 中间件导航 + data-access-guidelines-{mw}.md 每中间件一篇
 13. **韧性规范** → tech-resilience-guidelines-analyze：超时/重试/熔断/异常处理，README 索引 + resilience-guidelines-{dimension}.md 每维度一篇
 14. **基础规范** → tech-foundation-guidelines-analyze：日志/配置/告警等编码指导，README 索引 + foundation-guidelines-{dimension}.md 每维度一篇
 15. **编码规范（门禁）** → qual-code-standards-analyze：命名/注释/函数长度/圈复杂度/安全编码红线/禁止项清单，code-standards.md + report/ 门禁差距报告
@@ -107,13 +107,13 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 18. **索引生成** → all-index：各域 README + docs/README.md 总索引 + 服务依赖全景图（Mermaid）
 19. **资产刷新（git 变更驱动）** → all-update：基于 git diff 识别变更对 docs/ 资产的影响，按最新要素定义增量刷新受影响文档，刷新清单人工确认后定稿
 20. **一键全量资产分析（编排入口）** → all-analyze：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），一次性建齐 docs/ 资产，all-index 收口
-21. **文档质量审核与评估** → spec-audit：场景 1 需求/功能设计审核（多彩建模 + 断点扫描 + ask-human 澄清 + HTML）；场景 2 docs/ 资产质量评估（A 轨 story 类澄清未清零不出分；B 轨 17 类资产要素 Linter 零容忍+专项维度 0-5 分），评分分级，报告归档 docs/report/（README.MD 整体评估 + 每篇一个打分报告，支持单篇更新/通篇全量）
+21. **文档质量审核与评估** → spec-audit：场景 1 需求/功能设计审核（多彩建模 + 断点扫描 + ask-human 澄清 + HTML）；场景 2 docs/ 资产质量评估（A 轨 story 类澄清未清零不出分；B 轨 17 类资产要素 Linter 零容忍+专项维度 0-5 分），评分分级，报告归档 docs/report/（README.md 整体评估 + 每篇一个打分报告，支持单篇更新/通篇全量）
 
 **需求到交付（旧体系保留链路）**
 
 22. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
 23. **需求到 story 设计** → spec-story-design：产出 docs/storys/{功能名}-story.md（八类核心要素组织，标注新增/变更/不涉及）+ develop-task
-24. **全链路编排（端到端主流程，推荐入口）** → code-generate：资产检查/录入 → 需求审核（spec-audit 场景 1）→ story 设计 → 代码实现与测试 → 资产刷新（all-update）→ 全链路分析报告（docs/code-generate-report/ 归档加载文档清单/代码修改清单/闭环核对/环节健康度），主代理编排与用户确认、各步骤派子代理执行
+24. **全链路编排（端到端主流程，推荐入口）** → code-generate：资产检查/录入 → 需求审核（spec-audit 场景 1）→ story 设计 → 代码实现与测试 → 资产刷新（all-update）→ 全链路分析报告（docs/code-generate-report/），主代理编排与用户确认、各步骤派子代理执行
 
 ## 红线（这些想法意味着你正在跳过 skill）
 

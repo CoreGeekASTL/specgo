@@ -1,7 +1,7 @@
 ---
 name: biz-object-model-analyze
 description: >-
-  分析存量代码仓的对象模型（实体、值对象、聚合、领域服务、领域事件），产出 UML 类图（mermaid classDiagram），落盘被分析仓的 docs/biz/object-model/object-model-{aggregate}.md（每聚合 1 篇）。用户指定聚合时只梳理该聚合；未指定时默认全量——扫描模型层与核心 service，按聚合根归集后逐聚合产出，不阻塞式询问。类图只画聚合内结构（关键属性与关联，方法省略）与聚合间引用方向，以代码中的结构体/类为准，禁止把 DB 表字段机械照抄成类图。当用户提到"对象模型"、"领域模型"、"实体"、"值对象"、"聚合"、"聚合根"、"领域服务"、"领域事件"、"类图"、"class diagram"、"object model"、"domain model"、"DDD"、"梳理 XX 聚合"、"画一下领域对象"、"实体建模"时使用。务必在生成任何领域对象/实体类图文档之前使用此 skill。
+  分析存量代码仓的对象模型（实体、值对象、聚合、领域服务、领域事件），产出 UML 类图（mermaid classDiagram），落盘被分析仓的 docs/biz/object-model/：README.md 聚合导航主文档 + object-model-{aggregate}.md（每聚合 1 篇）。用户指定聚合时只梳理该聚合；未指定时默认全量——扫描模型层与核心 service，按聚合根归集后逐聚合产出，不阻塞式询问。类图只画聚合内结构（关键属性与关联，方法省略）与聚合间引用方向，以代码中的结构体/类为准，禁止把 DB 表字段机械照抄成类图。当用户提到"对象模型"、"领域模型"、"实体"、"值对象"、"聚合"、"聚合根"、"领域服务"、"领域事件"、"类图"、"class diagram"、"object model"、"domain model"、"DDD"、"梳理 XX 聚合"、"画一下领域对象"、"实体建模"时使用。务必在生成任何领域对象/实体类图文档之前使用此 skill。
 ---
 
 # 代码仓对象模型分析 Skill（biz-object-model-analyze）
@@ -95,7 +95,6 @@ description: >-
 - `{aggregate}` 实例 slug **从代码标识符派生**：取聚合根类名/结构体名转 kebab-case，如 `Order` → `order`、`AuthSession` → `auth-session`；禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。聚合的中文名只进文档标题，不进文件名。
 - 同名文件已存在**直接覆盖更新**——模型文档是活文档，固定名、覆盖更新，git diff 即演进史。
 - **资产主文档 `README.md` 必产出**：同目录落 `README.md`（活文档，同名覆盖），内容仅两项——元信息表（分支/更新日期/Skill）+ 聚合导航表（聚合名 → `object-model-{aggregate}.md` 链接 + 聚合根 + 一句话说明，从各文档首行标题提取）；单聚合模式（用户指定聚合）时同样刷新该 README，只增改对应行。
-- 索引分工：本资产目录的 `README.md` 由本 skill 产出；域索引 `docs/biz/README.md` 与总索引 `docs/README.md` 由 all-index 统一生成，本 skill 不维护。
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
 
