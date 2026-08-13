@@ -1,25 +1,25 @@
 ---
-name: all-analyze
+name: spec-analyze
 description: >-
-  一键全量资产分析编排 skill——以子代理并行派发全部 16 个资产分析 skill（arch 结构/交互 2 个 + biz 接口/规则/对象模型/数据模型/词典 5 个 + tech 使用/通信/并发/数据访问/韧性/基础 6 个 + qual 编码/DT/分支 3 个），一次性完成代码仓全套 docs/ 资产建库：首波 15 个分析子代理并行，第二波 biz-lexicon-analyze（复用接口功能域口径保证词典子域对齐），最后 all-index 子代理收口生成各域索引与总索引。主代理只做编排、用户确认与验收，不亲自分析。当需要为代码仓首次建齐 docs/ 全套资产、或资产长期失修需要全量重建时使用。触发场景包括"all-analyze"、"全量资产分析"、"一次性分析代码仓"、"一键资产分析"、"资产全量录入"、"全仓资产盘点"、"把所有分析 skill 跑一遍"、"建齐 docs 资产"等。
+  一键全量资产分析编排 skill——以子代理并行派发全部 16 个资产分析 skill（arch 结构/交互 2 个 + biz 接口/规则/对象模型/数据模型/词典 5 个 + tech 使用/通信/并发/数据访问/韧性/基础 6 个 + qual 编码/DT/分支 3 个），一次性完成代码仓全套 docs/ 资产建库：首波 15 个分析子代理并行，第二波 biz-lexicon-analyze（复用接口功能域口径保证词典子域对齐），最后 spec-index 子代理收口生成各域索引与总索引。主代理只做编排、用户确认与验收，不亲自分析。当需要为代码仓首次建齐 docs/ 全套资产、或资产长期失修需要全量重建时使用。触发场景包括"spec-analyze"、"全量资产分析"、"一次性分析代码仓"、"一键资产分析"、"资产全量录入"、"全仓资产盘点"、"把所有分析 skill 跑一遍"、"建齐 docs 资产"等。
 ---
 
-# 全量资产分析编排（all-analyze）
+# 全量资产分析编排（spec-analyze）
 
 对存量代码仓**一次性建齐 docs/ 全套资产**的编排入口。主代理不亲自分析——只做流程推进、用户确认、子代理派发与验收；每个 analyze skill 由一个独立子代理加载全文后执行。
 
-**定位**：本 skill 是纯编排层，不定义任何资产格式——分析方法与产出格式归各 analyze skill（最新要素定义来源）；索引归 all-index；旧布局迁移归 all-init；变更驱动的增量刷新归 all-update（全量分析不走本 skill 的反向）。
+**定位**：本 skill 是纯编排层，不定义任何资产格式——分析方法与产出格式归各 analyze skill（最新要素定义来源）；索引归 spec-index；旧布局迁移归 spec-init；变更驱动的增量刷新归 spec-update（全量分析不走本 skill 的反向）。
 
 ## 何时触发 / 何时不触发
 
 - **触发**：首次为代码仓建立全套 docs/ 资产；资产体系长期失修需要全量重建；用户明确要求"全量/一键/跑一遍所有分析"。
-- **不触发**：单个资产的分析（直接加载对应 analyze skill）；代码变更后的增量同步（加载 all-update）；旧布局迁移（先加载 all-init）。
+- **不触发**：单个资产的分析（直接加载对应 analyze skill）；代码变更后的增量同步（加载 spec-update）；旧布局迁移（先加载 spec-init）。
 
 ## 第 0 步：前置检查与用户确认
 
 1. 确认被分析仓路径与主语言；检查 `docs/` 现状：
-   - 存在旧布局历史产出（`docs/business/`、`docs/technical/`、扁平 arch 文档等）→ 提示用户先运行 all-init 迁移，再继续本流程。
-   - 已存在 v1.1 资产 → 告知用户各 analyze skill 均为**同名覆盖的活文档口径**（全量重刷），确认后继续；仅需增量同步时建议改走 all-update。
+   - 存在旧布局历史产出（`docs/business/`、`docs/technical/`、扁平 arch 文档等）→ 提示用户先运行 spec-init 迁移，再继续本流程。
+   - 已存在 v1.1 资产 → 告知用户各 analyze skill 均为**同名覆盖的活文档口径**（全量重刷），确认后继续；仅需增量同步时建议改走 spec-update。
 2. 确认分析范围：**默认全部 16 个 analyze skill**；用户明确勾选子集时按子集执行（后续波次同步裁剪）。
 3. 子代理一律**不阻塞式询问**：各 analyze skill 按其默认全量口径执行；某类资产在仓内无法建立（如无 MQ 则通信规范无 MQ 篇目）时，子代理在返回中注明原因，不中断流程。
 
@@ -59,14 +59,14 @@ description: >-
 2. **mermaid 验证**：含图文档（structure-model / interaction-model / object-model / data-model）全部过验证脚本，INVALID 打回对应子代理（task_id 续会话）修复后重验：
 
 ```bash
-node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <文档路径>
+node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <文档路径>
 ```
 
 3. **口径抽查**：每域抽 1 篇对照其 analyze skill 模板——小节结构、文件命名、证据不带行号等组织规则一致；不符打回整改，主代理不亲自代写。
 
-## 第 4 步：索引收口（all-index）
+## 第 4 步：索引收口（spec-index）
 
-- 全部资产验收通过后，派**索引子代理**加载 all-index 全文：生成/刷新各域索引 `docs/{域}/README.md` 与总索引 `docs/README.md`（含服务依赖全景图）；全景图 mermaid 同样过验证脚本。
+- 全部资产验收通过后，派**索引子代理**加载 spec-index 全文：生成/刷新各域索引 `docs/{域}/README.md` 与总索引 `docs/README.md`（含服务依赖全景图）；全景图 mermaid 同样过验证脚本。
 
 ## 第 5 步：交付摘要
 
@@ -91,14 +91,14 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 | "我自己扫一遍更快" | 分析一律派子代理，主代理只编排、确认与验收 |
 | "16 个太多，挑几个跑" | 默认全量；只有用户明确勾选子集才裁剪 |
 | "词典和接口一起发" | 词典依赖接口功能域口径，必须在第二波 |
-| "索引最后顺手写一下" | 索引由 all-index 子代理按其 skill 口径生成 |
+| "索引最后顺手写一下" | 索引由 spec-index 子代理按其 skill 口径生成 |
 | "mermaid 看着没问题" | 含图文档必须过 validate-mermaid.mjs 全部 VALID |
 | "某篇不合格我顺手改改" | 打回子代理整改，主代理不代写 |
 
 ## 与其它 skill 的关系
 
 - **16 个 analyze skill**：被编排对象与要素定义来源——本 skill 不复制它们的模板与规则，只负责派发与验收。
-- **all-index**：第 4 步索引收口由其实现。
-- **all-init**：旧布局迁移的前置（第 0 步检测并提示），本 skill 不代做迁移。
-- **all-update**：增量刷新场景入口；全量建库/重建走本 skill。
-- **code-generate**：需求到交付全链路编排；其第 1 步的全量资产录入可改用本 skill 完成。
+- **spec-index**：第 4 步索引收口由其实现。
+- **spec-init**：旧布局迁移的前置（第 0 步检测并提示），本 skill 不代做迁移。
+- **spec-update**：增量刷新场景入口；全量建库/重建走本 skill。
+- **specgo**：需求到交付全链路编排；其第 1 步的全量资产录入可改用本 skill 完成。

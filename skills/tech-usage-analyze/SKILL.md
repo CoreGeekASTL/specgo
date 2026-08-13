@@ -96,19 +96,19 @@ python3 <skill_dir>/scripts/scan_frameworks.py <repo_path> -o scan_result.md
 1. **索引 README.md**：按 references/readme-template.md 填充——固定三行元信息表（分支/更新日期/Skill）+ 框架全景清单表（# | 类别 | 框架 | 使用现状文档链接，无死链）。README 只起导航作用，不加其他章节；未命中的类别列一行标注"未发现"，证明排查过。
 2. **每框架一篇 `usage-{framework}.md`**：按 references/usage-template.md 填充，只含两节——**用途定位**（该框架在系统中承担什么角色、用在哪些模块）+ **使用模式**（典型调用序列骨架，真实代码片段注明来源文件路径）。
 
-更新策略：目录与文件已存在时，按框架逐篇对比更新（框架被移除则在该篇标注"已下线"），不要整目录覆盖重写；README.md 索引随框架增删同步更新。历史产出若仍位于旧布局 `docs/technical/framework-usage/`，由 all-init 负责一次性迁移，本 skill 只读写 `docs/tech/usage/`。
+更新策略：目录与文件已存在时，按框架逐篇对比更新（框架被移除则在该篇标注"已下线"），不要整目录覆盖重写；README.md 索引随框架增删同步更新。历史产出若仍位于旧布局 `docs/technical/framework-usage/`，由 spec-init 负责一次性迁移，本 skill 只读写 `docs/tech/usage/`。
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
 
-产出文档中含 ```mermaid 代码块（框架调用关系图、线程模型图等），交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块（框架调用关系图、线程模型图等），交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
-- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 spec-mermaid-diagram skill 的「语法红线」。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 mermaid-validate skill 的「语法红线」。
 
 ## 输出模板
 
@@ -123,14 +123,14 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - **基于实证**：所有结论必须有代码证据支撑，证据为**文件路径**（不带行号——行号随代码变更失效且无跨工具稳定性），禁止臆测；约定从代码事实归纳，不从文档照抄。
 - **实例 slug 从代码标识符派生**：`{framework}` 取依赖清单/代码中的框架名转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
 - **活文档覆盖更新**：`docs/tech/usage/` 下文档同名直接覆盖（按框架逐篇更新），不保留历史副本、不加日期后缀。
-- **索引分工**：索引 `README.md`（框架全景导航）即本资产目录主文档，由本 skill 产出、活文档同名覆盖；域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 all-index 统一生成，本 skill 不维护。
+- **索引分工**：索引 `README.md`（框架全景导航）即本资产目录主文档，由本 skill 产出、活文档同名覆盖；域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 spec-index 统一生成，本 skill 不维护。
 - **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（`docs/` 下产出除外）。
 - **成品纯净**：最终文档只含成品内容；第 2~4 步的探测过程（执行的 grep 命令、扫描脚本输出摘要）仅供自检，绝不写入最终文档——其结论须以文件路径证据形式进入文档。
 - **文档语言**：输出文档用中文，技术术语（RPC / Actor / ORM / ThreadPool / Channel 等）保留英文。
 - **排查完备性**：十六类框架全部排查（含未命中的，README 相应类别标注"未发现"）；依赖清单版本与代码实际使用交叉核对；自研/内部框架必须识别并纳入分析。
 - **封装层优先**：封装层文件全部精读；文档中明确区分"通过封装层使用"与"直接使用框架原生 API"两类调用点。
 - **统计口径**：IDL 生成代码不计入调用点统计（或单独标注），避免虚增。
-- **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
+- **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
 
 ## 参考文件索引
 

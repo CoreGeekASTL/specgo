@@ -95,7 +95,7 @@ python3 <skill_dir>/scripts/scan_interfaces.py <repo_path> -o scan_result.md
 - 主文档功能域索引表每行带子文档链接，可从总览直跳详情；子文档元信息带返回主文档链接。
 - 单功能域接口数 > 10 时，列代表性 5~10 处并注明"全量见 xxx"，禁止全量罗列刷屏。
 
-**更新策略**：`docs/biz/interface/` 下文档已存在时按功能域逐篇对比更新（功能已下线则标注"已下线"并保留子文档灰显，或从索引移除并归档）；主文档索引随功能增删同步更新。同名文件**直接覆盖更新**——接口文档是活文档，固定名、覆盖更新，git diff 即演进史。本 skill 不维护域索引：`docs/biz/README.md` 域索引与总索引由 all-index 统一生成。
+**更新策略**：`docs/biz/interface/` 下文档已存在时按功能域逐篇对比更新（功能已下线则标注"已下线"并保留子文档灰显，或从索引移除并归档）；主文档索引随功能增删同步更新。同名文件**直接覆盖更新**——接口文档是活文档，固定名、覆盖更新，git diff 即演进史。本 skill 不维护域索引：`docs/biz/README.md` 域索引与总索引由 spec-index 统一生成。
 
 ### 第 4 步：输出后自检（防漏文件、防臆造）
 
@@ -111,15 +111,15 @@ python3 <skill_dir>/scripts/scan_interfaces.py <repo_path> -o scan_result.md
 
 ### 第 5 步：验证 mermaid 图可渲染（收尾必做）
 
-产出文档中含 ```mermaid 代码块（接口全景图等），交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块（接口全景图等），交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
-- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 spec-mermaid-diagram skill 的「语法红线」。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 mermaid-validate skill 的「语法红线」。
 
 ## 输出模板
 

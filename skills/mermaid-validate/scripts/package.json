@@ -1,5 +1,5 @@
 {
-  "name": "spec-mermaid-diagram-scripts",
+  "name": "mermaid-validate-scripts",
   "private": true,
   "type": "module",
   "dependencies": {

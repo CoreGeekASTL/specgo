@@ -1,5 +1,5 @@
 ---
-name: spec-mermaid-diagram
+name: mermaid-validate
 description: >-
   指导如何编写可被正确渲染的 mermaid 图，并在本地验证渲染结果。当用户提到"mermaid"、"画图"、"流程图"、"时序图"、"架构图"、"依赖图"、"图渲染失败"、"图渲染不出来"、"验证 mermaid"、"mermaid 报错"时使用；任何产出物（文档/HTML）中包含 ```mermaid 代码块时，必须用本 skill 的验证流程确认每张图可被解析渲染后才能宣称完成。
 ---
@@ -19,7 +19,7 @@ description: >-
 
 - 用户要求画任何 mermaid 图（流程图、时序图、类图、ER 图、状态图、架构图等）。
 - 用户反馈某文档里的 mermaid 图渲染失败、报错、显示异常。
-- 任何资产整理/设计类 skill（arch-structure-model-analyze、arch-interaction-model-analyze、biz-object-model-analyze、biz-data-model-analyze、all-index、all-update、all-analyze、spec-story-design、spec-audit 等）执行到收尾阶段，产出物中含 mermaid 图。
+- 任何资产整理/设计类 skill（arch-structure-model-analyze、arch-interaction-model-analyze、biz-object-model-analyze、biz-data-model-analyze、spec-index、spec-update、spec-analyze、spec-story-design、spec-audit 等）执行到收尾阶段，产出物中含 mermaid 图。
 
 ## 图类型速查
 
@@ -107,7 +107,7 @@ mmdc -i diagram.mmd -o /tmp/test.png   # 成功即合法
 
 所有产出物可能含 mermaid 图的 skill，在收尾步骤必须执行：
 
-> 对最终产出的每个文档文件运行 `node <spec-mermaid-diagram>/scripts/validate-mermaid.mjs <产出文件...>`，全部 VALID 才算完成；INVALID 必须修复重验，禁止跳过。
+> 对最终产出的每个文档文件运行 `node <mermaid-validate>/scripts/validate-mermaid.mjs <产出文件...>`，全部 VALID 才算完成；INVALID 必须修复重验，禁止跳过。
 
 ## 关键约束
 

@@ -100,15 +100,15 @@ guidelines 形态语义：基础规范是**指导性规范**（"应该"遵守）
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
 
-产出文档中含 ```mermaid 代码块（如机制调用分布图）时，交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块（如机制调用分布图）时，交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
-- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 spec-mermaid-diagram skill 的「语法红线」。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 mermaid-validate skill 的「语法红线」。
 
 ## 输出模板
 
@@ -128,8 +128,8 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - **成品纯净**：最终文档只含成品内容。扫描过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格。
 - **语言无关**：不预设被分析仓的语言与框架，按第 2 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（DEBUG / INFO / WARN / ERROR / Nacos / SDK / metrics / traceId 等）保留英文。
-- **索引分工**：域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 all-index 生成，本 skill 不维护；本资产目录的 README 是资产主文档（机制全景 + 维度导航），非域索引。
-- **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
+- **索引分工**：域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护；本资产目录的 README 是资产主文档（机制全景 + 维度导航），非域索引。
+- **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
 - **与相邻资产互补**：框架用法骨架（用了什么框架、怎么用）归 tech-usage-analyze 的 `docs/tech/usage/`；超时 / 重试 / 熔断等故障策略归 tech-resilience-guidelines-analyze；跨服务调用规范归 tech-comm-guidelines-analyze；命名 / 函数长度等"必须"级编码红线归 qual-code-standards-analyze。本 skill 只管日志 / 配置 / 告警等基础编码机制的"应该"级约定。
 
 ## 参考文件索引

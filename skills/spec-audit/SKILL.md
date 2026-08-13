@@ -69,10 +69,10 @@ description: >-
 产出物含 ```mermaid 代码块时，交付前必须逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
-全部 VALID 才算完成；INVALID 按报错行号修复重验。首次使用先在脚本目录 `npm install`。语法红线见 spec-mermaid-diagram skill。
+全部 VALID 才算完成；INVALID 按报错行号修复重验。首次使用先在脚本目录 `npm install`。语法红线见 mermaid-validate skill。
 
 ---
 
@@ -119,7 +119,7 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 ## 1. 结论                  # ❌ 失实 / ⚠️ 待修订 / ✅ 可信 + 一行理由
 ## 2. 表达质量检出           # E 规则 × 命中数 × 位置
 ## 3. 代码一致性核验         # C 规则 × 核验方式 × 命中数 × 证据（零容忍命中单列）
-## 4. 改进建议              # 落到具体章节/条目；失实项注明修复入口（all-update / 重跑对应 analyze skill）
+## 4. 改进建议              # 落到具体章节/条目；失实项注明修复入口（spec-update / 重跑对应 analyze skill）
 ```
 
 **`docs/report/README.md` 总览**（活文档，两节）：
@@ -139,7 +139,7 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - **更新模式**（单篇审核、增量审核共用）：只重审被审清单内的文档——其报告同名覆盖；README.md 明细表定位对应行更新（无则新增），第一节基于全部既有行重算；不动其他文档的行与报告。
 - **全量模式**（全量审核）：逐篇重审出报告（同名覆盖）；README.md 两节全量重建。
 
-交付回复给摘要：审核范围、各文档结论一行表、失实项与证据、改进建议清单；并提示：失实修复走 all-update 或重跑对应 analyze skill。
+交付回复给摘要：审核范围、各文档结论一行表、失实项与证据、改进建议清单；并提示：失实修复走 spec-update 或重跑对应 analyze skill。
 
 ---
 
@@ -173,15 +173,15 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 
 - **基于实证**：所有检出以实际读到的文档与代码证据为准；锚点反查、接口比对、链接闭环必须真实执行，禁止目测通过。
 - **澄清门禁不可跳**（场景 1）：断点未裁定不进下一阶段，带病继续记「仍存疑」。
-- **不修改被审文档正文**：场景 1 的补齐只落在建模 HTML 与可选功能设计 md；场景 2 的改进建议只落在报告——资产正文刷新归 all-update，重跑归对应 analyze skill。
+- **不修改被审文档正文**：场景 1 的补齐只落在建模 HTML 与可选功能设计 md；场景 2 的改进建议只落在报告——资产正文刷新归 spec-update，重跑归对应 analyze skill。
 - **报告活文档**：docs/report/ 下报告与 README.md 同名覆盖，不留历史副本、不加日期后缀；单篇审核只动该篇对应报告与 README 行。
 
 ## 与其它 skill 的关系
 
-- **spec-mermaid-diagram**：mermaid 校验脚本提供方，两场景共用。
+- **mermaid-validate**：mermaid 校验脚本提供方，两场景共用。
 - **各 analyze skill**：四类资产的生产方——场景 2 检出「失实」后的重建入口；其内嵌自检（锚点反查/覆盖留痕/导航闭环）是 C/E 规则的出处。
-- **all-update**：「失实」的增量修复入口（审核只发现问题）。
-- **code-generate**：全链路编排第 2 步（需求审核）调用本 skill 场景 1。
+- **spec-update**：「失实」的增量修复入口（审核只发现问题）。
+- **specgo**：全链路编排第 2 步（需求审核）调用本 skill 场景 1。
 
 ## 参考文件索引
 

@@ -1,10 +1,10 @@
 ---
-name: all-index
+name: spec-index
 description: >-
-  生成被分析仓 docs/ 资产体系的索引层——各域索引 docs/{域}/README.md（列出本域各资产目录及目录内真实文件清单，每文件一句话说明、从文件首行标题提取，无资产的域不生成）+ 总索引 docs/README.md（四域导航表 + 服务依赖全景图：mermaid flowchart，从 docs/tech/comm-guidelines/ 各文档提取本仓→下游服务依赖边；通信规范资产未建时该节注明"通信规范资产未建"）。索引为活文档，同名覆盖更新并标注生成时间；只聚合真实存在的文件、不重述资产正文。当各 analyze skill 跑完需要统一生成/刷新导航、all-init 建骨架或迁移后首次建索引、资产增删后刷新索引、需要下游依赖全景图时使用。触发场景包括"生成索引"、"docs 索引"、"域索引"、"总索引"、"资产导航"、"服务依赖全景图"、"依赖全景图"、"刷新 README 索引"、"刷新索引"、"all-index"等。
+  生成被分析仓 docs/ 资产体系的索引层——各域索引 docs/{域}/README.md（列出本域各资产目录及目录内真实文件清单，每文件一句话说明、从文件首行标题提取，无资产的域不生成）+ 总索引 docs/README.md（四域导航表 + 服务依赖全景图：mermaid flowchart，从 docs/tech/comm-guidelines/ 各文档提取本仓→下游服务依赖边；通信规范资产未建时该节注明"通信规范资产未建"）。索引为活文档，同名覆盖更新并标注生成时间；只聚合真实存在的文件、不重述资产正文。当各 analyze skill 跑完需要统一生成/刷新导航、spec-init 建骨架或迁移后首次建索引、资产增删后刷新索引、需要下游依赖全景图时使用。触发场景包括"生成索引"、"docs 索引"、"域索引"、"总索引"、"资产导航"、"服务依赖全景图"、"依赖全景图"、"刷新 README 索引"、"刷新索引"、"spec-index"等。
 ---
 
-# 资产索引生成 Skill（all-index）
+# 资产索引生成 Skill（spec-index）
 
 ## 目的
 
@@ -28,10 +28,10 @@ description: >-
 ## 何时触发
 
 - 各 analyze skill 跑完一轮后，需要统一生成或刷新 `docs/` 导航索引。
-- all-init 建骨架/迁移完成后，首次生成索引。
+- spec-init 建骨架/迁移完成后，首次生成索引。
 - 资产文档增删后（新建某资产、重跑某 analyze skill），刷新索引保持导航准确。
 - 需要一张"本仓 → 下游服务"依赖全景图时。
-- 典型触发语："生成索引""docs 索引""域索引""总索引""资产导航""服务依赖全景图""刷新 README 索引""all-index"。
+- 典型触发语："生成索引""docs 索引""域索引""总索引""资产导航""服务依赖全景图""刷新 README 索引""spec-index"。
 
 ## 工作流程
 
@@ -40,8 +40,8 @@ description: >-
 ### 第 1 步：扫描 docs/ 现状
 
 - 确认被分析仓根路径。
-- `docs/` 不存在 → 直接告知用户"资产目录未建，请先运行 all-init 建骨架、运行各 analyze skill 产出资产"，**停止，不创建空索引**。
-- 枚举 `docs/` 下一层目录，对照受控域名表（`arch`/`biz`/`tech`/`qual`）识别四域；taxonomy 外目录（如历史遗留 `docs/business/`、`docs/technical/`）不索引，记入总索引「附注」节交用户判断（可提示运行 all-init 迁移）。
+- `docs/` 不存在 → 直接告知用户"资产目录未建，请先运行 spec-init 建骨架、运行各 analyze skill 产出资产"，**停止，不创建空索引**。
+- 枚举 `docs/` 下一层目录，对照受控域名表（`arch`/`biz`/`tech`/`qual`）识别四域；taxonomy 外目录（如历史遗留 `docs/business/`、`docs/technical/`）不索引，记入总索引「附注」节交用户判断（可提示运行 spec-init 迁移）。
 - 逐域枚举资产目录（只认 HELP.MD taxonomy 内的资产目录名）与目录内真实存在的 `.md` 文件，并记录各资产目录 `report/` 子目录内的差距报告数量与最新日期。
 
 受控域名表（唯一权威为插件根 HELP.MD 第 1、2 章，此处为查表快照）：
@@ -102,16 +102,16 @@ description: >-
 
 ### 第 4 步：验证 mermaid 图可渲染（收尾必做）
 
-总索引含 ```mermaid 代码块（服务依赖全景图），交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+总索引含 ```mermaid 代码块（服务依赖全景图），交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
 
 ```bash
-node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs docs/README.md <其他含图产出...>
+node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-validate/scripts/validate-mermaid.mjs docs/README.md <其他含图产出...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
 - 域索引正常不含 mermaid 图；若某篇域索引因故含图，一并纳入校验清单。
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
-- 画图规则（label 一律加引号、裸 `end` 禁用、节点 id 仅字母数字下划线等）见 spec-mermaid-diagram skill 的「语法红线」。
+- 画图规则（label 一律加引号、裸 `end` 禁用、节点 id 仅字母数字下划线等）见 mermaid-validate skill 的「语法红线」。
 
 ## 输出模板
 
@@ -129,8 +129,8 @@ node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/spec-mer
 - **只读不改、永不删文件**：不改动被分析仓的任何文件（`docs/{域}/README.md` 与 `docs/README.md` 两处产出除外）；不删除任何文件——域内资产清空后遗留的旧域索引不擅自删除，交用户处理。
 - **成品纯净**：最终索引只含成品内容。扫描过程（find/ls 命令与原始输出）仅供自检，绝不写入索引。
 - **taxonomy 查表制**：域名、资产目录名、资产内涵说明只从第 1 步受控表（源自插件根 HELP.MD）取；taxonomy 外目录不索引，只进总索引「附注」节。
-- **索引分工**：资产目录内的 README（如 `docs/biz/interface/README.md`）归各 analyze skill 产出与维护，本 skill 只在域索引中链接它，不覆盖、不改写；骨架目录创建归 all-init，本 skill 不建目录。
-- **无资产不生成**：无资产的域不生成域索引；`docs/` 不存在时停止并提示先跑 all-init 与各 analyze skill，不创建空索引。
+- **索引分工**：资产目录内的 README（如 `docs/biz/interface/README.md`）归各 analyze skill 产出与维护，本 skill 只在域索引中链接它，不覆盖、不改写；骨架目录创建归 spec-init，本 skill 不建目录。
+- **无资产不生成**：无资产的域不生成域索引；`docs/` 不存在时停止并提示先跑 spec-init 与各 analyze skill，不创建空索引。
 - **语言无关**：只读 `docs/` 目录与 Markdown 文件，与被分析仓语言、框架无关。
 - **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须按第 4 步用 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
 - **文档语言**：输出索引用中文，技术术语（RPC / HTTP / MQ / flowchart / README 等）保留英文。

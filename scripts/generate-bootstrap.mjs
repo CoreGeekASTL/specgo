@@ -1,5 +1,5 @@
 /**
- * 自动扫描 skills/ 下全部 skill 目录（排除 . 开头；code-generate 编排排最后，其余按名字典序），
+ * 自动扫描 skills/ 下全部 skill 目录（排除 . 开头；specgo 编排排最后，其余按名字典序），
  * 从各 SKILL.md frontmatter 生成 bootstrap.md。
  * bootstrap.md 是两平台共用的注入源——opencode.js 和 hooks/session-start 都读它。
  * skill 内容变更后重跑：node .claude/plugins/specgo/scripts/generate-bootstrap.mjs
@@ -18,8 +18,8 @@ const SPEC_SKILLS = fs.readdirSync(SKILLS_DIR, { withFileTypes: true })
   .filter((e) => e.isDirectory() && !e.name.startsWith('.'))
   .map((e) => e.name)
   .sort((a, b) => {
-    if (a === 'code-generate') return 1;
-    if (b === 'code-generate') return -1;
+    if (a === 'specgo') return 1;
+    if (b === 'specgo') return -1;
     return a < b ? -1 : a > b ? 1 : 0;
   });
 
@@ -89,9 +89,9 @@ ${indexMd}
 
 针对一个存量代码仓的完整规格化流程，按序串联；也可单独触发任意一步。
 
-**四域资产治理（arch / biz / tech / qual + 横向 all，新体系）**
+**四域资产治理（arch / biz / tech / qual + 横向 spec，新体系）**
 
-1. **资产骨架初始化（一次性）** → all-init：初始化 docs/{域}/{资产}/ 目录骨架（每类资产一个单独目录），一次性迁移既有产出，迁移映射清单先交用户确认
+1. **资产骨架初始化（一次性）** → spec-init：初始化 docs/{域}/{资产}/ 目录骨架（每类资产一个单独目录），一次性迁移既有产出，迁移映射清单先交用户确认
 2. **结构摸底** → arch-structure-model-analyze：UML 包图 + 依赖矩阵 + 分层特征，落盘 docs/arch/structure-model/（仓级总览 README.md + 每模块 structure-model-{module}.md）
 3. **交互模型提取（默认全部流程，可指定单流程）** → arch-interaction-model-analyze：UML 时序图呈现模块间主业务流程与消息走向，只画主链路，落盘 docs/arch/interaction-model/（README.md 流程导航 + interaction-model-{flow}.md）
 4. **对外接口盘点** → biz-interface-analyze：按功能域聚类，主文档 README + interface-{feature}.md，落盘 docs/biz/interface/
@@ -108,16 +108,16 @@ ${indexMd}
 15. **编码规范（门禁）** → qual-code-standards-analyze：命名/注释/函数长度/圈复杂度/安全编码红线/禁止项清单，code-standards.md + report/ 门禁差距报告
 16. **DT 规范（门禁）** → qual-dt-guidelines-analyze：测试金字塔与覆盖基线、用例设计、覆盖率门禁，dt-guidelines.md + report/
 17. **分支与变更规范** → qual-branch-guidelines-analyze：分支模型、commit/MR 规范、评审要求，branch-guidelines.md
-18. **索引生成** → all-index：各域 README + docs/README.md 总索引 + 服务依赖全景图（Mermaid）
-19. **资产刷新（git 变更驱动）** → all-update：基于 git diff 识别变更对 docs/ 资产的影响，按最新要素定义增量刷新受影响文档，刷新清单人工确认后定稿
-20. **一键全量资产分析（编排入口）** → all-analyze：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），一次性建齐 docs/ 资产，all-index 收口
+18. **索引生成** → spec-index：各域 README + docs/README.md 总索引 + 服务依赖全景图（Mermaid）
+19. **资产刷新（git 变更驱动）** → spec-update：基于 git diff 识别变更对 docs/ 资产的影响，按最新要素定义增量刷新受影响文档，刷新清单人工确认后定稿
+20. **一键全量资产分析（编排入口）** → spec-analyze：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），一次性建齐 docs/ 资产，spec-index 收口
 21. **文档质量审核与评估** → spec-audit：场景 1 需求/功能设计审核（多彩建模 + 断点扫描 + ask-human 澄清 + HTML）；场景 2 docs/ 资产质量评估（A 轨 story 类澄清未清零不出分；B 轨 17 类资产要素 Linter 零容忍+专项维度 0-5 分），评分分级，报告归档 docs/report/（README.md 整体评估 + 每篇一个打分报告，支持单篇更新/通篇全量）
 
 **需求到交付（旧体系保留链路）**
 
-22. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
+22. **mermaid 图验证** → mermaid-validate：含图产出物必须本地校验全部 VALID 后交付
 23. **需求到 story 设计** → spec-story-design：产出 docs/storys/{功能名}-story.md（八类核心要素组织，标注新增/变更/不涉及）+ develop-task
-24. **全链路编排（端到端主流程，推荐入口）** → code-generate：资产检查/录入 → 需求审核（spec-audit 场景 1）→ story 设计 → 代码实现与测试 → 资产刷新（all-update）→ 全链路分析报告（docs/code-generate-report/），主代理编排与用户确认、各步骤派子代理执行
+24. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核（spec-audit 场景 1）→ story 设计 → 代码实现与测试 → 资产刷新（spec-update）→ 全链路分析报告（docs/specgo-report/），每步校验环节结束固定过 ask-human 审视门；主代理编排与用户确认、各步骤派子代理执行
 
 ## 红线（这些想法意味着你正在跳过 skill）
 
@@ -132,13 +132,13 @@ ${indexMd}
 | "线程池这么用没问题" | tech-concurrency-guidelines-analyze 定义了并发规范差距分析，先加载它 |
 | "这需求文档我读读就好" | spec-audit 场景 1 用来查表述质量与逻辑断点，先加载它 |
 | "给我讲讲 XX 流程怎么走的" | arch-interaction-model-analyze 定义了交互模型（时序图）提取格式，先加载它 |
-| "这 mermaid 图我直接画/看着没问题" | spec-mermaid-diagram 定义了语法红线与本地验证流程，先加载它 |
+| "这 mermaid 图我直接画/看着没问题" | mermaid-validate 定义了语法红线与本地验证流程，先加载它 |
 | "这功能我直接写 story" | spec-story-design 定义了 story 模板，先加载它 |
 | "代码写完直接提交" | qual-code-standards-analyze 定义了编码红线与门禁检查，先加载它 |
-| "MR 合了，看看文档要不要改" | all-update 定义了 git 变更驱动的资产刷新流程，先加载它 |
-| "把分析 skill 挨个手动跑一遍" | all-analyze 定义了子代理并行的一键全量分析编排，先加载它 |
+| "MR 合了，看看文档要不要改" | spec-update 定义了 git 变更驱动的资产刷新流程，先加载它 |
+| "把分析 skill 挨个手动跑一遍" | spec-analyze 定义了子代理并行的一键全量分析编排，先加载它 |
 | "这批文档质量怎么样" | spec-audit 定义了分轨质量评估与评分分级，先加载它 |
-| "从需求到交付，一条龙做了" | code-generate 定义了六步全链路编排与子代理分工，先加载它 |
+| "从需求到交付，一条龙做了" | specgo 定义了六步全链路编排与子代理分工，先加载它 |
 | "这个 skill 太重，我快速做" | 如果 skill 存在，就必须用 |
 | "我记得这个 skill 的内容" | skill 会演进，每次都要重新加载当前版本 |
 

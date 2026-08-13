@@ -1,7 +1,7 @@
 # {仓名} 文档资产总索引
 
 > 生成时间：{YYYY-MM-DD}
-> 生成工具：all-index（自动聚合产物，同名覆盖更新；资产变更后重跑 all-index 刷新，请勿手改）
+> 生成工具：spec-index（自动聚合产物，同名覆盖更新；资产变更后重跑 spec-index 刷新，请勿手改）
 > 布局规范：specgo HELP.MD v1.1——每类资产一个单独目录（docs/{域}/{资产}/）
 
 ## 四域导航
@@ -30,4 +30,4 @@ flowchart LR
 
 ## 附注（可选，无此类情况整节删除）
 
-- {taxonomy 外目录提示：如「docs/business/ 不在 specgo v1.1 taxonomy 内，未索引；如需治理请运行 all-init 迁移」}
+- {taxonomy 外目录提示：如「docs/business/ 不在 specgo v1.1 taxonomy 内，未索引；如需治理请运行 spec-init 迁移」}

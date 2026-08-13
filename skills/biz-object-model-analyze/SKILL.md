@@ -72,7 +72,7 @@ description: >-
 - **以代码中的结构体/类为准**：类名、属性名取代码标识符原文；DB 表里有而代码对象里没有的字段不画，代码对象里有而表里没有的计算字段照画——表结构归数据模型资产（`docs/biz/data-model/`）。
 - **关系符号**：聚合根与内部实体/值对象用组合 `*--`；跨聚合引用用 `-->`（持对象引用）或 `..>`（仅持标识/经 service 间接访问），方向从引用方指向被引用方；领域事件与发布方的关系用 `..>` 并标注"发布"。
 - **stereotype 标注类型**：`<<aggregate root>>` / `<<entity>>` / `<<value object>>` / `<<domain service>>` / `<<domain event>>` / `<<外部聚合>>`。
-- **语法要点**：泛型集合写作 `List~OrderItem~`（尖括号在部分渲染器解析失败）；关系基数加引号（`"1"` / `"many"`）；关系标签（中文）放冒号后；其余红线（裸 `end` 禁用、关键字不做裸 label 等）见 spec-mermaid-diagram skill 的「语法红线」。
+- **语法要点**：泛型集合写作 `List~OrderItem~`（尖括号在部分渲染器解析失败）；关系基数加引号（`"1"` / `"many"`）；关系标签（中文）放冒号后；其余红线（裸 `end` 禁用、关键字不做裸 label 等）见 mermaid-validate skill 的「语法红线」。
 
 ### 第 4 步：按模板产出对象模型文档
 
@@ -98,10 +98,10 @@ description: >-
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
 
-产出文档中含 ```mermaid 代码块，交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块，交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
@@ -123,7 +123,7 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - **语言无关**：不预设被分析仓的语言/框架，按第 1 步实际探测结果走。
 - **实例 slug 从代码标识符派生**：`{aggregate}` 取聚合根类名/结构体名转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
 - **活文档覆盖更新**：`docs/biz/object-model/` 下模型文档同名直接覆盖，不保留历史副本、不加日期后缀——差距报告才带日期，模型文档不带。
-- **索引分工**：本资产目录的 `README.md`（聚合导航主文档）由本 skill 产出，活文档同名覆盖；域索引 `docs/biz/README.md` 与总索引 `docs/README.md` 由 all-index skill 统一生成，本 skill 不维护。
+- **索引分工**：本资产目录的 `README.md`（聚合导航主文档）由本 skill 产出，活文档同名覆盖；域索引 `docs/biz/README.md` 与总索引 `docs/README.md` 由 spec-index skill 统一生成，本 skill 不维护。
 - **成品纯净**：最终文档只含成品内容（标题、概述、图、表格、补充说明）。模板顶部的元说明、写作指令行、占位符说明均为规则，不复制进成品。第 1~2 步的探测过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格，且**证据不得含代码行号**。
 - **文档语言**：输出文档用中文，技术术语（Entity / Value Object / Aggregate Root / Domain Service / Domain Event 等）保留英文。
 

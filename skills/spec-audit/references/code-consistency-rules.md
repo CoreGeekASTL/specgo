@@ -1,7 +1,7 @@
 # 资产文档代码一致性规则（场景 2 维度二，重点）
 
 适用对象：docs/{arch,biz,tech,qual}/ 下资产文档与索引 README。
-核心立场：资产跟着代码走——文档与代码不一致即「失实」，是必须修复的底线问题。所有核验必须真实执行 grep/文件比对，禁止目测通过。只检出不修改：修复走 all-update，重建走对应 analyze skill。
+核心立场：资产跟着代码走——文档与代码不一致即「失实」，是必须修复的底线问题。所有核验必须真实执行 grep/文件比对，禁止目测通过。只检出不修改：修复走 spec-update，重建走对应 analyze skill。
 
 ## 零容忍项（任一命中 → 该篇判「失实」）
 
@@ -34,7 +34,7 @@
 ### C6 mermaid 渲染校验
 
 ```bash
-node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <文档>
+node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <文档>
 ```
 
 - 文档内全部 mermaid 图 VALID 才算过；任一 INVALID = 失实（图即事实载体，渲染失败等同内容不可信）。
@@ -50,7 +50,7 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 
 | 结论 | 条件 | 处置建议 |
 | --- | --- | --- |
-| ❌ 失实 | 任一零容忍项（C1/C2/C3/C4/C6）命中 | 按命中域重跑对应 analyze skill，或走 all-update 增量刷新 |
+| ❌ 失实 | 任一零容忍项（C1/C2/C3/C4/C6）命中 | 按命中域重跑对应 analyze skill，或走 spec-update 增量刷新 |
 | ⚠️ 待修订 | 无失实，但有覆盖缺失/C5 缺失/表达质量检出 | 报告给改进建议，落实到具体章节 |
 | ✅ 可信 | 两维度均无检出 | 无需动作 |
 

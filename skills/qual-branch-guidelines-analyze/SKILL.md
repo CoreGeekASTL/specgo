@@ -117,10 +117,10 @@ guidelines 形态语义：分支与变更规范是**指导性规范**（"应该"
 
 ### 第 7 步：验证 mermaid 图可渲染（有条件必做）
 
-产出文档中含 ```mermaid 代码块时（分支模型图可选用 mermaid gitGraph / flowchart 呈现，非必需），交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块时（分支模型图可选用 mermaid gitGraph / flowchart 呈现，非必需），交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
 
 ```bash
-node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
@@ -142,7 +142,7 @@ node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/spec-mer
 - **成品纯净**：最终文档只含成品内容。探测过程（执行的 git 命令、原始输出摘要）仅供自检，绝不写入最终文档——其结论须以 git 对象或 `文件路径` 证据形式进入相关表格。
 - **语言无关、平台无关**：不预设被分析仓的语言、框架与托管平台；平台 CLI（gh / glab）不可用时降级为纯 git 历史痕迹分析并如实标注。
 - **文档语言**：输出文档用中文，技术术语（merge commit / squash / rebase / fast-forward / conventional commits / MR / PR / CODEOWNERS / trailer 等）保留英文。
-- **索引分工**：域索引 `docs/qual/README.md` 与总索引 `docs/README.md` 由 all-index 生成，本 skill 不维护。
+- **索引分工**：域索引 `docs/qual/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
 - **与相邻资产边界**：代码本身写到什么程度算合格归 qual-code-standards-analyze 产出的 `docs/qual/code-standards/`；测试与覆盖要求归 qual-dt-guidelines-analyze 产出的 `docs/qual/dt-guidelines/`。本 skill 只记录"变更怎么进仓"的协作规矩事实与合规性，越界内容不写入本文档。
 - **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
 

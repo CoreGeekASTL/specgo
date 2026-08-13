@@ -14,7 +14,7 @@
 
 - 全小写 kebab-case；
 - 四段式，缺一不可（豁免项见 1.3）；
-- 横向与编排能力不受四段式约束：`all-init` / `all-index` / `all-update` / `all-analyze` / `code-generate` 五个。
+- 横向与编排能力不受四段式约束：`spec-init` / `spec-index` / `spec-update` / `spec-analyze` / `specgo` 五个。
 
 ### 1.2 受控词汇表
 
@@ -26,7 +26,7 @@
 | `biz` | 业务要素 | 定业务：对象怎么建、数据存什么 |
 | `tech` | 技术要素 | 定用法：机制怎么用、调用怎么跑 |
 | `qual` | 工程要素 | 定规矩：写到什么程度才算合格 |
-| `all` | 横向 | 跨资产能力 |
+| `spec` | 横向 | 跨资产能力 |
 
 **形态（3 个，编码资产性质）**
 
@@ -85,14 +85,14 @@
 | `qual-dt-guidelines-analyze` | DT规范 | 测试金字塔与覆盖基线、用例设计方法、自测报告要求、新增代码覆盖率门禁 | 仓级单篇 | `dt-guidelines.md` | 双模式+门禁 | P0 |
 | `qual-branch-guidelines-analyze` | 分支与变更规范 | 分支模型、commit/MR 规范、评审要求 | 仓级单篇 | `branch-guidelines.md` | 双模式 | P1 |
 
-### 2.5 横向能力（all）
+### 2.5 横向能力（spec）
 
 | Skill | 职责 | 输出 |
 |---|---|---|
-| `all-init` | 初始化仓级 `docs/` 资产目录骨架（每类资产一个单独目录）；一次性迁移既有产出（external-call/AR/framework-usage 及扁平布局历史产出） | 目录骨架 |
-| `all-index` | 生成各域索引 README + 总索引 + 服务依赖全景图（Mermaid） | `docs/README.md` 及各域 `README.md` |
-| `all-update` | 基于 git 变更识别代码变化对 docs/ 资产的影响，按最新要素定义增量刷新受影响文档（刷新清单人工确认后定稿） | 受影响 docs/ 文档就地刷新（同名覆盖） |
-| `all-analyze` | 一键全量资产分析编排：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），all-index 收口索引 | `docs/` 全套资产 + 各域索引与总索引 |
+| `spec-init` | 初始化仓级 `docs/` 资产目录骨架（每类资产一个单独目录）；一次性迁移既有产出（external-call/AR/framework-usage 及扁平布局历史产出） | 目录骨架 |
+| `spec-index` | 生成各域索引 README + 总索引 + 服务依赖全景图（Mermaid） | `docs/README.md` 及各域 `README.md` |
+| `spec-update` | 基于 git 变更识别代码变化对 docs/ 资产的影响，按最新要素定义增量刷新受影响文档（刷新清单人工确认后定稿） | 受影响 docs/ 文档就地刷新（同名覆盖） |
+| `spec-analyze` | 一键全量资产分析编排：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），spec-index 收口索引 | `docs/` 全套资产 + 各域索引与总索引 |
 
 ---
 
@@ -106,24 +106,24 @@
 docs/{域}/{资产}/{资产}-{形态}-{实例}.md           ← 模型/规范文档（活文档，覆盖更新；形态豁免资产无形态段）
 docs/{域}/{资产}/README.md                         ← 多文件资产的主文档/索引（必产出，内容口径按各 SKILL.md 约定）
 docs/{域}/{资产}/report/{YYYYMMDD}-{资产}-{形态}.md ← 差距报告（次抛，带日期）
-docs/{域}/README.md                                ← 域索引（all-index 产出）
-docs/README.md                                     ← 总索引 + 依赖全景图（all-index 产出）
+docs/{域}/README.md                                ← 域索引（spec-index 产出）
+docs/README.md                                     ← 总索引 + 依赖全景图（spec-index 产出）
 ```
 
 规则：
 
 1. **同域不同资产不混放**：资产目录内只放本资产的文档及其 `report/` 子目录；
 2. **单文件资产同样独占目录**（code-standards、dt-guidelines、branch-guidelines），目录内仅一个同名 md——目录即资产身份，新增多实例时无需迁移；
-3. **多文件资产必须在目录内置 `README.md` 作为主文档/索引**（如接口资产的全景主文档、韧性规范的扫描范围总览），由各资产 analyze skill 产出、活文档同名覆盖；域索引与总索引仍归 all-index；
+3. **多文件资产必须在目录内置 `README.md` 作为主文档/索引**（如接口资产的全景主文档、韧性规范的扫描范围总览），由各资产 analyze skill 产出、活文档同名覆盖；域索引与总索引仍归 spec-index；
 4. **文件名不变**：本次仅调整目录层级，各资产文件名沿用第 2 章表格「输出文件」列，保证既有链接与重跑同名覆盖语义不断代。
 
 ### 3.2 目录树
 
 ```
 docs/
-├── README.md                                ← all-index 产出（总索引 + 依赖全景图）
+├── README.md                                ← spec-index 产出（总索引 + 依赖全景图）
 ├── arch/
-│   ├── README.md                            ← 域索引（all-index 产出）
+│   ├── README.md                            ← 域索引（spec-index 产出）
 │   ├── structure-model/
 │   │   ├── README.md                        ← 仓级总览（资产主文档）
 │   │   └── structure-model-{module}.md      ← 每模块 1 篇

@@ -84,19 +84,19 @@ ER 图中的关系分两类，必须区分：
 - `{entity}` 实例 slug **从代码标识符派生**：取表名 / ORM entity 结构体名 / 缓存结构体名转 kebab-case，如 `white_list` → `white-list`、`AuthCache` → `auth-cache`；禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。实体中文名只进文档标题，不进文件名。
 - 同名文件已存在**直接覆盖更新**——模型文档是活文档，固定名、覆盖更新，git diff 即演进史。
 - **资产主文档 `README.md` 必产出**：同目录落 `README.md`（活文档，同名覆盖），内容仅两项——元信息表（分支/更新日期/Skill）+ 实体导航表（实体名 → `data-model-{entity}.md` 链接 + 存储形态（DB 表/缓存/文件）+ 一句话说明，从各文档首行标题提取）；单实体模式（用户指明实体）时同样刷新该 README，只增改对应行。
-- 索引分工：本资产目录的 `README.md` 由本 skill 产出；域索引 `docs/biz/README.md` 与总索引 `docs/README.md` 由 all-index 统一生成，本 skill 不维护。
+- 索引分工：本资产目录的 `README.md` 由本 skill 产出；域索引 `docs/biz/README.md` 与总索引 `docs/README.md` 由 spec-index 统一生成，本 skill 不维护。
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
 
-产出文档中含 ```mermaid 代码块，交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块，交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
-- 画图规则（label 一律加引号、裸 `end` 禁用等）见 spec-mermaid-diagram skill 的「语法红线」。
+- 画图规则（label 一律加引号、裸 `end` 禁用等）见 mermaid-validate skill 的「语法红线」。
 - 全量模式：全部产出文档一次性传入校验；全部 VALID 后在回复中给出汇总——实体清单（实体名 → 文档路径）与排除项清单（表/结构 + 排除理由）。
 
 ## 输出模板
@@ -116,7 +116,7 @@ node <specgo插件目录>/skills/spec-mermaid-diagram/scripts/validate-mermaid.m
 - **活文档覆盖更新**：`docs/biz/data-model/` 下模型文档同名直接覆盖，不保留历史副本、不加日期后缀——差距报告才带日期，模型文档不带。
 - **成品纯净**：最终文档只含成品内容（标题、概述、图、表格、说明）。模板顶部的元说明、写作指令行、占位符说明均为规则，不复制进成品。第 1~2 步的探测过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格，且**证据不得含代码行号**。
 - **文档语言**：输出文档用中文，技术术语（ORM / TTL / FOREIGN KEY / PRIMARY KEY 等）保留英文。
-- **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 spec-mermaid-diagram 的 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
+- **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 mermaid-validate 的 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
 
 ## 参考文件索引
 

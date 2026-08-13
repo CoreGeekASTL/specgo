@@ -45,8 +45,8 @@
 
 ## 无独立模板的 skill
 
-- **all-update**：无新模板，按各 analyze skill 的最新要素定义增量刷新既有文档。
-- **all-analyze**：纯编排 skill（子代理派发各 analyze skill），无文档输出模板。
-- **code-generate**：全链路编排 skill（按 docs/storys/ 下 story 设计文档编码），无文档输出模板。
-- **spec-mermaid-diagram**：画图指导 skill，无文档输出模板。
+- **spec-update**：无新模板，按各 analyze skill 的最新要素定义增量刷新既有文档。
+- **spec-analyze**：纯编排 skill（子代理派发各 analyze skill），无文档输出模板。
+- **specgo**：全链路编排 skill（按 docs/storys/ 下 story 设计文档编码），无文档输出模板。
+- **mermaid-validate**：画图指导 skill，无文档输出模板。
 - **spec-audit**：评估报告（docs/report/ 打分报告与 README.MD）结构内嵌于 SKILL.md 场景 2 第 6 步，无独立模板文件。

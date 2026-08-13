@@ -112,10 +112,10 @@ guidelines 形态语义：韧性规范是**指导性规范**（"应该"遵守）
 
 ### 第 6 步：验证 mermaid 图可渲染（有条件必做）
 
-产出文档中含 ```mermaid 代码块时（本资产通常为纯表格文档，不含图），交付前必须运行 spec-mermaid-diagram skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块时（本资产通常为纯表格文档，不含图），交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
 
 ```bash
-node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/spec-mermaid-diagram/scripts/validate-mermaid.mjs <产出文件...>
+node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
@@ -138,7 +138,7 @@ node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/spec-mer
 - **成品纯净**：最终文档只含成品内容。探测过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格。
 - **语言无关**：不预设被分析仓的语言与框架，按第 2 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（HTTP / RPC / MQ / SDK / timeout / retry / circuit breaker / fallback / panic / recover 等）保留英文。
-- **索引分工**：域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 all-index 生成，本 skill 不维护；本资产目录的 README 是资产主文档（扫描范围总览 + 维度导航），非域索引。
+- **索引分工**：域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护；本资产目录的 README 是资产主文档（扫描范围总览 + 维度导航），非域索引。
 - **与相邻资产边界**：通信协议与封装方式归 tech-comm-guidelines-analyze 产出的 `docs/tech/comm-guidelines/`；线程池选型、隔离、拒绝策略归 tech-concurrency-guidelines-analyze 产出的 `docs/tech/concurrency-guidelines/`。本 skill 只记录故障策略事实与合规性，越界内容不写入本文档。
 
 ## 参考文件索引
