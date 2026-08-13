@@ -1,6 +1,6 @@
 # Specgo
 
-面向存量代码仓的四分类资产治理 skill 体系（arch 结构 / biz 业务 / tech 技术 / qual 工程四域 + all 横向共 20 个治理 skill，另保留 6 个旧体系 spec-* skill 与 code-generate 编排 skill 支撑需求到交付链路）。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前，先加载对应 skill、按 HELP.MD  taxonomy 与统一格式产出文档资产到 `docs/{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
+面向存量代码仓的四分类资产治理 skill 体系（arch 结构 / biz 业务 / tech 技术 / qual 工程四域 + all 横向共 20 个治理 skill，另保留 3 个旧体系 spec-* skill 与 code-generate 编排 skill 支撑需求到交付链路）。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前，先加载对应 skill、按 HELP.MD  taxonomy 与统一格式产出文档资产到 `docs/{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
 
 ## 组成
 
@@ -69,7 +69,7 @@ bootstrap.md 是预生成文件，由 `scripts/generate-bootstrap.mjs` 从各 sk
 
 ## 内含 skill
 
-skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arch / biz / tech / qual）+ 横向（all）共 20 个治理 skill；另有 6 个旧体系 spec-* skill 与 code-generate 编排 skill 保留支撑需求到交付链路。命名公式 `{域}-{资产}-{形态}-analyze`，输出统一落盘 `docs/{域}/{资产}/`（每类资产一个单独目录）。
+skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arch / biz / tech / qual）+ 横向（all）共 20 个治理 skill；另有 3 个旧体系 spec-* skill 与 code-generate 编排 skill 保留支撑需求到交付链路。命名公式 `{域}-{资产}-{形态}-analyze`，输出统一落盘 `docs/{域}/{资产}/`（每类资产一个单独目录）。
 
 ### 架构要素（arch）—— 定结构：代码往哪放
 
