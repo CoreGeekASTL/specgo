@@ -116,8 +116,8 @@ ${indexMd}
 **需求到交付（旧体系保留链路）**
 
 22. **mermaid 图验证** → mermaid-validate：含图产出物必须本地校验全部 VALID 后交付
-23. **需求到 story 设计** → spec-story-design：产出 docs/storys/{功能名}-story.md（八类核心要素组织，标注新增/变更/不涉及）+ develop-task
-24. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核（spec-audit 场景 1）→ story 设计 → 代码实现与测试 → 资产刷新（spec-update）→ 全链路分析报告（docs/specgo-report/），每步校验环节结束固定过 ask-human 审视门；主代理编排与用户确认、各步骤派子代理执行
+23. **需求到 story 设计** → spec-story-design：产出 docs/storys/{功能名}/ 目录（{功能名}-story.md 八类核心要素组织、标注新增/变更/不涉及 + {功能名}-develop-task.md）
+24. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核（spec-audit 场景 1）→ story 设计 → 代码实现与测试 → 资产刷新（spec-update）→ 全链路分析报告（归档 docs/storys/{功能名}/ story 目录），每步校验环节结束固定过 ask-human 审视门；主代理编排与用户确认、各步骤派子代理执行
 
 ## 红线（这些想法意味着你正在跳过 skill）
 

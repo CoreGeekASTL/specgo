@@ -52,7 +52,7 @@ skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arc
 | spec-index | 生成各域索引 README + 总索引 + 服务依赖全景图（Mermaid flowchart，从通信规范资产提取依赖边）；只聚合真实存在的文件 | `docs/README.md` 总索引 + 各域 `docs/{域}/README.md` |
 | spec-update | 基于 git 变更（工作区 diff / commit / MR diff）识别代码变化对 docs/ 资产的影响，按最新要素定义增量刷新受影响文档（刷新清单人工确认后定稿） | 受影响 docs/ 文档就地刷新（同名覆盖） |
 | spec-analyze | 一键全量资产分析编排：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），spec-index 收口索引；主代理只编排、确认与验收 | `docs/` 全套资产 + 各域索引与总索引 |
-| spec-story-design | 需求文档 → story 设计文档（`docs/storys/{功能名}-story.md`，八类核心要素组织，标注新增/变更/不涉及） | `docs/storys/` + `docs/develop-task/`（抛弃式编码辅助文档） |
+| spec-story-design | 需求文档 → story 设计文档（八类核心要素组织，标注新增/变更/不涉及）；每 story 一个目录 | `docs/storys/{功能名}/`：{功能名}-story.md + {功能名}-develop-task.md（抛弃式编码辅助文档） |
 | spec-audit | 文档质量审核与评估：场景 1 需求/功能设计审核（多彩建模 + 断点扫描 + ask-human 澄清 + HTML，可选输出规范功能设计 md）；场景 2 资产质量评估（A 轨澄清未清零不出分；B 轨 Linter 零容忍+专项 0-5 分），支持单篇更新/通篇全量 | 建模 HTML（`docs/audit/{需求名}/`）；评估报告（`docs/report/`：README.MD 整体评估 + 每篇一个打分报告）；功能设计 md（`docs/storys/`） |
 | specgo | 全链路编排：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 资产刷新（spec-update）→ 全链路分析报告，六步端到端；每步校验环节结束固定过 ask-human 审视门；主代理编排与用户确认，各步骤派子代理执行 | 从需求到交付的全部产出物 |
 
