@@ -1,6 +1,6 @@
 # Specgo
 
-面向存量代码仓的四分类资产治理 skill 体系，共 24 个 skill：`arch` / `biz` / `tech` / `qual` 四域 16 个 + `spec` 系列 7 个（横向 4 个 + 需求到交付链路 2 个 + specgo 编排）+ 其它 1 个（mermaid-validate）。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应 skill、按 HELP.MD taxonomy 与统一格式产出文档资产到 `docs/{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
+面向存量代码仓的四分类资产治理 skill 体系，共 25 个 skill：`arch` / `biz` / `tech` / `qual` 四域 16 个 + `spec` 系列 8 个（横向 5 个 + 需求到交付链路 2 个 + specgo 编排）+ 其它 1 个（mermaid-validate）。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应 skill、按 HELP.MD taxonomy 与统一格式产出文档资产到 `docs/{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
 
 ## 内含 skill
 
@@ -44,7 +44,7 @@ skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arc
 
 ### spec 系列（横向 + 需求到交付链路 + 编排）
 
-横向 4 件管 docs/ 资产的生命周期（建骨架、索引、刷新、一键全量）；链路 2 件 + specgo 编排支撑"需求审核 → story 设计 → 代码生成"的需求到交付链路。
+横向 5 件管 docs/ 资产的生命周期与交付报告（建骨架、索引、刷新、一键全量、全链路报告）；链路 2 件 + specgo 编排支撑"需求审核 → story 设计 → 代码生成"的需求到交付链路。
 
 | Skill | 作用 | 产出 |
 |-------|------|------|
@@ -54,7 +54,8 @@ skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arc
 | spec-analyze | 一键全量资产分析编排：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），spec-index 收口索引；主代理只编排、确认与验收 | `docs/` 全套资产 + 各域索引与总索引 |
 | spec-story-design | 需求文档 → story 设计文档（八类核心要素组织，标注新增/变更/不涉及）；每 story 一个目录 | `docs/storys/{功能名}/`：{功能名}-story.md + {功能名}-develop-task.md（抛弃式编码辅助文档） |
 | spec-audit | 文档质量审核与评估：场景 1 需求/功能设计审核（多彩建模 + 断点扫描 + ask-human 澄清 + HTML，可选输出规范功能设计 md）；场景 2 资产质量评估（A 轨澄清未清零不出分；B 轨 Linter 零容忍+专项 0-5 分），支持单篇更新/通篇全量 | 建模 HTML（`docs/audit/{需求名}/`）；评估报告（`docs/report/`：README.MD 整体评估 + 每篇一个打分报告）；功能设计 md（`docs/storys/`） |
-| specgo | 全链路编排：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 资产刷新（spec-update）→ 全链路分析报告，六步端到端；每步校验环节结束固定过 ask-human 审视门；主代理编排与用户确认，各步骤派子代理执行 | 从需求到交付的全部产出物 |
+| specgo | 全链路编排：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 资产刷新（spec-update）→ 全链路分析报告（specgo-report），六步端到端；每步校验环节结束固定过 ask-human 审视门；主代理编排与用户确认，各步骤派子代理执行 | 从需求到交付的全部产出物 |
+| specgo-report | 需求到代码全链路分析报告：三节结构（测试用例执行结果 + 代码修改清单含「业务规则」列 + 引用资产质量评估与清单同口径），由 specgo 第 6 步调度或单独触发 | `docs/storys/{功能名}/{YYYYMMDD}-report.md` |
 
 ### 其它
 

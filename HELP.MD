@@ -14,7 +14,7 @@
 
 - 全小写 kebab-case；
 - 四段式，缺一不可（豁免项见 1.3）；
-- 横向与编排能力不受四段式约束：`spec-init` / `spec-index` / `spec-update` / `spec-analyze` / `specgo` 五个。
+- 横向与编排能力不受四段式约束：`spec-init` / `spec-index` / `spec-update` / `spec-analyze` / `specgo-report` / `specgo` 六个。
 
 ### 1.2 受控词汇表
 
@@ -93,6 +93,7 @@
 | `spec-index` | 生成各域索引 README + 总索引 + 服务依赖全景图（Mermaid） | `docs/README.md` 及各域 `README.md` |
 | `spec-update` | 基于 git 变更识别代码变化对 docs/ 资产的影响，按最新要素定义增量刷新受影响文档（刷新清单人工确认后定稿） | 受影响 docs/ 文档就地刷新（同名覆盖） |
 | `spec-analyze` | 一键全量资产分析编排：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），spec-index 收口索引 | `docs/` 全套资产 + 各域索引与总索引 |
+| `specgo-report` | 需求到代码全链路分析报告：三节结构（测试用例执行结果 + 代码修改清单含「业务规则」列 + 引用资产质量评估与清单同口径），通常由 specgo 第 6 步调度 | `docs/storys/{功能名}/{YYYYMMDD}-report.md` |
 
 ---
 
