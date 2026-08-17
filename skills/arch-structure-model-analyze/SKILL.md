@@ -1,7 +1,7 @@
 ---
 name: arch-structure-model-analyze
 description: >-
-  分析存量代码仓的结构模型（模块划分、分层、职责与依赖关系），产出 UML 包图（mermaid）+ 依赖矩阵，落盘被分析仓的 docs/arch/structure-model/：仓级总览 README.md + 每模块 structure-model-{module}.md。当用户提到"代码仓结构"、"结构模型"、"目录关系"、"模块依赖图"、"画一下项目结构"、"梳理目录关系"、"生成结构文档"、"第一层目录"、"包之间依赖"、"repo structure"、"structure model"、"module relationship"、"项目摸底"、"架构摸底"时使用。即使用户没明说"结构模型"，只要意图是"看清一个代码仓第一层目录之间、或某目录下包与包之间的依赖关系并出图"，都应触发。务必在生成任何代码仓结构文档之前使用此 skill。
+  分析存量代码仓的结构模型（模块划分、分层、职责与依赖关系），产出 UML 包图（mermaid）+ 依赖矩阵，落盘被分析仓的 docs/0-arch/structure-model/：仓级总览 README.md + 每模块 structure-model-{module}.md。当用户提到"代码仓结构"、"结构模型"、"目录关系"、"模块依赖图"、"画一下项目结构"、"梳理目录关系"、"生成结构文档"、"第一层目录"、"包之间依赖"、"repo structure"、"structure model"、"module relationship"、"项目摸底"、"架构摸底"时使用。即使用户没明说"结构模型"，只要意图是"看清一个代码仓第一层目录之间、或某目录下包与包之间的依赖关系并出图"，都应触发。务必在生成任何代码仓结构文档之前使用此 skill。
 ---
 
 # 代码仓结构模型分析 Skill（arch-structure-model-analyze）
@@ -18,10 +18,10 @@ description: >-
 
 | 输入 | 粒度 | 画什么 | 产出 |
 | --- | --- | --- | --- |
-| 代码仓根路径 | 仓库级（模式 A） | 业务代码**第一层目录**之间的关系 | `docs/arch/structure-model/README.md`（仓级总览 1 篇，即资产主文档）+ `docs/arch/structure-model/structure-model-{module}.md`（每模块 1 篇） |
-| 某个子目录路径 | 目录级（模式 B） | 该目录下**包与包**之间的关系 | `docs/arch/structure-model/structure-model-{dir}.md`（目录级总览 1 篇）+ `docs/arch/structure-model/structure-model-{dir}-{pkg}.md`（每包 1 篇） |
+| 代码仓根路径 | 仓库级（模式 A） | 业务代码**第一层目录**之间的关系 | `docs/0-arch/structure-model/README.md`（仓级总览 1 篇，即资产主文档）+ `docs/0-arch/structure-model/structure-model-{module}.md`（每模块 1 篇） |
+| 某个子目录路径 | 目录级（模式 B） | 该目录下**包与包**之间的关系 | `docs/0-arch/structure-model/structure-model-{dir}.md`（目录级总览 1 篇）+ `docs/0-arch/structure-model/structure-model-{dir}-{pkg}.md`（每包 1 篇） |
 
-文档最终落到**被分析代码仓根目录**的 `docs/arch/structure-model/` 下（不存在则创建）。`{module}`/`{dir}`/`{pkg}` 实例 slug 一律从代码标识符派生（目录名/包名转 kebab-case），禁止自由起名——保证重跑产出同名文件、资产不断代。
+文档最终落到**被分析代码仓根目录**的 `docs/0-arch/structure-model/` 下（不存在则创建）。`{module}`/`{dir}`/`{pkg}` 实例 slug 一律从代码标识符派生（目录名/包名转 kebab-case），禁止自由起名——保证重跑产出同名文件、资产不断代。
 
 本 skill 通用，不预设任何特定代码仓。执行时基于实际探测结果走，禁止凭仓库名或已知项目结构臆测。
 
@@ -123,14 +123,14 @@ description: >-
   "主要依赖 + 被依赖"两列合起来即依赖矩阵的表格形态——任意两模块间的依赖边都可在表内查证。
 - **分层特征**：基于模块命名约定与依赖方向的实证观察（如入口层/业务层/数据层的流向是否单向、有无跨层直达、有无循环依赖），2~4 句。证据不足写"未识别"，禁止凭经验套三层架构模板。
 
-### 第 7 步：写每模块文档并落盘 docs/arch/structure-model/
+### 第 7 步：写每模块文档并落盘 docs/0-arch/structure-model/
 
 - 每个模块 1 篇，骨架见 references/structure-model-module-template.md，内容：模块职责、子模块关系图与子模块说明（模块内第一层子包之间的依赖关系与职责，证据来自第 4 步的跨子包 import 记录；扁平模块、单子包、子包间无依赖三种退化情形按模板规则处理）。跨模块依赖不在每模块文档重复，统一由总览文档的模块说明表（依赖矩阵）承载。
-- 文档保存到**被分析代码仓根目录**的 `docs/arch/structure-model/` 下（不是当前工作目录的 `docs/arch/structure-model/`，除非两者相同）。
+- 文档保存到**被分析代码仓根目录**的 `docs/0-arch/structure-model/` 下（不是当前工作目录的 `docs/0-arch/structure-model/`，除非两者相同）。
 - 文件名：
   - 模式 A：总览 `README.md`（资产主文档）；每模块 `structure-model-{module}.md`，`{module}` 取模块目录名转 kebab-case。
   - 模式 B：总览 `structure-model-{dir}.md`；每包 `structure-model-{dir}-{pkg}.md`，`{dir}`/`{pkg}` 取目录名/包名转 kebab-case。
-- `docs/arch/structure-model/` 不存在则创建（连同 `docs/` 一起创建）。
+- `docs/0-arch/structure-model/` 不存在则创建（连同 `docs/` 一起创建）。
 - 同名文件已存在**直接覆盖更新**——模型文档是活文档，固定名、覆盖更新，git diff 即演进史。
 
 ### 第 8 步：验证 mermaid 图可渲染（收尾必做）
@@ -156,11 +156,11 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 
 - **通用性**：本 skill 不依赖任何特定代码仓的结构。执行时基于实际探测结果走，禁止凭仓库名或已知项目结构臆测。第 2 步的"通用辅助目录清单"是跨语言行业共识可以排除，但禁止把特定代码仓的目录名写进 skill。
 - **基于实证**：所有"依赖""职责""分层"结论必须有 import 语句或文件路径支撑。读不到就写"未识别（原因：xxx）"，禁止凭目录名直接下依赖结论——`controllers` 不一定依赖 `services`，看代码说了算。证据形式为 `文件路径`，**不得出现代码行号**，行号会随代码变更失效且无跨工具稳定性。
-- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（新建 `docs/arch/structure-model/` 目录和文档文件除外）。
+- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（新建 `docs/0-arch/structure-model/` 目录和文档文件除外）。
 - **语言无关**：不预设被分析仓的语言，按第 1 步实际探测结果走。
 - **业务目录识别靠启发式不靠硬编码**：第 2 步的辅助目录清单是行业共识，可以排除；遇到清单外的可疑辅助目录，单独注明理由排除，保留可追溯性。
 - **实例 slug 从代码标识符派生**：`{module}`/`{dir}`/`{pkg}` 一律取模块目录名/包名转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
-- **活文档覆盖更新**：`docs/arch/structure-model/` 下模型文档同名直接覆盖，不保留历史副本、不加日期后缀——差距报告才带日期，模型文档不带。
-- **索引分工**：仓级总览 `README.md` 即本资产目录主文档，由本 skill 产出、活文档同名覆盖；域索引 `docs/arch/README.md` 与总索引 `docs/README.md` 由 spec-index skill 统一生成，本 skill 不维护。
+- **活文档覆盖更新**：`docs/0-arch/structure-model/` 下模型文档同名直接覆盖，不保留历史副本、不加日期后缀——差距报告才带日期，模型文档不带。
+- **索引分工**：仓级总览 `README.md` 即本资产目录主文档，由本 skill 产出、活文档同名覆盖；域索引 `docs/0-arch/README.md` 与总索引 `docs/README.md` 由 spec-index skill 统一生成，本 skill 不维护。
 - **成品纯净**：最终文档只含成品内容（标题、概览、图、表格）。模板顶部的元说明、写作指令行、占位符说明均为规则，不复制进成品。第 1~4 步的探测过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格，且**证据不得含代码行号**。
 - **文档语言**：输出文档用中文，技术术语（Controller / Service / Repository / Package / Module 等）保留英文。

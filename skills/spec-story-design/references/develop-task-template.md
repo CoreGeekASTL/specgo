@@ -1,6 +1,6 @@
 # develop-task 文档模板
 
-抛弃式文档，聚焦辅助出代码。产出到 `<repo>/docs/storys/{功能名}/{功能名}-develop-task.md`（与 story 设计文档同目录）。不看排版、不写设计论证——设计细节在 story 设计文档里，本文档只回答"代码怎么改"。同名文件已存在时直接覆盖，不进 README 索引。
+抛弃式文档，聚焦辅助出代码。产出到 `<repo>/docs/1-storys/{功能名}/{功能名}-develop-task.md`（与 story 设计文档同目录）。不看排版、不写设计论证——设计细节在 story 设计文档里，本文档只回答"代码怎么改"。同名文件已存在时直接覆盖，不进 README 索引。
 
 > 模板中所有具体内容（服务名、文件路径、框架文档链接、命令等）均为**格式示例**，产出时替换为目标仓实际内容。
 
@@ -30,7 +30,7 @@
 | Beego ORM | [framework-guidelines-beego-orm.md](../tech/framework-guidelines/framework-guidelines-beego-orm.md) | DAO 继承 BaseInterface，EntityType 设置，ContextDo 传 context.TODO() |
 | HTTP 客户端 | [framework-guidelines-http-client.md](../tech/framework-guidelines/framework-guidelines-http-client.md) | 请求用 https.NewRequest().WithRetry() builder |
 
-每条必须链到 docs/tech/framework-guidelines/ 真实存在的文档；仓内无该目录时按记忆列框架名并注明"无框架文档，待核实"。
+每条必须链到 docs/0-tech/framework-guidelines/ 真实存在的文档；仓内无该目录时按记忆列框架名并注明"无框架文档，待核实"。
 
 ## 4. 要调用的外部接口
 
@@ -38,7 +38,7 @@
 |---------|------|-------------------|---------|
 | 沐恩云服务 | POST /auth/v1/verify | service/remote_service.go VerifyDevice | [comm-guidelines-munen.md](../tech/comm-guidelines/comm-guidelines-munen.md#auth-verify) |
 
-每条链到 docs/tech/comm-guidelines/ 对应文档的接口章节；仓内无该目录时按需求文档列接口并注明"无出站调用文档，待核实"。本功能无出站调用时本节写"无"。
+每条链到 docs/0-tech/comm-guidelines/ 对应文档的接口章节；仓内无该目录时按需求文档列接口并注明"无出站调用文档，待核实"。本功能无出站调用时本节写"无"。
 
 ## 5. 验证方式
 

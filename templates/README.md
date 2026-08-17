@@ -17,7 +17,7 @@
 
 | 模板文件 | 来源 Skill | 原文件路径 | 用途 |
 | --- | --- | --- | --- |
-| business/story/Story设计README文档模板.md | spec-story-design | skills/spec-story-design/references/story-readme-template.md | 旧版索引归档；现行 docs/storys/README.md 索引模板以 skill references 为准 |
+| business/story/Story设计README文档模板.md | spec-story-design | skills/spec-story-design/references/story-readme-template.md | 旧版索引归档；现行 docs/1-storys/README.md 索引模板以 skill references 为准 |
 | business/story/Story设计详情文档模板.md | 同上 | skills/spec-story-design/references/story-template.md | 旧六节版归档；现行 {功能名}-story.md 八类核心要素模板以 skill references 为准 |
 | business/story/DevelopTask文档模板.md | spec-story-design | skills/spec-story-design/references/develop-task-template.md | develop-task 抛弃式文档（修改文件清单 + 澄清问题列表） |
 | business/story/功能设计规范模板.md | spec-audit | skills/spec-audit/references/functional-design-template.md | 功能设计规范 md（含多彩建模章节，场景 1 审核完成后的可选输出） |
@@ -47,6 +47,6 @@
 
 - **spec-update**：无新模板，按各 analyze skill 的最新要素定义增量刷新既有文档。
 - **spec-analyze**：纯编排 skill（子代理派发各 analyze skill），无文档输出模板。
-- **specgo**：全链路编排 skill（按 docs/storys/ 下 story 设计文档编码），无文档输出模板。
+- **specgo**：全链路编排 skill（按 docs/1-storys/ 下 story 设计文档编码），无文档输出模板。
 - **mermaid-validate**：画图指导 skill，无文档输出模板。
 - **spec-audit**：评估报告（docs/report/ 打分报告与 README.MD）结构内嵌于 SKILL.md 场景 2 第 6 步，无独立模板文件。

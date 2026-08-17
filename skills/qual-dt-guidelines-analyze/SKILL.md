@@ -1,6 +1,6 @@
 ---
 name: qual-dt-guidelines-analyze
-description: 治理存量代码仓的 DT 规范资产（开发者测试规范：测试金字塔与覆盖基线、用例设计方法（等价类/边界值）、自测报告要求、新增代码覆盖率门禁），双模式运行——起草模式盘点仓内测试现状（测试文件分布：单测/集成/E2E，测试框架、Mock 工具、覆盖率工具与当前覆盖率，CI 测试关卡）并据此起草规范，新增代码覆盖率门禁线从现状实测给建议值并标注"建议值，待团队确认"；差距分析模式对照规范扫描差距（重点：新增代码无测试、覆盖率低于门禁线），覆盖率红线违反单独成节供 CI 门禁。产出落盘被分析仓的 docs/qual/dt-guidelines/dt-guidelines.md（仓级单篇活文档）；差距报告落盘 docs/qual/dt-guidelines/report/{YYYYMMDD}-dt-guidelines.md。当用户提到"DT 规范"、"开发者测试规范"、"测试金字塔"、"覆盖率基线"、"新增代码覆盖率门禁"、"覆盖率门禁线"、"用例设计方法"、"等价类"、"边界值"、"自测报告"、"测试现状盘点"、"单元测试覆盖率"、"DT guidelines"、"测试覆盖率差距分析"、"对照 DT 规范检查"时使用。
+description: 治理存量代码仓的 DT 规范资产（开发者测试规范：测试金字塔与覆盖基线、用例设计方法（等价类/边界值）、自测报告要求、新增代码覆盖率门禁），双模式运行——起草模式盘点仓内测试现状（测试文件分布：单测/集成/E2E，测试框架、Mock 工具、覆盖率工具与当前覆盖率，CI 测试关卡）并据此起草规范，新增代码覆盖率门禁线从现状实测给建议值并标注"建议值，待团队确认"；差距分析模式对照规范扫描差距（重点：新增代码无测试、覆盖率低于门禁线），覆盖率红线违反单独成节供 CI 门禁。产出落盘被分析仓的 docs/0-qual/dt-guidelines/dt-guidelines.md（仓级单篇活文档）；差距报告落盘 docs/0-qual/dt-guidelines/report/{YYYYMMDD}-dt-guidelines.md。当用户提到"DT 规范"、"开发者测试规范"、"测试金字塔"、"覆盖率基线"、"新增代码覆盖率门禁"、"覆盖率门禁线"、"用例设计方法"、"等价类"、"边界值"、"自测报告"、"测试现状盘点"、"单元测试覆盖率"、"DT guidelines"、"测试覆盖率差距分析"、"对照 DT 规范检查"时使用。
 ---
 
 # DT 规范分析（qual-dt-guidelines-analyze）
@@ -17,8 +17,8 @@ description: 治理存量代码仓的 DT 规范资产（开发者测试规范：
 
 | 模式 | 产出 | 落盘 |
 | --- | --- | --- |
-| 起草模式 | 仓级单篇 `dt-guidelines.md` | 被分析仓 `docs/qual/dt-guidelines/` |
-| 差距分析模式 | 差距报告 1 篇 `{YYYYMMDD}-dt-guidelines.md` | 被分析仓 `docs/qual/dt-guidelines/report/` |
+| 起草模式 | 仓级单篇 `dt-guidelines.md` | 被分析仓 `docs/0-qual/dt-guidelines/` |
+| 差距分析模式 | 差距报告 1 篇 `{YYYYMMDD}-dt-guidelines.md` | 被分析仓 `docs/0-qual/dt-guidelines/report/` |
 
 仓级单篇资产，文件名固定 `dt-guidelines.md`，无实例 slug；文档内引用的模块/目录标识一律从代码标识符派生（目录名、包名转 kebab-case），禁止 AI 自由起名。
 
@@ -28,7 +28,7 @@ description: 治理存量代码仓的 DT 规范资产（开发者测试规范：
 
 - 用户要盘点仓内测试现状：有哪些测试、测到哪一层、覆盖率多少、CI 有没有卡测试。
 - 用户要建立或刷新 DT 规范文档：测试金字塔基线、用例设计方法（等价类/边界值）要求、自测报告要求、新增代码覆盖率门禁线。
-- 用户给出一份 DT 规范文档（或仓内 `docs/qual/dt-guidelines/` 下已有规范），要求对照规范检查测试差距、输出差距报告，或将覆盖率门禁结论接入 CI。
+- 用户给出一份 DT 规范文档（或仓内 `docs/0-qual/dt-guidelines/` 下已有规范），要求对照规范检查测试差距、输出差距报告，或将覆盖率门禁结论接入 CI。
 
 ## 运行模式
 
@@ -38,7 +38,7 @@ description: 治理存量代码仓的 DT 规范资产（开发者测试规范：
 
 ### 差距分析模式
 
-仓内已存在 DT 规范文档（`docs/qual/dt-guidelines/dt-guidelines.md`），或用户显式提供规范文件时走本模式。以规范为基准对照扫描差距，重点两项：**新增代码无测试**、**覆盖率低于门禁线**。产出差距报告 `docs/qual/dt-guidelines/report/{YYYYMMDD}-dt-guidelines.md`：结论概览 + 覆盖率红线违反（单独成节）+ 合规项 / 差距项 / 规范未覆盖 / 规范条目无实现，均附证据文件路径。差距报告为次抛件，带日期、不覆盖。
+仓内已存在 DT 规范文档（`docs/0-qual/dt-guidelines/dt-guidelines.md`），或用户显式提供规范文件时走本模式。以规范为基准对照扫描差距，重点两项：**新增代码无测试**、**覆盖率低于门禁线**。产出差距报告 `docs/0-qual/dt-guidelines/report/{YYYYMMDD}-dt-guidelines.md`：结论概览 + 覆盖率红线违反（单独成节）+ 合规项 / 差距项 / 规范未覆盖 / 规范条目无实现，均附证据文件路径。差距报告为次抛件，带日期、不覆盖。
 
 ### 门禁语义说明
 
@@ -50,7 +50,7 @@ description: 治理存量代码仓的 DT 规范资产（开发者测试规范：
 
 ### 模式缺省回退
 
-用户要求差距分析、但未提供规范文档且 `docs/qual/dt-guidelines/` 下也无既有规范时，默认回退起草模式，并在产出的 `dt-guidelines.md` 末尾注明「规范未建，本次为现状盘点与规范起草」。
+用户要求差距分析、但未提供规范文档且 `docs/0-qual/dt-guidelines/` 下也无既有规范时，默认回退起草模式，并在产出的 `dt-guidelines.md` 末尾注明「规范未建，本次为现状盘点与规范起草」。
 
 ## 工作流程
 
@@ -59,7 +59,7 @@ description: 治理存量代码仓的 DT 规范资产（开发者测试规范：
 ### 第 1 步：判定运行模式
 
 - 用户显式提供规范文件 → 差距分析模式，规范来源记为该文件路径。
-- 否则检查被分析仓 `docs/qual/dt-guidelines/dt-guidelines.md` 是否已存在 → 有则按差距分析模式执行（用户意图是"检查 / 对照 / 差距 / 门禁"时直接执行），规范来源记为该文档。
+- 否则检查被分析仓 `docs/0-qual/dt-guidelines/dt-guidelines.md` 是否已存在 → 有则按差距分析模式执行（用户意图是"检查 / 对照 / 差距 / 门禁"时直接执行），规范来源记为该文档。
 - 都没有 → 起草模式；若用户本意是差距分析，在文档末尾注明「规范未建，本次为现状盘点与规范起草」。
 
 ### 第 2 步：盘点测试现状
@@ -75,7 +75,7 @@ description: 治理存量代码仓的 DT 规范资产（开发者测试规范：
 
 ### 第 3 步（起草模式）：起草 DT 规范文档
 
-输出被分析仓 `docs/qual/dt-guidelines/dt-guidelines.md`，按 references/dt-guidelines-template.md 填充：
+输出被分析仓 `docs/0-qual/dt-guidelines/dt-guidelines.md`，按 references/dt-guidelines-template.md 填充：
 
 1. **元信息表**：分支 / 更新日期 / Skill / 运行模式 / 文档状态（起草待评审）。
 2. **测试现状盘点**：第 2 步四路事实原样落表（分布表、框架工具表、当前覆盖率、CI 关卡表）——这是规范的事实基线。
@@ -98,7 +98,7 @@ description: 治理存量代码仓的 DT 规范资产（开发者测试规范：
 - 核查维度固定四项：**测试分布**（三层分布是否符合金字塔基线）、**用例设计方法**（抽样精读测试代码，从测试函数名与断言推断是否覆盖等价类/边界值——推断不出记「未能判定」，不臆断）、**自测报告要求**（近期 MR/变更是否附自测报告，仓内可读范围内核查）、**新增代码测试与覆盖率**（对照基准分支 diff 或近期变更：新增代码有无对应测试、新增代码覆盖率实测值）。
 - 每条核查结论落四类之一：**合规项**（实际测试遵守规范，附证据文件路径）、**差距项**（违反规范或规范有要求而测试未实现，附证据文件路径与现状说明）、**规范未覆盖**（实际存在测试活动但规范未约定，单列提示规范补全）、**规范条目无实现**（规范条目在仓内找不到任何对应测试实现，不臆造实现位置）。
 - **覆盖率红线单独核查**：实测新增代码覆盖率 vs 规范门禁线——低于门禁线即红线违反，产出 BLOCK 门禁结论；「覆盖率红线违反」单独成节（门禁线 / 实测值 / 无测试新增代码清单 / 低于门禁线新增代码清单），字段固定，供 CI 门禁直接消费。规范门禁线仍标注「建议值，待团队确认」时门禁不生效，结论写「未生效（门禁线建议值待确认）」。
-- 产出差距报告 `docs/qual/dt-guidelines/report/{YYYYMMDD}-dt-guidelines.md`，按 references/gap-report-template.md 填充。
+- 产出差距报告 `docs/0-qual/dt-guidelines/report/{YYYYMMDD}-dt-guidelines.md`，按 references/gap-report-template.md 填充。
 - 差距报告**只新增不覆盖**，文件名带日期；同日重跑同名覆盖。
 
 ### 第 5 步：验证 mermaid 图可渲染（收尾必做）
@@ -124,14 +124,14 @@ node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-
 
 - **基于实证**：所有"有哪些测试、用什么框架、覆盖率多少、是否合规"的结论必须有代码、配置或命令实测支撑，证据形式为 `文件路径`，**不得出现代码行号**（行号随代码变更失效）。读不到就写「未识别（原因：xxx）」/「未能实测（原因：xxx）」，禁止凭经验臆造框架名、层级归属或覆盖率数字。
 - **覆盖率数字三态**：实测值（注明命令与执行日期）/ 取自既有报告文件（注明文件路径与报告日期）/ 未能实测（注明原因）——三选一，禁止出现第四种来源。
-- **仓级单篇无实例 slug**：资产固定 `docs/qual/dt-guidelines/dt-guidelines.md`；文档内引用的模块/目录标识从代码标识符派生转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
-- **活文档覆盖更新**：`docs/qual/dt-guidelines/dt-guidelines.md` 同名直接覆盖，不保留历史副本、不加日期后缀；**差距报告才带日期**，落 `report/` 子目录、次抛。
-- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（`docs/qual/dt-guidelines/` 下的产出除外）。允许执行只读性质的测试与覆盖率命令；临时产物优先落系统临时目录，仓内产生的临时文件（coverage.out 等）收尾清理。
+- **仓级单篇无实例 slug**：资产固定 `docs/0-qual/dt-guidelines/dt-guidelines.md`；文档内引用的模块/目录标识从代码标识符派生转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
+- **活文档覆盖更新**：`docs/0-qual/dt-guidelines/dt-guidelines.md` 同名直接覆盖，不保留历史副本、不加日期后缀；**差距报告才带日期**，落 `report/` 子目录、次抛。
+- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（`docs/0-qual/dt-guidelines/` 下的产出除外）。允许执行只读性质的测试与覆盖率命令；临时产物优先落系统临时目录，仓内产生的临时文件（coverage.out 等）收尾清理。
 - **成品纯净**：最终文档只含成品内容。扫描过程（执行的 grep/rg 命令、命中输出摘要、覆盖率命令原始输出）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据或「实测值+命令」形式进入相关表格。
 - **语言无关**：不预设被分析仓的语言与框架，按第 2 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（unit test / integration test / E2E / Mock / coverage / diff coverage / CI 等）保留英文。
-- **索引分工**：域索引 `docs/qual/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
-- **与相邻资产互补**：编码层面的命名/注释/函数长度等红线归 qual-code-standards-analyze 的 `docs/qual/code-standards/`；分支模型与 MR 评审要求归 qual-branch-guidelines-analyze 的 `docs/qual/branch-guidelines/`；本 skill 只管测试维度（金字塔、用例设计、自测报告、覆盖率门禁）。
+- **索引分工**：域索引 `docs/0-qual/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
+- **与相邻资产互补**：编码层面的命名/注释/函数长度等红线归 qual-code-standards-analyze 的 `docs/0-qual/code-standards/`；分支模型与 MR 评审要求归 qual-branch-guidelines-analyze 的 `docs/0-qual/branch-guidelines/`；本 skill 只管测试维度（金字塔、用例设计、自测报告、覆盖率门禁）。
 - **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 mermaid-validate 的 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
 
 ## 参考文件索引

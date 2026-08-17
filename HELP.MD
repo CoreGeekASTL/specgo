@@ -2,7 +2,7 @@
 
 > 版本：v1.1　日期：2026-08-08
 > 适用范围：基于"四分类资产模型"的存量代码资产治理
-> v1.1 变更：输出目录改为"每类资产一个单独目录"（`docs/{域}/{资产}/`），同域不同资产不再混放。
+> v1.1 变更：输出目录改为"每类资产一个单独目录"（`docs/0-{域}/{资产}/`），同域不同资产不再混放。
 
 ## 一、命名规范
 
@@ -20,13 +20,15 @@
 
 **域（5 个，新增需先扩表）**
 
-| 域 | 含义 | 治理问题 |
-|---|---|---|
-| `arch` | 架构要素 | 定结构：代码往哪放 |
-| `biz` | 业务要素 | 定业务：对象怎么建、数据存什么 |
-| `tech` | 技术要素 | 定用法：机制怎么用、调用怎么跑 |
-| `qual` | 工程要素 | 定规矩：写到什么程度才算合格 |
-| `spec` | 横向 | 跨资产能力 |
+| 域 | 含义 | 治理问题 | 目录名 |
+|---|---|---|---|
+| `arch` | 架构要素 | 定结构：代码往哪放 | `0-arch/` |
+| `biz` | 业务要素 | 定业务：对象怎么建、数据存什么 | `0-biz/` |
+| `tech` | 技术要素 | 定用法：机制怎么用、调用怎么跑 | `0-tech/` |
+| `qual` | 工程要素 | 定规矩：写到什么程度才算合格 | `0-qual/` |
+| `spec` | 横向 | 跨资产能力 | —（无域目录） |
+
+> 目录排序约定：四域资产目录加 `0` 前缀（0-arch/0-biz/0-tech/0-qual），story 目录为 `1-storys/`，保证字典序下资产在前、story 在后；域名本身（skill 名前缀）不加前缀。
 
 **形态（3 个，编码资产性质）**
 
@@ -93,7 +95,7 @@
 | `spec-index` | 生成各域索引 README + 总索引 + 服务依赖全景图（Mermaid） | `docs/README.md` 及各域 `README.md` |
 | `spec-update` | 基于 git 变更识别代码变化对 docs/ 资产的影响，按最新要素定义增量刷新受影响文档（刷新清单人工确认后定稿） | 受影响 docs/ 文档就地刷新（同名覆盖） |
 | `spec-analyze` | 一键全量资产分析编排：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），spec-index 收口索引 | `docs/` 全套资产 + 各域索引与总索引 |
-| `specgo-report` | 需求到代码全链路分析报告：三节结构（测试用例执行结果 + 代码修改清单含「业务规则」列 + 引用资产质量评估与清单同口径），通常由 specgo 第 6 步调度 | `docs/storys/{功能名}/{YYYYMMDD}-report.md` |
+| `specgo-report` | 需求到代码全链路分析报告：三节结构（测试用例执行结果 + 代码修改清单含「业务规则」列 + 引用资产质量评估与清单同口径），通常由 specgo 第 6 步调度 | `docs/1-storys/{功能名}/{YYYYMMDD}-report.md` |
 
 ---
 
@@ -101,14 +103,15 @@
 
 ### 3.1 总公式
 
-**每类资产一个单独目录**：`docs/{域}/{资产}/`。资产目录名从 skill 名派生——去掉 `{域}-` 前缀与 `-analyze` 后缀（如 `arch-structure-model-analyze` → `structure-model/`、`tech-framework-guidelines-analyze` → `framework-guidelines/`），禁止自由起名。
+**每类资产一个单独目录**：`docs/0-{域}/{资产}/`（域目录加 0- 前缀：0-arch/0-biz/0-tech/0-qual）。资产目录名从 skill 名派生——去掉 `{域}-` 前缀与 `-analyze` 后缀（如 `arch-structure-model-analyze` → `structure-model/`、`tech-framework-guidelines-analyze` → `framework-guidelines/`），禁止自由起名。story 文档落 `docs/1-storys/{功能名}/`。
 
 ```
-docs/{域}/{资产}/{资产}-{形态}-{实例}.md           ← 模型/规范文档（活文档，覆盖更新；形态豁免资产无形态段）
-docs/{域}/{资产}/README.md                         ← 多文件资产的主文档/索引（必产出，内容口径按各 SKILL.md 约定）
-docs/{域}/{资产}/report/{YYYYMMDD}-{资产}-{形态}.md ← 差距报告（次抛，带日期）
-docs/{域}/README.md                                ← 域索引（spec-index 产出）
-docs/README.md                                     ← 总索引 + 依赖全景图（spec-index 产出）
+docs/0-{域}/{资产}/{资产}-{形态}-{实例}.md           ← 模型/规范文档（活文档，覆盖更新；形态豁免资产无形态段）
+docs/0-{域}/{资产}/README.md                         ← 多文件资产的主文档/索引（必产出，内容口径按各 SKILL.md 约定）
+docs/0-{域}/{资产}/report/{YYYYMMDD}-{资产}-{形态}.md ← 差距报告（次抛，带日期）
+docs/0-{域}/README.md                                ← 域索引（spec-index 产出）
+docs/1-storys/{功能名}/                              ← story 目录（story/develop-task/全链路报告）
+docs/README.md                                      ← 总索引 + 依赖全景图（spec-index 产出）
 ```
 
 规则：
@@ -123,7 +126,7 @@ docs/README.md                                     ← 总索引 + 依赖全景�
 ```
 docs/
 ├── README.md                                ← spec-index 产出（总索引 + 依赖全景图）
-├── arch/
+├── 0-arch/
 │   ├── README.md                            ← 域索引（spec-index 产出）
 │   ├── structure-model/
 │   │   ├── README.md                        ← 仓级总览（资产主文档）
@@ -131,7 +134,7 @@ docs/
 │   └── interaction-model/
 │       ├── README.md                        ← 流程导航主文档
 │       └── interaction-model-{flow}.md      ← 每业务流程 1 篇
-├── biz/
+├── 0-biz/
 │   ├── README.md
 │   ├── interface/
 │   │   ├── README.md                        ← 接口全景主文档
@@ -148,7 +151,7 @@ docs/
 │   └── lexicon/
 │       ├── README.md                        ← 主文档（说明/待确认清单/子域导航/通用节）
 │       └── lexicon-{feature}.md             ← 每功能域 1 篇（按业务子域拆分）
-├── tech/
+├── 0-tech/
 │   ├── README.md
 │   ├── framework-guidelines/
 │   │   ├── README.md                        ← 框架清单索引
@@ -168,7 +171,7 @@ docs/
 │   └── foundation-guidelines/
 │       ├── README.md                        ← 机制全景索引
 │       └── foundation-guidelines-{dimension}.md ← 每维度 1 篇
-└── qual/
+└── 0-qual/
     ├── README.md
     ├── code-standards/
     │   ├── code-standards.md                ← 仓级单篇

@@ -1,6 +1,6 @@
 ---
 name: specgo
-description: 规格化全链路主流程编排 skill——资产检查/录入 → 需求审核(spec-audit 场景 1) → story 设计(spec-story-design) → 代码实现与测试 → 资产刷新(spec-update) → 全链路分析报告（归档 docs/storys/{功能名}/ story 目录），六步端到端；每步校验环节结束固定过 ask-human 审视门，新生成的文档/代码必须经人审视通过后才进下一步。主代理只做编排与用户确认，各步骤派子代理执行。触发场景包括"specgo"、"code-generate"、"代码生成"、"端到端开发 xx 功能"、"从需求到交付"、"全流程开发"等。
+description: 规格化全链路主流程编排 skill——资产检查/录入 → 需求审核(spec-audit 场景 1) → story 设计(spec-story-design) → 代码实现与测试 → 资产刷新(spec-update) → 全链路分析报告（归档 docs/1-storys/{功能名}/ story 目录），六步端到端；每步校验环节结束固定过 ask-human 审视门，新生成的文档/代码必须经人审视通过后才进下一步。主代理只做编排与用户确认，各步骤派子代理执行。触发场景包括"specgo"、"code-generate"、"代码生成"、"端到端开发 xx 功能"、"从需求到交付"、"全流程开发"等。
 ---
 
 # specgo — 规格化全链路编排（主流程）
@@ -27,7 +27,7 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 ## 第 1 步：资产检查与录入/刷新
 
-1. 探测四类核心资产目录：`docs/` 下——`biz/interface/`、`tech/framework-guidelines/`、`tech/comm-guidelines/`、`arch/structure-model/`（README.md 仓级总览 + structure-model-*.md）。
+1. 探测四类核心资产目录：`docs/` 下——`0-biz/interface/`、`0-tech/framework-guidelines/`、`0-tech/comm-guidelines/`、`0-arch/structure-model/`（README.md 仓级总览 + structure-model-*.md）。
    - 需要全套 16 类资产（含 rules/object-model/data-model/lexicon 等）时，改派 spec-analyze 子代理做一键全量分析，本步后续小步跳过。
    - `docs/business/` 旧体系资产目录（story/key-class/data-structure 等）如存在仅作"外部文档引用"素材，不再探测录入（对应旧分析 skill 已删除）。
 2. 分支：
@@ -42,7 +42,7 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 4. 验收：产出文档落位对应目录；含 mermaid 的文档全部通过 mermaid-validate 验证脚本（VALID）。
 5. **审视门**：列出本步新生成/刷新的资产文档清单（带路径）+ VALID 结论，ask-human 审视通过后才进第 2 步。
 
-> 注：交互模型文档（docs/arch/interaction-model/interaction-model-*.md）不属于本步自动检查的资产——它由用户主动指定流程后经 arch-interaction-model-analyze 提取产出，不派全量子代理。
+> 注：交互模型文档（docs/0-arch/interaction-model/interaction-model-*.md）不属于本步自动检查的资产——它由用户主动指定流程后经 arch-interaction-model-analyze 提取产出，不派全量子代理。
 
 ## 第 2 步：需求与功能审核（spec-audit 场景 1）
 
@@ -54,8 +54,8 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 ## 第 3 步：story 设计（spec-story-design）
 
-- 派**设计子代理**：加载 spec-story-design 全文，输入=第 2 步审核通过的 Spec + 第 1 步资产文档（usage 框架指导 + docs/storys 既有 story 为参照）。
-- 产出 `docs/storys/{功能名}/` story 目录：`{功能名}-story.md`（八类核心要素结构，标注新增/变更/不涉及）+ `{功能名}-develop-task.md`（同目录）。
+- 派**设计子代理**：加载 spec-story-design 全文，输入=第 2 步审核通过的 Spec + 第 1 步资产文档（usage 框架指导 + docs/1-storys 既有 story 为参照）。
+- 产出 `docs/1-storys/{功能名}/` story 目录：`{功能名}-story.md`（八类核心要素结构，标注新增/变更/不涉及）+ `{功能名}-develop-task.md`（同目录）。
 - 子代理在 develop-task 第 5.2 步返回疑问清单 → 主代理批量向用户澄清 → 回传子代理定稿。
 - 主代理验收：story 八类核心要素判定完整（变更条目写清更改对象与内容）、develop-task 修改文件清单到函数级、mermaid 全部 VALID。
 - **审视门**：列出 story 与 develop-task 文档路径 + 验收结论，ask-human 审视设计，通过后才进第 4 步。
@@ -91,12 +91,12 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 1. **取证**（主代理汇总各步骤已返回的事实，禁止凭印象）：
    - 测试用例执行结果：第 4 步返回的 DT（测试函数级）与集成（用例步骤级）结果 + 验证命令实跑输出；证据不足时主代理复跑验证命令补证；
-   - 业务规则清单：story 业务规则章节 + docs/biz/rules/ 相关条目 + develop-task 澄清裁定，三方合并（第二、三节共同主键）；
+   - 业务规则清单：story 业务规则章节 + docs/0-biz/rules/ 相关条目 + develop-task 澄清裁定，三方合并（第二、三节共同主键）；
    - 代码修改清单：以 `git diff`（已提交则取本次需求 commit 范围）为唯一事实来源，逐文件核对 develop-task 修改文件清单——清单外改动、清单内未改都要显式暴露；
    - 引用资产清单：story「外部文档引用」章节 + develop-task 框架表 + 第 4 步实现子代理返回的实际加载文档清单，逐条去重合并；
    - 各步骤返回的冲突偏差、待确认事项（作为资产评估依据，不单独成节）。
 2. **派报告子代理**：加载 specgo-report 全文（prompt 含上述取证材料），按其三节模板产出报告——测试用例执行结果 / 代码修改清单（含「业务规则」列）/ 引用资产质量评估（业务规则主键，与修改清单同口径）。
-3. **落盘**：被分析仓 `docs/storys/{功能名}/{YYYYMMDD}-report.md`（归档进本需求的 story 目录，与 story/develop-task 同目录；次抛件带日期，同日同需求重跑同名覆盖）。
+3. **落盘**：被分析仓 `docs/1-storys/{功能名}/{YYYYMMDD}-report.md`（归档进本需求的 story 目录，与 story/develop-task 同目录；次抛件带日期，同日同需求重跑同名覆盖）。
 4. **审视门**：报告落盘后，ask-human 审视报告全文；有意见回传报告子代理修订后重新过门，审视通过后流程结束。
 5. 评估为「部分符合/不符合」的资产，主代理在回复中显式列出并给出下一步建议（如重跑某 analyze skill、补齐某资产后再生成）。
 

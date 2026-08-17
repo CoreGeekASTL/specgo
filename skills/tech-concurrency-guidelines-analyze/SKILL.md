@@ -1,6 +1,6 @@
 ---
 name: tech-concurrency-guidelines-analyze
-description: 提取存量代码仓的并发规范资产（线程池、锁、channel、goroutine 启动点、Actor、定时任务并发等并发原语实例），单模式提取运行——盘点仓内并发原语并按实例归集成文，产出 README.md 实例导航主文档 + 每实例一篇 concurrency-guidelines-{pool}.md；每篇文档章节不超过三个（用途定位 + 使用说明 + 代码案例），人一看就懂：用途定位一段话说清该实例干什么、为什么需要并发；使用说明列可调用的封装函数/原语入口清单（作用、参数或取值、定义文件）；代码案例给真实调用片段（注明来源文件路径）。产出落盘被分析仓的 docs/tech/concurrency-guidelines/（活文档，同名覆盖更新）。当用户提到"并发规范"、"线程池"、"池隔离"、"并发原语盘点"、"goroutine 启动点"、"锁使用"、"channel"、"Actor"、"定时任务并发"、"concurrency guidelines"、"thread pool"时使用。
+description: 提取存量代码仓的并发规范资产（线程池、锁、channel、goroutine 启动点、Actor、定时任务并发等并发原语实例），单模式提取运行——盘点仓内并发原语并按实例归集成文，产出 README.md 实例导航主文档 + 每实例一篇 concurrency-guidelines-{pool}.md；每篇文档章节不超过三个（用途定位 + 使用说明 + 代码案例），人一看就懂：用途定位一段话说清该实例干什么、为什么需要并发；使用说明列可调用的封装函数/原语入口清单（作用、参数或取值、定义文件）；代码案例给真实调用片段（注明来源文件路径）。产出落盘被分析仓的 docs/0-tech/concurrency-guidelines/（活文档，同名覆盖更新）。当用户提到"并发规范"、"线程池"、"池隔离"、"并发原语盘点"、"goroutine 启动点"、"锁使用"、"channel"、"Actor"、"定时任务并发"、"concurrency guidelines"、"thread pool"时使用。
 ---
 
 # 并发规范分析（tech-concurrency-guidelines-analyze）
@@ -19,7 +19,7 @@ description: 提取存量代码仓的并发规范资产（线程池、锁、chan
 
 | 产出 | 落盘 |
 | --- | --- |
-| 主文档 `README.md`（实例导航）+ 每池/原语实例 1 篇 `concurrency-guidelines-{pool}.md` | 被分析仓 `docs/tech/concurrency-guidelines/` |
+| 主文档 `README.md`（实例导航）+ 每池/原语实例 1 篇 `concurrency-guidelines-{pool}.md` | 被分析仓 `docs/0-tech/concurrency-guidelines/` |
 
 `{pool}` 实例 slug 一律从代码标识符派生（线程池变量名/类型名/配置 key 转 kebab-case；goroutine 池以用途命名处派生；锁以被保护资源名派生），禁止 AI 自由起名——保证重跑产出同名文件、资产不断代。
 
@@ -60,7 +60,7 @@ description: 提取存量代码仓的并发规范资产（线程池、锁、chan
 
 ### 第 3 步：生成并发规范文档
 
-输出到被分析仓 `docs/tech/concurrency-guidelines/` 目录：主文档 `README.md` + 每个池/原语实例一篇 `concurrency-guidelines-{pool}.md`，实例文档按 references/concurrency-guidelines-template.md 填充。
+输出到被分析仓 `docs/0-tech/concurrency-guidelines/` 目录：主文档 `README.md` + 每个池/原语实例一篇 `concurrency-guidelines-{pool}.md`，实例文档按 references/concurrency-guidelines-template.md 填充。
 
 主文档 `README.md`（活文档，同名覆盖）内容仅两项：元信息表（分支/更新日期/Skill）+ 实例导航表（实例 → `concurrency-guidelines-{pool}.md` 链接 + 实例类型 + 一句话用途定位）。
 
@@ -94,13 +94,13 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **基于实证**：所有"实例干什么、怎么用、容量取值多少"的结论必须有代码或配置支撑，证据形式为 `文件路径`，**不得出现代码行号**（行号随代码变更失效）。读不到就写「未识别（原因：xxx）」/「未设置」/「框架默认」，禁止凭经验臆造容量取值或使用方式。
 - **章节上限三节**：实例文档只含「用途定位 / 使用说明 / 代码案例」三节（元信息表不计）；不写调用点分布统计、不写"应该"级约定、不做合规性判断。
 - **实例 slug 从代码标识符派生**：`{pool}` 取线程池变量名/类型名/配置 key/用途命名处转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
-- **活文档覆盖更新**：`docs/tech/concurrency-guidelines/` 下 README 与 `concurrency-guidelines-{pool}.md` 同名直接覆盖，不保留历史副本、不加日期后缀。
-- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（`docs/tech/concurrency-guidelines/` 下的产出除外）。
+- **活文档覆盖更新**：`docs/0-tech/concurrency-guidelines/` 下 README 与 `concurrency-guidelines-{pool}.md` 同名直接覆盖，不保留历史副本、不加日期后缀。
+- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（`docs/0-tech/concurrency-guidelines/` 下的产出除外）。
 - **成品纯净**：最终文档只含成品内容。扫描过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格。
 - **语言无关**：不预设被分析仓的语言与框架，按第 1 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（ThreadPool / Executor / goroutine / Mutex / RWMutex / channel / Actor 等）保留英文。
-- **索引分工**：本资产目录的 `README.md`（实例导航主文档）由本 skill 产出，活文档同名覆盖；域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
-- **与相邻资产互补**：并发框架使用事实清单看 tech-framework-guidelines-analyze 产出的 `docs/tech/framework-guidelines/`；超时/重试/熔断等故障策略归 tech-resilience-guidelines-analyze；跨服务调用指导归 tech-comm-guidelines-analyze。
+- **索引分工**：本资产目录的 `README.md`（实例导航主文档）由本 skill 产出，活文档同名覆盖；域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
+- **与相邻资产互补**：并发框架使用事实清单看 tech-framework-guidelines-analyze 产出的 `docs/0-tech/framework-guidelines/`；超时/重试/熔断等故障策略归 tech-resilience-guidelines-analyze；跨服务调用指导归 tech-comm-guidelines-analyze。
 - **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
 
 ## 参考文件索引

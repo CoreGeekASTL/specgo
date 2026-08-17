@@ -91,15 +91,15 @@ ${indexMd}
 
 **四域资产治理（arch / biz / tech / qual + 横向 spec，新体系）**
 
-1. **资产骨架初始化（一次性）** → spec-init：初始化 docs/{域}/{资产}/ 目录骨架（每类资产一个单独目录），一次性迁移既有产出，迁移映射清单先交用户确认
-2. **结构摸底** → arch-structure-model-analyze：UML 包图 + 依赖矩阵 + 分层特征，落盘 docs/arch/structure-model/（仓级总览 README.md + 每模块 structure-model-{module}.md）
-3. **交互模型提取（默认全部流程，可指定单流程）** → arch-interaction-model-analyze：UML 时序图呈现模块间主业务流程与消息走向，只画主链路，落盘 docs/arch/interaction-model/（README.md 流程导航 + interaction-model-{flow}.md）
-4. **对外接口盘点** → biz-interface-analyze：按功能域聚类，主文档 README + interface-{feature}.md，落盘 docs/biz/interface/
-5. **业务规则梳理** → biz-rules-analyze：按需求类整理"条件 → 动作 + 依据"规则条目，README.md 功能域导航 + rules-{feature}.md，落盘 docs/biz/rules/
-6. **对象模型** → biz-object-model-analyze：实体/值对象/聚合/领域服务/领域事件（UML 类图），README.md 聚合导航 + object-model-{aggregate}.md，落盘 docs/biz/object-model/
-7. **数据模型** → biz-data-model-analyze：持久态表结构/缓存数据结构/字段关系与数据生命周期（UML-ER），README.md 实体导航 + data-model-{entity}.md，落盘 docs/biz/data-model/
-8. **领域词典** → biz-lexicon-analyze：业务与代码共用的受控词汇集（术语释义 + 语境边界 + 代码命名映射），主文档 README.md + 每功能域 1 篇 lexicon-{feature}.md，落盘 docs/biz/lexicon/
-9. **框架使用指导** → tech-framework-guidelines-analyze：基础框架清单与使用方式盘点（纯现状提取），framework-guidelines-{framework}.md 每框架一篇，落盘 docs/tech/framework-guidelines/
+1. **资产骨架初始化（一次性）** → spec-init：初始化 docs/0-{域}/{资产}/ 目录骨架（每类资产一个单独目录），一次性迁移既有产出，迁移映射清单先交用户确认
+2. **结构摸底** → arch-structure-model-analyze：UML 包图 + 依赖矩阵 + 分层特征，落盘 docs/0-arch/structure-model/（仓级总览 README.md + 每模块 structure-model-{module}.md）
+3. **交互模型提取（默认全部流程，可指定单流程）** → arch-interaction-model-analyze：UML 时序图呈现模块间主业务流程与消息走向，只画主链路，落盘 docs/0-arch/interaction-model/（README.md 流程导航 + interaction-model-{flow}.md）
+4. **对外接口盘点** → biz-interface-analyze：按功能域聚类，主文档 README + interface-{feature}.md，落盘 docs/0-biz/interface/
+5. **业务规则梳理** → biz-rules-analyze：按需求类整理"条件 → 动作 + 依据"规则条目，README.md 功能域导航 + rules-{feature}.md，落盘 docs/0-biz/rules/
+6. **对象模型** → biz-object-model-analyze：实体/值对象/聚合/领域服务/领域事件（UML 类图），README.md 聚合导航 + object-model-{aggregate}.md，落盘 docs/0-biz/object-model/
+7. **数据模型** → biz-data-model-analyze：持久态表结构/缓存数据结构/字段关系与数据生命周期（UML-ER），README.md 实体导航 + data-model-{entity}.md，落盘 docs/0-biz/data-model/
+8. **领域词典** → biz-lexicon-analyze：业务与代码共用的受控词汇集（术语释义 + 语境边界 + 代码命名映射），主文档 README.md + 每功能域 1 篇 lexicon-{feature}.md，落盘 docs/0-biz/lexicon/
+9. **框架使用指导** → tech-framework-guidelines-analyze：基础框架清单与使用方式盘点（纯现状提取），framework-guidelines-{framework}.md 每框架一篇，落盘 docs/0-tech/framework-guidelines/
 10. **通信规范** → tech-comm-guidelines-analyze：RPC/HTTP/MQ 跨服务调用指导（双模式：现状提取 + 差距分析），comm-guidelines-{service}.md 每外部服务一篇
 11. **并发规范** → tech-concurrency-guidelines-analyze：线程池/锁/channel 等并发原语实例的用途定位、使用说明与代码案例（章节上限三节），README.md 实例导航 + concurrency-guidelines-{pool}.md 每实例一篇
 12. **数据访问规范** → tech-data-access-guidelines-analyze：Redis/DB 等中间件访问指导，README.md 中间件导航 + data-access-guidelines-{mw}.md 每中间件一篇
@@ -116,8 +116,8 @@ ${indexMd}
 **需求到交付（旧体系保留链路）**
 
 22. **mermaid 图验证** → mermaid-validate：含图产出物必须本地校验全部 VALID 后交付
-23. **需求到 story 设计** → spec-story-design：产出 docs/storys/{功能名}/ 目录（{功能名}-story.md 八类核心要素组织、标注新增/变更/不涉及 + {功能名}-develop-task.md）
-24. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核（spec-audit 场景 1）→ story 设计 → 代码实现与测试 → 资产刷新（spec-update）→ 全链路分析报告（归档 docs/storys/{功能名}/ story 目录），每步校验环节结束固定过 ask-human 审视门；主代理编排与用户确认、各步骤派子代理执行
+23. **需求到 story 设计** → spec-story-design：产出 docs/1-storys/{功能名}/ 目录（{功能名}-story.md 八类核心要素组织、标注新增/变更/不涉及 + {功能名}-develop-task.md）
+24. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核（spec-audit 场景 1）→ story 设计 → 代码实现与测试 → 资产刷新（spec-update）→ 全链路分析报告（归档 docs/1-storys/{功能名}/ story 目录），每步校验环节结束固定过 ask-human 审视门；主代理编排与用户确认、各步骤派子代理执行
 
 ## 红线（这些想法意味着你正在跳过 skill）
 

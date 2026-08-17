@@ -29,29 +29,29 @@ description: >-
 
 | # | 子代理 | 加载 skill | 产出落盘 | 模式备注 |
 | --- | --- | --- | --- | --- |
-| 1 | 结构模型 | arch-structure-model-analyze | `docs/arch/structure-model/` | 仓级总览 + 每模块 |
-| 2 | 交互模型 | arch-interaction-model-analyze | `docs/arch/interaction-model/` | 默认枚举全部业务流程 |
-| 3 | 对外接口 | biz-interface-analyze | `docs/biz/interface/` | 主文档 + 功能域子文档 |
-| 4 | 业务规则 | biz-rules-analyze | `docs/biz/rules/` | 默认全功能域 |
-| 5 | 对象模型 | biz-object-model-analyze | `docs/biz/object-model/` | 默认全聚合 |
-| 6 | 数据模型 | biz-data-model-analyze | `docs/biz/data-model/` | 默认全实体 |
-| 7 | 框架使用 | tech-framework-guidelines-analyze | `docs/tech/framework-guidelines/` | 现状提取 |
-| 8 | 通信规范 | tech-comm-guidelines-analyze | `docs/tech/comm-guidelines/` | 提取模式 |
-| 9 | 并发规范 | tech-concurrency-guidelines-analyze | `docs/tech/concurrency-guidelines/` | 提取模式 |
-| 10 | 数据访问规范 | tech-data-access-guidelines-analyze | `docs/tech/data-access-guidelines/` | 起草模式 |
-| 11 | 韧性规范 | tech-resilience-guidelines-analyze | `docs/tech/resilience-guidelines/` | 提取模式 |
-| 12 | 基础规范 | tech-foundation-guidelines-analyze | `docs/tech/foundation-guidelines/` | 提取模式 |
-| 13 | 编码规范 | qual-code-standards-analyze | `docs/qual/code-standards/` | 起草模式 |
-| 14 | DT 规范 | qual-dt-guidelines-analyze | `docs/qual/dt-guidelines/` | 起草模式 |
-| 15 | 分支规范 | qual-branch-guidelines-analyze | `docs/qual/branch-guidelines/` | 起草模式 |
+| 1 | 结构模型 | arch-structure-model-analyze | `docs/0-arch/structure-model/` | 仓级总览 + 每模块 |
+| 2 | 交互模型 | arch-interaction-model-analyze | `docs/0-arch/interaction-model/` | 默认枚举全部业务流程 |
+| 3 | 对外接口 | biz-interface-analyze | `docs/0-biz/interface/` | 主文档 + 功能域子文档 |
+| 4 | 业务规则 | biz-rules-analyze | `docs/0-biz/rules/` | 默认全功能域 |
+| 5 | 对象模型 | biz-object-model-analyze | `docs/0-biz/object-model/` | 默认全聚合 |
+| 6 | 数据模型 | biz-data-model-analyze | `docs/0-biz/data-model/` | 默认全实体 |
+| 7 | 框架使用 | tech-framework-guidelines-analyze | `docs/0-tech/framework-guidelines/` | 现状提取 |
+| 8 | 通信规范 | tech-comm-guidelines-analyze | `docs/0-tech/comm-guidelines/` | 提取模式 |
+| 9 | 并发规范 | tech-concurrency-guidelines-analyze | `docs/0-tech/concurrency-guidelines/` | 提取模式 |
+| 10 | 数据访问规范 | tech-data-access-guidelines-analyze | `docs/0-tech/data-access-guidelines/` | 起草模式 |
+| 11 | 韧性规范 | tech-resilience-guidelines-analyze | `docs/0-tech/resilience-guidelines/` | 提取模式 |
+| 12 | 基础规范 | tech-foundation-guidelines-analyze | `docs/0-tech/foundation-guidelines/` | 提取模式 |
+| 13 | 编码规范 | qual-code-standards-analyze | `docs/0-qual/code-standards/` | 起草模式 |
+| 14 | DT 规范 | qual-dt-guidelines-analyze | `docs/0-qual/dt-guidelines/` | 起草模式 |
+| 15 | 分支规范 | qual-branch-guidelines-analyze | `docs/0-qual/branch-guidelines/` | 起草模式 |
 
 **子代理 prompt 四要素**：①用 Skill 工具加载哪个 skill 全文（必须先加载再开工）②被分析仓路径 ③产出落盘路径与模式（见上表）④返回内容（产出文件清单 + 关键结论 + 未建/异常说明 + 含 mermaid 文档清单）。
 
 ## 第 2 步：第二波——领域词典（biz-lexicon-analyze）
 
-- **待对外接口子代理（#3）返回后**再派发：词典子域划分优先复用 `docs/biz/interface/` 的功能域归类口径（其 skill 第 2 步），保证词典子域与接口功能域一一对应、子域锚点与 interface 子文档一致。
+- **待对外接口子代理（#3）返回后**再派发：词典子域划分优先复用 `docs/0-biz/interface/` 的功能域归类口径（其 skill 第 2 步），保证词典子域与接口功能域一一对应、子域锚点与 interface 子文档一致。
 - 若接口分析失败或被用户裁剪 → 词典子代理按其 skill 口径自行从代码归纳功能域，并在返回中注明。
-- 产出：`docs/biz/lexicon/`（主文档 lexicon.md + 每功能域 1 篇 lexicon-{子域锚点}.md）。
+- 产出：`docs/0-biz/lexicon/`（主文档 lexicon.md + 每功能域 1 篇 lexicon-{子域锚点}.md）。
 
 ## 第 3 步：验收
 
@@ -66,7 +66,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 
 ## 第 4 步：索引收口（spec-index）
 
-- 全部资产验收通过后，派**索引子代理**加载 spec-index 全文：生成/刷新各域索引 `docs/{域}/README.md` 与总索引 `docs/README.md`（含服务依赖全景图）；全景图 mermaid 同样过验证脚本。
+- 全部资产验收通过后，派**索引子代理**加载 spec-index 全文：生成/刷新各域索引 `docs/0-{域}/README.md` 与总索引 `docs/README.md`（含服务依赖全景图）；全景图 mermaid 同样过验证脚本。
 
 ## 第 5 步：交付摘要
 

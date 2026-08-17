@@ -1,7 +1,7 @@
 ---
 name: spec-init
 description: >-
-  初始化被分析仓的 docs/ 资产目录骨架（HELP.MD v1.1「每类资产一个单独目录」布局：arch/{structure-model,interaction-model}、biz/{interface,rules,object-model,data-model,lexicon}、tech/{framework-guidelines,comm-guidelines,concurrency-guidelines,data-access-guidelines,resilience-guidelines,foundation-guidelines}、qual/{code-standards,dt-guidelines,branch-guidelines}），并一次性迁移既有产出到新布局（旧扁平结构模型/交互模型文档、docs/business/interface/、docs/technical/external-call/、docs/technical/framework-usage/ 等历史产出，文件名同步去 spec- 前缀），迁移映射清单先交用户确认再动手，产出迁移执行摘要（已迁移/跳过/冲突清单）。当首次在一个代码仓启用 specgo 资产治理、需要从旧布局升级到 v1.1 新布局时使用。触发场景包括"初始化 docs 目录"、"资产目录骨架"、"docs 骨架"、"迁移旧文档"、"docs 目录迁移"、"旧布局升级"、"spec-init"、"初始化资产目录"等。
+  初始化被分析仓的 docs/ 资产目录骨架（HELP.MD v1.1「每类资产一个单独目录」布局：0-arch/{structure-model,interaction-model}、0-biz/{interface,rules,object-model,data-model,lexicon}、0-tech/{framework-guidelines,comm-guidelines,concurrency-guidelines,data-access-guidelines,resilience-guidelines,foundation-guidelines}、0-qual/{code-standards,dt-guidelines,branch-guidelines}），并一次性迁移既有产出到新布局（旧扁平结构模型/交互模型文档、docs/business/interface/、docs/technical/external-call/、docs/technical/framework-usage/ 等历史产出，文件名同步去 spec- 前缀），迁移映射清单先交用户确认再动手，产出迁移执行摘要（已迁移/跳过/冲突清单）。当首次在一个代码仓启用 specgo 资产治理、需要从旧布局升级到 v1.1 新布局时使用。触发场景包括"初始化 docs 目录"、"资产目录骨架"、"docs 骨架"、"迁移旧文档"、"docs 目录迁移"、"旧布局升级"、"spec-init"、"初始化资产目录"等。
 ---
 
 # 资产目录初始化与迁移 Skill（spec-init）
@@ -13,12 +13,12 @@ description: >-
 1. **建骨架**：按 HELP.MD 3.2 目录树在 `docs/` 下创建全部域/资产目录，让后续各 analyze skill 有标准落盘位置；
 2. **一次性迁移**：把 v1.1 之前各 skill 产出的旧布局文档（扁平结构模型文档、`docs/business/`、`docs/technical/` 等）搬到新目录并改齐文件名，保证资产不断代、重跑同名覆盖语义不变。
 
-本 skill 只做目录与文件操作，不产出任何资产内容文档；域索引 `docs/{域}/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
+本 skill 只做目录与文件操作，不产出任何资产内容文档；域索引 `docs/0-{域}/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
 
 ## 何时触发
 
 - 首次在一个代码仓启用 specgo 资产治理，需要建立 `docs/` 目录骨架。
-- 仓内已有旧布局产出（`docs/business/`、`docs/technical/`、扁平 `docs/arch/structure-model*.md` 等），需要升级到 v1.1 新布局。
+- 仓内已有旧布局产出（`docs/business/`、`docs/technical/`、扁平 `docs/0-arch/structure-model*.md` 等），需要升级到 v1.1 新布局。
 - 用户提到"初始化 docs 目录""资产目录骨架""迁移旧文档""旧布局升级""spec-init"。
 
 ## 工作流程
@@ -35,9 +35,9 @@ description: >-
 
 | 源文件 | 目标文件 | 处置 |
 | --- | --- | --- |
-| docs/arch/structure-model.md | docs/arch/structure-model/README.md | 迁移（仓级总览即资产主文档） |
-| docs/business/interface/spec-interface-login.md | docs/biz/interface/interface-login.md | 迁移+改名 |
-| docs/tech/framework-guidelines/framework-guidelines-grpc.md | （已存在） | 冲突，待裁决 |
+| docs/0-arch/structure-model.md | docs/0-arch/structure-model/README.md | 迁移（仓级总览即资产主文档） |
+| docs/business/interface/spec-interface-login.md | docs/0-biz/interface/interface-login.md | 迁移+改名 |
+| docs/0-tech/framework-guidelines/framework-guidelines-grpc.md | （已存在） | 冲突，待裁决 |
 | docs/business/key-class/README.md | （不动） | 跳过：不在新 taxonomy |
 
 - **未获用户确认前禁止动手**；骨架目录创建可与清单一并确认。
@@ -49,23 +49,23 @@ description: >-
 
 ```
 docs/
-├── arch/
+├── 0-arch/
 │   ├── structure-model/
 │   └── interaction-model/
-├── biz/
+├── 0-biz/
 │   ├── interface/
 │   ├── rules/
 │   ├── object-model/
 │   ├── data-model/
 │   └── lexicon/
-├── tech/
+├── 0-tech/
 │   ├── framework-guidelines/
 │   ├── comm-guidelines/
 │   ├── concurrency-guidelines/
 │   ├── data-access-guidelines/
 │   ├── resilience-guidelines/
 │   └── foundation-guidelines/
-└── qual/
+└── 0-qual/
     ├── code-standards/
     ├── dt-guidelines/
     └── branch-guidelines/
@@ -74,7 +74,7 @@ docs/
 说明：
 
 - 只建资产目录；`report/` 子目录由各 skill 产出差距报告时自建，不在骨架内。
-- 域索引 `docs/{域}/README.md` 与总索引 `docs/README.md` 由 spec-index 产出，骨架不创建占位 README。
+- 域索引 `docs/0-{域}/README.md` 与总索引 `docs/README.md` 由 spec-index 产出，骨架不创建占位 README。
 - git 仓中如需空目录入库，可在各资产目录放 `.gitkeep`；用户无此要求时省略。
 
 ### 第 4 步：执行迁移
@@ -89,11 +89,11 @@ docs/
 
 | 旧位置 | 新位置 | 文件名处理 |
 | --- | --- | --- |
-| `docs/arch/structure-model.md`、`docs/arch/structure-model-{module}.md`（扁平散放） | `docs/arch/structure-model/` | 文件名不变 |
-| `docs/arch/interaction-model-{flow}.md`（扁平散放） | `docs/arch/interaction-model/` | 文件名不变 |
-| `docs/business/interface/` | `docs/biz/interface/` | `spec-interface-{feature}.md` → `interface-{feature}.md`；`README.md` 原名迁移 |
-| `docs/technical/external-call/` | `docs/tech/comm-guidelines/` | `external-call-{service}.md` → `comm-guidelines-{service}.md`；`README.md` 原名迁移 |
-| `docs/technical/framework-usage/` | `docs/tech/framework-guidelines/` | 去 `spec-` 前缀并统一为 `framework-guidelines-{framework}.md`；`README.md` 原名迁移 |
+| `docs/0-arch/structure-model.md`、`docs/0-arch/structure-model-{module}.md`（扁平散放） | `docs/0-arch/structure-model/` | 文件名不变 |
+| `docs/0-arch/interaction-model-{flow}.md`（扁平散放） | `docs/0-arch/interaction-model/` | 文件名不变 |
+| `docs/business/interface/` | `docs/0-biz/interface/` | `spec-interface-{feature}.md` → `interface-{feature}.md`；`README.md` 原名迁移 |
+| `docs/technical/external-call/` | `docs/0-tech/comm-guidelines/` | `external-call-{service}.md` → `comm-guidelines-{service}.md`；`README.md` 原名迁移 |
+| `docs/technical/framework-usage/` | `docs/0-tech/framework-guidelines/` | 去 `spec-` 前缀并统一为 `framework-guidelines-{framework}.md`；`README.md` 原名迁移 |
 | `docs/business/key-class/`、`docs/business/data-structure/`、`docs/business/story/` | — | **不在新 taxonomy 内，保持不动** |
 
 注意：
@@ -120,14 +120,14 @@ docs/
 # spec-init 执行摘要（{YYYY-MM-DD}）
 
 ## 已创建目录
-- docs/arch/structure-model/（新建）
-- docs/biz/interface/（已存在，跳过）
+- docs/0-arch/structure-model/（新建）
+- docs/0-biz/interface/（已存在，跳过）
 - ...
 
 ## 已迁移（N 个文件）
 | 源文件 | 目标文件 | 方式 |
 | --- | --- | --- |
-| docs/business/interface/spec-interface-login.md | docs/biz/interface/interface-login.md | git mv + 改名 |
+| docs/business/interface/spec-interface-login.md | docs/0-biz/interface/interface-login.md | git mv + 改名 |
 
 ## 跳过（保持不动）
 - docs/business/key-class/ — 不在新 taxonomy 内
@@ -136,7 +136,7 @@ docs/
 ## 冲突与裁决
 | 目标文件 | 冲突情况 | 裁决 |
 | --- | --- | --- |
-| docs/tech/framework-guidelines/framework-guidelines-grpc.md | 目标已存在 | 保留目标，源文件未迁移 |
+| docs/0-tech/framework-guidelines/framework-guidelines-grpc.md | 目标已存在 | 保留目标，源文件未迁移 |
 
 ## 后续建议
 - 运行各 analyze skill 填充资产；运行 spec-index 生成域索引与总索引。

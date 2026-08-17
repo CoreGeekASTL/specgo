@@ -1,6 +1,6 @@
 ---
 name: tech-resilience-guidelines-analyze
-description: 提取存量代码仓的韧性规范资产（超时/重试/熔断降级/异常处理等故障策略——只管故障来了怎么扛，不管通信协议本身，协议与封装归通信规范），单模式提取运行——扫描仓内全部出站调用点与后台任务的故障策略，产出 README 索引 + 每维度一篇 resilience-guidelines-{dimension}.md；每篇文档只含两项内容：使用说明（该维度机制在仓内怎么用——可调用的封装函数/配置项清单：作用、参数或取值、来源文件）与代码案例（真实代码片段，注明来源文件路径）。产出落盘被分析仓的 docs/tech/resilience-guidelines/（活文档，同名覆盖更新）。当用户提到"韧性规范"、"超时设置"、"重试策略"、"熔断降级"、"故障策略"、"异常处理"、"panic recover"、"错误吞掉"、"吞错"、"错误 swallowing"、"容错"、"稳定性治理"、"resilience"时使用。
+description: 提取存量代码仓的韧性规范资产（超时/重试/熔断降级/异常处理等故障策略——只管故障来了怎么扛，不管通信协议本身，协议与封装归通信规范），单模式提取运行——扫描仓内全部出站调用点与后台任务的故障策略，产出 README 索引 + 每维度一篇 resilience-guidelines-{dimension}.md；每篇文档只含两项内容：使用说明（该维度机制在仓内怎么用——可调用的封装函数/配置项清单：作用、参数或取值、来源文件）与代码案例（真实代码片段，注明来源文件路径）。产出落盘被分析仓的 docs/0-tech/resilience-guidelines/（活文档，同名覆盖更新）。当用户提到"韧性规范"、"超时设置"、"重试策略"、"熔断降级"、"故障策略"、"异常处理"、"panic recover"、"错误吞掉"、"吞错"、"错误 swallowing"、"容错"、"稳定性治理"、"resilience"时使用。
 ---
 
 # 韧性规范分析（tech-resilience-guidelines-analyze）
@@ -18,7 +18,7 @@ description: 提取存量代码仓的韧性规范资产（超时/重试/熔断�
 
 | 产出 | 落盘 |
 | --- | --- |
-| 主文档 `README.md`（维度导航）+ 每维度 1 篇 `resilience-guidelines-{dimension}.md` | 被分析仓 `docs/tech/resilience-guidelines/` |
+| 主文档 `README.md`（维度导航）+ 每维度 1 篇 `resilience-guidelines-{dimension}.md` | 被分析仓 `docs/0-tech/resilience-guidelines/` |
 
 `{dimension}` 维度 slug 固定五类：`timeout`（超时）/ `retry`（重试）/ `circuit-breaker`（熔断与降级）/ `panic-recover`（panic/recover 与异常兜底）/ `error-swallowing`（错误 swallowing）——保证重跑产出同名文件、资产不断代。
 
@@ -66,7 +66,7 @@ description: 提取存量代码仓的韧性规范资产（超时/重试/熔断�
 
 ### 第 3 步：生成韧性规范文档
 
-输出到被分析仓 `docs/tech/resilience-guidelines/` 目录：1 个主文档 `README.md` + 每个维度一个子文档 `resilience-guidelines-{dimension}.md`。
+输出到被分析仓 `docs/0-tech/resilience-guidelines/` 目录：1 个主文档 `README.md` + 每个维度一个子文档 `resilience-guidelines-{dimension}.md`。
 
 - **主文档 `README.md`** 按 references/readme-template.md 填充：元信息表 + 五维度导航表（维度 / 使用入口概要 / 子文档链接）。
 - **每维度子文档** 按 references/dimension-template.md 填充，固定两小节：**使用说明**（封装函数 / 配置项清单表格：函数或配置 key / 作用 / 参数或取值说明 / 定义文件）、**代码案例**（真实代码片段，每段注明来源文件路径）。
@@ -96,13 +96,13 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **基于实证**：所有"超时怎么设、重试怎么调、吞错案例在哪"的结论必须有代码或配置支撑，证据形式为 `文件路径`，**不得出现代码行号**（行号随代码变更失效）。读不到就写「未设置」/「框架默认」/「未识别（原因：xxx）」，禁止凭经验臆造函数签名、配置 key 或代码案例。
 - **内容边界**：输出文档只含使用说明与代码案例两项内容；不写调用点分布统计、不写"应该"级约定、不做合规性判断。
 - **维度 slug 固定**：五大维度 slug 固定为 `timeout` / `retry` / `circuit-breaker` / `panic-recover` / `error-swallowing`；文档内表格中的条目标识从代码标识符（函数名 / 配置 key / 文件名）派生，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
-- **活文档覆盖更新**：`docs/tech/resilience-guidelines/` 下 README 与 `resilience-guidelines-{dimension}.md` 同名直接覆盖，不保留历史副本、不加日期后缀。
-- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（`docs/tech/resilience-guidelines/` 下的产出除外）。
+- **活文档覆盖更新**：`docs/0-tech/resilience-guidelines/` 下 README 与 `resilience-guidelines-{dimension}.md` 同名直接覆盖，不保留历史副本、不加日期后缀。
+- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（`docs/0-tech/resilience-guidelines/` 下的产出除外）。
 - **成品纯净**：最终文档只含成品内容。探测过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格。
 - **语言无关**：不预设被分析仓的语言与框架，按第 1 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（HTTP / RPC / MQ / SDK / timeout / retry / circuit breaker / fallback / panic / recover 等）保留英文。
-- **索引分工**：域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护；本资产目录的 README 是资产主文档（维度导航），非域索引。
-- **与相邻资产边界**：通信协议与封装方式归 tech-comm-guidelines-analyze 产出的 `docs/tech/comm-guidelines/`；线程池选型、隔离、拒绝策略归 tech-concurrency-guidelines-analyze 产出的 `docs/tech/concurrency-guidelines/`。本 skill 只记录故障策略的使用方式与代码案例，越界内容不写入本文档。
+- **索引分工**：域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护；本资产目录的 README 是资产主文档（维度导航），非域索引。
+- **与相邻资产边界**：通信协议与封装方式归 tech-comm-guidelines-analyze 产出的 `docs/0-tech/comm-guidelines/`；线程池选型、隔离、拒绝策略归 tech-concurrency-guidelines-analyze 产出的 `docs/0-tech/concurrency-guidelines/`。本 skill 只记录故障策略的使用方式与代码案例，越界内容不写入本文档。
 
 ## 参考文件索引
 

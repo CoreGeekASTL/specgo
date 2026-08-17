@@ -1,7 +1,7 @@
 ---
 name: biz-data-model-analyze
 description: >-
-  分析存量代码仓的数据模型资产（持久态表结构、缓存数据结构、字段关系与数据生命周期），产出 UML-ER 图（mermaid erDiagram）+ 字段表 + 生命周期说明，落盘被分析仓的 docs/biz/data-model/：README.md 实体导航主文档 + data-model-{entity}.md（每数据实体 1 篇）。用户指明实体时只梳理该实体；未指明时默认全量——扫描建表 SQL（CREATE TABLE）、ORM entity 注册（TableName/RegisterModel）与关键缓存结构体，逐实体产出，不阻塞式询问。逻辑关联无 DB 约束时标注"代码未体现物理外键"。当用户提到"数据模型"、"表结构"、"ER 图"、"数据库设计"、"字段说明"、"数据字典"、"梳理 XX 表"、"数据生命周期"、"缓存数据结构"、"TTL"、"data model"、"ER diagram"、"schema 文档"时使用。务必在生成任何表结构/ER 图/数据字典类文档之前使用此 skill。
+  分析存量代码仓的数据模型资产（持久态表结构、缓存数据结构、字段关系与数据生命周期），产出 UML-ER 图（mermaid erDiagram）+ 字段表 + 生命周期说明，落盘被分析仓的 docs/0-biz/data-model/：README.md 实体导航主文档 + data-model-{entity}.md（每数据实体 1 篇）。用户指明实体时只梳理该实体；未指明时默认全量——扫描建表 SQL（CREATE TABLE）、ORM entity 注册（TableName/RegisterModel）与关键缓存结构体，逐实体产出，不阻塞式询问。逻辑关联无 DB 约束时标注"代码未体现物理外键"。当用户提到"数据模型"、"表结构"、"ER 图"、"数据库设计"、"字段说明"、"数据字典"、"梳理 XX 表"、"数据生命周期"、"缓存数据结构"、"TTL"、"data model"、"ER diagram"、"schema 文档"时使用。务必在生成任何表结构/ER 图/数据字典类文档之前使用此 skill。
 ---
 
 # 代码仓数据模型分析 Skill（biz-data-model-analyze）
@@ -15,9 +15,9 @@ description: >-
 3. 它的数据生命周期如何（创建 → 更新 → 归档/删除，各环节发生在哪段代码）？
 4. 围绕它有哪些不落库的运行时缓存结构（TTL / 容量 / 清理策略）？
 
-产出：UML-ER 图（mermaid `erDiagram`）+ 字段表 + 数据生命周期 + 缓存数据结构说明，落盘被分析仓的 `docs/biz/data-model/data-model-{entity}.md`，**每数据实体 1 篇**。
+产出：UML-ER 图（mermaid `erDiagram`）+ 字段表 + 数据生命周期 + 缓存数据结构说明，落盘被分析仓的 `docs/0-biz/data-model/data-model-{entity}.md`，**每数据实体 1 篇**。
 
-与相关资产的关系：对象模型（biz-object-model-analyze，`docs/biz/object-model/`）回答"领域对象怎么建模"（实体/值对象/聚合的类图视角）；数据模型回答"数据怎么存、怎么生灭"（表结构/缓存结构/字段约束的 ER 视角），两者互补，同归 `docs/biz/`。
+与相关资产的关系：对象模型（biz-object-model-analyze，`docs/0-biz/object-model/`）回答"领域对象怎么建模"（实体/值对象/聚合的类图视角）；数据模型回答"数据怎么存、怎么生灭"（表结构/缓存结构/字段约束的 ER 视角），两者互补，同归 `docs/0-biz/`。
 
 两种运行模式：**单实体模式**（用户点名实体/表，只梳理该实体）与**全量模式**（用户未指明时的默认模式——扫描建表 SQL、ORM entity 注册点与关键缓存结构体，逐实体产出文档，不再询问"梳理哪个"）。全量模式的"扫描"只读注册/定义类文件（建表 SQL、迁移脚本、entity 注册点、缓存结构体定义），不做全仓通读；每个实体的证据来源仍是该实体实际被读写的代码文件。
 
@@ -50,7 +50,7 @@ description: >-
 2. 顺读写链阅读：谁创建（INSERT/Create）、谁更新（UPDATE/Save）、谁删除或归档（DELETE/软删标记/定期清理）、谁读（SELECT/Query），只读与本实体直接相关的代码，**禁止全仓通读**（全量模式的枚举只读注册/定义类文件，不在此限）。
 3. 沿途记录：字段清单（代码结构体字段 + 建表 SQL 列，二者不一致时以代码实体与建表 SQL 为准并在文档标注差异）、实体间关联线索（外键声明、含 `xxx_id` 字段但无 DB 约束的逻辑关联）、生命周期各环节代码位置（文件路径，不带行号）、围绕本实体的缓存结构（定义位置、TTL、容量、清理策略）。
 4. 关联判定：只有代码里出现 JOIN/按关联字段查询/级联写入等实际使用，才算实体间关系；凭字段名相似猜测的关联不写入。
-5. 可借助存量资产加速：`docs/biz/key-class/`（关键类定位）、`docs/biz/data-structure/`（缓存结构盘点）、`docs/arch/structure-model/`（模块归属）。资产缺失不影响本实体梳理，以实读代码为准。
+5. 可借助存量资产加速：`docs/0-biz/key-class/`（关键类定位）、`docs/0-biz/data-structure/`（缓存结构盘点）、`docs/0-arch/structure-model/`（模块归属）。资产缺失不影响本实体梳理，以实读代码为准。
 
 ### 第 3 步：确定关系语义
 
@@ -78,13 +78,13 @@ ER 图中的关系分两类，必须区分：
 - ER 图只画与本实体直接关联的实体（一跳），不追求全仓大图；全仓关系靠各篇文档同名互链。
 - 涉及其他已产出实体时，在 ER 图旁或补充说明给出相对链接 `data-model-{other}.md`。
 
-### 第 5 步：落盘 docs/biz/data-model/
+### 第 5 步：落盘 docs/0-biz/data-model/
 
-- 输出到**被分析代码仓根目录**的 `docs/biz/data-model/data-model-{entity}.md`；目录不存在则创建（连同 `docs/` 一起创建）。
+- 输出到**被分析代码仓根目录**的 `docs/0-biz/data-model/data-model-{entity}.md`；目录不存在则创建（连同 `docs/` 一起创建）。
 - `{entity}` 实例 slug **从代码标识符派生**：取表名 / ORM entity 结构体名 / 缓存结构体名转 kebab-case，如 `white_list` → `white-list`、`AuthCache` → `auth-cache`；禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。实体中文名只进文档标题，不进文件名。
 - 同名文件已存在**直接覆盖更新**——模型文档是活文档，固定名、覆盖更新，git diff 即演进史。
 - **资产主文档 `README.md` 必产出**：同目录落 `README.md`（活文档，同名覆盖），内容仅两项——元信息表（分支/更新日期/Skill）+ 实体导航表（实体名 → `data-model-{entity}.md` 链接 + 存储形态（DB 表/缓存/文件）+ 一句话说明，从各文档首行标题提取）；单实体模式（用户指明实体）时同样刷新该 README，只增改对应行。
-- 索引分工：本资产目录的 `README.md` 由本 skill 产出；域索引 `docs/biz/README.md` 与总索引 `docs/README.md` 由 spec-index 统一生成，本 skill 不维护。
+- 索引分工：本资产目录的 `README.md` 由本 skill 产出；域索引 `docs/0-biz/README.md` 与总索引 `docs/README.md` 由 spec-index 统一生成，本 skill 不维护。
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
 
@@ -110,10 +110,10 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **基于实证**：所有字段、关系、生命周期结论必须有代码/SQL 支撑，证据形式为 `文件路径`，**不得出现代码行号**，行号会随代码变更失效且无跨工具稳定性。
 - **以代码实体与建表 SQL 为准**：字段表的权威来源是 ORM entity 定义与 CREATE TABLE 语句；二者不一致时如实并列标注，不擅自取舍。
 - **逻辑关联显式标注**：无 DB 外键约束的关联在 ER 图与正文中标注"代码未体现物理外键"，禁止把逻辑关联画成物理外键。
-- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（新建 `docs/biz/data-model/` 目录和文档文件除外）。
+- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（新建 `docs/0-biz/data-model/` 目录和文档文件除外）。
 - **语言无关**：不预设被分析仓的语言与 ORM 框架，按实际探测结果走。
 - **实例 slug 从代码标识符派生**：`{entity}` 取表名/结构体名转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
-- **活文档覆盖更新**：`docs/biz/data-model/` 下模型文档同名直接覆盖，不保留历史副本、不加日期后缀——差距报告才带日期，模型文档不带。
+- **活文档覆盖更新**：`docs/0-biz/data-model/` 下模型文档同名直接覆盖，不保留历史副本、不加日期后缀——差距报告才带日期，模型文档不带。
 - **成品纯净**：最终文档只含成品内容（标题、概述、图、表格、说明）。模板顶部的元说明、写作指令行、占位符说明均为规则，不复制进成品。第 1~2 步的探测过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格，且**证据不得含代码行号**。
 - **文档语言**：输出文档用中文，技术术语（ORM / TTL / FOREIGN KEY / PRIMARY KEY 等）保留英文。
 - **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 mermaid-validate 的 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。

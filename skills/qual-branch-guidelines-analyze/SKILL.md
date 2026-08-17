@@ -1,6 +1,6 @@
 ---
 name: qual-branch-guidelines-analyze
-description: 治理存量代码仓的分支与变更规范资产（分支模型、commit/MR 规范、评审要求），双模式运行——起草模式从 git 历史提取现状（git branch -a 采样归纳分支命名形态、merge commit / squash / rebase 证据判定 merge 策略、git log 采样归纳 commit message 类型前缀/语言/长度分布、MR 评审痕迹），归纳现状后起草规范文档（现状描述与应有约定分节，约定标注「建议，待团队确认」）；差距分析模式对照规范检查近期 N 个 commit/分支的差距。产出落盘被分析仓的 docs/qual/branch-guidelines/：仓级单篇 branch-guidelines.md（活文档，同名覆盖更新）；差距报告落盘 docs/qual/branch-guidelines/report/{YYYYMMDD}-branch-guidelines.md（次抛，带日期）。当用户提到"分支规范"、"分支模型"、"分支命名规范"、"git flow"、"commit 规范"、"commit message 规范"、"MR 规范"、"合并请求规范"、"评审要求"、"merge 策略"、"squash merge"、"rebase 还是 merge"、"branch guidelines"、"分支规范差距分析"、"对照分支规范检查"时使用。
+description: 治理存量代码仓的分支与变更规范资产（分支模型、commit/MR 规范、评审要求），双模式运行——起草模式从 git 历史提取现状（git branch -a 采样归纳分支命名形态、merge commit / squash / rebase 证据判定 merge 策略、git log 采样归纳 commit message 类型前缀/语言/长度分布、MR 评审痕迹），归纳现状后起草规范文档（现状描述与应有约定分节，约定标注「建议，待团队确认」）；差距分析模式对照规范检查近期 N 个 commit/分支的差距。产出落盘被分析仓的 docs/0-qual/branch-guidelines/：仓级单篇 branch-guidelines.md（活文档，同名覆盖更新）；差距报告落盘 docs/0-qual/branch-guidelines/report/{YYYYMMDD}-branch-guidelines.md（次抛，带日期）。当用户提到"分支规范"、"分支模型"、"分支命名规范"、"git flow"、"commit 规范"、"commit message 规范"、"MR 规范"、"合并请求规范"、"评审要求"、"merge 策略"、"squash merge"、"rebase 还是 merge"、"branch guidelines"、"分支规范差距分析"、"对照分支规范检查"时使用。
 ---
 
 # 分支与变更规范分析（qual-branch-guidelines-analyze）
@@ -18,8 +18,8 @@ description: 治理存量代码仓的分支与变更规范资产（分支模型�
 
 | 模式 | 产出 | 落盘 |
 | --- | --- | --- |
-| 起草模式 | 仓级单篇 `branch-guidelines.md` | 被分析仓 `docs/qual/branch-guidelines/` |
-| 差距分析模式 | 差距报告 1 篇 `{YYYYMMDD}-branch-guidelines.md` | 被分析仓 `docs/qual/branch-guidelines/report/` |
+| 起草模式 | 仓级单篇 `branch-guidelines.md` | 被分析仓 `docs/0-qual/branch-guidelines/` |
+| 差距分析模式 | 差距报告 1 篇 `{YYYYMMDD}-branch-guidelines.md` | 被分析仓 `docs/0-qual/branch-guidelines/report/` |
 
 仓级单篇、文件名固定为 `branch-guidelines.md`，无实例 slug；规范文档为活文档，同名覆盖更新，git diff 即演进史。
 
@@ -31,7 +31,7 @@ description: 治理存量代码仓的分支与变更规范资产（分支模型�
 
 - 用户要盘点仓内分支与变更协作现状：分支命名形态、merge 策略、commit message 形态、评审痕迹，建立或刷新"分支与变更规范"文档。
 - 用户要把 git 历史中的多数派实践沉淀成团队约定（现状描述与应有约定分节，约定待团队确认）。
-- 用户给出一份分支与变更规范文档（或仓内 `docs/qual/branch-guidelines/` 下已有规范），要求对照规范检查近期 N 个 commit/分支是否遵守、输出差距报告。
+- 用户给出一份分支与变更规范文档（或仓内 `docs/0-qual/branch-guidelines/` 下已有规范），要求对照规范检查近期 N 个 commit/分支是否遵守、输出差距报告。
 
 ## 运行模式
 
@@ -41,13 +41,13 @@ description: 治理存量代码仓的分支与变更规范资产（分支模型�
 
 ### 差距分析模式
 
-仓内已存在分支与变更规范文档（`docs/qual/branch-guidelines/branch-guidelines.md`），或用户显式提供规范文件时走本模式。以规范为基准，对照检查近期 N 个 commit（默认 N=50，用户可指定）与当前活跃分支：分支命名、commit message 格式、merge 策略、评审要求是否遵守规范，产出差距报告 `docs/qual/branch-guidelines/report/{YYYYMMDD}-branch-guidelines.md`（逐维度一节：合规项 / 差距项 / 规范未覆盖 / 规范条目无检查对象，各项附 git 对象或文件路径证据）。差距报告为次抛件，带日期、不覆盖。
+仓内已存在分支与变更规范文档（`docs/0-qual/branch-guidelines/branch-guidelines.md`），或用户显式提供规范文件时走本模式。以规范为基准，对照检查近期 N 个 commit（默认 N=50，用户可指定）与当前活跃分支：分支命名、commit message 格式、merge 策略、评审要求是否遵守规范，产出差距报告 `docs/0-qual/branch-guidelines/report/{YYYYMMDD}-branch-guidelines.md`（逐维度一节：合规项 / 差距项 / 规范未覆盖 / 规范条目无检查对象，各项附 git 对象或文件路径证据）。差距报告为次抛件，带日期、不覆盖。
 
 guidelines 形态语义：分支与变更规范是**指导性规范**（"应该"遵守），违反出报告提示改进，不做 CI 拦截——拦截是 standards 形态资产的语义。
 
 ### 模式缺省回退
 
-用户要求差距分析、但未提供规范文档且 `docs/qual/branch-guidelines/` 下也无既有规范时，默认回退起草模式，并在产出的规范文档末尾注明「规范未建，本次为现状提取」。
+用户要求差距分析、但未提供规范文档且 `docs/0-qual/branch-guidelines/` 下也无既有规范时，默认回退起草模式，并在产出的规范文档末尾注明「规范未建，本次为现状提取」。
 
 ## 工作流程
 
@@ -58,7 +58,7 @@ guidelines 形态语义：分支与变更规范是**指导性规范**（"应该"
 - 目标目录不是 git 仓（无 `.git`）→ 终止执行并向用户说明「未识别（原因：非 git 仓）」，禁止臆造历史。
 - 浅克隆（存在 `.git/shallow`）或可见历史极短 → 继续执行，但在产出文档附注中声明「浅克隆，历史不全，结论仅基于可见历史」。
 - 用户显式提供规范文件 → 差距分析模式，规范来源记为该文件路径。
-- 否则检查被分析仓 `docs/qual/branch-guidelines/branch-guidelines.md` 是否存在 → 有则按差距分析模式执行（用户意图是"检查 / 对照 / 差距"时直接执行），规范来源记为该文档。
+- 否则检查被分析仓 `docs/0-qual/branch-guidelines/branch-guidelines.md` 是否存在 → 有则按差距分析模式执行（用户意图是"检查 / 对照 / 差距"时直接执行），规范来源记为该文档。
 - 都没有 → 起草模式；若用户本意是差距分析，在文档末尾注明「规范未建，本次为现状提取」。
 
 ### 第 2 步：采集分支模型现状
@@ -97,7 +97,7 @@ guidelines 形态语义：分支与变更规范是**指导性规范**（"应该"
 
 ### 第 5 步（起草模式）：生成分支与变更规范文档
 
-按 references/branch-guidelines-template.md 填充，输出仓级单篇 `docs/qual/branch-guidelines/branch-guidelines.md`：
+按 references/branch-guidelines-template.md 填充，输出仓级单篇 `docs/0-qual/branch-guidelines/branch-guidelines.md`：
 
 - 元信息表 + 采样口径（分支全量/采样数、commit 采样窗口与所在分支）。
 - **四维度章节**（一、分支模型；二、commit message 规范；三、merge 策略；四、MR 与评审要求），每维度分「现状」与「约定」两小节：
@@ -112,7 +112,7 @@ guidelines 形态语义：分支与变更规范是**指导性规范**（"应该"
 - 核查维度固定四项：**分支命名**、**commit message**、**merge 策略**、**MR 与评审**。
 - 每条核查结论落四类之一：**合规项**（检查对象遵守规范，附分支名 / commit 短 hash）、**差距项**（违反规范，附 git 对象证据与现状说明）、**规范未覆盖**（实际存在形态但规范未约定，提示规范补全）、**规范条目无检查对象**（规范约定了但核查窗口内无对应场景，如窗口内无 hotfix 分支、无平台访问权限时评审人数类条目，如实注明无法核查原因，不臆造差距）。
 - 逐 commit / 逐分支出结果：差距项必须落到具体分支名或 commit 短 hash，禁止只写"部分 commit 不符合"。
-- 产出差距报告 `docs/qual/branch-guidelines/report/{YYYYMMDD}-branch-guidelines.md`，按 references/gap-report-template.md 填充：结论概览表 + 逐维度一节（合规项 / 差距项 / 规范未覆盖 / 规范条目无检查对象）。
+- 产出差距报告 `docs/0-qual/branch-guidelines/report/{YYYYMMDD}-branch-guidelines.md`，按 references/gap-report-template.md 填充：结论概览表 + 逐维度一节（合规项 / 差距项 / 规范未覆盖 / 规范条目无检查对象）。
 - 差距报告**只新增不覆盖**，文件名带日期；同日重跑同名覆盖。
 
 ### 第 7 步：验证 mermaid 图可渲染（有条件必做）
@@ -136,14 +136,14 @@ node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-
 
 - **基于实证**：所有"分支命名形态、merge 策略、commit message 分布、评审痕迹、是否合规"的结论必须有 git 历史或仓内文件支撑。证据两类——git 对象标识（分支名 / commit 短 hash / tag 名）与仓内文件路径（**不带行号**，行号随代码变更失效）。读不到就写「未识别（原因：xxx）」，禁止凭经验臆造团队约定、评审要求或合规结论。
 - **采样口径明示**：分支与 commit 均为采样归纳，文档必须注明采样窗口（分支全量或采样 N 条、commit 近 N 条及所在分支），禁止把采样结论表述为全量事实。
-- **仓级单篇文件名固定**：产出固定为 `docs/qual/branch-guidelines/branch-guidelines.md`，无实例 slug；文档内表格中的样本标识一律取真实 git 对象（分支名 / commit 短 hash / tag 名），禁止 AI 自由起名、禁止虚构示例。
+- **仓级单篇文件名固定**：产出固定为 `docs/0-qual/branch-guidelines/branch-guidelines.md`，无实例 slug；文档内表格中的样本标识一律取真实 git 对象（分支名 / commit 短 hash / tag 名），禁止 AI 自由起名、禁止虚构示例。
 - **活文档覆盖更新**：`branch-guidelines.md` 同名直接覆盖，不保留历史副本、不加日期后缀；**差距报告才带日期**，落 `report/` 子目录、次抛。
-- **只读不改**：只读、只分析、只产出文档；git 命令只读（branch / log / tag / remote / config / symbolic-ref），禁止执行任何写操作类 git 命令（commit / push / branch -d / checkout / merge 等）；不改动被分析代码仓的任何文件（`docs/qual/branch-guidelines/` 下的产出除外）。
+- **只读不改**：只读、只分析、只产出文档；git 命令只读（branch / log / tag / remote / config / symbolic-ref），禁止执行任何写操作类 git 命令（commit / push / branch -d / checkout / merge 等）；不改动被分析代码仓的任何文件（`docs/0-qual/branch-guidelines/` 下的产出除外）。
 - **成品纯净**：最终文档只含成品内容。探测过程（执行的 git 命令、原始输出摘要）仅供自检，绝不写入最终文档——其结论须以 git 对象或 `文件路径` 证据形式进入相关表格。
 - **语言无关、平台无关**：不预设被分析仓的语言、框架与托管平台；平台 CLI（gh / glab）不可用时降级为纯 git 历史痕迹分析并如实标注。
 - **文档语言**：输出文档用中文，技术术语（merge commit / squash / rebase / fast-forward / conventional commits / MR / PR / CODEOWNERS / trailer 等）保留英文。
-- **索引分工**：域索引 `docs/qual/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
-- **与相邻资产边界**：代码本身写到什么程度算合格归 qual-code-standards-analyze 产出的 `docs/qual/code-standards/`；测试与覆盖要求归 qual-dt-guidelines-analyze 产出的 `docs/qual/dt-guidelines/`。本 skill 只记录"变更怎么进仓"的协作规矩事实与合规性，越界内容不写入本文档。
+- **索引分工**：域索引 `docs/0-qual/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
+- **与相邻资产边界**：代码本身写到什么程度算合格归 qual-code-standards-analyze 产出的 `docs/0-qual/code-standards/`；测试与覆盖要求归 qual-dt-guidelines-analyze 产出的 `docs/0-qual/dt-guidelines/`。本 skill 只记录"变更怎么进仓"的协作规矩事实与合规性，越界内容不写入本文档。
 - **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
 
 ## 参考文件索引

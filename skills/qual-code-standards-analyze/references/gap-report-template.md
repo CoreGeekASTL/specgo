@@ -6,7 +6,7 @@
 | 检查日期 | <YYYY-MM-DD> |
 | Skill | qual-code-standards-analyze |
 | 运行模式 | 差距分析模式 |
-| 对照规范 | <规范文档路径：docs/qual/code-standards/code-standards.md，或用户提供的规范文件路径；无既有规范用内置底稿代位时注明"内置底稿代位"> |
+| 对照规范 | <规范文档路径：docs/0-qual/code-standards/code-standards.md，或用户提供的规范文件路径；无既有规范用内置底稿代位时注明"内置底稿代位"> |
 | 门禁结论 | **<拦截 / 放行>**（存在红线违反 → 拦截；仅建议级差距或无差距 → 放行） |
 
 ## 结论概览

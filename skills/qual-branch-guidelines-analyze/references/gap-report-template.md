@@ -6,7 +6,7 @@
 | 检查日期 | <YYYY-MM-DD> |
 | Skill | qual-branch-guidelines-analyze |
 | 运行模式 | 差距分析模式 |
-| 对照规范 | <规范文档路径：docs/qual/branch-guidelines/branch-guidelines.md，或用户提供的规范文件路径> |
+| 对照规范 | <规范文档路径：docs/0-qual/branch-guidelines/branch-guidelines.md，或用户提供的规范文件路径> |
 | 核查范围 | <近期 N 个 commit（<起始短 hash>..<末尾短 hash>，所在分支 <分支名>）+ 活跃分支 M 条> |
 
 ## 结论概览

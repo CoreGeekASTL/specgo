@@ -6,7 +6,7 @@
 | 检查日期 | <YYYY-MM-DD> |
 | Skill | qual-dt-guidelines-analyze |
 | 运行模式 | 差距分析模式 |
-| 对照规范 | <规范文档路径：docs/qual/dt-guidelines/dt-guidelines.md，或用户提供的规范文件路径> |
+| 对照规范 | <规范文档路径：docs/0-qual/dt-guidelines/dt-guidelines.md，或用户提供的规范文件路径> |
 | 门禁结论 | <PASS / BLOCK / 未生效（门禁线建议值待确认）> |
 
 ## 结论概览

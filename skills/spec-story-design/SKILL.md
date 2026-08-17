@@ -1,11 +1,11 @@
 ---
 name: spec-story-design
-description: 当接收到需求设计文档（SR/特性设计），需要为存量代码仓产出新功能的 story 设计文档时使用——产出 `docs/storys/{功能名}/` 目录（每 story 一个目录：`{功能名}-story.md` + `{功能名}-develop-task.md`，后续全链路分析报告也归档同目录）：story 按八类核心要素（对外接口/业务规则/数据模型/对象模型/领域词典/交互流程/外部服务调用/技术要素）组织章节，每类要素明确标注 新增 / 变更（写清对哪个既有要素做了什么更改）/ 不涉及，并附需求概述（多彩建模）、实现方案与修改清单、外部文档引用；同需求重跑同名覆盖。触发场景包括"新增 story 设计"、"根据需求文档生成 story 设计"、"xxx-story 文档"、"docs/storys"、"按 story 模板输出新功能设计"等。
+description: 当接收到需求设计文档（SR/特性设计），需要为存量代码仓产出新功能的 story 设计文档时使用——产出 `docs/1-storys/{功能名}/` 目录（每 story 一个目录：`{功能名}-story.md` + `{功能名}-develop-task.md`，后续全链路分析报告也归档同目录）：story 按八类核心要素（对外接口/业务规则/数据模型/对象模型/领域词典/交互流程/外部服务调用/技术要素）组织章节，每类要素明确标注 新增 / 变更（写清对哪个既有要素做了什么更改）/ 不涉及，并附需求概述（多彩建模）、实现方案与修改清单、外部文档引用；同需求重跑同名覆盖。触发场景包括"新增 story 设计"、"根据需求文档生成 story 设计"、"xxx-story 文档"、"docs/1-storys"、"按 story 模板输出新功能设计"等。
 ---
 
 # Story 设计：从需求文档到 {功能名}-story 文档
 
-接收一篇需求设计文档，结合存量资产（v1.1 四域资产 + 旧体系素材），产出一个 story 目录 `docs/storys/{功能名}/`（内含 `{功能名}-story.md` 与 `{功能名}-develop-task.md`；specgo 第 6 步的全链路分析报告亦归档此目录）。
+接收一篇需求设计文档，结合存量资产（v1.1 四域资产 + 旧体系素材），产出一个 story 目录 `docs/1-storys/{功能名}/`（内含 `{功能名}-story.md` 与 `{功能名}-develop-task.md`；specgo 第 6 步的全链路分析报告亦归档此目录）。
 
 **核心立意**：一篇 story 文档表达**一个需求给代码仓带来的增量（delta）**——章节由八类核心要素构成，每个要素必须回答两个问题：**哪个要素是新加的？对哪个既有要素做了什么更改？** 不涉及的要素显式标注"不涉及"，不留空白。
 
@@ -17,14 +17,14 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 
 | # | 核心要素 | 内容 | 对应资产目录 |
 | --- | --- | --- | --- |
-| 1 | 对外接口 | 新增接口；变更既有接口（含注入点：对哪个既有接口注入/修改了什么） | docs/biz/interface/ |
-| 2 | 业务规则 | 新增规则（条件 → 动作 + 依据）；变更既有规则（变更前 → 变更后） | docs/biz/rules/ |
-| 3 | 数据模型 | 新增表/缓存结构；变更既有结构（加列/索引/TTL/生命周期调整） | docs/biz/data-model/ |
-| 4 | 对象模型 | 新增实体/值对象/聚合；变更既有对象的字段或关联 | docs/biz/object-model/ |
-| 5 | 领域词典 | 新增术语；演进既有术语释义（标注落入子域） | docs/biz/lexicon/ |
-| 6 | 交互流程 | 新增链路（时序图）；变更链路（在哪个环节插入/替换/删除什么 + 变更后主链路图） | docs/arch/interaction-model/ |
-| 7 | 外部服务调用 | 新增出向调用；变更既有调用契约 | docs/tech/comm-guidelines/ |
-| 8 | 技术要素 | 新增/变更并发原语、数据访问方式、韧性策略、日志/配置/告警机制 | docs/tech/{concurrency,data-access,resilience,foundation}-guidelines/ |
+| 1 | 对外接口 | 新增接口；变更既有接口（含注入点：对哪个既有接口注入/修改了什么） | docs/0-biz/interface/ |
+| 2 | 业务规则 | 新增规则（条件 → 动作 + 依据）；变更既有规则（变更前 → 变更后） | docs/0-biz/rules/ |
+| 3 | 数据模型 | 新增表/缓存结构；变更既有结构（加列/索引/TTL/生命周期调整） | docs/0-biz/data-model/ |
+| 4 | 对象模型 | 新增实体/值对象/聚合；变更既有对象的字段或关联 | docs/0-biz/object-model/ |
+| 5 | 领域词典 | 新增术语；演进既有术语释义（标注落入子域） | docs/0-biz/lexicon/ |
+| 6 | 交互流程 | 新增链路（时序图）；变更链路（在哪个环节插入/替换/删除什么 + 变更后主链路图） | docs/0-arch/interaction-model/ |
+| 7 | 外部服务调用 | 新增出向调用；变更既有调用契约 | docs/0-tech/comm-guidelines/ |
+| 8 | 技术要素 | 新增/变更并发原语、数据访问方式、韧性策略、日志/配置/告警机制 | docs/0-tech/{concurrency,data-access,resilience,foundation}-guidelines/ |
 
 变更类型三态：**新增** / **变更** / **不涉及**。每个要素节内分「新增」「变更」两小节组织（无则省略小节）；整要素"不涉及"时整节省略，但第 2 节总览表必须保留该行并标注"不涉及"——禁止留空或遗漏判定。
 
@@ -36,12 +36,12 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 
 ### 第 2 步：分析存量资产
 
-1. **docs/biz/interface/**：确定既有接口注入点与功能域归属（变更/注入类接口的对照基线）。
-2. **docs/tech/framework-guidelines/**：确定新功能应使用哪些基础框架及其约定（路由怎么注册、DAO 怎么继承、缓存怎么写、测试怎么搭），候选框架逐条核对，只保留新功能真实需要的。
-3. **docs/tech/comm-guidelines/**：新功能需调用的外部服务契约。
-4. **docs/arch/structure-model/**：新模块的分层归属依据。
-5. **docs/biz/rules/、docs/biz/lexicon/、docs/biz/data-model/、docs/biz/object-model/、docs/arch/interaction-model/**（存在时按需读）：变更类要素的"变更前"基线——写"变更前 → 变更后"必须引用这些资产或存量代码的事实，禁止凭印象写变更前状态。
-6. **docs/storys/**：相关功能的既有 story（被注入链路的原始设计参照）；并做**重跑判定**——是否已有同功能名 story：
+1. **docs/0-biz/interface/**：确定既有接口注入点与功能域归属（变更/注入类接口的对照基线）。
+2. **docs/0-tech/framework-guidelines/**：确定新功能应使用哪些基础框架及其约定（路由怎么注册、DAO 怎么继承、缓存怎么写、测试怎么搭），候选框架逐条核对，只保留新功能真实需要的。
+3. **docs/0-tech/comm-guidelines/**：新功能需调用的外部服务契约。
+4. **docs/0-arch/structure-model/**：新模块的分层归属依据。
+5. **docs/0-biz/rules/、docs/0-biz/lexicon/、docs/0-biz/data-model/、docs/0-biz/object-model/、docs/0-arch/interaction-model/**（存在时按需读）：变更类要素的"变更前"基线——写"变更前 → 变更后"必须引用这些资产或存量代码的事实，禁止凭印象写变更前状态。
+6. **docs/1-storys/**：相关功能的既有 story（被注入链路的原始设计参照）；并做**重跑判定**——是否已有同功能名 story：
    - **已有同功能名 story** → 本需求为其迭代/重跑，第 6 步走「覆盖更新」分支
    - **无** → 第 6 步走「新增文档」分支
 7. **存量代码（按需抽查）**：仅核实复用点/注入点的真实文件路径与分层约定（models/dao/service/controllers/routers），禁止全仓阅读。
@@ -49,7 +49,7 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 
 **存量资产缺失时的降级（任一缺失不阻断流程）**：
 
-- `docs/storys/` 不存在：第 6 步新建目录并按 references/story-readme-template.md 生成 README 索引。
+- `docs/1-storys/` 不存在：第 6 步新建目录并按 references/story-readme-template.md 生成 README 索引。
 - 上述任一资产目录不存在：以外部文档引用章节对应行注明"仓内无该类文档"，要素变更前基线以存量代码为准。
 - 全部不存在（全新仓首篇 story）：格式基准仍以 references/story-template.md、color-modeling.md 为准，产出物形态不变。
 
@@ -69,13 +69,13 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 1. **核心要素变更总览（第 2 节）**：八类要素逐行判定三态（新增/变更/不涉及），变更类摘要必须写清"对哪个要素做了什么更改"。
 2. **要素节（第 3~10 节）**：逐要素展开——「新增」小节列全新要素（接口表/规则表/表结构/术语等，字段见模板）；「变更」小节逐条写清**变更对象（既有要素名+文件）+ 更改内容（变更前 → 变更后）+ 影响**；两小节都无内容的要素整节省略。交互流程节：每条新增链路一张 mermaid 时序图 + 实现说明（多句话逐步说明，每句 ≤30 字、业务语言、可落到编码）；变更链路先给变更点表（在哪个环节插入/替换/删除什么），再画变更后主链路时序图。
 3. **实现方案与修改清单（第 11 节）**：mermaid 依赖图 + 承载模块表，模块按变更类型标注——新增标"（规划）"、复用标"（复用，<文件>）"、变更标"（变更：<文件>，改了什么）"；职责边界遵循需求文档的模块职责约束。
-4. **外部文档引用（第 12 节）**：三列表（文档类型 | 引用文档 | 引用点），逐类一行：接口文档（biz/interface 相关子文档）、外部接口文档（comm-guidelines 相关子文档）、基础框架文档（逐个框架一行链接 usage 真实文档，注明"按该文档 <某约定> 执行"，只列真实需要的框架，禁止按目录全量罗列）、结构模型文档（structure-model*.md）、既有 story（docs/storys/ 相关文档）、其它资产（rules/lexicon/data-model 等按需）。链接必须指向仓内真实存在的文件，无死链；某类确无引用须注明"无引用"及原因，禁止整节省略。
+4. **外部文档引用（第 12 节）**：三列表（文档类型 | 引用文档 | 引用点），逐类一行：接口文档（biz/interface 相关子文档）、外部接口文档（comm-guidelines 相关子文档）、基础框架文档（逐个框架一行链接 usage 真实文档，注明"按该文档 <某约定> 执行"，只列真实需要的框架，禁止按目录全量罗列）、结构模型文档（structure-model*.md）、既有 story（docs/1-storys/ 相关文档）、其它资产（rules/lexicon/data-model 等按需）。链接必须指向仓内真实存在的文件，无死链；某类确无引用须注明"无引用"及原因，禁止整节省略。
 
 产出后按 references/orthogonality-principles.md 执行**正交四原则自检**：逐条核对实现方案与各要素节是否符合 DRY（无重复实现）、SoC（无错位分层）、最小化依赖（无多余框架/库/字段）、稳定依赖方向（无下层反向依赖、无循环依赖）。违规处直接修改设计；确有理由必须违规的，标注理由提交用户确认，禁止悄悄违规。
 
 ### 第 5 步：生成 develop-task 文档（读源码 → 疑问澄清 → 定稿）
 
-本步独立于 story 设计文档，产出辅助出代码的抛弃式文档 `docs/storys/{功能名}/{功能名}-develop-task.md`（与 story 同目录）。与第 4 步的设计论证不同——本步只回答"代码怎么改"，依据是**实读源码**而非设计推断。**子步骤顺序不可颠倒，5.2 未完成不得进入 5.3。**
+本步独立于 story 设计文档，产出辅助出代码的抛弃式文档 `docs/1-storys/{功能名}/{功能名}-develop-task.md`（与 story 同目录）。与第 4 步的设计论证不同——本步只回答"代码怎么改"，依据是**实读源码**而非设计推断。**子步骤顺序不可颠倒，5.2 未完成不得进入 5.3。**
 
 **本步实现方案选型原则（业务逻辑正确性第一）**：
 
@@ -113,7 +113,7 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 
 #### 5.3 用户澄清后，输出完整 develop-task 文档
 
-收到用户澄清回复后，按 references/develop-task-template.md 模板输出完整文档到 `docs/storys/{功能名}/{功能名}-develop-task.md`。文档两部分核心内容须基于 5.1 源码阅读 + 5.2 用户澄清填写，输出格式见模板：
+收到用户澄清回复后，按 references/develop-task-template.md 模板输出完整文档到 `docs/1-storys/{功能名}/{功能名}-develop-task.md`。文档两部分核心内容须基于 5.1 源码阅读 + 5.2 用户澄清填写，输出格式见模板：
 
 - **修改文件清单（模板第 2 节）**：逐文件逐函数列出修改点（图表呈现，格式与要求见模板）
 - **澄清问题列表（模板第 7 节）**：5.2 疑问点与用户澄清结论逐条记录（格式见模板）
@@ -124,15 +124,15 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 
 按第 2 步的重跑判定结果二选一：
 
-**分支 A：新增文档**（docs/storys/ 下无同功能名 story 目录）
+**分支 A：新增文档**（docs/1-storys/ 下无同功能名 story 目录）
 
-- 输出到 `docs/storys/{功能名}/{功能名}-story.md`（功能名为英文短名 kebab-case）；目录不存在时新建。
-- 更新 `docs/storys/README.md`：Story 全景表新增一行（核心要素变更摘要取自 story 第 2 节总览表，文档列链接 `{功能名}/{功能名}-story.md`）；README 不存在时按 references/story-readme-template.md 从头生成（元信息表 + Story 全景表，导航作用不加其他章节）。
+- 输出到 `docs/1-storys/{功能名}/{功能名}-story.md`（功能名为英文短名 kebab-case）；目录不存在时新建。
+- 更新 `docs/1-storys/README.md`：Story 全景表新增一行（核心要素变更摘要取自 story 第 2 节总览表，文档列链接 `{功能名}/{功能名}-story.md`）；README 不存在时按 references/story-readme-template.md 从头生成（元信息表 + Story 全景表，导航作用不加其他章节）。
 
 **分支 B：覆盖更新**（同功能名 story 目录已存在——本需求重跑/迭代）
 
-- `docs/storys/{功能名}/{功能名}-story.md` 整篇按最新需求重新产出、同名覆盖（story 是需求的 delta 文档，需求迭代即重出），文档头来源行更新为最新需求文档与日期。
-- 更新 `docs/storys/README.md` 对应行的变更摘要与日期，不新增行。
+- `docs/1-storys/{功能名}/{功能名}-story.md` 整篇按最新需求重新产出、同名覆盖（story 是需求的 delta 文档，需求迭代即重出），文档头来源行更新为最新需求文档与日期。
+- 更新 `docs/1-storys/README.md` 对应行的变更摘要与日期，不新增行。
 
 **两个分支都要做的：**
 
@@ -154,7 +154,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 
 - [ ] 第 3 步多彩建模先于其它设计章节完成，图中每个粉色事件四要素齐全、无文件名/函数名/行号
 - [ ] 实现逻辑速览 1~3 句、每句 ≤30 字
-- [ ] 产出文档落盘 `docs/storys/{功能名}/{功能名}-story.md`，12 节结构完整（需求概述/核心要素变更总览/八要素节/实现方案与修改清单/外部文档引用）
+- [ ] 产出文档落盘 `docs/1-storys/{功能名}/{功能名}-story.md`，12 节结构完整（需求概述/核心要素变更总览/八要素节/实现方案与修改清单/外部文档引用）
 - [ ] **核心要素变更总览八行齐全，三态判定无遗漏**；"不涉及"要素已省略对应节且总览表保留标注
 - [ ] **每个"变更"条目都写清了变更对象（既有要素名+文件）与更改内容（变更前 → 变更后）**，无"只写新不写改了谁"
 - [ ] 已按正交四原则自检（DRY 无重复实现 / SoC 无错位分层 / 最小化依赖 / 稳定依赖方向无反向与循环依赖），违规已修正或经用户确认
@@ -165,18 +165,18 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - [ ] 已按重跑判定选择「新增文档」或「覆盖更新」；覆盖更新分支未保留过期内容
 - [ ] 每条链路时序图下方已补实现说明，多句话逐步说明，每句 ≤30 字
 - [ ] develop-task 文档已在第 5 步独立产出：5.1 已实读源码定位修改点；实现方案立足存量代码现状论证，5.2 已将不确定的、待选方案全部向用户问清楚且覆盖业务逻辑正确的合理方案（非只拿最简单方案问，无疑问时已明确回复"无疑问"），无绕过既有校验/事务/并发语义的逻辑缺口；修改点不违反正交四原则，确需违规的取舍已提交用户确认；5.3 按用户澄清定稿七节齐全（修改文件清单图表写到函数级 + 澄清问题列表逐条记录），框架/外部接口链接仓内真实文档
-- [ ] `docs/storys/README.md` 索引已同步（新增加行 / 重跑更新对应行），无死链
+- [ ] `docs/1-storys/README.md` 索引已同步（新增加行 / 重跑更新对应行），无死链
 - [ ] 产出文档中的 mermaid 图已全部通过本地渲染验证（mermaid-validate 验证脚本全部 VALID）
 
 ## 参考文件索引
 
 - references/color-modeling.md — 多彩建模方法论（第 3 步用，本目录自包含副本）
 - references/story-template.md — story 设计文档输出模板（需求概述 + 八类核心要素 + 实现方案 + 外部文档引用，第 4、6 步用）
-- references/story-readme-template.md — docs/storys/README.md 索引模板（第 6 步用）
+- references/story-readme-template.md — docs/1-storys/README.md 索引模板（第 6 步用）
 - references/develop-task-template.md — develop-task 抛弃式文档模板（第 5 步用）
 - references/orthogonality-principles.md — 软件正交四原则（DRY/SoC/最小化依赖/稳定依赖方向）：第 4 步自检与第 5 步修改点设计约束
-- docs/biz/interface/README.md — 对外接口文档索引（第 2、4 步用）
-- docs/tech/framework-guidelines/README.md — 框架使用文档索引（第 2、4 步用）
-- docs/tech/comm-guidelines/README.md — 出站调用文档索引（第 2、4 步用）
-- docs/arch/structure-model/ — 结构模型文档目录（structure-model*.md，第 2、4 步用）
-- docs/storys/README.md — 既有 story 索引（第 2、6 步用）
+- docs/0-biz/interface/README.md — 对外接口文档索引（第 2、4 步用）
+- docs/0-tech/framework-guidelines/README.md — 框架使用文档索引（第 2、4 步用）
+- docs/0-tech/comm-guidelines/README.md — 出站调用文档索引（第 2、4 步用）
+- docs/0-arch/structure-model/ — 结构模型文档目录（structure-model*.md，第 2、4 步用）
+- docs/1-storys/README.md — 既有 story 索引（第 2、6 步用）
