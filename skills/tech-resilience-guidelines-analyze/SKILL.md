@@ -12,7 +12,7 @@ description: 提取存量代码仓的韧性规范资产（超时/重试/熔断�
 1. 仓内出站调用与后台任务的故障策略（超时 / 重试 / 熔断降级 / panic recover / 错误 swallowing）通过哪些封装函数 / 配置项实现（怎么用）？
 2. 业务代码实际怎么写的（真实代码案例长什么样）？
 
-资产边界：**只管故障策略，不管通信协议本身**——协议选型、封装方式、错误码语义归 tech-comm-guidelines-analyze（通信规范）；线程池选型、隔离、拒绝策略归 tech-concurrency-guidelines-analyze（并发规范）。本资产只回答"故障来了怎么扛、照着怎么写"。
+资产边界：**只管故障策略，不管通信协议本身**——协议选型、封装方式、错误码语义归 tech-external-call-guidelines-analyze（通信规范）；线程池选型、隔离、拒绝策略归 tech-concurrency-guidelines-analyze（并发规范）。本资产只回答"故障来了怎么扛、照着怎么写"。
 
 产出粒度对齐存量代码资产治理规范 v1.1——**按维度拆分，每个维度一个文件**：
 
@@ -102,7 +102,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **语言无关**：不预设被分析仓的语言与框架，按第 1 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（HTTP / RPC / MQ / SDK / timeout / retry / circuit breaker / fallback / panic / recover 等）保留英文。
 - **索引分工**：域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护；本资产目录的 README 是资产主文档（维度导航），非域索引。
-- **与相邻资产边界**：通信协议与封装方式归 tech-comm-guidelines-analyze 产出的 `docs/0-tech/comm-guidelines/`；线程池选型、隔离、拒绝策略归 tech-concurrency-guidelines-analyze 产出的 `docs/0-tech/concurrency-guidelines/`。本 skill 只记录故障策略的使用方式与代码案例，越界内容不写入本文档。
+- **与相邻资产边界**：通信协议与封装方式归 tech-external-call-guidelines-analyze 产出的 `docs/0-tech/external-call-guidelines/`；线程池选型、隔离、拒绝策略归 tech-concurrency-guidelines-analyze 产出的 `docs/0-tech/concurrency-guidelines/`。本 skill 只记录故障策略的使用方式与代码案例，越界内容不写入本文档。
 
 ## 参考文件索引
 

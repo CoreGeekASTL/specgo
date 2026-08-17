@@ -1,7 +1,7 @@
 ---
 name: tech-framework-guidelines-analyze
 description: >-
-  分析存量代码仓中的内部代码框架（RPC/Web 框架、线程池、Actor、日志、序列化、配置、依赖注入、消息队列、调度、资源池、容错治理、监控、基础库、测试框架等）及其使用方式，提取"框架使用指导"资产（基础框架清单与使用方式盘点，纯现状、无规范文档），落盘被分析仓的 docs/0-tech/framework-guidelines/：索引 README.md + 每框架一篇 framework-guidelines-{framework}.md（含用途定位、使用模式）。边界：只承载内部代码框架使用指导——数据存储访问（DB driver/ORM/Redis/MinIO/嵌入式存储等）归 tech-data-access-guidelines-analyze，跨服务业务节点调用归 tech-comm-guidelines-analyze，均不纳入本资产。当需要盘点代码仓技术栈、梳理框架使用模式与调用点分布、为 AI 代码生成沉淀"框架使用知识"、或为重构/迁移/新人上手提供框架使用文档时使用。触发场景包括"框架使用指导"、"框架使用现状"、"技术栈盘点"、"框架使用"、"用了哪些框架"、"XX 框架怎么用"、"线程池怎么用"、"RPC 怎么调的"、"framework guidelines"、"framework usage"、"tech stack"等。
+  分析存量代码仓中的内部代码框架（RPC/Web 框架、线程池、Actor、日志、序列化、配置、依赖注入、消息队列、调度、资源池、容错治理、监控、基础库、测试框架等）及其使用方式，提取"框架使用指导"资产（基础框架清单与使用方式盘点，纯现状、无规范文档），落盘被分析仓的 docs/0-tech/framework-guidelines/：索引 README.md + 每框架一篇 framework-guidelines-{framework}.md（含用途定位、使用模式）。边界：只承载内部代码框架使用指导——数据存储访问（DB driver/ORM/Redis/MinIO/嵌入式存储等）归 tech-data-access-guidelines-analyze，跨服务业务节点调用归 tech-external-call-guidelines-analyze，均不纳入本资产。当需要盘点代码仓技术栈、梳理框架使用模式与调用点分布、为 AI 代码生成沉淀"框架使用知识"、或为重构/迁移/新人上手提供框架使用文档时使用。触发场景包括"框架使用指导"、"框架使用现状"、"技术栈盘点"、"框架使用"、"用了哪些框架"、"XX 框架怎么用"、"线程池怎么用"、"RPC 怎么调的"、"framework guidelines"、"framework usage"、"tech stack"等。
 ---
 
 # 框架使用指导分析 Skill（tech-framework-guidelines-analyze）
@@ -18,7 +18,7 @@ description: >-
 
 - 本资产只承载**内部代码框架使用指导**——进程内引用的库/框架/自研封装怎么用。
 - **数据存储访问不纳入**：DB driver / ORM / Redis / MinIO / 嵌入式存储等数据存储的访问指导归 tech-data-access-guidelines-analyze 产出的 `docs/0-tech/data-access-guidelines/`（ORM 作为"怎么访问 DB"的事实已在该资产承载，本资产不再立篇）。
-- **跨服务业务节点调用不纳入**：HTTP/RPC/MQ 调用外部业务服务的指导归 tech-comm-guidelines-analyze 产出的 `docs/0-tech/comm-guidelines/`。
+- **跨服务业务节点调用不纳入**：HTTP/RPC/MQ 调用外部业务服务的指导归 tech-external-call-guidelines-analyze 产出的 `docs/0-tech/external-call-guidelines/`。
 - 框架探测（第 2 步）命中存储/ORM 类依赖时，在 README 清单表相应类别标注"归 data-access-guidelines 承载"，不在本目录立篇。
 
 本资产为**提取型纯现状**：只记录代码里已长出的事实，不含"应该怎么用"的规范性要求（规范类资产由 tech 域 guidelines/standards 形态的 skill 承载）。
@@ -66,7 +66,7 @@ python3 <skill_dir>/scripts/scan_frameworks.py <repo_path> -o scan_result.md
 ```
 
 3. **查漏**：对照 references/framework-catalog.md 的十六类框架逐项核对——清单里有但扫描没命中（或反之）的必须追查；特别注意目录中列出的"易遗漏项"（自研框架、IDL 生成代码虚增、一框多用、版本双轨）。发现自研框架时，归纳其特征字符串写入自定义模式 JSON 重新扫描。
-4. **边界过滤**：命中存储/ORM 类（DB driver、ORM、Redis/Memcached client、对象存储 SDK、嵌入式存储）的框架不立篇，标注"归 data-access-guidelines 承载"；命中外部业务服务 client stub 的不立篇，标注"归 comm-guidelines 承载"。
+4. **边界过滤**：命中存储/ORM 类（DB driver、ORM、Redis/Memcached client、对象存储 SDK、嵌入式存储）的框架不立篇，标注"归 data-access-guidelines 承载"；命中外部业务服务 client stub 的不立篇，标注"归 external-call-guidelines 承载"。
 
 ### 第 3 步：使用点定位与聚类
 
@@ -128,7 +128,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 ## 关键约束
 
 - **语言无关**：不预设被分析仓的语言/框架，按第 1 步实际探测结果走。
-- **资产边界**：只承载内部代码框架使用指导；数据存储访问归 tech-data-access-guidelines-analyze，跨服务业务节点调用归 tech-comm-guidelines-analyze——边界处探测命中时在 README 标注归属，不在本目录立篇。
+- **资产边界**：只承载内部代码框架使用指导；数据存储访问归 tech-data-access-guidelines-analyze，跨服务业务节点调用归 tech-external-call-guidelines-analyze——边界处探测命中时在 README 标注归属，不在本目录立篇。
 - **基于实证**：所有结论必须有代码证据支撑，证据为**文件路径**（不带行号——行号随代码变更失效且无跨工具稳定性），禁止臆测；约定从代码事实归纳，不从文档照抄。
 - **实例 slug 从代码标识符派生**：`{framework}` 取依赖清单/代码中的框架名转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
 - **活文档覆盖更新**：`docs/0-tech/framework-guidelines/` 下文档同名直接覆盖（按框架逐篇更新），不保留历史副本、不加日期后缀。

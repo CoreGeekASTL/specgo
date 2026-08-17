@@ -23,7 +23,7 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 | 4 | 对象模型 | 新增实体/值对象/聚合；变更既有对象的字段或关联 | docs/0-biz/object-model/ |
 | 5 | 领域词典 | 新增术语；演进既有术语释义（标注落入子域） | docs/0-biz/lexicon/ |
 | 6 | 交互流程 | 新增链路（时序图）；变更链路（在哪个环节插入/替换/删除什么 + 变更后主链路图） | docs/0-arch/interaction-model/ |
-| 7 | 外部服务调用 | 新增出向调用；变更既有调用契约 | docs/0-tech/comm-guidelines/ |
+| 7 | 外部服务调用 | 新增出向调用；变更既有调用契约 | docs/0-tech/external-call-guidelines/ |
 | 8 | 技术要素 | 新增/变更并发原语、数据访问方式、韧性策略、日志/配置/告警机制 | docs/0-tech/{concurrency,data-access,resilience,foundation}-guidelines/ |
 
 变更类型三态：**新增** / **变更** / **不涉及**。每个要素节内分「新增」「变更」两小节组织（无则省略小节）；整要素"不涉及"时整节省略，但第 2 节总览表必须保留该行并标注"不涉及"——禁止留空或遗漏判定。
@@ -38,7 +38,7 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 
 1. **docs/0-biz/interface/**：确定既有接口注入点与功能域归属（变更/注入类接口的对照基线）。
 2. **docs/0-tech/framework-guidelines/**：确定新功能应使用哪些基础框架及其约定（路由怎么注册、DAO 怎么继承、缓存怎么写、测试怎么搭），候选框架逐条核对，只保留新功能真实需要的。
-3. **docs/0-tech/comm-guidelines/**：新功能需调用的外部服务契约。
+3. **docs/0-tech/external-call-guidelines/**：新功能需调用的外部服务契约。
 4. **docs/0-arch/structure-model/**：新模块的分层归属依据。
 5. **docs/0-biz/rules/、docs/0-biz/lexicon/、docs/0-biz/data-model/、docs/0-biz/object-model/、docs/0-arch/interaction-model/**（存在时按需读）：变更类要素的"变更前"基线——写"变更前 → 变更后"必须引用这些资产或存量代码的事实，禁止凭印象写变更前状态。
 6. **docs/1-storys/**：相关功能的既有 story（被注入链路的原始设计参照）；并做**重跑判定**——是否已有同功能名 story：
@@ -69,7 +69,7 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 1. **核心要素变更总览（第 2 节）**：八类要素逐行判定三态（新增/变更/不涉及），变更类摘要必须写清"对哪个要素做了什么更改"。
 2. **要素节（第 3~10 节）**：逐要素展开——「新增」小节列全新要素（接口表/规则表/表结构/术语等，字段见模板）；「变更」小节逐条写清**变更对象（既有要素名+文件）+ 更改内容（变更前 → 变更后）+ 影响**；两小节都无内容的要素整节省略。交互流程节：每条新增链路一张 mermaid 时序图 + 实现说明（多句话逐步说明，每句 ≤30 字、业务语言、可落到编码）；变更链路先给变更点表（在哪个环节插入/替换/删除什么），再画变更后主链路时序图。
 3. **实现方案与修改清单（第 11 节）**：mermaid 依赖图 + 承载模块表，模块按变更类型标注——新增标"（规划）"、复用标"（复用，<文件>）"、变更标"（变更：<文件>，改了什么）"；职责边界遵循需求文档的模块职责约束。
-4. **外部文档引用（第 12 节）**：三列表（文档类型 | 引用文档 | 引用点），逐类一行：接口文档（biz/interface 相关子文档）、外部接口文档（comm-guidelines 相关子文档）、基础框架文档（逐个框架一行链接 usage 真实文档，注明"按该文档 <某约定> 执行"，只列真实需要的框架，禁止按目录全量罗列）、结构模型文档（structure-model*.md）、既有 story（docs/1-storys/ 相关文档）、其它资产（rules/lexicon/data-model 等按需）。链接必须指向仓内真实存在的文件，无死链；某类确无引用须注明"无引用"及原因，禁止整节省略。
+4. **外部文档引用（第 12 节）**：三列表（文档类型 | 引用文档 | 引用点），逐类一行：接口文档（biz/interface 相关子文档）、外部接口文档（external-call-guidelines 相关子文档）、基础框架文档（逐个框架一行链接 usage 真实文档，注明"按该文档 <某约定> 执行"，只列真实需要的框架，禁止按目录全量罗列）、结构模型文档（structure-model*.md）、既有 story（docs/1-storys/ 相关文档）、其它资产（rules/lexicon/data-model 等按需）。链接必须指向仓内真实存在的文件，无死链；某类确无引用须注明"无引用"及原因，禁止整节省略。
 
 产出后按 references/orthogonality-principles.md 执行**正交四原则自检**：逐条核对实现方案与各要素节是否符合 DRY（无重复实现）、SoC（无错位分层）、最小化依赖（无多余框架/库/字段）、稳定依赖方向（无下层反向依赖、无循环依赖）。违规处直接修改设计；确有理由必须违规的，标注理由提交用户确认，禁止悄悄违规。
 
@@ -177,6 +177,6 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - references/orthogonality-principles.md — 软件正交四原则（DRY/SoC/最小化依赖/稳定依赖方向）：第 4 步自检与第 5 步修改点设计约束
 - docs/0-biz/interface/README.md — 对外接口文档索引（第 2、4 步用）
 - docs/0-tech/framework-guidelines/README.md — 框架使用文档索引（第 2、4 步用）
-- docs/0-tech/comm-guidelines/README.md — 出站调用文档索引（第 2、4 步用）
+- docs/0-tech/external-call-guidelines/README.md — 出站调用文档索引（第 2、4 步用）
 - docs/0-arch/structure-model/ — 结构模型文档目录（structure-model*.md，第 2、4 步用）
 - docs/1-storys/README.md — 既有 story 索引（第 2、6 步用）

@@ -36,9 +36,9 @@
 
 | 外部服务 | 接口 | 本功能中的调用位置 | 文档链接 |
 |---------|------|-------------------|---------|
-| 沐恩云服务 | POST /auth/v1/verify | service/remote_service.go VerifyDevice | [comm-guidelines-munen.md](../tech/comm-guidelines/comm-guidelines-munen.md#auth-verify) |
+| 沐恩云服务 | POST /auth/v1/verify | service/remote_service.go VerifyDevice | [external-call-guidelines-munen.md](../tech/external-call-guidelines/external-call-guidelines-munen.md#auth-verify) |
 
-每条链到 docs/0-tech/comm-guidelines/ 对应文档的接口章节；仓内无该目录时按需求文档列接口并注明"无出站调用文档，待核实"。本功能无出站调用时本节写"无"。
+每条链到 docs/0-tech/external-call-guidelines/ 对应文档的接口章节；仓内无该目录时按需求文档列接口并注明"无出站调用文档，待核实"。本功能无出站调用时本节写"无"。
 
 ## 5. 验证方式
 

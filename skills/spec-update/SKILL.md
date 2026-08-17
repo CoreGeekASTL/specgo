@@ -52,11 +52,11 @@ description: >-
 | 数据模型 | `docs/0-biz/data-model/` | biz-data-model-analyze | 表结构/索引/缓存数据结构/TTL/数据生命周期变化，建表 SQL 变化 |
 | 领域词典 | `docs/0-biz/lexicon/` | biz-lexicon-analyze | 五类来源（请求响应模型、DB 实体、事件模型、错误码、常量）任一变化；功能域增删 |
 | 框架使用 | `docs/0-tech/framework-guidelines/` | tech-framework-guidelines-analyze | 引入/移除框架或基础库（依赖清单变化）、框架用法模式变化 |
-| 通信规范 | `docs/0-tech/comm-guidelines/` | tech-comm-guidelines-analyze | 出站调用点增删、被调外部服务变化、协议/封装方式变化 |
+| 通信规范 | `docs/0-tech/external-call-guidelines/` | tech-external-call-guidelines-analyze | 出站调用点增删、被调外部服务变化、协议/封装方式变化 |
 | 并发规范 | `docs/0-tech/concurrency-guidelines/` | tech-concurrency-guidelines-analyze | 线程池/goroutine/锁/channel/定时任务等并发原语增改 |
 | 数据访问规范 | `docs/0-tech/data-access-guidelines/` | tech-data-access-guidelines-analyze | 数据访问中间件增改、事务/批量/缓存读写模式变化 |
 | 韧性规范 | `docs/0-tech/resilience-guidelines/` | tech-resilience-guidelines-analyze | 超时/重试/熔断降级/panic recover/吞错点变化 |
-| 基础规范 | `docs/0-tech/foundation-guidelines/` | tech-foundation-guidelines-analyze | 日志/配置/告警等横切机制使用方式变化 |
+| 基础规范 | `docs/0-tech/basic-mechanism-guidelines/` | tech-basic-mechanism-guidelines-analyze | 日志/配置/告警等横切机制使用方式变化 |
 | 编码规范 | `docs/0-qual/code-standards/` | qual-code-standards-analyze | 通常不随单次代码变更刷新；编码约定本身变化时刷新 |
 | DT 规范 | `docs/0-qual/dt-guidelines/` | qual-dt-guidelines-analyze | 测试体系/覆盖率门禁约定变化时刷新 |
 | 分支规范 | `docs/0-qual/branch-guidelines/` | qual-branch-guidelines-analyze | 分支/commit/MR 约定变化时刷新 |

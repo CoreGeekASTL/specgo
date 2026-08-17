@@ -1,9 +1,9 @@
 ---
-name: tech-foundation-guidelines-analyze
-description: 提取存量代码仓的基础规范资产（日志/配置/告警等横切编码机制的使用指导），单模式提取运行——盘点仓内基础编码机制，产出 README 索引 + 每维度一篇 foundation-guidelines-{dimension}.md；每篇文档只含两项内容：基础机制的函数调用说明（可调用的函数/方法清单：签名、作用、参数、来源文件）与使用代码案例（真实代码片段，注明来源文件路径）。产出落盘被分析仓的 docs/0-tech/foundation-guidelines/。当用户提到"基础规范"、"日志规范"、"日志怎么用"、"配置规范"、"配置读取方式"、"环境变量"、"告警规范"、"告警 ID"、"告警怎么上报"、"编码指导"、"foundation guidelines"时使用。
+name: tech-basic-mechanism-guidelines-analyze
+description: 提取存量代码仓的基础规范资产（日志/配置/告警等横切编码机制的使用指导），单模式提取运行——盘点仓内基础编码机制，产出 README 索引 + 每维度一篇 basic-mechanism-guidelines-{dimension}.md；每篇文档只含两项内容：基础机制的函数调用说明（可调用的函数/方法清单：签名、作用、参数、来源文件）与使用代码案例（真实代码片段，注明来源文件路径）。产出落盘被分析仓的 docs/0-tech/basic-mechanism-guidelines/。当用户提到"基础规范"、"日志规范"、"日志怎么用"、"配置规范"、"配置读取方式"、"环境变量"、"告警规范"、"告警 ID"、"告警怎么上报"、"编码指导"、"foundation guidelines"时使用。
 ---
 
-# 基础规范分析（tech-foundation-guidelines-analyze）
+# 基础规范分析（tech-basic-mechanism-guidelines-analyze）
 
 ## 目的
 
@@ -18,7 +18,7 @@ description: 提取存量代码仓的基础规范资产（日志/配置/告警�
 
 | 产出 | 落盘 |
 | --- | --- |
-| 主文档 `README.md`（机制全景索引）+ 每维度 1 篇 `foundation-guidelines-{dimension}.md` | 被分析仓 `docs/0-tech/foundation-guidelines/` |
+| 主文档 `README.md`（机制全景索引）+ 每维度 1 篇 `basic-mechanism-guidelines-{dimension}.md` | 被分析仓 `docs/0-tech/basic-mechanism-guidelines/` |
 
 `{dimension}` 维度 slug：三大核心维度固定取 `log`（日志）/ `config`（配置）/ `alarm`（告警）；增补机制 slug 从该机制的代码标识符派生（日志框架名 / 配置中心 client 名 / 告警 SDK 名转 kebab-case），禁止 AI 自由起名——保证重跑产出同名文件、资产不断代。
 
@@ -54,7 +54,7 @@ description: 提取存量代码仓的基础规范资产（日志/配置/告警�
 
 ### 第 3 步：生成基础规范文档
 
-输出到被分析仓 `docs/0-tech/foundation-guidelines/` 目录：1 个主文档 `README.md` + 每个维度一个子文档 `foundation-guidelines-{dimension}.md`。
+输出到被分析仓 `docs/0-tech/basic-mechanism-guidelines/` 目录：1 个主文档 `README.md` + 每个维度一个子文档 `basic-mechanism-guidelines-{dimension}.md`。
 
 - **主文档 `README.md`** 按 references/readme-template.md 填充：元信息表 + 机制全景表（维度 / 使用框架或 SDK / 函数清单概要 / 子文档链接）+ 附注（排查到但无法判定归属 / 待人工确认的机制或调用点）。
 - **每维度子文档** 按 references/dimension-template.md 填充，固定两小节：**函数调用说明**（函数清单表格：函数 / 作用 / 参数说明 / 定义文件）、**使用代码案例**（真实代码片段，每段注明来源文件路径）。
@@ -86,14 +86,14 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **基于实证**：所有"机制提供哪些函数、怎么调用"的结论必须有代码或配置支撑，证据形式为 `文件路径`，**不得出现代码行号**（行号随代码变更失效）。读不到就写「未识别（原因：xxx）」/「未设置」，禁止凭经验臆造函数签名、参数或调用案例。
 - **内容边界**：输出文档只含函数调用说明与使用代码案例两项内容；不写调用点分布统计、不写"应该"级约定、不做合规性判断。
 - **维度 slug 固定或从代码标识符派生**：三大核心维度 slug 固定为 `log` / `config` / `alarm`；增补机制 slug 取该机制的代码标识符（框架名 / client 名 / SDK 名）转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
-- **活文档覆盖更新**：`docs/0-tech/foundation-guidelines/` 下 README 与 `foundation-guidelines-{dimension}.md` 同名直接覆盖，不保留历史副本、不加日期后缀。
-- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（`docs/0-tech/foundation-guidelines/` 下的产出除外）。
+- **活文档覆盖更新**：`docs/0-tech/basic-mechanism-guidelines/` 下 README 与 `basic-mechanism-guidelines-{dimension}.md` 同名直接覆盖，不保留历史副本、不加日期后缀。
+- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（`docs/0-tech/basic-mechanism-guidelines/` 下的产出除外）。
 - **成品纯净**：最终文档只含成品内容。扫描过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格。
 - **语言无关**：不预设被分析仓的语言与框架，按第 1 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（DEBUG / INFO / WARN / ERROR / Nacos / SDK / metrics / traceId 等）保留英文。
 - **索引分工**：域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护；本资产目录的 README 是资产主文档（机制全景 + 维度导航），非域索引。
 - **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
-- **与相邻资产互补**：框架用法骨架（用了什么框架、怎么用）归 tech-framework-guidelines-analyze 的 `docs/0-tech/framework-guidelines/`；超时 / 重试 / 熔断等故障策略归 tech-resilience-guidelines-analyze；跨服务调用规范归 tech-comm-guidelines-analyze；命名 / 函数长度等"必须"级编码红线归 qual-code-standards-analyze。本 skill 只管日志 / 配置 / 告警等基础编码机制的函数级使用参考。
+- **与相邻资产互补**：框架用法骨架（用了什么框架、怎么用）归 tech-framework-guidelines-analyze 的 `docs/0-tech/framework-guidelines/`；超时 / 重试 / 熔断等故障策略归 tech-resilience-guidelines-analyze；跨服务调用规范归 tech-external-call-guidelines-analyze；命名 / 函数长度等"必须"级编码红线归 qual-code-standards-analyze。本 skill 只管日志 / 配置 / 告警等基础编码机制的函数级使用参考。
 
 ## 参考文件索引
 

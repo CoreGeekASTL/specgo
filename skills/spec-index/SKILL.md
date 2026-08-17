@@ -1,7 +1,7 @@
 ---
 name: spec-index
 description: >-
-  生成被分析仓 docs/ 资产体系的索引层——各域索引 docs/0-{域}/README.md（列出本域各资产目录及目录内真实文件清单，每文件一句话说明、从文件首行标题提取，无资产的域不生成）+ 总索引 docs/README.md（四域导航表 + 服务依赖全景图：mermaid flowchart，从 docs/0-tech/comm-guidelines/ 各文档提取本仓→下游服务依赖边；通信规范资产未建时该节注明"通信规范资产未建"）。索引为活文档，同名覆盖更新并标注生成时间；只聚合真实存在的文件、不重述资产正文。当各 analyze skill 跑完需要统一生成/刷新导航、spec-init 建骨架或迁移后首次建索引、资产增删后刷新索引、需要下游依赖全景图时使用。触发场景包括"生成索引"、"docs 索引"、"域索引"、"总索引"、"资产导航"、"服务依赖全景图"、"依赖全景图"、"刷新 README 索引"、"刷新索引"、"spec-index"等。
+  生成被分析仓 docs/ 资产体系的索引层——各域索引 docs/0-{域}/README.md（列出本域各资产目录及目录内真实文件清单，每文件一句话说明、从文件首行标题提取，无资产的域不生成）+ 总索引 docs/README.md（四域导航表 + 服务依赖全景图：mermaid flowchart，从 docs/0-tech/external-call-guidelines/ 各文档提取本仓→下游服务依赖边；通信规范资产未建时该节注明"通信规范资产未建"）。索引为活文档，同名覆盖更新并标注生成时间；只聚合真实存在的文件、不重述资产正文。当各 analyze skill 跑完需要统一生成/刷新导航、spec-init 建骨架或迁移后首次建索引、资产增删后刷新索引、需要下游依赖全景图时使用。触发场景包括"生成索引"、"docs 索引"、"域索引"、"总索引"、"资产导航"、"服务依赖全景图"、"依赖全景图"、"刷新 README 索引"、"刷新索引"、"spec-index"等。
 ---
 
 # 资产索引生成 Skill（spec-index）
@@ -65,11 +65,11 @@ description: >-
 | `0-biz/data-model` | 数据模型 | 持久态表结构、缓存数据结构、字段关系与数据生命周期 |
 | `0-biz/lexicon` | 领域词典 | 业务与代码共用的受控词汇集 |
 | `0-tech/framework-guidelines` | 框架使用指导 | 基础框架清单与使用方式盘点 |
-| `0-tech/comm-guidelines` | 通信规范 | RPC/HTTP/MQ 跨服务调用指导 |
+| `0-tech/external-call-guidelines` | 通信规范 | RPC/HTTP/MQ 跨服务调用指导 |
 | `0-tech/concurrency-guidelines` | 并发规范 | 线程池选型、隔离、拒绝策略 |
 | `0-tech/data-access-guidelines` | 数据访问规范 | Redis/DB 等中间件访问指导 |
 | `0-tech/resilience-guidelines` | 韧性规范 | 超时/重试/熔断/异常处理 |
-| `0-tech/foundation-guidelines` | 基础规范 | 日志/配置/告警等编码指导 |
+| `0-tech/basic-mechanism-guidelines` | 基础规范 | 日志/配置/告警等编码指导 |
 | `0-qual/code-standards` | 编码规范 | 命名、注释、函数长度/圈复杂度、安全编码红线、禁止项清单 |
 | `0-qual/dt-guidelines` | DT规范 | 测试金字塔与覆盖基线、用例设计方法、覆盖率门禁 |
 | `0-qual/branch-guidelines` | 分支与变更规范 | 分支模型、commit/MR 规范、评审要求 |
@@ -92,11 +92,11 @@ description: >-
 
 1. **四域导航表**：域 | 治理问题 | 已建资产 | 域索引链接。「已建资产」列列本域真实存在的资产目录名（顿号分隔）；无资产的域该列写「暂无资产」，域索引列写「—」，**不留死链**。
 2. **服务依赖全景图**（mermaid `flowchart LR`）：
-   - 数据源：`docs/0-tech/comm-guidelines/comm-guidelines-{service}.md`，每篇文档 = 一个下游服务节点（`{service}` 取文件名去 `comm-guidelines-` 前缀与 `.md` 后缀）。
+   - 数据源：`docs/0-tech/external-call-guidelines/external-call-guidelines-{service}.md`，每篇文档 = 一个下游服务节点（`{service}` 取文件名去 `external-call-guidelines-` 前缀与 `.md` 后缀）。
    - 边：本仓节点 `-->` 每下游服务节点；边 label 标协议——从该服务文档的二级章节标题（`## HTTP` / `## RPC` / `## MQ` …）提取协议类名，多个协议顿号合并；章节标题不可读时从「协议：」行提取；均失败则该边不加 label。
    - 本仓节点 label 用仓根目录名。
    - mermaid 语法红线：节点 id 只能是字母数字与下划线——`{service}` slug 与仓名中的 `-` 等非法字符转 `_` 作 id，原名放 label 并**一律加双引号**；边 label 用管道符或引号。
-   - `docs/0-tech/comm-guidelines/` 缺失或其内无服务文档 → 本节**不画空图、不臆造依赖**，只写一行「通信规范资产未建（docs/0-tech/comm-guidelines/ 缺失），请先运行 tech-comm-guidelines-analyze 提取出站调用后再生成全景图」。
+   - `docs/0-tech/external-call-guidelines/` 缺失或其内无服务文档 → 本节**不画空图、不臆造依赖**，只写一行「通信规范资产未建（docs/0-tech/external-call-guidelines/ 缺失），请先运行 tech-external-call-guidelines-analyze 提取出站调用后再生成全景图」。
 3. **附注节**（可选，无此类情况整节删除）：taxonomy 外目录逐条列出，注明"不在 specgo v1.1 taxonomy 内，未索引"。
 4. 同名**直接覆盖更新**，标注本次生成时间。
 

@@ -179,7 +179,7 @@ graph LR
 | 文档类型 | 引用文档 | 引用点 |
 | --- | --- | --- |
 | 接口文档 | {[interface-login.md](../biz/interface/interface-login.md)} | {既有登录链路注入点对照} |
-| 外部接口文档 | {[comm-guidelines-muen.md](../tech/comm-guidelines/comm-guidelines-muen.md)} | {沐恩二次登录调用契约} |
+| 外部接口文档 | {[external-call-guidelines-muen.md](../tech/external-call-guidelines/external-call-guidelines-muen.md)} | {沐恩二次登录调用契约} |
 | 基础框架文档 | {[framework-guidelines-beego.md](../tech/framework-guidelines/framework-guidelines-beego.md)} | {Beego 路由注册与 ORM 约定（逐个框架一行，只列真实需要的）} |
 | 结构模型文档 | {[README.md](../arch/structure-model/README.md)} | {新模块 controllers/service/dao 分层归属依据} |
 | 既有 story | {[login-story.md](login-story.md)} | {被注入链路的原始设计} |

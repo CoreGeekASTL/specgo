@@ -28,11 +28,11 @@ skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arc
 | Skill | 作用 | 产出 |
 |-------|------|------|
 | tech-framework-guidelines-analyze | 框架使用指导：基础框架清单与使用方式盘点（纯现状提取，无规范文档） | `docs/0-tech/framework-guidelines/`：README 索引 + framework-guidelines-{framework}.md 每框架一篇 |
-| tech-comm-guidelines-analyze | 通信规范：RPC/HTTP/MQ 跨服务调用指导（协议与封装归此，故障策略归韧性）；双模式：提取 + 差距分析 | `docs/0-tech/comm-guidelines/`：README + comm-guidelines-{service}.md 每外部服务一篇；差距报告 report/{YYYYMMDD}-comm-guidelines.md |
+| tech-external-call-guidelines-analyze | 通信规范：RPC/HTTP/MQ 跨服务调用指导（协议与封装归此，故障策略归韧性）；双模式：提取 + 差距分析 | `docs/0-tech/external-call-guidelines/`：README + external-call-guidelines-{service}.md 每外部服务一篇；差距报告 report/{YYYYMMDD}-external-call-guidelines.md |
 | tech-concurrency-guidelines-analyze | 并发规范：线程池/锁/channel 等并发原语实例的用途定位、使用说明与代码案例（章节上限三节）；单模式提取 | `docs/0-tech/concurrency-guidelines/`：README 索引 + concurrency-guidelines-{pool}.md 每实例一篇 |
 | tech-data-access-guidelines-analyze | 数据访问规范：Redis/DB 等中间件访问指导（连接管理、事务、分页批量、SQL 注入防护、缓存读写模式）；双模式 | `docs/0-tech/data-access-guidelines/`：data-access-guidelines-{mw}.md 每中间件一篇 + report/ |
 | tech-resilience-guidelines-analyze | 韧性规范：超时/重试/熔断降级/异常处理等故障策略的使用说明与代码案例；单模式提取 | `docs/0-tech/resilience-guidelines/`：README 索引 + resilience-guidelines-{dimension}.md 每维度一篇 |
-| tech-foundation-guidelines-analyze | 基础规范：日志/配置/告警等横切编码机制的使用指导（函数调用说明 + 使用代码案例）；单模式提取 | `docs/0-tech/foundation-guidelines/`：README 索引 + foundation-guidelines-{dimension}.md 每维度一篇 |
+| tech-basic-mechanism-guidelines-analyze | 基础规范：日志/配置/告警等横切编码机制的使用指导（函数调用说明 + 使用代码案例）；单模式提取 | `docs/0-tech/basic-mechanism-guidelines/`：README 索引 + basic-mechanism-guidelines-{dimension}.md 每维度一篇 |
 
 ### 工程要素（qual）—— 定规矩：写到什么程度才算合格
 

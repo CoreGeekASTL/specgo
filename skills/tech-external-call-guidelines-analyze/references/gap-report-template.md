@@ -4,9 +4,9 @@
 |--------|-----|
 | 分支 | <分支名> 分支 (<YYYY-MM-DD>) |
 | 检查日期 | <YYYY-MM-DD> |
-| Skill | tech-comm-guidelines-analyze |
+| Skill | tech-external-call-guidelines-analyze |
 | 运行模式 | 差距分析模式 |
-| 对照规范 | <规范文档路径：docs/0-tech/comm-guidelines/ 下既有文档，或用户提供的规范文件路径> |
+| 对照规范 | <规范文档路径：docs/0-tech/external-call-guidelines/ 下既有文档，或用户提供的规范文件路径> |
 
 ## 结论概览
 

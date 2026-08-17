@@ -72,12 +72,12 @@
 
 | Skill | 治理资产 | 资产内涵 | 产出粒度 | 输出文件 | 模式 | 优先级 |
 |---|---|---|---|---|---|---|
-| `tech-comm-guidelines-analyze` | 通信规范 | RPC/HTTP/MQ 跨服务调用指导——只承载业务节点间调用（协议与封装归此；故障策略归韧性；DB/缓存等数据存储访问归数据访问规范） | 主文档 + 每外部服务 1 篇 | `README.md`<br>`comm-guidelines-{service}.md` | 双模式 | P0 |
+| `tech-external-call-guidelines-analyze` | 通信规范 | RPC/HTTP/MQ 跨服务调用指导——只承载业务节点间调用（协议与封装归此；故障策略归韧性；DB/缓存等数据存储访问归数据访问规范） | 主文档 + 每外部服务 1 篇 | `README.md`<br>`external-call-guidelines-{service}.md` | 双模式 | P0 |
 | `tech-framework-guidelines-analyze` | 框架使用指导 | 内部代码框架清单与使用方式盘点（无规范文档，纯现状；数据存储访问归数据访问规范） | 主文档 + 每框架 1 篇 | `README.md`<br>`framework-guidelines-{framework}.md` | 提取 | P0 |
 | `tech-concurrency-guidelines-analyze` | 并发规范 | 线程池/锁/channel 等并发原语实例的用途定位、使用说明与代码案例（章节上限三节） | 主文档 + 每实例 1 篇 | `README.md`<br>`concurrency-guidelines-{pool}.md` | 提取 | P0 |
 | `tech-data-access-guidelines-analyze` | 数据访问规范 | Redis/DB 等中间件访问指导 | 主文档 + 每中间件 1 篇 | `README.md`<br>`data-access-guidelines-{mw}.md` | 双模式 | P1 |
 | `tech-resilience-guidelines-analyze` | 韧性规范 | 超时/重试/熔断/异常处理的使用说明与代码案例（只管故障策略） | 主文档 + 每维度 1 篇 | `README.md`<br>`resilience-guidelines-{dimension}.md` | 提取 | P1 |
-| `tech-foundation-guidelines-analyze` | 基础规范 | 日志/配置/告警等基础机制的函数调用说明与使用代码案例 | 主文档 + 每维度 1 篇 | `README.md`<br>`foundation-guidelines-{dimension}.md` | 提取 | P1 |
+| `tech-basic-mechanism-guidelines-analyze` | 基础规范 | 日志/配置/告警等基础机制的函数调用说明与使用代码案例 | 主文档 + 每维度 1 篇 | `README.md`<br>`basic-mechanism-guidelines-{dimension}.md` | 提取 | P1 |
 
 ### 2.4 工程要素（qual）—— 定规矩：写到什么程度才算合格
 
@@ -156,9 +156,9 @@ docs/
 │   ├── framework-guidelines/
 │   │   ├── README.md                        ← 框架清单索引
 │   │   └── framework-guidelines-{framework}.md             ← 每框架 1 篇
-│   ├── comm-guidelines/
+│   ├── external-call-guidelines/
 │   │   ├── README.md                        ← 外部服务导航主文档
-│   │   └── comm-guidelines-{service}.md     ← 每外部服务 1 篇
+│   │   └── external-call-guidelines-{service}.md     ← 每外部服务 1 篇
 │   ├── concurrency-guidelines/
 │   │   ├── README.md                        ← 实例导航主文档
 │   │   └── concurrency-guidelines-{pool}.md ← 每线程池 1 篇
@@ -168,9 +168,9 @@ docs/
 │   ├── resilience-guidelines/
 │   │   ├── README.md                        ← 扫描范围总览 + 维度导航
 │   │   └── resilience-guidelines-{dimension}.md ← 每维度 1 篇
-│   └── foundation-guidelines/
+│   └── basic-mechanism-guidelines/
 │       ├── README.md                        ← 机制全景索引
-│       └── foundation-guidelines-{dimension}.md ← 每维度 1 篇
+│       └── basic-mechanism-guidelines-{dimension}.md ← 每维度 1 篇
 └── 0-qual/
     ├── README.md
     ├── code-standards/

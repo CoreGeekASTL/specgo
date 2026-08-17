@@ -15,10 +15,10 @@
 
 ## 服务依赖全景图
 
-<!-- 数据源：docs/0-tech/comm-guidelines/comm-guidelines-{service}.md，每篇 = 一个下游服务节点。
+<!-- 数据源：docs/0-tech/external-call-guidelines/external-call-guidelines-{service}.md，每篇 = 一个下游服务节点。
      节点 id 仅字母数字下划线（slug 中 `-` 转 `_`），label 一律加双引号，边 label 标协议。
-     docs/0-tech/comm-guidelines/ 缺失或无服务文档时：删除下方 mermaid 块与依赖详情行，本节只保留一行——
-     通信规范资产未建（docs/0-tech/comm-guidelines/ 缺失），请先运行 tech-comm-guidelines-analyze 提取出站调用后再生成全景图。 -->
+     docs/0-tech/external-call-guidelines/ 缺失或无服务文档时：删除下方 mermaid 块与依赖详情行，本节只保留一行——
+     通信规范资产未建（docs/0-tech/external-call-guidelines/ 缺失），请先运行 tech-external-call-guidelines-analyze 提取出站调用后再生成全景图。 -->
 
 ```mermaid
 flowchart LR
@@ -26,7 +26,7 @@ flowchart LR
     my_service["my-service"] --> file_store["file-store<br/>gRPC、MQ"]
 ```
 
-依赖详情见各服务通信规范文档：[docs/0-tech/comm-guidelines/](tech/comm-guidelines/)。
+依赖详情见各服务通信规范文档：[docs/0-tech/external-call-guidelines/](tech/external-call-guidelines/)。
 
 ## 附注（可选，无此类情况整节删除）
 

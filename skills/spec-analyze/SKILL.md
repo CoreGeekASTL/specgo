@@ -36,11 +36,11 @@ description: >-
 | 5 | 对象模型 | biz-object-model-analyze | `docs/0-biz/object-model/` | 默认全聚合 |
 | 6 | 数据模型 | biz-data-model-analyze | `docs/0-biz/data-model/` | 默认全实体 |
 | 7 | 框架使用 | tech-framework-guidelines-analyze | `docs/0-tech/framework-guidelines/` | 现状提取 |
-| 8 | 通信规范 | tech-comm-guidelines-analyze | `docs/0-tech/comm-guidelines/` | 提取模式 |
+| 8 | 通信规范 | tech-external-call-guidelines-analyze | `docs/0-tech/external-call-guidelines/` | 提取模式 |
 | 9 | 并发规范 | tech-concurrency-guidelines-analyze | `docs/0-tech/concurrency-guidelines/` | 提取模式 |
 | 10 | 数据访问规范 | tech-data-access-guidelines-analyze | `docs/0-tech/data-access-guidelines/` | 起草模式 |
 | 11 | 韧性规范 | tech-resilience-guidelines-analyze | `docs/0-tech/resilience-guidelines/` | 提取模式 |
-| 12 | 基础规范 | tech-foundation-guidelines-analyze | `docs/0-tech/foundation-guidelines/` | 提取模式 |
+| 12 | 基础规范 | tech-basic-mechanism-guidelines-analyze | `docs/0-tech/basic-mechanism-guidelines/` | 提取模式 |
 | 13 | 编码规范 | qual-code-standards-analyze | `docs/0-qual/code-standards/` | 起草模式 |
 | 14 | DT 规范 | qual-dt-guidelines-analyze | `docs/0-qual/dt-guidelines/` | 起草模式 |
 | 15 | 分支规范 | qual-branch-guidelines-analyze | `docs/0-qual/branch-guidelines/` | 起草模式 |

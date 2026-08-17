@@ -70,7 +70,7 @@ guidelines 形态语义：数据访问规范是**指导性规范**（"应该"遵
    - **缓存命令调用点**：GET/SET/HGET/DEL/pipeline/eval 等 Redis 命令封装调用；
    - **嵌入式存储打开点**：sqlite3.connect、`sql.Open("sqlite3"...)`、leveldb.open 等；
    - **对象存储调用点**：PutObject / GetObject / upload / download 等 SDK 调用；
-   - **文件系统读写点**：open / read / write / ReadFile / WriteFile / fs.createReadStream 等（排除日志框架自身的文件写入，日志归 tech-foundation-guidelines-analyze）。
+   - **文件系统读写点**：open / read / write / ReadFile / WriteFile / fs.createReadStream 等（排除日志框架自身的文件写入，日志归 tech-basic-mechanism-guidelines-analyze）。
 
 排除：测试代码、mock、生成代码中的访问点不计入（或单独标注）；识别不出归属的归入「未知存储」分组并标注待人工确认，**不臆造存储名**。
 

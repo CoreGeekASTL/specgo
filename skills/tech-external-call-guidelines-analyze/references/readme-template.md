@@ -4,7 +4,7 @@
 |--------|-----|
 | 分支 | <分支名> 分支 (<YYYY-MM-DD>) |
 | 更新日期 | <YYYY-MM-DD> |
-| Skill | tech-comm-guidelines-analyze |
+| Skill | tech-external-call-guidelines-analyze |
 | 运行模式 | 提取模式 |
 
 ## 外部服务全景
@@ -13,7 +13,7 @@
 
 | 服务名 | 协议 | 接口数 | 主要业务域 | 归属判定依据 | 子文档 |
 |---|---|---|---|---|---|
-| <服务名> | <协议> | <N> | <业务域> | <显式服务名 / 配置映射 / 上下文推断> | [comm-guidelines-<service>.md](comm-guidelines-<service>.md) |
+| <服务名> | <协议> | <N> | <业务域> | <显式服务名 / 配置映射 / 上下文推断> | [external-call-guidelines-<service>.md](external-call-guidelines-<service>.md) |
 
 ## 附注（可选，无此类情况整节删除）
 

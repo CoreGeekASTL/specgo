@@ -4,7 +4,7 @@
 |--------|-----|
 | 分支 | <分支名> 分支 (<YYYY-MM-DD>) |
 | 更新日期 | <YYYY-MM-DD> |
-| Skill | tech-foundation-guidelines-analyze |
+| Skill | tech-basic-mechanism-guidelines-analyze |
 | 维度 | <日志 / 配置 / 告警 / 增补维度名> |
 
 ## 函数调用说明

@@ -1,7 +1,7 @@
 ---
 name: spec-init
 description: >-
-  初始化被分析仓的 docs/ 资产目录骨架（HELP.MD v1.1「每类资产一个单独目录」布局：0-arch/{structure-model,interaction-model}、0-biz/{interface,rules,object-model,data-model,lexicon}、0-tech/{framework-guidelines,comm-guidelines,concurrency-guidelines,data-access-guidelines,resilience-guidelines,foundation-guidelines}、0-qual/{code-standards,dt-guidelines,branch-guidelines}），并一次性迁移既有产出到新布局（旧扁平结构模型/交互模型文档、docs/business/interface/、docs/technical/external-call/、docs/technical/framework-usage/ 等历史产出，文件名同步去 spec- 前缀），迁移映射清单先交用户确认再动手，产出迁移执行摘要（已迁移/跳过/冲突清单）。当首次在一个代码仓启用 specgo 资产治理、需要从旧布局升级到 v1.1 新布局时使用。触发场景包括"初始化 docs 目录"、"资产目录骨架"、"docs 骨架"、"迁移旧文档"、"docs 目录迁移"、"旧布局升级"、"spec-init"、"初始化资产目录"等。
+  初始化被分析仓的 docs/ 资产目录骨架（HELP.MD v1.1「每类资产一个单独目录」布局：0-arch/{structure-model,interaction-model}、0-biz/{interface,rules,object-model,data-model,lexicon}、0-tech/{framework-guidelines,external-call-guidelines,concurrency-guidelines,data-access-guidelines,resilience-guidelines,basic-mechanism-guidelines}、0-qual/{code-standards,dt-guidelines,branch-guidelines}），并一次性迁移既有产出到新布局（旧扁平结构模型/交互模型文档、docs/business/interface/、docs/technical/external-call/、docs/technical/framework-usage/ 等历史产出，文件名同步去 spec- 前缀），迁移映射清单先交用户确认再动手，产出迁移执行摘要（已迁移/跳过/冲突清单）。当首次在一个代码仓启用 specgo 资产治理、需要从旧布局升级到 v1.1 新布局时使用。触发场景包括"初始化 docs 目录"、"资产目录骨架"、"docs 骨架"、"迁移旧文档"、"docs 目录迁移"、"旧布局升级"、"spec-init"、"初始化资产目录"等。
 ---
 
 # 资产目录初始化与迁移 Skill（spec-init）
@@ -60,11 +60,11 @@ docs/
 │   └── lexicon/
 ├── 0-tech/
 │   ├── framework-guidelines/
-│   ├── comm-guidelines/
+│   ├── external-call-guidelines/
 │   ├── concurrency-guidelines/
 │   ├── data-access-guidelines/
 │   ├── resilience-guidelines/
-│   └── foundation-guidelines/
+│   └── basic-mechanism-guidelines/
 └── 0-qual/
     ├── code-standards/
     ├── dt-guidelines/
@@ -92,7 +92,7 @@ docs/
 | `docs/0-arch/structure-model.md`、`docs/0-arch/structure-model-{module}.md`（扁平散放） | `docs/0-arch/structure-model/` | 文件名不变 |
 | `docs/0-arch/interaction-model-{flow}.md`（扁平散放） | `docs/0-arch/interaction-model/` | 文件名不变 |
 | `docs/business/interface/` | `docs/0-biz/interface/` | `spec-interface-{feature}.md` → `interface-{feature}.md`；`README.md` 原名迁移 |
-| `docs/technical/external-call/` | `docs/0-tech/comm-guidelines/` | `external-call-{service}.md` → `comm-guidelines-{service}.md`；`README.md` 原名迁移 |
+| `docs/technical/external-call/` | `docs/0-tech/external-call-guidelines/` | `external-call-{service}.md` → `external-call-guidelines-{service}.md`；`README.md` 原名迁移 |
 | `docs/technical/framework-usage/` | `docs/0-tech/framework-guidelines/` | 去 `spec-` 前缀并统一为 `framework-guidelines-{framework}.md`；`README.md` 原名迁移 |
 | `docs/business/key-class/`、`docs/business/data-structure/`、`docs/business/story/` | — | **不在新 taxonomy 内，保持不动** |
 

@@ -1,9 +1,9 @@
 ---
-name: tech-comm-guidelines-analyze
-description: 治理存量代码仓的通信规范资产（RPC/HTTP/MQ 等跨服务调用指导：本服务调用了哪些外部业务节点、协议与封装方式、超时重试与错误码处理），双模式运行——提取模式扫描仓内全部出站调用（HTTP 客户端 / RPC client / IDL client stub / 消息队列生产端 / 进程间通信 / 平台 SDK），按被调外部业务服务归类成文；差距分析模式对照既有通信规范文档核查实际调用的合规差距。边界：只承载业务节点间跨服务调用——DB/Redis/对象存储等数据存储的访问不视为外部服务调用，归 tech-data-access-guidelines-analyze。产出落盘被分析仓的 docs/0-tech/comm-guidelines/：README 索引 + 每外部服务一篇 comm-guidelines-{service}.md；差距报告落盘 docs/0-tech/comm-guidelines/report/{YYYYMMDD}-comm-guidelines.md。当用户提到"通信规范"、"外部调用"、"下游接口"、"出站调用"、"调用了哪些外部服务"、"服务依赖盘点"、"跨服务调用指导"、"调用规范差距分析"、"对照通信规范检查"、"external call"、"comm guidelines"时使用。
+name: tech-external-call-guidelines-analyze
+description: 治理存量代码仓的通信规范资产（RPC/HTTP/MQ 等跨服务调用指导：本服务调用了哪些外部业务节点、协议与封装方式、超时重试与错误码处理），双模式运行——提取模式扫描仓内全部出站调用（HTTP 客户端 / RPC client / IDL client stub / 消息队列生产端 / 进程间通信 / 平台 SDK），按被调外部业务服务归类成文；差距分析模式对照既有通信规范文档核查实际调用的合规差距。边界：只承载业务节点间跨服务调用——DB/Redis/对象存储等数据存储的访问不视为外部服务调用，归 tech-data-access-guidelines-analyze。产出落盘被分析仓的 docs/0-tech/external-call-guidelines/：README 索引 + 每外部服务一篇 external-call-guidelines-{service}.md；差距报告落盘 docs/0-tech/external-call-guidelines/report/{YYYYMMDD}-external-call-guidelines.md。当用户提到"通信规范"、"外部调用"、"下游接口"、"出站调用"、"调用了哪些外部服务"、"服务依赖盘点"、"跨服务调用指导"、"调用规范差距分析"、"对照通信规范检查"、"external call"、"comm guidelines"时使用。
 ---
 
-# 通信规范分析（tech-comm-guidelines-analyze）
+# 通信规范分析（tech-external-call-guidelines-analyze）
 
 ## 目的
 
@@ -14,14 +14,14 @@ description: 治理存量代码仓的通信规范资产（RPC/HTTP/MQ 等跨服�
 
 与 biz-interface-analyze（入站方向：本服务对外暴露什么接口）互补，本 skill 管出站方向。
 
-**资产边界（严格遵守）**：本资产只承载**业务节点间的跨服务调用**——被调方是独立部署的业务服务/平台服务（有服务发现名或业务接口）。**DB / Redis / 对象存储等数据存储不视为外部服务调用**，其访问指导（连接管理、驱动、SQL/命令）归 tech-data-access-guidelines-analyze 产出的 `docs/0-tech/data-access-guidelines/`；扫描命中数据存储连接点（如 DSN、连接串获取）时不立 comm-guidelines 篇，在 README 标注"归 data-access-guidelines 承载"。进程内引用的库/框架归 tech-framework-guidelines-analyze。
+**资产边界（严格遵守）**：本资产只承载**业务节点间的跨服务调用**——被调方是独立部署的业务服务/平台服务（有服务发现名或业务接口）。**DB / Redis / 对象存储等数据存储不视为外部服务调用**，其访问指导（连接管理、驱动、SQL/命令）归 tech-data-access-guidelines-analyze 产出的 `docs/0-tech/data-access-guidelines/`；扫描命中数据存储连接点（如 DSN、连接串获取）时不立 external-call-guidelines 篇，在 README 标注"归 data-access-guidelines 承载"。进程内引用的库/框架归 tech-framework-guidelines-analyze。
 
 产出粒度对齐存量代码资产治理规范 v1.1：
 
 | 模式 | 产出 | 落盘 |
 | --- | --- | --- |
-| 提取模式 | README 索引 + 每外部服务 1 篇 `comm-guidelines-{service}.md` | 被分析仓 `docs/0-tech/comm-guidelines/` |
-| 差距分析模式 | 差距报告 1 篇 `{YYYYMMDD}-comm-guidelines.md` | 被分析仓 `docs/0-tech/comm-guidelines/report/` |
+| 提取模式 | README 索引 + 每外部服务 1 篇 `external-call-guidelines-{service}.md` | 被分析仓 `docs/0-tech/external-call-guidelines/` |
+| 差距分析模式 | 差距报告 1 篇 `{YYYYMMDD}-external-call-guidelines.md` | 被分析仓 `docs/0-tech/external-call-guidelines/report/` |
 
 `{service}` 实例 slug 一律从代码标识符派生（服务发现名 / 配置 key / client 类名转 kebab-case），禁止 AI 自由起名——保证重跑产出同名文件、资产不断代。
 
@@ -31,23 +31,23 @@ description: 治理存量代码仓的通信规范资产（RPC/HTTP/MQ 等跨服�
 
 - 用户要盘点代码仓依赖哪些下游服务、梳理出站调用清单、做依赖治理 / 影响分析 / 新人上手。
 - 用户要建立或刷新"通信规范"文档：把仓内跨服务调用的协议、封装方式、超时重试、错误码处理现状沉淀成文。
-- 用户给出一份通信规范文档（或仓内 `docs/0-tech/comm-guidelines/` 下已有规范），要求对照规范检查实际调用是否遵守、输出差距报告。
+- 用户给出一份通信规范文档（或仓内 `docs/0-tech/external-call-guidelines/` 下已有规范），要求对照规范检查实际调用是否遵守、输出差距报告。
 
 ## 运行模式
 
 ### 提取模式（默认）
 
-仓内无既有通信规范、用户也未提供规范文档时走本模式。扫描仓内全部出站调用，按被调外部服务归类，产出 README 索引 + 每服务一篇 `comm-guidelines-{service}.md`，作为通信规范的事实基线（活文档，同名覆盖更新）。
+仓内无既有通信规范、用户也未提供规范文档时走本模式。扫描仓内全部出站调用，按被调外部服务归类，产出 README 索引 + 每服务一篇 `external-call-guidelines-{service}.md`，作为通信规范的事实基线（活文档，同名覆盖更新）。
 
 ### 差距分析模式
 
-仓内已存在通信规范文档（`docs/0-tech/comm-guidelines/` 下既有 guidelines 文档），或用户显式提供规范文件时走本模式。以规范为基准，对照扫描实际调用：协议封装方式、超时设置、重试策略、错误码处理是否遵守规范，产出差距报告 `docs/0-tech/comm-guidelines/report/{YYYYMMDD}-comm-guidelines.md`（逐服务一节：合规项 / 差距项 / 证据文件路径）。差距报告为次抛件，带日期、不覆盖。
+仓内已存在通信规范文档（`docs/0-tech/external-call-guidelines/` 下既有 guidelines 文档），或用户显式提供规范文件时走本模式。以规范为基准，对照扫描实际调用：协议封装方式、超时设置、重试策略、错误码处理是否遵守规范，产出差距报告 `docs/0-tech/external-call-guidelines/report/{YYYYMMDD}-external-call-guidelines.md`（逐服务一节：合规项 / 差距项 / 证据文件路径）。差距报告为次抛件，带日期、不覆盖。
 
 guidelines 形态语义：通信规范是**指导性规范**（"应该"遵守），违反出报告提示改进，不做 CI 拦截——拦截是 standards 形态资产的语义。
 
 ### 模式缺省回退
 
-用户要求差距分析、但未提供规范文档且 `docs/0-tech/comm-guidelines/` 下也无既有规范时，默认回退提取模式，并在产出的 README 索引末尾注明「规范未建，本次为现状提取」。
+用户要求差距分析、但未提供规范文档且 `docs/0-tech/external-call-guidelines/` 下也无既有规范时，默认回退提取模式，并在产出的 README 索引末尾注明「规范未建，本次为现状提取」。
 
 ## 工作流程
 
@@ -56,7 +56,7 @@ guidelines 形态语义：通信规范是**指导性规范**（"应该"遵守）
 ### 第 1 步：判定运行模式
 
 - 用户显式提供规范文件 → 差距分析模式，规范来源记为该文件路径。
-- 否则检查被分析仓 `docs/0-tech/comm-guidelines/` 下是否已有 `comm-guidelines-*.md` 规范文档 → 有则询问或直接按差距分析模式执行（用户意图是"检查 / 对照 / 差距"时直接执行），规范来源记为该目录下文档。
+- 否则检查被分析仓 `docs/0-tech/external-call-guidelines/` 下是否已有 `external-call-guidelines-*.md` 规范文档 → 有则询问或直接按差距分析模式执行（用户意图是"检查 / 对照 / 差距"时直接执行），规范来源记为该目录下文档。
 - 都没有 → 提取模式；若用户本意是差距分析，在 README 末尾注明「规范未建，本次为现状提取」。
 
 ### 第 2 步：全仓扫描，识别出站调用点
@@ -88,7 +88,7 @@ guidelines 形态语义：通信规范是**指导性规范**（"应该"遵守）
 
 ### 第 4 步（提取模式）：生成通信规范文档
 
-输出到被分析仓 `docs/0-tech/comm-guidelines/` 目录：1 个主文档 `README.md` + 每个外部服务一个子文档 `comm-guidelines-{service}.md`。
+输出到被分析仓 `docs/0-tech/external-call-guidelines/` 目录：1 个主文档 `README.md` + 每个外部服务一个子文档 `external-call-guidelines-{service}.md`。
 
 主文档按 references/readme-template.md 填充（元信息表 + 外部服务全景表）；子文档按 references/service-template.md 填充（按协议分二级小节，每个外部调用接口一个三级章节：业务场景、接口功能、调用位置、协议信息——协议/封装方式/超时重试/错误码处理现状）。
 
@@ -108,7 +108,7 @@ guidelines 形态语义：通信规范是**指导性规范**（"应该"遵守）
 - 核查维度固定四项：**协议与封装方式**（是否走规范要求的协议 / 统一封装层）、**超时**（是否按规范设置显式超时）、**重试**（重试次数 / 退避是否符合规范，含规范禁止重试而实际重试的情形）、**错误码处理**（错误码分类与处理路径是否遵守规范）。
 - 每条核查结论落三类之一：**合规项**（实际调用遵守规范，附证据文件路径）、**差距项**（违反规范或规范有要求而代码未实现，附证据文件路径与现状说明）、**规范未覆盖**（实际存在调用但规范未约定，单列提示规范补全）。
 - 规范条目中在代码里找不到任何对应调用点的，记「规范条目无实现」，不臆造实现位置。
-- 产出差距报告 `docs/0-tech/comm-guidelines/report/{YYYYMMDD}-comm-guidelines.md`，按 references/gap-report-template.md 填充：结论概览表 + 逐服务一节（合规项 / 差距项 / 规范未覆盖，各项均附证据文件路径）。
+- 产出差距报告 `docs/0-tech/external-call-guidelines/report/{YYYYMMDD}-external-call-guidelines.md`，按 references/gap-report-template.md 填充：结论概览表 + 逐服务一节（合规项 / 差距项 / 规范未覆盖，各项均附证据文件路径）。
 - 差距报告**只新增不覆盖**，文件名带日期；同日重跑同名覆盖。
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
@@ -135,8 +135,8 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 
 - **基于实证**：所有"调用了哪个服务、走什么协议、超时重试如何、是否合规"的结论必须有代码或配置支撑，证据形式为 `文件路径`，**不得出现代码行号**（行号随代码变更失效）。读不到就写「未识别（原因：xxx）」/「未设置」，禁止凭经验臆造服务名、超时取值或合规结论。
 - **实例 slug 从代码标识符派生**：`{service}` 取服务发现名 / 配置 key / client 类名转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
-- **活文档覆盖更新**：`docs/0-tech/comm-guidelines/` 下 README 与 `comm-guidelines-{service}.md` 同名直接覆盖，不保留历史副本、不加日期后缀；**差距报告才带日期**，落 `report/` 子目录、次抛。
-- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（`docs/0-tech/comm-guidelines/` 下的产出除外）。
+- **活文档覆盖更新**：`docs/0-tech/external-call-guidelines/` 下 README 与 `external-call-guidelines-{service}.md` 同名直接覆盖，不保留历史副本、不加日期后缀；**差距报告才带日期**，落 `report/` 子目录、次抛。
+- **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（`docs/0-tech/external-call-guidelines/` 下的产出除外）。
 - **成品纯净**：最终文档只含成品内容。扫描过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格。
 - **语言无关**：不预设被分析仓的语言与框架，按第 2 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（HTTP / RPC / gRPC / MQ / SDK / timeout / retry 等）保留英文。
