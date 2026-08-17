@@ -13,7 +13,7 @@ description: 提取存量代码仓的并发规范资产（线程池、锁、chan
 2. 每个实例干什么、为什么需要并发（用途定位）？
 3. 每个实例怎么用——调用入口是什么、业务代码实际怎么写（使用说明 + 代码案例）？
 
-与 tech-framework-usage-analyze（框架使用现状：盘点"用了哪些并发框架"的事实清单）互补——本资产按**实例**归集，给编码提供"这个池/锁照着怎么写"的实例级参考。
+与 tech-framework-guidelines-analyze（框架使用指导：盘点"用了哪些并发框架"的事实清单）互补——本资产按**实例**归集，给编码提供"这个池/锁照着怎么写"的实例级参考。
 
 产出粒度对齐存量代码资产治理规范 v1.1：
 
@@ -100,7 +100,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **语言无关**：不预设被分析仓的语言与框架，按第 1 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（ThreadPool / Executor / goroutine / Mutex / RWMutex / channel / Actor 等）保留英文。
 - **索引分工**：本资产目录的 `README.md`（实例导航主文档）由本 skill 产出，活文档同名覆盖；域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
-- **与相邻资产互补**：并发框架使用事实清单看 tech-framework-usage-analyze 产出的 `docs/tech/usage/`；超时/重试/熔断等故障策略归 tech-resilience-guidelines-analyze；跨服务调用指导归 tech-comm-guidelines-analyze。
+- **与相邻资产互补**：并发框架使用事实清单看 tech-framework-guidelines-analyze 产出的 `docs/tech/framework-guidelines/`；超时/重试/熔断等故障策略归 tech-resilience-guidelines-analyze；跨服务调用指导归 tech-comm-guidelines-analyze。
 - **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
 
 ## 参考文件索引

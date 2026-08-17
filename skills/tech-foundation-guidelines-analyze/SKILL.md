@@ -12,7 +12,7 @@ description: 提取存量代码仓的基础规范资产（日志/配置/告警�
 1. 仓内这些基础编码机制提供了哪些可调用的函数 / 方法（签名、作用、参数、定义在哪个文件）？
 2. 业务代码怎么调用它们（真实使用代码案例长什么样）？
 
-与 tech-framework-usage-analyze（框架使用现状：用了什么框架、用法骨架如何）互补——本资产聚焦**基础编码机制的可调用 API 与调用案例**，给编码提供"照抄即可用"的函数级参考。
+与 tech-framework-guidelines-analyze（框架使用指导：用了什么框架、用法骨架如何）互补——本资产聚焦**基础编码机制的可调用 API 与调用案例**，给编码提供"照抄即可用"的函数级参考。
 
 产出粒度对齐存量代码资产治理规范 v1.1——**按维度拆分，每个维度一个文件**：
 
@@ -93,7 +93,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **文档语言**：输出文档用中文，技术术语（DEBUG / INFO / WARN / ERROR / Nacos / SDK / metrics / traceId 等）保留英文。
 - **索引分工**：域索引 `docs/tech/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护；本资产目录的 README 是资产主文档（机制全景 + 维度导航），非域索引。
 - **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
-- **与相邻资产互补**：框架用法骨架（用了什么框架、怎么用）归 tech-framework-usage-analyze 的 `docs/tech/usage/`；超时 / 重试 / 熔断等故障策略归 tech-resilience-guidelines-analyze；跨服务调用规范归 tech-comm-guidelines-analyze；命名 / 函数长度等"必须"级编码红线归 qual-code-standards-analyze。本 skill 只管日志 / 配置 / 告警等基础编码机制的函数级使用参考。
+- **与相邻资产互补**：框架用法骨架（用了什么框架、怎么用）归 tech-framework-guidelines-analyze 的 `docs/tech/framework-guidelines/`；超时 / 重试 / 熔断等故障策略归 tech-resilience-guidelines-analyze；跨服务调用规范归 tech-comm-guidelines-analyze；命名 / 函数长度等"必须"级编码红线归 qual-code-standards-analyze。本 skill 只管日志 / 配置 / 告警等基础编码机制的函数级使用参考。
 
 ## 参考文件索引
 

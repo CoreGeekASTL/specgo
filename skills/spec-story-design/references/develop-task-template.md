@@ -27,10 +27,10 @@
 
 | 框架 | 文档链接 | 按哪条约定执行 |
 |------|---------|---------------|
-| Beego ORM | [usage-beego-orm.md](../tech/usage/usage-beego-orm.md) | DAO 继承 BaseInterface，EntityType 设置，ContextDo 传 context.TODO() |
-| HTTP 客户端 | [usage-http-client.md](../tech/usage/usage-http-client.md) | 请求用 https.NewRequest().WithRetry() builder |
+| Beego ORM | [framework-guidelines-beego-orm.md](../tech/framework-guidelines/framework-guidelines-beego-orm.md) | DAO 继承 BaseInterface，EntityType 设置，ContextDo 传 context.TODO() |
+| HTTP 客户端 | [framework-guidelines-http-client.md](../tech/framework-guidelines/framework-guidelines-http-client.md) | 请求用 https.NewRequest().WithRetry() builder |
 
-每条必须链到 docs/tech/usage/ 真实存在的文档；仓内无该目录时按记忆列框架名并注明"无框架文档，待核实"。
+每条必须链到 docs/tech/framework-guidelines/ 真实存在的文档；仓内无该目录时按记忆列框架名并注明"无框架文档，待核实"。
 
 ## 4. 要调用的外部接口
 

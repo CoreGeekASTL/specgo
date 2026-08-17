@@ -52,7 +52,7 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 生成被分析仓 docs/ 资产体系的索引层——各域索引 docs/{域}/README.md（列出本域各资产目录及目录内真实文件清单，每文件一句话说明、从文件首行标题提取，无资产的域不生成）+ 总索引 docs/README.md（四域导航表 + 服务依赖全景图：mermaid flowchart，从 docs/tech/comm-guidelines/ 各文档提取本仓→下游服务依赖边；通信规范资产未建时该节注明"通信规范资产未建"）。索引为活文档，同名覆盖更新并标注生成时间；只聚合真实存在的文件、不重述资产正文。当各 analyze skill 跑完需要统一生成/刷新导航、spec-init 建骨架或迁移后首次建索引、资产增删后刷新索引、需要下游依赖全景图时使用。触发场景包括"生成索引"、"docs 索引"、"域索引"、"总索引"、"资产导航"、"服务依赖全景图"、"依赖全景图"、"刷新 README 索引"、"刷新索引"、"spec-index"等。
 
 ### 15. spec-init
-初始化被分析仓的 docs/ 资产目录骨架（HELP.MD v1.1「每类资产一个单独目录」布局：arch/{structure-model,interaction-model}、biz/{interface,rules,object-model,data-model,lexicon}、tech/{usage,comm-guidelines,concurrency-guidelines,data-access-guidelines,resilience-guidelines,foundation-guidelines}、qual/{code-standards,dt-guidelines,branch-guidelines}），并一次性迁移既有产出到新布局（旧扁平结构模型/交互模型文档、docs/business/interface/、docs/technical/external-call/、docs/technical/framework-usage/ 等历史产出，文件名同步去 spec- 前缀），迁移映射清单先交用户确认再动手，产出迁移执行摘要（已迁移/跳过/冲突清单）。当首次在一个代码仓启用 specgo 资产治理、需要从旧布局升级到 v1.1 新布局时使用。触发场景包括"初始化 docs 目录"、"资产目录骨架"、"docs 骨架"、"迁移旧文档"、"docs 目录迁移"、"旧布局升级"、"spec-init"、"初始化资产目录"等。
+初始化被分析仓的 docs/ 资产目录骨架（HELP.MD v1.1「每类资产一个单独目录」布局：arch/{structure-model,interaction-model}、biz/{interface,rules,object-model,data-model,lexicon}、tech/{framework-guidelines,comm-guidelines,concurrency-guidelines,data-access-guidelines,resilience-guidelines,foundation-guidelines}、qual/{code-standards,dt-guidelines,branch-guidelines}），并一次性迁移既有产出到新布局（旧扁平结构模型/交互模型文档、docs/business/interface/、docs/technical/external-call/、docs/technical/framework-usage/ 等历史产出，文件名同步去 spec- 前缀），迁移映射清单先交用户确认再动手，产出迁移执行摘要（已迁移/跳过/冲突清单）。当首次在一个代码仓启用 specgo 资产治理、需要从旧布局升级到 v1.1 新布局时使用。触发场景包括"初始化 docs 目录"、"资产目录骨架"、"docs 骨架"、"迁移旧文档"、"docs 目录迁移"、"旧布局升级"、"spec-init"、"初始化资产目录"等。
 
 ### 16. spec-story-design
 当接收到需求设计文档（SR/特性设计），需要为存量代码仓产出新功能的 story 设计文档时使用——产出 `docs/storys/{功能名}/` 目录（每 story 一个目录：`{功能名}-story.md` + `{功能名}-develop-task.md`，后续全链路分析报告也归档同目录）：story 按八类核心要素（对外接口/业务规则/数据模型/对象模型/领域词典/交互流程/外部服务调用/技术要素）组织章节，每类要素明确标注 新增 / 变更（写清对哪个既有要素做了什么更改）/ 不涉及，并附需求概述（多彩建模）、实现方案与修改清单、外部文档引用；同需求重跑同名覆盖。触发场景包括"新增 story 设计"、"根据需求文档生成 story 设计"、"xxx-story 文档"、"docs/storys"、"按 story 模板输出新功能设计"等。
@@ -72,8 +72,8 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 ### 21. tech-foundation-guidelines-analyze
 提取存量代码仓的基础规范资产（日志/配置/告警等横切编码机制的使用指导），单模式提取运行——盘点仓内基础编码机制，产出 README 索引 + 每维度一篇 foundation-guidelines-{dimension}.md；每篇文档只含两项内容：基础机制的函数调用说明（可调用的函数/方法清单：签名、作用、参数、来源文件）与使用代码案例（真实代码片段，注明来源文件路径）。产出落盘被分析仓的 docs/tech/foundation-guidelines/。当用户提到"基础规范"、"日志规范"、"日志怎么用"、"配置规范"、"配置读取方式"、"环境变量"、"告警规范"、"告警 ID"、"告警怎么上报"、"编码指导"、"foundation guidelines"时使用。
 
-### 22. tech-framework-usage-analyze
-分析存量代码仓中的基础框架（RPC、线程池、Actor、日志、序列化、配置、依赖注入、存储/ORM、消息队列、调度、资源池、容错治理、监控、基础库、测试框架等）及其使用方式，提取"框架使用现状"资产（基础框架清单与使用方式盘点，纯现状、无规范文档），落盘被分析仓的 docs/tech/usage/：索引 README.md + 每框架一篇 usage-{framework}.md（含用途定位、使用模式）。当需要盘点代码仓技术栈、梳理框架使用模式与调用点分布、为 AI 代码生成沉淀"框架使用知识"、或为重构/迁移/新人上手提供框架使用文档时使用。触发场景包括"框架使用现状"、"技术栈盘点"、"框架使用"、"用了哪些框架"、"XX 框架怎么用"、"线程池怎么用"、"RPC 怎么调的"、"framework usage"、"tech stack"等。
+### 22. tech-framework-guidelines-analyze
+分析存量代码仓中的内部代码框架（RPC/Web 框架、线程池、Actor、日志、序列化、配置、依赖注入、消息队列、调度、资源池、容错治理、监控、基础库、测试框架等）及其使用方式，提取"框架使用指导"资产（基础框架清单与使用方式盘点，纯现状、无规范文档），落盘被分析仓的 docs/tech/framework-guidelines/：索引 README.md + 每框架一篇 framework-guidelines-{framework}.md（含用途定位、使用模式）。边界：只承载内部代码框架使用指导——数据存储访问（DB driver/ORM/Redis/MinIO/嵌入式存储等）归 tech-data-access-guidelines-analyze，跨服务业务节点调用归 tech-comm-guidelines-analyze，均不纳入本资产。当需要盘点代码仓技术栈、梳理框架使用模式与调用点分布、为 AI 代码生成沉淀"框架使用知识"、或为重构/迁移/新人上手提供框架使用文档时使用。触发场景包括"框架使用指导"、"框架使用现状"、"技术栈盘点"、"框架使用"、"用了哪些框架"、"XX 框架怎么用"、"线程池怎么用"、"RPC 怎么调的"、"framework guidelines"、"framework usage"、"tech stack"等。
 
 ### 23. tech-resilience-guidelines-analyze
 提取存量代码仓的韧性规范资产（超时/重试/熔断降级/异常处理等故障策略——只管故障来了怎么扛，不管通信协议本身，协议与封装归通信规范），单模式提取运行——扫描仓内全部出站调用点与后台任务的故障策略，产出 README 索引 + 每维度一篇 resilience-guidelines-{dimension}.md；每篇文档只含两项内容：使用说明（该维度机制在仓内怎么用——可调用的封装函数/配置项清单：作用、参数或取值、来源文件）与代码案例（真实代码片段，注明来源文件路径）。产出落盘被分析仓的 docs/tech/resilience-guidelines/（活文档，同名覆盖更新）。当用户提到"韧性规范"、"超时设置"、"重试策略"、"熔断降级"、"故障策略"、"异常处理"、"panic recover"、"错误吞掉"、"吞错"、"错误 swallowing"、"容错"、"稳定性治理"、"resilience"时使用。
@@ -95,7 +95,7 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 6. **对象模型** → biz-object-model-analyze：实体/值对象/聚合/领域服务/领域事件（UML 类图），README.md 聚合导航 + object-model-{aggregate}.md，落盘 docs/biz/object-model/
 7. **数据模型** → biz-data-model-analyze：持久态表结构/缓存数据结构/字段关系与数据生命周期（UML-ER），README.md 实体导航 + data-model-{entity}.md，落盘 docs/biz/data-model/
 8. **领域词典** → biz-lexicon-analyze：业务与代码共用的受控词汇集（术语释义 + 语境边界 + 代码命名映射），主文档 README.md + 每功能域 1 篇 lexicon-{feature}.md，落盘 docs/biz/lexicon/
-9. **框架使用现状** → tech-framework-usage-analyze：基础框架清单与使用方式盘点（纯现状提取），usage-{framework}.md 每框架一篇，落盘 docs/tech/usage/
+9. **框架使用指导** → tech-framework-guidelines-analyze：基础框架清单与使用方式盘点（纯现状提取），framework-guidelines-{framework}.md 每框架一篇，落盘 docs/tech/framework-guidelines/
 10. **通信规范** → tech-comm-guidelines-analyze：RPC/HTTP/MQ 跨服务调用指导（双模式：现状提取 + 差距分析），comm-guidelines-{service}.md 每外部服务一篇
 11. **并发规范** → tech-concurrency-guidelines-analyze：线程池/锁/channel 等并发原语实例的用途定位、使用说明与代码案例（章节上限三节），README.md 实例导航 + concurrency-guidelines-{pool}.md 每实例一篇
 12. **数据访问规范** → tech-data-access-guidelines-analyze：Redis/DB 等中间件访问指导，README.md 中间件导航 + data-access-guidelines-{mw}.md 每中间件一篇
@@ -124,7 +124,7 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 | "看看调了哪些下游服务" | tech-comm-guidelines-analyze 定义了跨服务调用规范与盘点格式，先加载它 |
 | "业务规则我边读边总结" | biz-rules-analyze 定义了规则条目格式（条件 → 动作 + 依据），先加载它 |
 | "表结构/缓存结构我随便列列" | biz-data-model-analyze 定义了数据模型格式，先加载它 |
-| "框架用法我直接写" | tech-framework-usage-analyze 定义了框架使用现状盘点格式，先加载它 |
+| "框架用法我直接写" | tech-framework-guidelines-analyze 定义了框架使用指导盘点格式，先加载它 |
 | "线程池这么用没问题" | tech-concurrency-guidelines-analyze 定义了并发实例的用途定位与使用案例提取格式，先加载它 |
 | "这需求文档我读读就好" | spec-audit 场景 1 用来查表述质量与逻辑断点，先加载它 |
 | "给我讲讲 XX 流程怎么走的" | arch-interaction-model-analyze 定义了交互模型（时序图）提取格式，先加载它 |

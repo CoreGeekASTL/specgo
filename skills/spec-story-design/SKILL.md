@@ -37,7 +37,7 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 ### 第 2 步：分析存量资产
 
 1. **docs/biz/interface/**：确定既有接口注入点与功能域归属（变更/注入类接口的对照基线）。
-2. **docs/tech/usage/**：确定新功能应使用哪些基础框架及其约定（路由怎么注册、DAO 怎么继承、缓存怎么写、测试怎么搭），候选框架逐条核对，只保留新功能真实需要的。
+2. **docs/tech/framework-guidelines/**：确定新功能应使用哪些基础框架及其约定（路由怎么注册、DAO 怎么继承、缓存怎么写、测试怎么搭），候选框架逐条核对，只保留新功能真实需要的。
 3. **docs/tech/comm-guidelines/**：新功能需调用的外部服务契约。
 4. **docs/arch/structure-model/**：新模块的分层归属依据。
 5. **docs/biz/rules/、docs/biz/lexicon/、docs/biz/data-model/、docs/biz/object-model/、docs/arch/interaction-model/**（存在时按需读）：变更类要素的"变更前"基线——写"变更前 → 变更后"必须引用这些资产或存量代码的事实，禁止凭印象写变更前状态。
@@ -176,7 +176,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - references/develop-task-template.md — develop-task 抛弃式文档模板（第 5 步用）
 - references/orthogonality-principles.md — 软件正交四原则（DRY/SoC/最小化依赖/稳定依赖方向）：第 4 步自检与第 5 步修改点设计约束
 - docs/biz/interface/README.md — 对外接口文档索引（第 2、4 步用）
-- docs/tech/usage/README.md — 框架使用文档索引（第 2、4 步用）
+- docs/tech/framework-guidelines/README.md — 框架使用文档索引（第 2、4 步用）
 - docs/tech/comm-guidelines/README.md — 出站调用文档索引（第 2、4 步用）
 - docs/arch/structure-model/ — 结构模型文档目录（structure-model*.md，第 2、4 步用）
 - docs/storys/README.md — 既有 story 索引（第 2、6 步用）

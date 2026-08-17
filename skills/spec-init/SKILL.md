@@ -1,7 +1,7 @@
 ---
 name: spec-init
 description: >-
-  初始化被分析仓的 docs/ 资产目录骨架（HELP.MD v1.1「每类资产一个单独目录」布局：arch/{structure-model,interaction-model}、biz/{interface,rules,object-model,data-model,lexicon}、tech/{usage,comm-guidelines,concurrency-guidelines,data-access-guidelines,resilience-guidelines,foundation-guidelines}、qual/{code-standards,dt-guidelines,branch-guidelines}），并一次性迁移既有产出到新布局（旧扁平结构模型/交互模型文档、docs/business/interface/、docs/technical/external-call/、docs/technical/framework-usage/ 等历史产出，文件名同步去 spec- 前缀），迁移映射清单先交用户确认再动手，产出迁移执行摘要（已迁移/跳过/冲突清单）。当首次在一个代码仓启用 specgo 资产治理、需要从旧布局升级到 v1.1 新布局时使用。触发场景包括"初始化 docs 目录"、"资产目录骨架"、"docs 骨架"、"迁移旧文档"、"docs 目录迁移"、"旧布局升级"、"spec-init"、"初始化资产目录"等。
+  初始化被分析仓的 docs/ 资产目录骨架（HELP.MD v1.1「每类资产一个单独目录」布局：arch/{structure-model,interaction-model}、biz/{interface,rules,object-model,data-model,lexicon}、tech/{framework-guidelines,comm-guidelines,concurrency-guidelines,data-access-guidelines,resilience-guidelines,foundation-guidelines}、qual/{code-standards,dt-guidelines,branch-guidelines}），并一次性迁移既有产出到新布局（旧扁平结构模型/交互模型文档、docs/business/interface/、docs/technical/external-call/、docs/technical/framework-usage/ 等历史产出，文件名同步去 spec- 前缀），迁移映射清单先交用户确认再动手，产出迁移执行摘要（已迁移/跳过/冲突清单）。当首次在一个代码仓启用 specgo 资产治理、需要从旧布局升级到 v1.1 新布局时使用。触发场景包括"初始化 docs 目录"、"资产目录骨架"、"docs 骨架"、"迁移旧文档"、"docs 目录迁移"、"旧布局升级"、"spec-init"、"初始化资产目录"等。
 ---
 
 # 资产目录初始化与迁移 Skill（spec-init）
@@ -37,7 +37,7 @@ description: >-
 | --- | --- | --- |
 | docs/arch/structure-model.md | docs/arch/structure-model/README.md | 迁移（仓级总览即资产主文档） |
 | docs/business/interface/spec-interface-login.md | docs/biz/interface/interface-login.md | 迁移+改名 |
-| docs/tech/usage/usage-grpc.md | （已存在） | 冲突，待裁决 |
+| docs/tech/framework-guidelines/framework-guidelines-grpc.md | （已存在） | 冲突，待裁决 |
 | docs/business/key-class/README.md | （不动） | 跳过：不在新 taxonomy |
 
 - **未获用户确认前禁止动手**；骨架目录创建可与清单一并确认。
@@ -59,7 +59,7 @@ docs/
 │   ├── data-model/
 │   └── lexicon/
 ├── tech/
-│   ├── usage/
+│   ├── framework-guidelines/
 │   ├── comm-guidelines/
 │   ├── concurrency-guidelines/
 │   ├── data-access-guidelines/
@@ -93,7 +93,7 @@ docs/
 | `docs/arch/interaction-model-{flow}.md`（扁平散放） | `docs/arch/interaction-model/` | 文件名不变 |
 | `docs/business/interface/` | `docs/biz/interface/` | `spec-interface-{feature}.md` → `interface-{feature}.md`；`README.md` 原名迁移 |
 | `docs/technical/external-call/` | `docs/tech/comm-guidelines/` | `external-call-{service}.md` → `comm-guidelines-{service}.md`；`README.md` 原名迁移 |
-| `docs/technical/framework-usage/` | `docs/tech/usage/` | 去 `spec-` 前缀并统一为 `usage-{framework}.md`；`README.md` 原名迁移 |
+| `docs/technical/framework-usage/` | `docs/tech/framework-guidelines/` | 去 `spec-` 前缀并统一为 `framework-guidelines-{framework}.md`；`README.md` 原名迁移 |
 | `docs/business/key-class/`、`docs/business/data-structure/`、`docs/business/story/` | — | **不在新 taxonomy 内，保持不动** |
 
 注意：
@@ -136,7 +136,7 @@ docs/
 ## 冲突与裁决
 | 目标文件 | 冲突情况 | 裁决 |
 | --- | --- | --- |
-| docs/tech/usage/usage-grpc.md | 目标已存在 | 保留目标，源文件未迁移 |
+| docs/tech/framework-guidelines/framework-guidelines-grpc.md | 目标已存在 | 保留目标，源文件未迁移 |
 
 ## 后续建议
 - 运行各 analyze skill 填充资产；运行 spec-index 生成域索引与总索引。

@@ -36,7 +36,7 @@
 | `guidelines` | 约束型·指导性规范（应该，违反出报告） | 差距分析 |
 | `standards` | 约束型·红线标准（必须，违反即拦截） | 差距分析 + 门禁 |
 
-**形态豁免**（词本身已含形态，不再追加）：`interface`、`rules`、`lexicon`、`usage`。
+**形态豁免**（词本身已含形态，不再追加）：`interface`、`rules`、`lexicon`。
 
 ### 1.3 命名红线
 
@@ -70,8 +70,8 @@
 
 | Skill | 治理资产 | 资产内涵 | 产出粒度 | 输出文件 | 模式 | 优先级 |
 |---|---|---|---|---|---|---|
-| `tech-comm-guidelines-analyze` | 通信规范 | RPC/HTTP/MQ 跨服务调用指导（协议与封装归此；故障策略归韧性） | 主文档 + 每外部服务 1 篇 | `README.md`<br>`comm-guidelines-{service}.md` | 双模式 | P0 |
-| `tech-framework-usage-analyze` | 框架使用现状 | 基础框架清单与使用方式盘点（无规范文档，纯现状） | 主文档 + 每框架 1 篇 | `README.md`<br>`usage-{framework}.md` | 提取 | P0 |
+| `tech-comm-guidelines-analyze` | 通信规范 | RPC/HTTP/MQ 跨服务调用指导——只承载业务节点间调用（协议与封装归此；故障策略归韧性；DB/缓存等数据存储访问归数据访问规范） | 主文档 + 每外部服务 1 篇 | `README.md`<br>`comm-guidelines-{service}.md` | 双模式 | P0 |
+| `tech-framework-guidelines-analyze` | 框架使用指导 | 内部代码框架清单与使用方式盘点（无规范文档，纯现状；数据存储访问归数据访问规范） | 主文档 + 每框架 1 篇 | `README.md`<br>`framework-guidelines-{framework}.md` | 提取 | P0 |
 | `tech-concurrency-guidelines-analyze` | 并发规范 | 线程池/锁/channel 等并发原语实例的用途定位、使用说明与代码案例（章节上限三节） | 主文档 + 每实例 1 篇 | `README.md`<br>`concurrency-guidelines-{pool}.md` | 提取 | P0 |
 | `tech-data-access-guidelines-analyze` | 数据访问规范 | Redis/DB 等中间件访问指导 | 主文档 + 每中间件 1 篇 | `README.md`<br>`data-access-guidelines-{mw}.md` | 双模式 | P1 |
 | `tech-resilience-guidelines-analyze` | 韧性规范 | 超时/重试/熔断/异常处理的使用说明与代码案例（只管故障策略） | 主文档 + 每维度 1 篇 | `README.md`<br>`resilience-guidelines-{dimension}.md` | 提取 | P1 |
@@ -100,7 +100,7 @@
 
 ### 3.1 总公式
 
-**每类资产一个单独目录**：`docs/{域}/{资产}/`。资产目录名从 skill 名派生——去掉 `{域}-` 前缀与 `-analyze` 后缀（如 `arch-structure-model-analyze` → `structure-model/`），禁止自由起名。例外：`tech-framework-usage-analyze` 的资产锚点为 `usage`（落盘 `docs/tech/usage/`），为兼容存量资产不随 skill 改名迁移。
+**每类资产一个单独目录**：`docs/{域}/{资产}/`。资产目录名从 skill 名派生——去掉 `{域}-` 前缀与 `-analyze` 后缀（如 `arch-structure-model-analyze` → `structure-model/`、`tech-framework-guidelines-analyze` → `framework-guidelines/`），禁止自由起名。
 
 ```
 docs/{域}/{资产}/{资产}-{形态}-{实例}.md           ← 模型/规范文档（活文档，覆盖更新；形态豁免资产无形态段）
@@ -149,9 +149,9 @@ docs/
 │       └── lexicon-{feature}.md             ← 每功能域 1 篇（按业务子域拆分）
 ├── tech/
 │   ├── README.md
-│   ├── usage/
+│   ├── framework-guidelines/
 │   │   ├── README.md                        ← 框架清单索引
-│   │   └── usage-{framework}.md             ← 每框架 1 篇
+│   │   └── framework-guidelines-{framework}.md             ← 每框架 1 篇
 │   ├── comm-guidelines/
 │   │   ├── README.md                        ← 外部服务导航主文档
 │   │   └── comm-guidelines-{service}.md     ← 每外部服务 1 篇

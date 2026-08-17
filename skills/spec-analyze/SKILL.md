@@ -35,7 +35,7 @@ description: >-
 | 4 | 业务规则 | biz-rules-analyze | `docs/biz/rules/` | 默认全功能域 |
 | 5 | 对象模型 | biz-object-model-analyze | `docs/biz/object-model/` | 默认全聚合 |
 | 6 | 数据模型 | biz-data-model-analyze | `docs/biz/data-model/` | 默认全实体 |
-| 7 | 框架使用 | tech-framework-usage-analyze | `docs/tech/usage/` | 现状提取 |
+| 7 | 框架使用 | tech-framework-guidelines-analyze | `docs/tech/framework-guidelines/` | 现状提取 |
 | 8 | 通信规范 | tech-comm-guidelines-analyze | `docs/tech/comm-guidelines/` | 提取模式 |
 | 9 | 并发规范 | tech-concurrency-guidelines-analyze | `docs/tech/concurrency-guidelines/` | 提取模式 |
 | 10 | 数据访问规范 | tech-data-access-guidelines-analyze | `docs/tech/data-access-guidelines/` | 起草模式 |

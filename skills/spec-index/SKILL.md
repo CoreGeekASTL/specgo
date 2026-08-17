@@ -64,7 +64,7 @@ description: >-
 | `biz/object-model` | 对象模型 | 实体、值对象、聚合、领域服务、领域事件 |
 | `biz/data-model` | 数据模型 | 持久态表结构、缓存数据结构、字段关系与数据生命周期 |
 | `biz/lexicon` | 领域词典 | 业务与代码共用的受控词汇集 |
-| `tech/usage` | 框架使用现状 | 基础框架清单与使用方式盘点 |
+| `tech/framework-guidelines` | 框架使用指导 | 基础框架清单与使用方式盘点 |
 | `tech/comm-guidelines` | 通信规范 | RPC/HTTP/MQ 跨服务调用指导 |
 | `tech/concurrency-guidelines` | 并发规范 | 线程池选型、隔离、拒绝策略 |
 | `tech/data-access-guidelines` | 数据访问规范 | Redis/DB 等中间件访问指导 |

@@ -1,6 +1,6 @@
 ---
 name: tech-comm-guidelines-analyze
-description: 治理存量代码仓的通信规范资产（RPC/HTTP/MQ 等跨服务调用指导：本服务调用了哪些外部服务、协议与封装方式、超时重试与错误码处理），双模式运行——提取模式扫描仓内全部出站调用（HTTP 客户端 / RPC client / IDL client stub / 消息队列生产端 / 进程间通信 / 平台 SDK），按被调外部服务归类成文；差距分析模式对照既有通信规范文档核查实际调用的合规差距。产出落盘被分析仓的 docs/tech/comm-guidelines/：README 索引 + 每外部服务一篇 comm-guidelines-{service}.md；差距报告落盘 docs/tech/comm-guidelines/report/{YYYYMMDD}-comm-guidelines.md。当用户提到"通信规范"、"外部调用"、"下游接口"、"出站调用"、"调用了哪些外部服务"、"服务依赖盘点"、"跨服务调用指导"、"调用规范差距分析"、"对照通信规范检查"、"external call"、"comm guidelines"时使用。
+description: 治理存量代码仓的通信规范资产（RPC/HTTP/MQ 等跨服务调用指导：本服务调用了哪些外部业务节点、协议与封装方式、超时重试与错误码处理），双模式运行——提取模式扫描仓内全部出站调用（HTTP 客户端 / RPC client / IDL client stub / 消息队列生产端 / 进程间通信 / 平台 SDK），按被调外部业务服务归类成文；差距分析模式对照既有通信规范文档核查实际调用的合规差距。边界：只承载业务节点间跨服务调用——DB/Redis/对象存储等数据存储的访问不视为外部服务调用，归 tech-data-access-guidelines-analyze。产出落盘被分析仓的 docs/tech/comm-guidelines/：README 索引 + 每外部服务一篇 comm-guidelines-{service}.md；差距报告落盘 docs/tech/comm-guidelines/report/{YYYYMMDD}-comm-guidelines.md。当用户提到"通信规范"、"外部调用"、"下游接口"、"出站调用"、"调用了哪些外部服务"、"服务依赖盘点"、"跨服务调用指导"、"调用规范差距分析"、"对照通信规范检查"、"external call"、"comm guidelines"时使用。
 ---
 
 # 通信规范分析（tech-comm-guidelines-analyze）
@@ -12,7 +12,11 @@ description: 治理存量代码仓的通信规范资产（RPC/HTTP/MQ 等跨服�
 1. 本服务出站调用了哪些外部服务的哪些接口（业务场景、接口功能、调用位置、协议信息）？
 2. 这些实际调用与既定通信规范之间有没有差距（协议封装 / 超时 / 重试 / 错误码处理是否遵守规范）？
 
-与 biz-interface-analyze（入站方向：本服务对外暴露什么接口）互补，本 skill 管出站方向。产出粒度对齐存量代码资产治理规范 v1.1：
+与 biz-interface-analyze（入站方向：本服务对外暴露什么接口）互补，本 skill 管出站方向。
+
+**资产边界（严格遵守）**：本资产只承载**业务节点间的跨服务调用**——被调方是独立部署的业务服务/平台服务（有服务发现名或业务接口）。**DB / Redis / 对象存储等数据存储不视为外部服务调用**，其访问指导（连接管理、驱动、SQL/命令）归 tech-data-access-guidelines-analyze 产出的 `docs/tech/data-access-guidelines/`；扫描命中数据存储连接点（如 DSN、连接串获取）时不立 comm-guidelines 篇，在 README 标注"归 data-access-guidelines 承载"。进程内引用的库/框架归 tech-framework-guidelines-analyze。
+
+产出粒度对齐存量代码资产治理规范 v1.1：
 
 | 模式 | 产出 | 落盘 |
 | --- | --- | --- |

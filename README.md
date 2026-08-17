@@ -27,7 +27,7 @@ skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arc
 
 | Skill | 作用 | 产出 |
 |-------|------|------|
-| tech-framework-usage-analyze | 框架使用现状：基础框架清单与使用方式盘点（纯现状提取，无规范文档） | `docs/tech/usage/`：README 索引 + usage-{framework}.md 每框架一篇 |
+| tech-framework-guidelines-analyze | 框架使用指导：基础框架清单与使用方式盘点（纯现状提取，无规范文档） | `docs/tech/framework-guidelines/`：README 索引 + framework-guidelines-{framework}.md 每框架一篇 |
 | tech-comm-guidelines-analyze | 通信规范：RPC/HTTP/MQ 跨服务调用指导（协议与封装归此，故障策略归韧性）；双模式：提取 + 差距分析 | `docs/tech/comm-guidelines/`：README + comm-guidelines-{service}.md 每外部服务一篇；差距报告 report/{YYYYMMDD}-comm-guidelines.md |
 | tech-concurrency-guidelines-analyze | 并发规范：线程池/锁/channel 等并发原语实例的用途定位、使用说明与代码案例（章节上限三节）；单模式提取 | `docs/tech/concurrency-guidelines/`：README 索引 + concurrency-guidelines-{pool}.md 每实例一篇 |
 | tech-data-access-guidelines-analyze | 数据访问规范：Redis/DB 等中间件访问指导（连接管理、事务、分页批量、SQL 注入防护、缓存读写模式）；双模式 | `docs/tech/data-access-guidelines/`：data-access-guidelines-{mw}.md 每中间件一篇 + report/ |
@@ -93,7 +93,7 @@ spec-init（一次性建骨架/迁移）→ 各域 analyze skill 逐件建资产
 `梳理对象模型`（领域类图）
 `梳理表结构`（数据模型 ER 图）
 `提取领域词典`（术语表）
-`盘点框架使用现状`（技术栈）
+`盘点框架使用指导`（技术栈）
 `盘点出站调用`（通信规范）
 `盘点线程池与并发原语`（并发规范）
 `盘点数据访问方式`（数据访问规范）
