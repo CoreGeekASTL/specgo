@@ -4,7 +4,7 @@
 |--------|-----|
 | 分支 | <分支名> 分支 (<YYYY-MM-DD>) |
 | 更新日期 | <YYYY-MM-DD> |
-| Skill | tech-usage-analyze |
+| Skill | tech-framework-usage-analyze |
 
 ## 框架全景清单
 

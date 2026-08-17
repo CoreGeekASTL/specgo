@@ -51,7 +51,7 @@ description: >-
 | 对象模型 | `docs/biz/object-model/` | biz-object-model-analyze | 领域实体/聚合结构、关联关系变化 |
 | 数据模型 | `docs/biz/data-model/` | biz-data-model-analyze | 表结构/索引/缓存数据结构/TTL/数据生命周期变化，建表 SQL 变化 |
 | 领域词典 | `docs/biz/lexicon/` | biz-lexicon-analyze | 五类来源（请求响应模型、DB 实体、事件模型、错误码、常量）任一变化；功能域增删 |
-| 框架使用 | `docs/tech/usage/` | tech-usage-analyze | 引入/移除框架或基础库（依赖清单变化）、框架用法模式变化 |
+| 框架使用 | `docs/tech/usage/` | tech-framework-usage-analyze | 引入/移除框架或基础库（依赖清单变化）、框架用法模式变化 |
 | 通信规范 | `docs/tech/comm-guidelines/` | tech-comm-guidelines-analyze | 出站调用点增删、被调外部服务变化、协议/封装方式变化 |
 | 并发规范 | `docs/tech/concurrency-guidelines/` | tech-concurrency-guidelines-analyze | 线程池/goroutine/锁/channel/定时任务等并发原语增改 |
 | 数据访问规范 | `docs/tech/data-access-guidelines/` | tech-data-access-guidelines-analyze | 数据访问中间件增改、事务/批量/缓存读写模式变化 |

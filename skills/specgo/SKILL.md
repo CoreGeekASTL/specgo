@@ -38,7 +38,7 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
    - structure → arch-structure-model-analyze
    - interface → biz-interface-analyze
    - comm-guidelines → tech-comm-guidelines-analyze
-   - usage → tech-usage-analyze
+   - usage → tech-framework-usage-analyze
 4. 验收：产出文档落位对应目录；含 mermaid 的文档全部通过 mermaid-validate 验证脚本（VALID）。
 5. **审视门**：列出本步新生成/刷新的资产文档清单（带路径）+ VALID 结论，ask-human 审视通过后才进第 2 步。
 
@@ -139,4 +139,4 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 ## 与其它 skill 的关系
 
-本 skill 是纯编排层，六个步骤分别调用：4 个分析 skill（arch-structure-model-analyze、biz-interface-analyze、tech-comm-guidelines-analyze、tech-usage-analyze，第 1 步；全套 16 类资产录入改用 spec-analyze）、spec-audit 场景 1（第 2 步）、spec-story-design（第 3 步）、spec-update（第 5 步）、全链路分析报告（第 6 步，模板 references/specgo-report-template.md）；mermaid 验证贯穿各步（mermaid-validate）。各 skill 也可脱离本流程单独触发。
+本 skill 是纯编排层，六个步骤分别调用：4 个分析 skill（arch-structure-model-analyze、biz-interface-analyze、tech-comm-guidelines-analyze、tech-framework-usage-analyze，第 1 步；全套 16 类资产录入改用 spec-analyze）、spec-audit 场景 1（第 2 步）、spec-story-design（第 3 步）、spec-update（第 5 步）、全链路分析报告（第 6 步，模板 references/specgo-report-template.md）；mermaid 验证贯穿各步（mermaid-validate）。各 skill 也可脱离本流程单独触发。

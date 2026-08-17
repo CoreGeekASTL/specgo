@@ -64,19 +64,19 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 治理存量代码仓的通信规范资产（RPC/HTTP/MQ 等跨服务调用指导：本服务调用了哪些外部服务、协议与封装方式、超时重试与错误码处理），双模式运行——提取模式扫描仓内全部出站调用（HTTP 客户端 / RPC client / IDL client stub / 消息队列生产端 / 进程间通信 / 平台 SDK），按被调外部服务归类成文；差距分析模式对照既有通信规范文档核查实际调用的合规差距。产出落盘被分析仓的 docs/tech/comm-guidelines/：README 索引 + 每外部服务一篇 comm-guidelines-{service}.md；差距报告落盘 docs/tech/comm-guidelines/report/{YYYYMMDD}-comm-guidelines.md。当用户提到"通信规范"、"外部调用"、"下游接口"、"出站调用"、"调用了哪些外部服务"、"服务依赖盘点"、"跨服务调用指导"、"调用规范差距分析"、"对照通信规范检查"、"external call"、"comm guidelines"时使用。
 
 ### 19. tech-concurrency-guidelines-analyze
-治理存量代码仓的并发规范资产（线程池选型、池间隔离、容量/队列配置、拒绝策略——仓内有哪些线程池与并发原语、每个池怎么用、是否符合既定并发规范），双模式运行——起草模式（仓内无规范时）盘点仓内并发原语（线程池/ExecutorService、goroutine 启动点、锁 Mutex/RWMutex、channel、Actor 模型、定时任务并发），按池/原语实例归集成文，每篇含用途定位、容量/队列/拒绝策略现状、线程模型图（可选 mermaid）与应有约定建议（严格区分"建议"与"代码现状"）；差距分析模式（仓内已有规范或用户给定规范文档时）对照规范逐项核查实际并发用法的合规差距。产出落盘被分析仓的 docs/tech/concurrency-guidelines/：README.md 实例导航主文档 + 每线程池/原语实例一篇 concurrency-guidelines-{pool}.md；差距报告落盘 docs/tech/concurrency-guidelines/report/{YYYYMMDD}-concurrency-guidelines.md。当用户提到"并发规范"、"线程池"、"线程池选型"、"池隔离"、"拒绝策略"、"并发原语盘点"、"goroutine 启动点"、"锁使用"、"channel"、"Actor"、"定时任务并发"、"concurrency guidelines"、"thread pool"时使用。
+提取存量代码仓的并发规范资产（线程池、锁、channel、goroutine 启动点、Actor、定时任务并发等并发原语实例），单模式提取运行——盘点仓内并发原语并按实例归集成文，产出 README.md 实例导航主文档 + 每实例一篇 concurrency-guidelines-{pool}.md；每篇文档章节不超过三个（用途定位 + 使用说明 + 代码案例），人一看就懂：用途定位一段话说清该实例干什么、为什么需要并发；使用说明列可调用的封装函数/原语入口清单（作用、参数或取值、定义文件）；代码案例给真实调用片段（注明来源文件路径）。产出落盘被分析仓的 docs/tech/concurrency-guidelines/（活文档，同名覆盖更新）。当用户提到"并发规范"、"线程池"、"池隔离"、"并发原语盘点"、"goroutine 启动点"、"锁使用"、"channel"、"Actor"、"定时任务并发"、"concurrency guidelines"、"thread pool"时使用。
 
 ### 20. tech-data-access-guidelines-analyze
-治理存量代码仓的数据访问规范资产（Redis/DB 等数据访问中间件的访问指导：连接与客户端管理、事务使用、分页与批量、SQL 拼接与注入防护、缓存读写模式、错误处理），双模式运行——起草模式识别仓内数据访问中间件（关系库/ORM、Redis、本地嵌入式存储、对象存储、文件系统等），逐中间件盘点访问方式并起草规范（用途定位 + 访问点分布表 + 现状描述与应有约定）；差距分析模式对照既有规范扫描实际访问的合规差距。产出落盘被分析仓的 docs/tech/data-access-guidelines/：README.md 中间件导航主文档 + 每中间件一篇 data-access-guidelines-{mw}.md；差距报告落盘 docs/tech/data-access-guidelines/report/{YYYYMMDD}-data-access-guidelines.md。当用户提到"数据访问规范"、"Redis 使用规范"、"DB 访问指导"、"数据库访问规范"、"缓存读写模式"、"缓存穿透"、"SQL 注入防护"、"事务使用盘点"、"ORM 怎么用"、"data access guidelines"、"数据访问差距分析"、"对照数据访问规范检查"时使用。
+治理存量代码仓的数据访问规范资产（数据存储的访问指导），按数据形态分两类治理——内存数据（进程内内存结构 map+锁/sync.Map/自研缓存，及 Redis/Memcached 等内存型存储）与持久化数据（关系库/ORM、本地嵌入式存储、对象存储、文件系统），两类各用一个模板，模板聚焦三件事：数据设计与定位（存什么、为什么放这里、结构/容量/TTL/生命周期）、如何使用这个数据（读写路径、一致性、并发/事务、降级）、应该在什么场景使用这个数据（业务场景与兜底边界）；外围维度含连接与客户端管理、分页与批量、SQL 拼接与注入防护、错误处理。双模式运行——起草模式识别仓内数据存储并分类，逐存储盘点访问方式并起草规范（数据设计与定位 + 使用方式 + 适用场景 + 现状描述与应有约定）；差距分析模式对照既有规范扫描实际访问的合规差距。产出落盘被分析仓的 docs/tech/data-access-guidelines/：README.md 导航主文档 + 每存储一篇 data-access-guidelines-{mw}.md；差距报告落盘 docs/tech/data-access-guidelines/report/{YYYYMMDD}-data-access-guidelines.md。当用户提到"数据访问规范"、"Redis 使用规范"、"DB 访问指导"、"数据库访问规范"、"内存缓存"、"进程内缓存"、"缓存读写模式"、"缓存穿透"、"SQL 注入防护"、"事务使用盘点"、"ORM 怎么用"、"data access guidelines"、"数据访问差距分析"、"对照数据访问规范检查"时使用。
 
 ### 21. tech-foundation-guidelines-analyze
-治理存量代码仓的基础规范资产（日志/配置/告警等横切编码机制的编码指导：日志级别使用/敏感信息脱敏/审计日志、配置读取方式/默认值处理/环境变量、告警 ID 使用/上报与恢复配对），双模式运行——起草模式盘点仓内基础编码机制使用现状，产出 README 索引 + 每维度一篇 foundation-guidelines-{dimension}.md（每篇含使用模式、调用点分布、应有约定建议）；差距分析模式对照既有基础规范逐维度逐条目核查合规差距。产出落盘被分析仓的 docs/tech/foundation-guidelines/：README.md + foundation-guidelines-{dimension}.md；差距报告落盘 docs/tech/foundation-guidelines/report/{YYYYMMDD}-foundation-guidelines.md。当用户提到"基础规范"、"日志规范"、"日志级别使用"、"敏感信息脱敏"、"审计日志"、"配置规范"、"配置读取方式"、"默认值处理"、"环境变量"、"告警规范"、"告警 ID"、"告警上报与恢复配对"、"对照基础规范检查"、"编码指导"、"foundation guidelines"时使用。
+提取存量代码仓的基础规范资产（日志/配置/告警等横切编码机制的使用指导），单模式提取运行——盘点仓内基础编码机制，产出 README 索引 + 每维度一篇 foundation-guidelines-{dimension}.md；每篇文档只含两项内容：基础机制的函数调用说明（可调用的函数/方法清单：签名、作用、参数、来源文件）与使用代码案例（真实代码片段，注明来源文件路径）。产出落盘被分析仓的 docs/tech/foundation-guidelines/。当用户提到"基础规范"、"日志规范"、"日志怎么用"、"配置规范"、"配置读取方式"、"环境变量"、"告警规范"、"告警 ID"、"告警怎么上报"、"编码指导"、"foundation guidelines"时使用。
 
-### 22. tech-resilience-guidelines-analyze
-治理存量代码仓的韧性规范资产（超时/重试/熔断降级/异常处理等故障策略——只管故障来了怎么扛，不管通信协议本身，协议与封装归通信规范），双模式运行——起草模式扫描仓内全部出站调用点与后台任务的故障策略现状（超时值与位置、重试次数/间隔/退避、熔断降级、panic/recover、错误 swallowing），产出 README 索引 + 每维度一篇 resilience-guidelines-{dimension}.md（每篇含现状调用点分布表 + 证据文件路径 + 应有约定建议）；差距分析模式对照既有韧性规范逐维度逐项核查差距。产出落盘被分析仓的 docs/tech/resilience-guidelines/：README.md + resilience-guidelines-{dimension}.md（活文档，同名覆盖更新）；差距报告落盘 docs/tech/resilience-guidelines/report/{YYYYMMDD}-resilience-guidelines.md（次抛，带日期）。当用户提到"韧性规范"、"超时设置"、"重试策略"、"熔断降级"、"故障策略"、"异常处理规范"、"panic recover"、"错误吞掉"、"吞错"、"错误 swallowing"、"错误被忽略"、"容错"、"稳定性治理"、"韧性差距分析"、"对照韧性规范检查"、"resilience"时使用。
-
-### 23. tech-usage-analyze
+### 22. tech-framework-usage-analyze
 分析存量代码仓中的基础框架（RPC、线程池、Actor、日志、序列化、配置、依赖注入、存储/ORM、消息队列、调度、资源池、容错治理、监控、基础库、测试框架等）及其使用方式，提取"框架使用现状"资产（基础框架清单与使用方式盘点，纯现状、无规范文档），落盘被分析仓的 docs/tech/usage/：索引 README.md + 每框架一篇 usage-{framework}.md（含用途定位、使用模式）。当需要盘点代码仓技术栈、梳理框架使用模式与调用点分布、为 AI 代码生成沉淀"框架使用知识"、或为重构/迁移/新人上手提供框架使用文档时使用。触发场景包括"框架使用现状"、"技术栈盘点"、"框架使用"、"用了哪些框架"、"XX 框架怎么用"、"线程池怎么用"、"RPC 怎么调的"、"framework usage"、"tech stack"等。
+
+### 23. tech-resilience-guidelines-analyze
+提取存量代码仓的韧性规范资产（超时/重试/熔断降级/异常处理等故障策略——只管故障来了怎么扛，不管通信协议本身，协议与封装归通信规范），单模式提取运行——扫描仓内全部出站调用点与后台任务的故障策略，产出 README 索引 + 每维度一篇 resilience-guidelines-{dimension}.md；每篇文档只含两项内容：使用说明（该维度机制在仓内怎么用——可调用的封装函数/配置项清单：作用、参数或取值、来源文件）与代码案例（真实代码片段，注明来源文件路径）。产出落盘被分析仓的 docs/tech/resilience-guidelines/（活文档，同名覆盖更新）。当用户提到"韧性规范"、"超时设置"、"重试策略"、"熔断降级"、"故障策略"、"异常处理"、"panic recover"、"错误吞掉"、"吞错"、"错误 swallowing"、"容错"、"稳定性治理"、"resilience"时使用。
 
 ### 24. specgo
 规格化全链路主流程编排 skill——资产检查/录入 → 需求审核(spec-audit 场景 1) → story 设计(spec-story-design) → 代码实现与测试 → 资产刷新(spec-update) → 全链路分析报告（归档 docs/storys/{功能名}/ story 目录），六步端到端；每步校验环节结束固定过 ask-human 审视门，新生成的文档/代码必须经人审视通过后才进下一步。主代理只做编排与用户确认，各步骤派子代理执行。触发场景包括"specgo"、"code-generate"、"代码生成"、"端到端开发 xx 功能"、"从需求到交付"、"全流程开发"等。
@@ -95,12 +95,12 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 6. **对象模型** → biz-object-model-analyze：实体/值对象/聚合/领域服务/领域事件（UML 类图），README.md 聚合导航 + object-model-{aggregate}.md，落盘 docs/biz/object-model/
 7. **数据模型** → biz-data-model-analyze：持久态表结构/缓存数据结构/字段关系与数据生命周期（UML-ER），README.md 实体导航 + data-model-{entity}.md，落盘 docs/biz/data-model/
 8. **领域词典** → biz-lexicon-analyze：业务与代码共用的受控词汇集（术语释义 + 语境边界 + 代码命名映射），主文档 README.md + 每功能域 1 篇 lexicon-{feature}.md，落盘 docs/biz/lexicon/
-9. **框架使用现状** → tech-usage-analyze：基础框架清单与使用方式盘点（纯现状提取），usage-{framework}.md 每框架一篇，落盘 docs/tech/usage/
+9. **框架使用现状** → tech-framework-usage-analyze：基础框架清单与使用方式盘点（纯现状提取），usage-{framework}.md 每框架一篇，落盘 docs/tech/usage/
 10. **通信规范** → tech-comm-guidelines-analyze：RPC/HTTP/MQ 跨服务调用指导（双模式：现状提取 + 差距分析），comm-guidelines-{service}.md 每外部服务一篇
-11. **并发规范** → tech-concurrency-guidelines-analyze：线程池选型/隔离/拒绝策略，README.md 实例导航 + concurrency-guidelines-{pool}.md 每线程池一篇
+11. **并发规范** → tech-concurrency-guidelines-analyze：线程池/锁/channel 等并发原语实例的用途定位、使用说明与代码案例（章节上限三节），README.md 实例导航 + concurrency-guidelines-{pool}.md 每实例一篇
 12. **数据访问规范** → tech-data-access-guidelines-analyze：Redis/DB 等中间件访问指导，README.md 中间件导航 + data-access-guidelines-{mw}.md 每中间件一篇
-13. **韧性规范** → tech-resilience-guidelines-analyze：超时/重试/熔断/异常处理，README 索引 + resilience-guidelines-{dimension}.md 每维度一篇
-14. **基础规范** → tech-foundation-guidelines-analyze：日志/配置/告警等编码指导，README 索引 + foundation-guidelines-{dimension}.md 每维度一篇
+13. **韧性规范** → tech-resilience-guidelines-analyze：超时/重试/熔断/异常处理的使用说明与代码案例，README 索引 + resilience-guidelines-{dimension}.md 每维度一篇
+14. **基础规范** → tech-foundation-guidelines-analyze：日志/配置/告警等基础机制的函数调用说明与使用代码案例，README 索引 + foundation-guidelines-{dimension}.md 每维度一篇
 15. **编码规范（门禁）** → qual-code-standards-analyze：命名/注释/函数长度/圈复杂度/安全编码红线/禁止项清单，code-standards.md + report/ 门禁差距报告
 16. **DT 规范（门禁）** → qual-dt-guidelines-analyze：测试金字塔与覆盖基线、用例设计、覆盖率门禁，dt-guidelines.md + report/
 17. **分支与变更规范** → qual-branch-guidelines-analyze：分支模型、commit/MR 规范、评审要求，branch-guidelines.md
@@ -124,8 +124,8 @@ spec skill 的 description 已包含触发关键词，请用下面的索引判�
 | "看看调了哪些下游服务" | tech-comm-guidelines-analyze 定义了跨服务调用规范与盘点格式，先加载它 |
 | "业务规则我边读边总结" | biz-rules-analyze 定义了规则条目格式（条件 → 动作 + 依据），先加载它 |
 | "表结构/缓存结构我随便列列" | biz-data-model-analyze 定义了数据模型格式，先加载它 |
-| "框架用法我直接写" | tech-usage-analyze 定义了框架使用现状盘点格式，先加载它 |
-| "线程池这么用没问题" | tech-concurrency-guidelines-analyze 定义了并发规范差距分析，先加载它 |
+| "框架用法我直接写" | tech-framework-usage-analyze 定义了框架使用现状盘点格式，先加载它 |
+| "线程池这么用没问题" | tech-concurrency-guidelines-analyze 定义了并发实例的用途定位与使用案例提取格式，先加载它 |
 | "这需求文档我读读就好" | spec-audit 场景 1 用来查表述质量与逻辑断点，先加载它 |
 | "给我讲讲 XX 流程怎么走的" | arch-interaction-model-analyze 定义了交互模型（时序图）提取格式，先加载它 |
 | "这 mermaid 图我直接画/看着没问题" | mermaid-validate 定义了语法红线与本地验证流程，先加载它 |

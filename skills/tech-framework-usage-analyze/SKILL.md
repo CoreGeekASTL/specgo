@@ -1,10 +1,10 @@
 ---
-name: tech-usage-analyze
+name: tech-framework-usage-analyze
 description: >-
   分析存量代码仓中的基础框架（RPC、线程池、Actor、日志、序列化、配置、依赖注入、存储/ORM、消息队列、调度、资源池、容错治理、监控、基础库、测试框架等）及其使用方式，提取"框架使用现状"资产（基础框架清单与使用方式盘点，纯现状、无规范文档），落盘被分析仓的 docs/tech/usage/：索引 README.md + 每框架一篇 usage-{framework}.md（含用途定位、使用模式）。当需要盘点代码仓技术栈、梳理框架使用模式与调用点分布、为 AI 代码生成沉淀"框架使用知识"、或为重构/迁移/新人上手提供框架使用文档时使用。触发场景包括"框架使用现状"、"技术栈盘点"、"框架使用"、"用了哪些框架"、"XX 框架怎么用"、"线程池怎么用"、"RPC 怎么调的"、"framework usage"、"tech stack"等。
 ---
 
-# 框架使用现状分析 Skill（tech-usage-analyze）
+# 框架使用现状分析 Skill（tech-framework-usage-analyze）
 
 ## 目的
 

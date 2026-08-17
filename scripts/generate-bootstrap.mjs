@@ -99,12 +99,12 @@ ${indexMd}
 6. **对象模型** → biz-object-model-analyze：实体/值对象/聚合/领域服务/领域事件（UML 类图），README.md 聚合导航 + object-model-{aggregate}.md，落盘 docs/biz/object-model/
 7. **数据模型** → biz-data-model-analyze：持久态表结构/缓存数据结构/字段关系与数据生命周期（UML-ER），README.md 实体导航 + data-model-{entity}.md，落盘 docs/biz/data-model/
 8. **领域词典** → biz-lexicon-analyze：业务与代码共用的受控词汇集（术语释义 + 语境边界 + 代码命名映射），主文档 README.md + 每功能域 1 篇 lexicon-{feature}.md，落盘 docs/biz/lexicon/
-9. **框架使用现状** → tech-usage-analyze：基础框架清单与使用方式盘点（纯现状提取），usage-{framework}.md 每框架一篇，落盘 docs/tech/usage/
+9. **框架使用现状** → tech-framework-usage-analyze：基础框架清单与使用方式盘点（纯现状提取），usage-{framework}.md 每框架一篇，落盘 docs/tech/usage/
 10. **通信规范** → tech-comm-guidelines-analyze：RPC/HTTP/MQ 跨服务调用指导（双模式：现状提取 + 差距分析），comm-guidelines-{service}.md 每外部服务一篇
-11. **并发规范** → tech-concurrency-guidelines-analyze：线程池选型/隔离/拒绝策略，README.md 实例导航 + concurrency-guidelines-{pool}.md 每线程池一篇
+11. **并发规范** → tech-concurrency-guidelines-analyze：线程池/锁/channel 等并发原语实例的用途定位、使用说明与代码案例（章节上限三节），README.md 实例导航 + concurrency-guidelines-{pool}.md 每实例一篇
 12. **数据访问规范** → tech-data-access-guidelines-analyze：Redis/DB 等中间件访问指导，README.md 中间件导航 + data-access-guidelines-{mw}.md 每中间件一篇
-13. **韧性规范** → tech-resilience-guidelines-analyze：超时/重试/熔断/异常处理，README 索引 + resilience-guidelines-{dimension}.md 每维度一篇
-14. **基础规范** → tech-foundation-guidelines-analyze：日志/配置/告警等编码指导，README 索引 + foundation-guidelines-{dimension}.md 每维度一篇
+13. **韧性规范** → tech-resilience-guidelines-analyze：超时/重试/熔断/异常处理的使用说明与代码案例，README 索引 + resilience-guidelines-{dimension}.md 每维度一篇
+14. **基础规范** → tech-foundation-guidelines-analyze：日志/配置/告警等基础机制的函数调用说明与使用代码案例，README 索引 + foundation-guidelines-{dimension}.md 每维度一篇
 15. **编码规范（门禁）** → qual-code-standards-analyze：命名/注释/函数长度/圈复杂度/安全编码红线/禁止项清单，code-standards.md + report/ 门禁差距报告
 16. **DT 规范（门禁）** → qual-dt-guidelines-analyze：测试金字塔与覆盖基线、用例设计、覆盖率门禁，dt-guidelines.md + report/
 17. **分支与变更规范** → qual-branch-guidelines-analyze：分支模型、commit/MR 规范、评审要求，branch-guidelines.md
@@ -128,8 +128,8 @@ ${indexMd}
 | "看看调了哪些下游服务" | tech-comm-guidelines-analyze 定义了跨服务调用规范与盘点格式，先加载它 |
 | "业务规则我边读边总结" | biz-rules-analyze 定义了规则条目格式（条件 → 动作 + 依据），先加载它 |
 | "表结构/缓存结构我随便列列" | biz-data-model-analyze 定义了数据模型格式，先加载它 |
-| "框架用法我直接写" | tech-usage-analyze 定义了框架使用现状盘点格式，先加载它 |
-| "线程池这么用没问题" | tech-concurrency-guidelines-analyze 定义了并发规范差距分析，先加载它 |
+| "框架用法我直接写" | tech-framework-usage-analyze 定义了框架使用现状盘点格式，先加载它 |
+| "线程池这么用没问题" | tech-concurrency-guidelines-analyze 定义了并发实例的用途定位与使用案例提取格式，先加载它 |
 | "这需求文档我读读就好" | spec-audit 场景 1 用来查表述质量与逻辑断点，先加载它 |
 | "给我讲讲 XX 流程怎么走的" | arch-interaction-model-analyze 定义了交互模型（时序图）提取格式，先加载它 |
 | "这 mermaid 图我直接画/看着没问题" | mermaid-validate 定义了语法红线与本地验证流程，先加载它 |

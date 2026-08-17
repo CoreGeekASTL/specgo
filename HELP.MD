@@ -71,11 +71,11 @@
 | Skill | 治理资产 | 资产内涵 | 产出粒度 | 输出文件 | 模式 | 优先级 |
 |---|---|---|---|---|---|---|
 | `tech-comm-guidelines-analyze` | 通信规范 | RPC/HTTP/MQ 跨服务调用指导（协议与封装归此；故障策略归韧性） | 主文档 + 每外部服务 1 篇 | `README.md`<br>`comm-guidelines-{service}.md` | 双模式 | P0 |
-| `tech-usage-analyze` | 框架使用现状 | 基础框架清单与使用方式盘点（无规范文档，纯现状） | 主文档 + 每框架 1 篇 | `README.md`<br>`usage-{framework}.md` | 提取 | P0 |
-| `tech-concurrency-guidelines-analyze` | 并发规范 | 线程池选型、隔离、拒绝策略 | 主文档 + 每线程池 1 篇 | `README.md`<br>`concurrency-guidelines-{pool}.md` | 双模式 | P0 |
+| `tech-framework-usage-analyze` | 框架使用现状 | 基础框架清单与使用方式盘点（无规范文档，纯现状） | 主文档 + 每框架 1 篇 | `README.md`<br>`usage-{framework}.md` | 提取 | P0 |
+| `tech-concurrency-guidelines-analyze` | 并发规范 | 线程池/锁/channel 等并发原语实例的用途定位、使用说明与代码案例（章节上限三节） | 主文档 + 每实例 1 篇 | `README.md`<br>`concurrency-guidelines-{pool}.md` | 提取 | P0 |
 | `tech-data-access-guidelines-analyze` | 数据访问规范 | Redis/DB 等中间件访问指导 | 主文档 + 每中间件 1 篇 | `README.md`<br>`data-access-guidelines-{mw}.md` | 双模式 | P1 |
-| `tech-resilience-guidelines-analyze` | 韧性规范 | 超时/重试/熔断/异常处理（只管故障策略） | 主文档 + 每维度 1 篇 | `README.md`<br>`resilience-guidelines-{dimension}.md` | 双模式 | P1 |
-| `tech-foundation-guidelines-analyze` | 基础规范 | 日志/配置/告警等编码指导 | 主文档 + 每维度 1 篇 | `README.md`<br>`foundation-guidelines-{dimension}.md` | 双模式 | P1 |
+| `tech-resilience-guidelines-analyze` | 韧性规范 | 超时/重试/熔断/异常处理的使用说明与代码案例（只管故障策略） | 主文档 + 每维度 1 篇 | `README.md`<br>`resilience-guidelines-{dimension}.md` | 提取 | P1 |
+| `tech-foundation-guidelines-analyze` | 基础规范 | 日志/配置/告警等基础机制的函数调用说明与使用代码案例 | 主文档 + 每维度 1 篇 | `README.md`<br>`foundation-guidelines-{dimension}.md` | 提取 | P1 |
 
 ### 2.4 工程要素（qual）—— 定规矩：写到什么程度才算合格
 
@@ -100,7 +100,7 @@
 
 ### 3.1 总公式
 
-**每类资产一个单独目录**：`docs/{域}/{资产}/`。资产目录名从 skill 名派生——去掉 `{域}-` 前缀与 `-analyze` 后缀（如 `arch-structure-model-analyze` → `structure-model/`、`tech-usage-analyze` → `usage/`），禁止自由起名。
+**每类资产一个单独目录**：`docs/{域}/{资产}/`。资产目录名从 skill 名派生——去掉 `{域}-` 前缀与 `-analyze` 后缀（如 `arch-structure-model-analyze` → `structure-model/`），禁止自由起名。例外：`tech-framework-usage-analyze` 的资产锚点为 `usage`（落盘 `docs/tech/usage/`），为兼容存量资产不随 skill 改名迁移。
 
 ```
 docs/{域}/{资产}/{资产}-{形态}-{实例}.md           ← 模型/规范文档（活文档，覆盖更新；形态豁免资产无形态段）
