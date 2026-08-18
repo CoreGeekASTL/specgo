@@ -2,6 +2,71 @@
 
 面向存量代码仓的四分类资产治理 skill 体系，共 26 个 skill：`arch` / `biz` / `tech` / `qual` 四域 16 个 + `spec` 系列 9 个（横向 5 个 + 需求到交付链路 3 个 + specgo 编排）+ 其它 1 个（mermaid-validate）。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应 skill、按 HELP.MD taxonomy 与统一格式产出文档资产到 `docs/0-{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
 
+## 设计要素全景
+
+26 个 skill 按「四域资产 + spec 横向 + spec 链路 + 编排」组织。为便于扫读拆两张图：四域 16 件按域成列（节点省略公共前后缀 `{域}-` 与 `-analyze` / `-guidelines-analyze`，全名见下表）：
+
+```mermaid
+flowchart LR
+    subgraph ARCH["arch 架构要素 · 定结构<br/>落盘 docs/0-arch/"]
+        direction TB
+        A1["structure-model<br/>结构模型：包图+依赖矩阵"]
+        A2["interaction-model<br/>交互模型：主链路时序图"]
+    end
+    subgraph BIZ["biz 业务要素 · 定业务<br/>落盘 docs/0-biz/"]
+        direction TB
+        B1["interface<br/>对外接口清单"]
+        B2["rules<br/>业务规则条目"]
+        B3["object-model<br/>对象模型：UML 类图"]
+        B4["data-model<br/>数据模型：UML-ER 图"]
+        B5["lexicon<br/>领域词典：术语表"]
+    end
+    subgraph TECH["tech 技术要素 · 定用法<br/>落盘 docs/0-tech/"]
+        direction TB
+        T1["framework-guidelines<br/>框架使用指导"]
+        T2["external-call-guidelines<br/>通信规范：出站调用"]
+        T3["concurrency-guidelines<br/>并发规范：线程池/锁"]
+        T4["data-access-guidelines<br/>数据访问：DB/Redis"]
+        T5["resilience-guidelines<br/>韧性规范：超时/重试/熔断"]
+        T6["basic-mechanism-guidelines<br/>基础规范：日志/配置/告警"]
+    end
+    subgraph QUAL["qual 工程要素 · 定规矩<br/>落盘 docs/0-qual/"]
+        direction TB
+        Q1["code-standards<br/>编码规范：红线门禁"]
+        Q2["dt-guidelines<br/>DT 规范：覆盖率门禁"]
+        Q3["branch-guidelines<br/>分支与变更规范"]
+    end
+```
+
+spec 系列 9 件 + 横切工具 mermaid-validate 共 10 件：specgo 把其中 6 件串成「需求到交付」六步链（第 1 步复用 spec-analyze 或逐件四域 analyze）；其余 3 件——spec-init（建骨架/旧布局迁移）、spec-index（索引+服务依赖全景）、mermaid-validate（图渲染校验）——管建仓与横切校验，不进交付链。
+
+```mermaid
+flowchart TB
+    subgraph L["specgo 六步编排 · 需求到交付"]
+        direction TB
+        R0["specgo<br/>编排主流程"]
+        S1["第1步 资产检查/录入<br/>spec-analyze（或逐件 analyze）"]
+        S2["第2步 需求审核<br/>spec-audit"]
+        S3["第3步 story 设计<br/>spec-story-design"]
+        S4["第4步 代码实现与测试<br/>spec-code-generate"]
+        S5["第5步 资产刷新<br/>spec-update"]
+        S6["第6步 全链路报告<br/>specgo-report"]
+        R0 --> S1
+        R0 --> S2
+        R0 --> S3
+        R0 --> S4
+        R0 --> S5
+        R0 --> S6
+        S1 --> S2
+        S2 --> S3
+        S3 --> S4
+        S4 --> S5
+        S5 --> S6
+    end
+```
+
+要点：四域 16 个 analyze skill 产出落盘 `docs/0-{域}/{资产}/`（每类资产一个单独目录，活文档同名覆盖）；specgo 编排六步、每步结束过一道 ask-human 审视门（人的参与方式见下方「人工环节一览」时序图）；spec-init / spec-index 只在建仓期使用，mermaid-validate 横切校验所有含图产出物。详细产出物清单见下表。
+
 ## 内含 skill
 
 skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arch / biz / tech / qual）+ spec 系列（横向 / 链路 / 编排）+ 其它。命名公式 `{域}-{资产}-{形态}-analyze`，输出统一落盘 `docs/0-{域}/{资产}/`（每类资产一个单独目录）。
@@ -66,17 +131,60 @@ skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arc
 
 ## 推荐使用顺序（spec 系列）
 
-#### 资产治理阶段
-spec-init（一次性建骨架/迁移）→ 各域 analyze skill 逐件建资产 → spec-index（索引与依赖全景收口）；
+两个阶段、两条流水线，每步也可单独触发：
 
-全量资产也可直接加载 spec-analyze 一键编排（子代理并行执行全部分析 + spec-index 收口）；
+```mermaid
+flowchart LR
+    subgraph G1["资产治理阶段（建仓一次性）"]
+        S1["spec-init<br/>建骨架/迁移"] --> S2["16 个 analyze 逐件建资产<br/>或 spec-analyze 一键全量"] --> S3["spec-index<br/>索引+依赖全景收口"]
+    end
+    subgraph G2["需求开发阶段（每需求一轮）"]
+        D1["spec-audit<br/>需求审核"] --> D2["spec-story-design<br/>story 设计"] --> D3["spec-code-generate<br/>编码与测试"] --> D4["spec-update<br/>资产刷新"] --> D5["specgo-report<br/>全链路报告"]
+    end
+    G1 -.-> G2
+```
 
-#### 需求开发阶段
-（有需求时）spec-audit 场景 1（需求审核）→ spec-story-design（story 设计）→ 代码实现 →（git 变更后）spec-update（资产刷新收口）；
-
-资产质量评估走 spec-audit 场景 2。每步也可单独触发；或直接加载 specgo 走六步端到端编排主流程（自动串联上述各步，子代理执行）。
+资产质量评估随时走 spec-audit 场景 2；也可直接加载 specgo 走六步端到端编排主流程（自动串联 G2 各步，子代理执行）。
 
 ## 使用指导
+
+### 人工环节一览（人只做两件事：下指令 + 过审视门）
+
+以 specgo 六步编排为例，执行全部派给子代理，人在每步校验环节的 ask-human 审视门拍板，不通过就打回重做：
+
+```mermaid
+sequenceDiagram
+    participant H as "人（审视者）"
+    participant M as "主代理（编排/确认）"
+    participant W as "子代理（执行）"
+    H->>M: "下发指令：specgo 全流程开发 xx 功能（附需求文档）"
+    M->>W: "第1步 资产检查/录入"
+    W-->>M: "资产现状与缺口清单"
+    M->>H: "审视门1：资产是否齐备"
+    H-->>M: "拍板"
+    M->>W: "第2步 需求审核（spec-audit 场景1）"
+    W-->>M: "建模 HTML + 疑问清单"
+    M->>H: "审视门2：逐条澄清拍板"
+    H-->>M: "澄清结论"
+    M->>W: "第3步 story 设计（spec-story-design）"
+    W-->>M: "story + develop-task"
+    M->>H: "审视门3：设计文档审视"
+    H-->>M: "拍板"
+    M->>W: "第4步 代码实现（spec-code-generate 按文件分组并行）"
+    W-->>M: "完整代码（零 TODO）"
+    M->>M: "主代理执行测试：单测/集成/验证命令实跑"
+    M->>H: "审视门4：测试证据审视"
+    H-->>M: "拍板"
+    M->>W: "第5步 资产刷新（spec-update）"
+    W-->>M: "受影响文档刷新清单"
+    M->>H: "审视门5：刷新清单确认"
+    H-->>M: "拍板定稿"
+    M->>W: "第6步 全链路报告（specgo-report）"
+    W-->>M: "报告落盘 docs/1-storys/"
+    M->>H: "审视门6：交付验收"
+```
+
+逐 skill 手动执行（方式一）时同理：每个 skill 产出后由人审视确认再进下一步；子代理只执行、主代理只编排与测试、人只决策。
 
 ### 方式一：逐 skill 手动执行（人逐步触发）
 
