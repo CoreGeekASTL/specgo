@@ -1,6 +1,6 @@
 ---
 name: specgo
-description: 规格化全链路主流程编排 skill——资产检查/录入 → 需求审核(spec-audit 场景 1) → story 设计(spec-story-design) → 代码实现与测试(spec-code-generate) → 资产刷新(spec-update) → 全链路分析报告（specgo-report，归档 docs/1-storys/{功能名}/ story 目录），六步端到端；每步校验环节结束固定过 ask-human 审视门，新生成的文档/代码必须经人审视通过后才进下一步。主代理只做编排与用户确认，各步骤派子代理执行。触发场景包括"specgo"、"端到端开发 xx 功能"、"从需求到交付"、"全流程开发"等。
+description: 规格化全链路主流程编排 skill——资产检查/录入 → 需求审核(spec-function-design-audit) → story 设计(spec-story-design) → 代码实现与测试(spec-code-generate) → 资产刷新(spec-update) → 全链路分析报告（specgo-report，归档 docs/1-storys/{功能名}/ story 目录），六步端到端；每步校验环节结束固定过 ask-human 审视门，新生成的文档/代码必须经人审视通过后才进下一步。主代理只做编排与用户确认，各步骤派子代理执行。触发场景包括"specgo"、"端到端开发 xx 功能"、"从需求到交付"、"全流程开发"等。
 ---
 
 # specgo — 规格化全链路编排（主流程）
@@ -44,9 +44,9 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 > 注：交互模型文档（docs/0-arch/interaction-model/interaction-model-*.md）不属于本步自动检查的资产——它由用户主动指定流程后经 arch-interaction-model-analyze 提取产出，不派全量子代理。
 
-## 第 2 步：需求与功能审核（spec-audit 场景 1）
+## 第 2 步：需求与功能审核（spec-function-design-audit）
 
-- 派**审核子代理**：加载 spec-audit 全文，按场景 1（需求/功能设计审核）执行，输入=需求/SR/功能设计文档，完成多彩建模翻译 + 全面扫描（表述质量/逻辑断点/设计要素）+ HTML 初版。
+- 派**审核子代理**：加载 spec-function-design-audit 全文执行（需求/功能设计审核），输入=需求/SR/功能设计文档，完成多彩建模翻译 + 全面扫描（表述质量/逻辑断点/设计要素）+ HTML 初版。
 - 子代理返回合并断点清单；**主代理**批量抛出全部问题 ask-human（每问给 2-4 个候选答案+推荐项），用户批量回答后核对——未答/含糊/引入新疑点的继续批量追问，无新问题的答案回传子代理补齐，直至建模闭环、HTML 定稿。
 - 审核通过后按 skill 阶段 6 询问用户是否输出规范功能实现设计 md。
 - **审视门**：建模闭环后，列出定稿 HTML（及可选的规范功能设计 md）路径，ask-human 审视通过后才进第 3 步。
@@ -133,4 +133,4 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 ## 与其它 skill 的关系
 
-本 skill 是纯编排层，六个步骤分别调用：4 个分析 skill（arch-structure-model-analyze、biz-interface-analyze、tech-external-call-guidelines-analyze、tech-framework-guidelines-analyze，第 1 步；全套 16 类资产录入改用 spec-analyze）、spec-audit 场景 1（第 2 步）、spec-story-design（第 3 步）、spec-code-generate（第 4 步，代码实现与测试）、spec-update（第 5 步）、specgo-report（第 6 步，全链路分析报告）；mermaid 验证贯穿各步（mermaid-validate）。各 skill 也可脱离本流程单独触发。
+本 skill 是纯编排层，六个步骤分别调用：4 个分析 skill（arch-structure-model-analyze、biz-interface-analyze、tech-external-call-guidelines-analyze、tech-framework-guidelines-analyze，第 1 步；全套 16 类资产录入改用 spec-analyze）、spec-function-design-audit（第 2 步）、spec-story-design（第 3 步）、spec-code-generate（第 4 步，代码实现与测试）、spec-update（第 5 步）、specgo-report（第 6 步，全链路分析报告）；mermaid 验证贯穿各步（mermaid-validate）。各 skill 也可脱离本流程单独触发。

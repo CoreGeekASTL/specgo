@@ -111,13 +111,14 @@ ${indexMd}
 18. **索引生成** → spec-index：各域 README + docs/README.md 总索引 + 服务依赖全景图（Mermaid）
 19. **资产刷新（git 变更驱动）** → spec-update：基于 git diff 识别变更对 docs/ 资产的影响，按最新要素定义增量刷新受影响文档，刷新清单人工确认后定稿
 20. **一键全量资产分析（编排入口）** → spec-analyze：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），一次性建齐 docs/ 资产，spec-index 收口
-21. **文档质量审核与评估** → spec-audit：场景 1 需求/功能设计审核（多彩建模 + 断点扫描 + ask-human 澄清 + HTML）；场景 2 docs/ 资产质量评估（A 轨 story 类澄清未清零不出分；B 轨 17 类资产要素 Linter 零容忍+专项维度 0-5 分），评分分级，报告归档 docs/report/（README.md 整体评估 + 每篇一个打分报告，支持单篇更新/通篇全量）
+21. **需求/功能设计审核** → spec-function-design-audit：多彩建模 + 断点扫描 + ask-human 澄清 + HTML，审核完成后可选输出规范功能设计 md
+22. **资产质量审核** → spec-asset-audit：docs/ 四类资产两维度审核（表达质量 + 代码一致性），结论三档，报告归档 docs/report/（README.md 总览 + 每篇一个审核报告，支持单篇更新/增量/全量）
 
 **需求到交付（旧体系保留链路）**
 
-22. **mermaid 图验证** → mermaid-validate：含图产出物必须本地校验全部 VALID 后交付
-23. **需求到 story 设计** → spec-story-design：产出 docs/1-storys/{功能名}/ 目录（{功能名}-story.md 八类核心要素组织、标注新增/变更/不涉及 + {功能名}-develop-task.md）
-24. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核（spec-audit 场景 1）→ story 设计 → 代码实现与测试 → 资产刷新（spec-update）→ 全链路分析报告（归档 docs/1-storys/{功能名}/ story 目录），每步校验环节结束固定过 ask-human 审视门；主代理编排与用户确认、各步骤派子代理执行
+23. **mermaid 图验证** → mermaid-validate：含图产出物必须本地校验全部 VALID 后交付
+24. **需求到 story 设计** → spec-story-design：产出 docs/1-storys/{功能名}/ 目录（{功能名}-story.md 八类核心要素组织、标注新增/变更/不涉及 + {功能名}-develop-task.md）
+25. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核（spec-function-design-audit）→ story 设计 → 代码实现与测试 → 资产刷新（spec-update）→ 全链路分析报告（归档 docs/1-storys/{功能名}/ story 目录），每步校验环节结束固定过 ask-human 审视门；主代理编排与用户确认、各步骤派子代理执行
 
 ## 红线（这些想法意味着你正在跳过 skill）
 
@@ -130,14 +131,14 @@ ${indexMd}
 | "表结构/缓存结构我随便列列" | biz-data-model-analyze 定义了数据模型格式，先加载它 |
 | "框架用法我直接写" | tech-framework-guidelines-analyze 定义了框架使用指导盘点格式，先加载它 |
 | "线程池这么用没问题" | tech-concurrency-guidelines-analyze 定义了并发实例的用途定位与使用案例提取格式，先加载它 |
-| "这需求文档我读读就好" | spec-audit 场景 1 用来查表述质量与逻辑断点，先加载它 |
+| "这需求文档我读读就好" | spec-function-design-audit 用来查表述质量与逻辑断点，先加载它 |
 | "给我讲讲 XX 流程怎么走的" | arch-interaction-model-analyze 定义了交互模型（时序图）提取格式，先加载它 |
 | "这 mermaid 图我直接画/看着没问题" | mermaid-validate 定义了语法红线与本地验证流程，先加载它 |
 | "这功能我直接写 story" | spec-story-design 定义了 story 模板，先加载它 |
 | "代码写完直接提交" | qual-code-standards-analyze 定义了编码红线与门禁检查，先加载它 |
 | "MR 合了，看看文档要不要改" | spec-update 定义了 git 变更驱动的资产刷新流程，先加载它 |
 | "把分析 skill 挨个手动跑一遍" | spec-analyze 定义了子代理并行的一键全量分析编排，先加载它 |
-| "这批文档质量怎么样" | spec-audit 定义了分轨质量评估与评分分级，先加载它 |
+| "这批文档质量怎么样" | spec-asset-audit 定义了资产两维度质量审核与结论三档，先加载它 |
 | "从需求到交付，一条龙做了" | specgo 定义了六步全链路编排与子代理分工，先加载它 |
 | "这个 skill 太重，我快速做" | 如果 skill 存在，就必须用 |
 | "我记得这个 skill 的内容" | skill 会演进，每次都要重新加载当前版本 |

@@ -1,10 +1,10 @@
 # Specgo
 
-面向存量代码仓的四分类资产治理 skill 体系，共 26 个 skill：`arch` / `biz` / `tech` / `qual` 四域 16 个 + `spec` 系列 9 个（横向 5 个 + 需求到交付链路 3 个 + specgo 编排）+ 其它 1 个（mermaid-validate）。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应 skill、按 HELP.MD taxonomy 与统一格式产出文档资产到 `docs/0-{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
+面向存量代码仓的四分类资产治理 skill 体系，共 27 个 skill：`arch` / `biz` / `tech` / `qual` 四域 16 个 + `spec` 系列 10 个（横向 6 个 + 需求到交付链路 3 个 + specgo 编排）+ 其它 1 个（mermaid-validate）。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应 skill、按 HELP.MD taxonomy 与统一格式产出文档资产到 `docs/0-{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
 
 ## 设计要素全景
 
-26 个 skill 按「四域资产 + spec 横向 + spec 链路 + 编排」组织。为便于扫读拆两张图：四域 16 件按域成列（节点省略公共前后缀 `{域}-` 与 `-analyze` / `-guidelines-analyze`，全名见下表）：
+27 个 skill 按「四域资产 + spec 横向 + spec 链路 + 编排」组织。为便于扫读拆两张图：四域 16 件按域成列（节点省略公共前后缀 `{域}-` 与 `-analyze` / `-guidelines-analyze`，全名见下表）：
 
 ```mermaid
 flowchart LR
@@ -38,7 +38,7 @@ flowchart LR
     end
 ```
 
-spec 系列 9 件 + 横切工具 mermaid-validate 共 10 件：specgo 把其中 6 件串成「需求到交付」六步链（第 1 步复用 spec-analyze 或逐件四域 analyze）；其余 3 件——spec-init（建骨架/旧布局迁移）、spec-index（索引+服务依赖全景）、mermaid-validate（图渲染校验）——管建仓与横切校验，不进交付链。
+spec 系列 10 件 + 横切工具 mermaid-validate 共 11 件：specgo 把其中 6 件串成「需求到交付」六步链（第 1 步复用 spec-analyze 或逐件四域 analyze）；其余 5 件——spec-init（建骨架/旧布局迁移）、spec-index（索引+服务依赖全景）、spec-asset-audit（docs 资产质量审核）、mermaid-validate（图渲染校验）等——管建仓、资产审核与横切校验，不进交付链。
 
 ```mermaid
 flowchart TB
@@ -46,7 +46,7 @@ flowchart TB
         direction TB
         R0["specgo<br/>编排主流程"]
         S1["第1步 资产检查/录入<br/>spec-analyze（或逐件 analyze）"]
-        S2["第2步 需求审核<br/>spec-audit"]
+        S2["第2步 需求审核<br/>spec-function-design-audit"]
         S3["第3步 story 设计<br/>spec-story-design"]
         S4["第4步 代码实现与测试<br/>spec-code-generate"]
         S5["第5步 资产刷新<br/>spec-update"]
@@ -109,7 +109,7 @@ skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arc
 
 ### spec 系列（横向 + 需求到交付链路 + 编排）
 
-横向 5 件管 docs/ 资产的生命周期与交付报告（建骨架、索引、刷新、一键全量、全链路报告）；链路 3 件 + specgo 编排支撑"需求审核 → story 设计 → 代码生成"的需求到交付链路。
+横向 6 件管 docs/ 资产的生命周期、质量审核与交付报告（建骨架、索引、刷新、一键全量、资产质量审核、全链路报告）；链路 3 件 + specgo 编排支撑"需求审核 → story 设计 → 代码生成"的需求到交付链路。
 
 | Skill | 作用 | 产出 |
 |-------|------|------|
@@ -118,7 +118,8 @@ skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arc
 | spec-update | 基于 git 变更（工作区 diff / commit / MR diff）识别代码变化对 docs/ 资产的影响，按最新要素定义增量刷新受影响文档（刷新清单人工确认后定稿） | 受影响 docs/ 文档就地刷新（同名覆盖） |
 | spec-analyze | 一键全量资产分析编排：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），spec-index 收口索引；主代理只编排、确认与验收 | `docs/` 全套资产 + 各域索引与总索引 |
 | spec-story-design | 需求文档 → story 设计文档（八类核心要素组织，标注新增/变更/不涉及）；每 story 一个目录 | `docs/1-storys/{功能名}/`：{功能名}-story.md + {功能名}-develop-task.md（抛弃式编码辅助文档） |
-| spec-audit | 文档质量审核与评估：场景 1 需求/功能设计审核（多彩建模 + 断点扫描 + ask-human 澄清 + HTML，可选输出规范功能设计 md）；场景 2 资产质量评估（A 轨澄清未清零不出分；B 轨 Linter 零容忍+专项 0-5 分），支持单篇更新/通篇全量 | 建模 HTML（`docs/audit/{需求名}/`）；评估报告（`docs/report/`：README.MD 整体评估 + 每篇一个打分报告）；功能设计 md（`docs/1-storys/`） |
+| spec-function-design-audit | 需求/功能设计审核：多彩建模 + 三类断点扫描（表述质量/逻辑断点/设计要素）+ ask-human 批量澄清 + HTML，可选输出规范功能设计 md | 源文档同目录：`{功能名}-建模结果.html`；可选 `{功能名}-功能设计.md` |
+| spec-asset-audit | 四类资产质量审核：docs/{arch,biz,tech,qual}/ 资产两维度审核（表达质量 + 代码一致性），结论三档（失实/待修订/可信）；范围支持指定单篇/增量（git 变更驱动，默认）/全量 | `docs/report/`：README.md 总览 + 每篇 `{文档基名}-audit.md`（镜像 docs/ 相对路径） |
 | specgo | 全链路编排：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 资产刷新（spec-update）→ 全链路分析报告（specgo-report），六步端到端；每步校验环节结束固定过 ask-human 审视门；主代理编排与用户确认，各步骤派子代理执行 | 从需求到交付的全部产出物 |
 | specgo-report | 需求到代码全链路分析报告：三节结构（测试用例执行结果 + 代码修改清单含「业务规则」列 + 引用资产质量评估与清单同口径），由 specgo 第 6 步调度或单独触发 | `docs/1-storys/{功能名}/{YYYYMMDD}-report.md` |
 | spec-code-generate | 代码生成执行：两条铁律（完整代码零 TODO；子代理只实现代码、按文件分组可并行多个，主代理执行测试与后续流程）+ 子代理三步纪律（三波文档 → 定点核实 → 按清单落地）+ 主代理四步测试验收（组装与零 TODO 复核 → 单测 → 集成测试主动跑 → 验证命令实跑），由 specgo 第 4 步调度或单独触发 | 完整可运行的代码 + 测试（落被分析仓） |
@@ -139,12 +140,12 @@ flowchart LR
         S1["spec-init<br/>建骨架/迁移"] --> S2["16 个 analyze 逐件建资产<br/>或 spec-analyze 一键全量"] --> S3["spec-index<br/>索引+依赖全景收口"]
     end
     subgraph G2["需求开发阶段（每需求一轮）"]
-        D1["spec-audit<br/>需求审核"] --> D2["spec-story-design<br/>story 设计"] --> D3["spec-code-generate<br/>编码与测试"] --> D4["spec-update<br/>资产刷新"] --> D5["specgo-report<br/>全链路报告"]
+        D1["spec-function-design-audit<br/>需求审核"] --> D2["spec-story-design<br/>story 设计"] --> D3["spec-code-generate<br/>编码与测试"] --> D4["spec-update<br/>资产刷新"] --> D5["specgo-report<br/>全链路报告"]
     end
     G1 -.-> G2
 ```
 
-资产质量评估随时走 spec-audit 场景 2；也可直接加载 specgo 走六步端到端编排主流程（自动串联 G2 各步，子代理执行）。
+资产质量审核随时走 spec-asset-audit；也可直接加载 specgo 走六步端到端编排主流程（自动串联 G2 各步，子代理执行）。
 
 ## 使用指导
 
@@ -162,7 +163,7 @@ sequenceDiagram
     W-->>M: "资产现状与缺口清单"
     M->>H: "审视门1：资产是否齐备"
     H-->>M: "拍板"
-    M->>W: "第2步 需求审核（spec-audit 场景1）"
+    M->>W: "第2步 需求审核（spec-function-design-audit）"
     W-->>M: "建模 HTML + 疑问清单"
     M->>H: "审视门2：逐条澄清拍板"
     H-->>M: "澄清结论"
@@ -219,7 +220,7 @@ sequenceDiagram
 
 第 4 步：需求审核（可选但推荐）
 输入指令：`审核这份需求文档的逻辑完备性：<需求文档路径>`
-（spec-audit 场景 1；产出建模 HTML，批量抛出疑问点，逐条拍板）
+（spec-function-design-audit；产出建模 HTML，批量抛出疑问点，逐条拍板）
 
 第 5 步：story 设计
 输入指令：`按这份需求文档做 story 设计：<需求文档路径>`

@@ -20,8 +20,8 @@
 | business/story/Story设计README文档模板.md | spec-story-design | skills/spec-story-design/references/story-readme-template.md | 旧版索引归档；现行 docs/1-storys/README.md 索引模板以 skill references 为准 |
 | business/story/Story设计详情文档模板.md | 同上 | skills/spec-story-design/references/story-template.md | 旧六节版归档；现行 {功能名}-story.md 八类核心要素模板以 skill references 为准 |
 | business/story/DevelopTask文档模板.md | spec-story-design | skills/spec-story-design/references/develop-task-template.md | develop-task 抛弃式文档（修改文件清单 + 澄清问题列表） |
-| business/story/功能设计规范模板.md | spec-audit | skills/spec-audit/references/functional-design-template.md | 功能设计规范 md（含多彩建模章节，场景 1 审核完成后的可选输出） |
-| business/story/建模结果HTML模板.html | spec-audit | skills/spec-audit/assets/model-template.html | 多彩建模结果 HTML（四色卡片 + 断点高亮 + 人工裁定区） |
+| business/story/功能设计规范模板.md | spec-function-design-audit | skills/spec-function-design-audit/references/functional-design-template.md | 功能设计规范 md（含多彩建模章节，场景 1 审核完成后的可选输出） |
+| business/story/建模结果HTML模板.html | spec-function-design-audit | skills/spec-function-design-audit/assets/model-template.html | 多彩建模结果 HTML（四色卡片 + 断点高亮 + 人工裁定区） |
 | business/key-class/ | spec-key-class-analyze | skills/spec-key-class-analyze/references/key-class-template.md | 单一 README 清单表（类名/职责），templates 下不单独放副本 |
 | business/data-structure/数据结构盘点README文档模板.md | spec-data-structure-analyze | skills/spec-data-structure-analyze/references/readme-template.md + subdoc-template.md | docs/business/data-structure/ 主文档 README（数据结构全景 + 用途索引） |
 | business/data-structure/数据结构盘点子文档模板.md | 同上 | 同上 | spec-data-structure-<用途名>.md 子文档（一个用途一篇，含核心作用说明） |
@@ -49,4 +49,4 @@
 - **spec-analyze**：纯编排 skill（子代理派发各 analyze skill），无文档输出模板。
 - **specgo**：全链路编排 skill（按 docs/1-storys/ 下 story 设计文档编码），无文档输出模板。
 - **mermaid-validate**：画图指导 skill，无文档输出模板。
-- **spec-audit**：评估报告（docs/report/ 打分报告与 README.MD）结构内嵌于 SKILL.md 场景 2 第 6 步，无独立模板文件。
+- **spec-asset-audit**：评估报告（docs/report/ 审核报告与 README.md）结构内嵌于 SKILL.md 第 4 步，无独立模板文件。
