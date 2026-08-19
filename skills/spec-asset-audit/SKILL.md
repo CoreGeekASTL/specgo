@@ -65,7 +65,7 @@ description: >-
 ## 4. 改进建议              # 落到具体章节/条目；失实项注明修复入口（spec-update / 重跑对应 analyze skill）
 ```
 
-**`docs/report/README.md` 打分总览**（活文档，三节）：结构、填写口径与模式差异见 [references/overview-readme-template.md](references/overview-readme-template.md)——第 1 节总体评分（平均分 + 总数 + 分级分布 + 复评记录）、第 2 节文档打分明细（| 文档 | 通用分 | 专项分 | 总分 | 分级 | 评估日期 | 报告 |）、第 3 节问题清单（仅总览模式保留，承载失实证据与改进建议）。
+**`docs/report/README.md` 打分总览**（活文档，三节）：结构见 [references/overview-readme-template.md](references/overview-readme-template.md)——第 1 节总体评分（平均分 + 总数 + 分级分布 + 复评记录）、第 2 节文档打分明细（| 文档 | 通用分 | 专项分 | 总分 | 分级 | 评估日期 | 报告 |）、第 3 节问题清单（仅总览模式保留，承载失实证据与改进建议）；打分口径见上方「打分模型」，模式差异见下方「归档模式」。
 
 **归档模式**：
 
@@ -105,4 +105,4 @@ description: >-
 
 - [references/asset-expression-rules.md](references/asset-expression-rules.md) — 资产表达质量规则 E1-E5 + 通用分扣分口径（第 2 步）
 - [references/code-consistency-rules.md](references/code-consistency-rules.md) — 资产代码一致性规则 C1-C6 + 专项分计分与分级（第 3 步）
-- [references/overview-readme-template.md](references/overview-readme-template.md) — docs/report/README.md 打分总览模板与填写口径（第 4 步）
+- [references/overview-readme-template.md](references/overview-readme-template.md) — docs/report/README.md 打分总览模板（第 4 步）
