@@ -24,7 +24,7 @@
 | 功能描述 | 「在新增 xxx 功能时，需进行 xxx，采用修改/增加 xxx 函数实现 xxx 逻辑」——人话、一眼看懂，句尾括注需求章节号与裁定编号；内容必须来自需求设计文档，禁止凭印象写 | 需求设计文档章节 + 本文档澄清问题列表 | spec-story-design（第 5.2 步澄清） |
 | 交互模型定位 | 「新增 xxx 交互模型」或「在 xxx 交互模型的基础上增加/修改 xxx 环节」——只写清在哪个流程的哪个环节改，不展开论证；分支/异常逻辑归 rules 资产，一句话指明 | docs/0-arch/interaction-model/、docs/0-biz/rules/ | arch-interaction-model-analyze / biz-rules-analyze |
 | 对象/数据模型确认 | 「新增 xxx 对象/数据」或「采用 xx 对象/数据，实现 xxx 功能」——结构不变时必须明说"不变" | docs/0-biz/object-model/、docs/0-biz/data-model/ | biz-object-model-analyze / biz-data-model-analyze |
-| 修改方案 | 行为优先、禁止代码化描述，四段式（顺序不可变、缺一不可）：① 变更本质——一句话"什么变了、什么没变"，只用业务语言（接口/响应/状态/结论），禁止任何代码符号（函数名/类名/变量名/方法调用）；② 行为对照表——`\| 场景 \| 现状行为 \| 变更后行为 \|` 穷举所有受影响分支不得遗漏，含成功路径（不变须标注"不变"）；③ 代码修改方案——表格呈现，列固定为 `\| 操作 \| 逻辑 \| 通过 \| 实现 \|`，对应统一模型「增加/修改 xxx 逻辑：通过 xxx（函数/手段），实现 xxx（效果）」（逻辑名用业务语言）；④ 边界与约束——不变项、口径注意、看护边界。读者不读源码也能完整理解"什么场景下、原来怎样、改成怎样、边界在哪" | docs/0-biz/interface/、docs/0-tech/{framework,concurrency,data-access,resilience}-guidelines/、docs/0-biz/lexicon/、docs/0-tech/external-call-guidelines/ | biz-interface-analyze / tech-framework-guidelines-analyze / tech-concurrency-guidelines-analyze / biz-lexicon-analyze / tech-external-call-guidelines-analyze |
+| 修改方案 | 行为优先、禁止代码化描述，五段式（顺序不可变、缺一不可）：① 变更本质——一句话"什么变了、什么没变"，只用业务语言（接口/响应/状态/结论），禁止任何代码符号（函数名/类名/变量名/方法调用）；② 变更示意图——mermaid flowchart LR 表达本次变更方案，让人一眼看懂改了什么：节点 ≤6 个，变更节点橙色（`fill:#ffe4b5,stroke:#d4930d`），不变分支标注"（不变）"，变更分支用"原 → 新"对比表述；③ 行为对照表——`\| 场景 \| 现状行为 \| 变更后行为 \|` 穷举所有受影响分支不得遗漏，含成功路径（不变须标注"不变"）；④ 代码修改方案——表格呈现，列固定为 `\| 操作 \| 逻辑 \| 通过 \| 实现 \|`，对应统一模型「增加/修改 xxx 逻辑：通过 xxx（函数/手段），实现 xxx（效果）」（逻辑名用业务语言）；⑤ 边界与约束——不变项、口径注意、看护边界。读者不读源码也能完整理解"什么场景下、原来怎样、改成怎样、边界在哪" | docs/0-biz/interface/、docs/0-tech/{framework,concurrency,data-access,resilience}-guidelines/、docs/0-biz/lexicon/、docs/0-tech/external-call-guidelines/ | biz-interface-analyze / tech-framework-guidelines-analyze / tech-concurrency-guidelines-analyze / biz-lexicon-analyze / tech-external-call-guidelines-analyze |
 | 参考资产 | 两列表格（参考文件 \| 引用内容），每条引用内容 ≤30 字、只写该文件被引用的那点内容；链接必须指向仓内真实存在的文件，无死链 | 同上行逐条列取实际引用者 | — |
 
 ## 模板正文
@@ -67,7 +67,19 @@ flowchart LR
 **修改方案**：
 
 1. **变更本质**：authIMEI 接口的应答方式变了——HTTP 状态不再表达业务结论，三档结论全部改由响应体 code 表达；接口入参与业务判定逻辑没变。
-2. **行为对照表**：
+2. **变更示意图**：
+
+```mermaid
+flowchart LR
+    R["authIMEI 请求"] --> D{"鉴权结论"}
+    D -->|"命中"| O1["HTTP 200 + code=200（不变）"]
+    D -->|"未命中"| O2["HTTP 401 → HTTP 200 + code=401"]
+    D -->|"参数错"| O3["HTTP 401 → HTTP 200 + code=-2"]
+    classDef chg fill:#ffe4b5,stroke:#d4930d;
+    class O2,O3 chg;
+```
+
+3. **行为对照表**：
 
 | 场景 | 现状行为 | 变更后行为 |
 | --- | --- | --- |
@@ -75,13 +87,13 @@ flowchart LR
 | 未命中白名单 | HTTP 401 | HTTP 200，body code=401 |
 | 参数缺失 / JSON 非法 | HTTP 401 | HTTP 200，body code=-2 |
 
-3. **代码修改方案**（src/controllers/auth_controller.go）：
+4. **代码修改方案**（src/controllers/auth_controller.go）：
 
 | 操作 | 逻辑 | 通过 | 实现 |
 | --- | --- | --- | --- |
 | 修改 | 参数错误应答逻辑 | `AuthIMEI`：`c.Failed` → `c.OK`（body code=-2） | 参数错误 HTTP 恒 200 |
 | 修改 | 鉴权未通过应答逻辑 | `AuthIMEI`：`c.Failed` → `c.OK`（body code=401） | 未命中 HTTP 恒 200 |
-4. **边界与约束**：成功路径不变；登录/事件链路拒绝行为不改（Q2 边界）。
+5. **边界与约束**：成功路径不变；登录/事件链路拒绝行为不改（Q2 边界）。
 
 **参考资产**：
 
@@ -129,6 +141,6 @@ flowchart LR
 - [ ] 逻辑链写作指导表（模板侧）未输出到文档中；文档第 2 节仅含变更框图与方案选型约束
 - [ ] 每个变更点五字段齐全（功能描述/交互模型定位/对象与数据模型确认/修改方案/参考资产）+ 看护测试
 - [ ] 功能描述均为「在新增 xxx 功能时…采用修改/增加 xxx 函数实现 xxx 逻辑」句式且有人话依据（需求章节+裁定编号）
-- [ ] 修改方案均为四段式：变更本质（纯业务语言、无代码符号）→ 行为对照表（场景穷举、不变标注"不变"）→ 代码修改方案（表格，列固定 操作/逻辑/通过/实现）→ 边界与约束
+- [ ] 修改方案均为五段式：变更本质（纯业务语言、无代码符号）→ 变更示意图（mermaid ≤6 节点、橙色变更、不变标注）→ 行为对照表（场景穷举、不变标注"不变"）→ 代码修改方案（表格，列固定 操作/逻辑/通过/实现）→ 边界与约束；全部 mermaid 通过本地渲染验证
 - [ ] 参考资产每条引用内容 ≤30 字，无全量罗列、无死链
 - [ ] 测试改动逐条标注看护的变更编号

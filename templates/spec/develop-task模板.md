@@ -40,7 +40,19 @@ flowchart LR
 **修改方案**：
 
 1. **变更本质**：authIMEI 接口的应答方式变了——HTTP 状态不再表达业务结论，三档结论全部改由响应体 code 表达；接口入参与业务判定逻辑没变。
-2. **行为对照表**：
+2. **变更示意图**：
+
+```mermaid
+flowchart LR
+    R["authIMEI 请求"] --> D{"鉴权结论"}
+    D -->|"命中"| O1["HTTP 200 + code=200（不变）"]
+    D -->|"未命中"| O2["HTTP 401 → HTTP 200 + code=401"]
+    D -->|"参数错"| O3["HTTP 401 → HTTP 200 + code=-2"]
+    classDef chg fill:#ffe4b5,stroke:#d4930d;
+    class O2,O3 chg;
+```
+
+3. **行为对照表**：
 
 | 场景 | 现状行为 | 变更后行为 |
 | --- | --- | --- |
@@ -48,13 +60,13 @@ flowchart LR
 | 未命中白名单 | HTTP 401 | HTTP 200，body code=401 |
 | 参数缺失 / JSON 非法 | HTTP 401 | HTTP 200，body code=-2 |
 
-3. **代码修改方案**（src/controllers/auth_controller.go）：
+4. **代码修改方案**（src/controllers/auth_controller.go）：
 
 | 操作 | 逻辑 | 通过 | 实现 |
 | --- | --- | --- | --- |
 | 修改 | 参数错误应答逻辑 | `AuthIMEI`：`c.Failed` → `c.OK`（body code=-2） | 参数错误 HTTP 恒 200 |
 | 修改 | 鉴权未通过应答逻辑 | `AuthIMEI`：`c.Failed` → `c.OK`（body code=401） | 未命中 HTTP 恒 200 |
-4. **边界与约束**：成功路径不变；登录/事件链路拒绝行为不改（Q2 边界）。
+5. **边界与约束**：成功路径不变；登录/事件链路拒绝行为不改（Q2 边界）。
 
 **参考资产**：
 
