@@ -54,7 +54,7 @@ description: 规格化全链路主流程编排 skill——资产检查/录入 �
 
 ## 第 3 步：story 设计（spec-story-design）
 
-- 派**设计子代理**：加载 spec-story-design 全文，输入=第 2 步审核通过的 Spec + 第 1 步资产文档（usage 框架指导 + docs/1-storys 既有 story 为参照）。
+- 派**设计子代理**：加载 spec-story-design 全文，输入=第 2 步审核通过的 Spec + 第 1 步资产文档（framework-guidelines 框架指导 + docs/1-storys 既有 story 为参照）。
 - 产出 `docs/1-storys/{功能名}/` story 目录：`{功能名}-story.md`（八类核心要素结构，标注新增/变更/不涉及）+ `{功能名}-develop-task.md`（同目录）。
 - 子代理在 develop-task 第 5.2 步返回疑问清单 → 主代理批量向用户澄清 → 回传子代理定稿。
 - 主代理验收：story 八类核心要素判定完整（变更条目写清更改对象与内容）、develop-task 修改文件清单到函数级、mermaid 全部 VALID。
