@@ -49,8 +49,11 @@ flowchart LR
 | 参数缺失 / JSON 非法 | HTTP 401 | HTTP 200，body code=-2 |
 
 3. **代码修改方案**（src/controllers/auth_controller.go）：
-   1. 修改参数错误应答逻辑：通过 `AuthIMEI` 函数将 `c.Failed` 改为 `c.OK`（body code=-2），实现参数错误 HTTP 恒 200
-   2. 修改鉴权未通过应答逻辑：通过 `AuthIMEI` 函数将 `c.Failed` 改为 `c.OK`（body code=401），实现未命中 HTTP 恒 200
+
+| 操作 | 逻辑 | 通过 | 实现 |
+| --- | --- | --- | --- |
+| 修改 | 参数错误应答逻辑 | `AuthIMEI`：`c.Failed` → `c.OK`（body code=-2） | 参数错误 HTTP 恒 200 |
+| 修改 | 鉴权未通过应答逻辑 | `AuthIMEI`：`c.Failed` → `c.OK`（body code=401） | 未命中 HTTP 恒 200 |
 4. **边界与约束**：成功路径不变；登录/事件链路拒绝行为不改（Q2 边界）。
 
 **参考资产**：
