@@ -48,7 +48,7 @@ flowchart LR
 | 未命中白名单 | HTTP 401 | HTTP 200，body code=401 |
 | 参数缺失 / JSON 非法 | HTTP 401 | HTTP 200，body code=-2 |
 
-3. **落地地址**（src/controllers/auth_controller.go）：
+3. **修改哪些函数**（src/controllers/auth_controller.go）：
    1. 修改 `AuthIMEI` 函数：参数错误改 `c.OK` 返回 body code=-2
    2. 修改 `AuthIMEI` 函数：鉴权未通过改 `c.OK` 返回 body code=401
 4. **边界与约束**：成功路径不变；登录/事件链路拒绝行为不改（Q2 边界）。
