@@ -2,6 +2,8 @@
 
 面向存量代码仓的四分类资产治理 skill 体系，共 27 个 skill：`arch` / `biz` / `tech` / `qual` 四域 16 个 + `spec` 系列 10 个（横向 6 个 + 需求到交付链路 3 个 + specgo 编排）+ 其它 1 个（mermaid-validate）。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应 skill、按 HELP.MD taxonomy 与统一格式产出文档资产到 `docs/0-{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
 
+> 安装与卸载见 [INSTALL.md](./INSTALL.md)。
+
 ## 设计要素全景
 
 27 个 skill 按「四域资产 + spec 横向 + spec 链路 + 编排」组织。为便于扫读拆两张图：四域 16 件按域成列（节点省略公共前后缀 `{域}-` 与 `-analyze` / `-guidelines-analyze`，全名见下表）：
