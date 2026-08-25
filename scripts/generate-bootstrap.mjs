@@ -1,7 +1,8 @@
 /**
- * 从 skills/ 下 14 个 spec skill 的 frontmatter 生成 bootstrap.md。
+ * 自动扫描 skills/ 下全部 skill 目录（排除 . 开头；specgo 编排排最后，其余按名字典序），
+ * 从各 SKILL.md frontmatter 生成 bootstrap.md。
  * bootstrap.md 是两平台共用的注入源——opencode.js 和 hooks/session-start 都读它。
- * skill 内容变更后重跑：bun .claude/plugins/specgo/scripts/generate-bootstrap.mjs
+ * skill 内容变更后重跑：node .claude/plugins/specgo/scripts/generate-bootstrap.mjs
  */
 
 import path from 'path';
@@ -13,22 +14,14 @@ const PLUGIN_ROOT = path.resolve(__dirname, '..');
 const SKILLS_DIR = path.join(PLUGIN_ROOT, 'skills');
 const OUTPUT = path.join(PLUGIN_ROOT, 'bootstrap.md');
 
-const SPEC_SKILLS = [
-  'spec-structure-analyze',
-  'spec-interface-analyze',
-  'spec-external-call-analyze',
-  'spec-feature-analyze',
-  'spec-key-class-analyze',
-  'spec-data-structure-analyze',
-  'spec-framework-usage-analyze',
-  'spec-business-flow-analyze',
-  'spec-logic-audit',
-  'spec-mermaid-diagram',
-  'spec-story-design',
-  'spec-code-check',
-  'spec-asset-refresh',
-  'specgo',
-];
+const SPEC_SKILLS = fs.readdirSync(SKILLS_DIR, { withFileTypes: true })
+  .filter((e) => e.isDirectory() && !e.name.startsWith('.'))
+  .map((e) => e.name)
+  .sort((a, b) => {
+    if (a === 'specgo') return 1;
+    if (b === 'specgo') return -1;
+    return a < b ? -1 : a > b ? 1 : 0;
+  });
 
 const parseFrontmatter = (content) => {
   const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
@@ -96,37 +89,57 @@ ${indexMd}
 
 针对一个存量代码仓的完整规格化流程，按序串联；也可单独触发任意一步。
 
-1. **结构摸底** → spec-structure-analyze：mermaid 依赖图 + 模块说明表
-2. **对外接口盘点** → spec-interface-analyze：主文档 README + 功能域子文档
-3. **出站调用盘点** → spec-external-call-analyze：README 索引 + external-call-*.md（按下游服务归类）
-4. **接口归纳为功能域** → spec-feature-analyze：feature-*.md（功能故事多彩建模 + 实现方案 + 接口清单 + 关键数据结构 + 调用关系 + 外部文档引用，共六节）
-5. **关键类剖析** → spec-key-class-analyze：docs/business/key-class/README.md 单文件单表（类名/类的职责，职责 38 字内）
-6. **关键数据结构** → spec-data-structure-analyze：README + 按用途分篇，归档 docs/business/data-structure/
-7. **框架使用模式** → spec-framework-usage-analyze：每框架一篇使用指导，归档 docs/technical/framework-usage/
-8. **业务流程梳理（用户指定流程）** → spec-business-flow-analyze：按模板深度梳理单个业务流程，归档 docs/architecture/business-flow/
-9. **需求文档逻辑审核** → spec-logic-audit：表述质量扫描 + 多彩建模 + HTML 可视化 + ask-human 补逻辑断点
-10. **mermaid 图验证** → spec-mermaid-diagram：含图产出物必须本地校验全部 VALID 后交付
-11. **需求到 story 设计** → spec-story-design：产出与 docs/business/story/ 同构的新功能设计文档
-12. **代码检查（资产刷新前质量闸门）** → spec-code-check：需求 commit 增量 clean code 检查（内置 27 条+语言特则）+ 架构变更分析，报告问题并询问是否修复，产出 docs/engineering/code-check/ 检查文档
-13. **MR 后资产刷新** → spec-asset-refresh：基于 MR diff 识别七类资产变化，增量刷新 + 人工审核
-14. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核 → story 设计 → 代码实现与测试 → 代码检查 → 资产维护，主代理编排与用户确认、各步骤派子代理执行
+**四域资产治理（arch / biz / tech / qual + 横向 spec，新体系）**
+
+1. **资产骨架初始化（一次性）** → spec-init：初始化 docs/0-{域}/{资产}/ 目录骨架（每类资产一个单独目录），一次性迁移既有产出，迁移映射清单先交用户确认
+2. **结构摸底** → arch-structure-model-analyze：UML 包图 + 依赖矩阵 + 分层特征，落盘 docs/0-arch/structure-model/（仓级总览 README.md + 每模块 structure-model-{module}.md）
+3. **交互模型提取（默认全部流程，可指定单流程）** → arch-interaction-model-analyze：UML 时序图呈现模块间主业务流程与消息走向，只画主链路，落盘 docs/0-arch/interaction-model/（README.md 流程导航 + interaction-model-{flow}.md）
+4. **对外接口盘点** → biz-interface-analyze：按功能域聚类，主文档 README + interface-{feature}.md，落盘 docs/0-biz/interface/
+5. **业务规则梳理** → biz-rules-analyze：按需求类整理"条件 → 动作 + 依据"规则条目，README.md 功能域导航 + rules-{feature}.md，落盘 docs/0-biz/rules/
+6. **对象模型** → biz-object-model-analyze：实体/值对象/聚合/领域服务/领域事件（UML 类图），README.md 聚合导航 + object-model-{aggregate}.md，落盘 docs/0-biz/object-model/
+7. **数据模型** → biz-data-model-analyze：持久态表结构/缓存数据结构/字段关系与数据生命周期（UML-ER），README.md 实体导航 + data-model-{entity}.md，落盘 docs/0-biz/data-model/
+8. **领域词典** → biz-lexicon-analyze：业务与代码共用的受控词汇集（术语释义 + 语境边界 + 代码命名映射），主文档 README.md + 每功能域 1 篇 lexicon-{feature}.md，落盘 docs/0-biz/lexicon/
+9. **框架使用指导** → tech-framework-guidelines-analyze：基础框架清单与使用方式盘点（纯现状提取），framework-guidelines-{framework}.md 每框架一篇，落盘 docs/0-tech/framework-guidelines/
+10. **通信规范** → tech-external-call-guidelines-analyze：RPC/HTTP/MQ 跨服务调用指导（双模式：现状提取 + 差距分析），external-call-guidelines-{service}.md 每外部服务一篇
+11. **并发规范** → tech-concurrency-guidelines-analyze：线程池/锁/channel 等并发原语实例的用途定位、使用说明与代码案例（章节上限三节），README.md 实例导航 + concurrency-guidelines-{pool}.md 每实例一篇
+12. **数据访问规范** → tech-data-access-guidelines-analyze：Redis/DB 等中间件访问指导，README.md 中间件导航 + data-access-guidelines-{mw}.md 每中间件一篇
+13. **韧性规范** → tech-resilience-guidelines-analyze：超时/重试/熔断/异常处理的使用说明与代码案例，README 索引 + resilience-guidelines-{dimension}.md 每维度一篇
+14. **基础规范** → tech-basic-mechanism-guidelines-analyze：日志/配置/告警等基础机制的函数调用说明与使用代码案例，README 索引 + basic-mechanism-guidelines-{dimension}.md 每维度一篇
+15. **编码规范（门禁）** → qual-code-standards-analyze：命名/注释/函数长度/圈复杂度/安全编码红线/禁止项清单，code-standards.md + report/ 门禁差距报告
+16. **DT 规范（门禁）** → qual-dt-guidelines-analyze：测试金字塔与覆盖基线、用例设计、覆盖率门禁，dt-guidelines.md + report/
+17. **分支与变更规范** → qual-branch-guidelines-analyze：分支模型、commit/MR 规范、评审要求，branch-guidelines.md
+18. **索引生成** → spec-index：各域 README + docs/README.md 总索引 + 服务依赖全景图（Mermaid）
+19. **资产刷新（git 变更驱动）** → spec-update：基于 git diff 识别变更对 docs/ 资产的影响，按最新要素定义增量刷新受影响文档，刷新清单人工确认后定稿
+20. **一键全量资产分析（编排入口）** → spec-analyze：子代理并行派发全部 16 个 analyze skill（词典第二波复用接口功能域口径），一次性建齐 docs/ 资产，spec-index 收口
+21. **需求/功能设计审核** → spec-function-design-audit：多彩建模 + 断点扫描 + ask-human 澄清 + HTML，审核完成后可选输出规范功能设计 md
+22. **资产质量审核** → spec-asset-audit：docs/ 四类资产两维度审核（表达质量 + 代码一致性），结论三档，报告归档 docs/report/（README.md 总览 + 每篇一个审核报告，支持单篇更新/增量/全量）
+
+**需求到交付（旧体系保留链路）**
+
+23. **mermaid 图验证** → mermaid-validate：含图产出物必须本地校验全部 VALID 后交付
+24. **需求到 story 设计** → spec-story-design：产出 docs/1-storys/{功能名}/ 目录（{功能名}-story.md 八类核心要素组织、标注新增/变更/不涉及 + {功能名}-develop-task.md）
+25. **全链路编排（端到端主流程，推荐入口）** → specgo：资产检查/录入 → 需求审核（spec-function-design-audit）→ story 设计 → 代码实现与测试 → 资产刷新（spec-update）→ 全链路分析报告（归档 docs/1-storys/{功能名}/ story 目录），每步校验环节结束固定过 ask-human 审视门；主代理编排与用户确认、各步骤派子代理执行
 
 ## 红线（这些想法意味着你正在跳过 skill）
 
 | 想法 | 现实 |
 |------|------|
-| "我先扫一眼目录" | spec-structure-analyze 定义了"怎么扫"，先加载它 |
-| "列一下接口就行" | spec-interface-analyze 定义了接口盘点格式，先加载它 |
-| "看看调了哪些下游服务" | spec-external-call-analyze 定义了出站调用盘点格式，先加载它 |
-| "核心类我挑几个讲讲" | spec-key-class-analyze 定义了关键类识别与清单格式，先加载它 |
-| "数据结构我随便列列" | spec-data-structure-analyze 定义了关键数据结构识别与分组格式，先加载它 |
-| "这需求文档我读读就好" | spec-logic-audit 用来查表述质量与逻辑断点，先加载它 |
-| "给我讲讲 XX 流程怎么走的" | spec-business-flow-analyze 定义了业务流程梳理模板，先加载它 |
-| "这 mermaid 图我直接画/看着没问题" | spec-mermaid-diagram 定义了语法红线与本地验证流程，先加载它 |
+| "我先扫一眼目录" | arch-structure-model-analyze 定义了"怎么扫"，先加载它 |
+| "列一下接口就行" | biz-interface-analyze 定义了接口盘点格式，先加载它 |
+| "看看调了哪些下游服务" | tech-external-call-guidelines-analyze 定义了跨服务调用规范与盘点格式，先加载它 |
+| "业务规则我边读边总结" | biz-rules-analyze 定义了规则条目格式（条件 → 动作 + 依据），先加载它 |
+| "表结构/缓存结构我随便列列" | biz-data-model-analyze 定义了数据模型格式，先加载它 |
+| "框架用法我直接写" | tech-framework-guidelines-analyze 定义了框架使用指导盘点格式，先加载它 |
+| "线程池这么用没问题" | tech-concurrency-guidelines-analyze 定义了并发实例的用途定位与使用案例提取格式，先加载它 |
+| "这需求文档我读读就好" | spec-function-design-audit 用来查表述质量与逻辑断点，先加载它 |
+| "给我讲讲 XX 流程怎么走的" | arch-interaction-model-analyze 定义了交互模型（时序图）提取格式，先加载它 |
+| "这 mermaid 图我直接画/看着没问题" | mermaid-validate 定义了语法红线与本地验证流程，先加载它 |
 | "这功能我直接写 story" | spec-story-design 定义了 story 模板，先加载它 |
-| "MR 合了，看看文档要不要改" | spec-asset-refresh 定义了 MR 驱动的资产刷新流程，先加载它 |
+| "代码写完直接提交" | qual-code-standards-analyze 定义了编码红线与门禁检查，先加载它 |
+| "MR 合了，看看文档要不要改" | spec-update 定义了 git 变更驱动的资产刷新流程，先加载它 |
+| "把分析 skill 挨个手动跑一遍" | spec-analyze 定义了子代理并行的一键全量分析编排，先加载它 |
+| "这批文档质量怎么样" | spec-asset-audit 定义了资产两维度质量审核与结论三档，先加载它 |
 | "从需求到交付，一条龙做了" | specgo 定义了六步全链路编排与子代理分工，先加载它 |
-| "代码写完了，直接刷新资产/提交" | spec-code-check 定义了资产刷新前的 clean code + 架构变更检查流程，先加载它 |
 | "这个 skill 太重，我快速做" | 如果 skill 存在，就必须用 |
 | "我记得这个 skill 的内容" | skill 会演进，每次都要重新加载当前版本 |
 
