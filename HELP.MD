@@ -1,8 +1,9 @@
 # 存量代码资产治理
 
-> 版本：v1.1　日期：2026-08-08
+> 版本：v1.2　日期：2026-08-26
 > 适用范围：基于"四分类资产模型"的存量代码资产治理
 > v1.1 变更：输出目录改为"每类资产一个单独目录"（`docs/0-{域}/{资产}/`），同域不同资产不再混放。
+> v1.2 变更：skill 结构收敛为「5 主 skill + 23 子流程」——下表各 skill 不再是独立 skill，而是主 skill 内 `references/subflows/<名称>.md` 的子流程（依赖文件在同级 `assets/`，带短名前缀），由主 skill 路由表加载或以同名 `/` 命令触发；主 skill 归属：四域 16 个归 spec-analyze，链路 5 个（function-design-audit/story-design/code-generate/report/update）归 specgo，init/index 归 spec-admin；spec-asset-audit 与 mermaid-validate 保持独立 skill。
 
 ## 一、命名规范
 
@@ -42,6 +43,7 @@
 
 ### 1.3 命名红线
 
+0. **子流程文件落位**：子流程文档命名为 `<子流程名>.md`，放主 skill 的 `references/subflows/`（禁止叫 SKILL.md，否则被递归发现为独立 skill）；其依赖文件放同级 `references/assets/`，命名 `<资产短名>--<原文件名>`（短名 = 子流程名去 `{域}-` 前缀与 `-analyze` 后缀）；
 1. **查表制**：域名、形态词、动作词只准从词汇表取，新增资产先扩表再起名；
 2. **动作统一 `analyze`**：提取与差距检查不占用命名，由 SKILL.md 内部双模式实现区分；
 3. **实例 slug 从代码标识符派生**：模块名/表名/服务名转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代；

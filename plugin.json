@@ -1,7 +1,7 @@
 {
   "name": "specgo",
-  "description": "四分类资产治理体系：arch 结构 / biz 业务 / tech 技术 / qual 工程四域 + spec 横向共 20 个治理 skill（产出落盘 docs/{域}/{资产}/），另有 spec-function-design-audit / spec-story-design / spec-code-generate 三个需求到交付链路 skill、spec-asset-audit 资产质量审核 skill、mermaid-validate 图校验 skill 与 specgo 编排 skill 支撑需求到交付链路，session 启动时注入 bootstrap，强制 AI 做分析/编码任务前先加载对应 skill",
-  "version": "2.9.3",
+  "description": "四分类资产治理体系：5 个主 skill（spec-analyze 资产分析 / specgo 需求到交付编排 / spec-admin 资产体系管理 / spec-asset-audit 资产质量审核 / mermaid-validate 图校验）+ 23 个子流程（主 skill 内 references/subflows/，由主 skill 路由加载，也可用同名 / 命令触发；arch 结构/交互、biz 接口/规则/对象/数据/词典、tech 框架/通信/并发/数据访问/韧性/基础、qual 编码/DT/分支、需求审核/story设计/代码生成/资产刷新/报告/init/index），产出落盘 docs/{域}/{资产}/；session 启动注入 bootstrap，强制 AI 做分析/编码任务前先加载对应主 skill",
+  "version": "2.10.0",
   "author": {
     "name": "AIAction"
   },

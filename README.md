@@ -1,12 +1,12 @@
 # Specgo
 
-面向存量代码仓的四分类资产治理 skill 体系，共 27 个 skill：`arch` / `biz` / `tech` / `qual` 四域 16 个 + `spec` 系列 10 个（横向 6 个 + 需求到交付链路 3 个 + specgo 编排）+ 其它 1 个（mermaid-validate）。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应 skill、按 HELP.MD taxonomy 与统一格式产出文档资产到 `docs/0-{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
+面向存量代码仓的四分类资产治理 skill 体系：**5 个主 skill + 23 个子流程 + 23 个斜杠命令**。主 skill 对外暴露（进 skill 列表）：`spec-analyze`（资产分析，承载 16 个四域分析子流程）、`specgo`（需求到交付六步编排，承载 5 个链路子流程）、`spec-admin`（资产体系管理，承载 init/index 2 个子流程）、`spec-asset-audit`（资产质量审核）、`mermaid-validate`（图校验）。子流程是主 skill 内 `references/subflows/*.md` 的执行剧本，由主 skill 路由表加载，也可用同名斜杠命令（如 `/biz-interface-analyze`）直接触发。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应主 skill、按 HELP.MD taxonomy 与统一格式产出文档资产到 `docs/0-{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
 
 > 安装与卸载见 [INSTALL.md](./INSTALL.md)。
 
 ## 设计要素全景
 
-27 个 skill 按「四域资产 + spec 横向 + spec 链路 + 编排」组织。为便于扫读拆两张图：四域 16 件按域成列（节点省略公共前后缀 `{域}-` 与 `-analyze` / `-guidelines-analyze`，全名见下表）：
+23 个子流程按「四域资产 + spec 横向 + spec 链路 + 编排」组织（子流程归属：四域 16 件归 spec-analyze，链路 5 件归 specgo，init/index 2 件归 spec-admin；每个子流程有同名斜杠命令）。为便于扫读拆两张图：四域 16 件按域成列（节点省略公共前后缀 `{域}-` 与 `-analyze` / `-guidelines-analyze`，全名见下表）：
 
 ```mermaid
 flowchart LR
@@ -40,7 +40,7 @@ flowchart LR
     end
 ```
 
-spec 系列 10 件 + 横切工具 mermaid-validate 共 11 件：specgo 把其中 6 件串成「需求到交付」六步链（第 1 步复用 spec-analyze 或逐件四域 analyze）；其余 5 件——spec-init（建骨架/旧布局迁移）、spec-index（索引+服务依赖全景）、spec-asset-audit（docs 资产质量审核）、mermaid-validate（图渲染校验）等——管建仓、资产审核与横切校验，不进交付链。
+spec 系列 7 件子流程 + spec-analyze/specgo/spec-admin 3 件主 skill + 横切工具 mermaid-validate：specgo 把其中 6 件串成「需求到交付」六步链（第 1 步复用 spec-analyze 或逐件四域 analyze）；其余——spec-init（建骨架/旧布局迁移）、spec-index（索引+服务依赖全景）、spec-asset-audit（docs 资产质量审核）、mermaid-validate（图渲染校验）等——管建仓、资产审核与横切校验，不进交付链。
 
 ```mermaid
 flowchart TB
@@ -69,9 +69,9 @@ flowchart TB
 
 要点：四域 16 个 analyze skill 产出落盘 `docs/0-{域}/{资产}/`（每类资产一个单独目录，活文档同名覆盖）；specgo 编排六步、每步结束过一道 ask-human 审视门（人的参与方式见下方「人工环节一览」时序图）；spec-init / spec-index 只在建仓期使用，mermaid-validate 横切校验所有含图产出物。详细产出物清单见下表。
 
-## 内含 skill
+## 内含 skill 与子流程
 
-skill 清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arch / biz / tech / qual）+ spec 系列（横向 / 链路 / 编排）+ 其它。命名公式 `{域}-{资产}-{形态}-analyze`，输出统一落盘 `docs/0-{域}/{资产}/`（每类资产一个单独目录）。
+对外暴露 5 个主 skill（`spec-analyze` / `specgo` / `spec-admin` / `spec-asset-audit` / `mermaid-validate`）；下表 23 项为子流程，清单按 HELP.MD「四分类资产模型」taxonomy 组织：四域（arch / biz / tech / qual）+ spec 系列（横向 / 链路 / 编排）+ 其它。命名公式 `{域}-{资产}-{形态}-analyze`，输出统一落盘 `docs/0-{域}/{资产}/`（每类资产一个单独目录）。子流程以同名斜杠命令触发，或由主 skill 路由加载。
 
 ### 架构要素（arch）—— 定结构：代码往哪放
 
@@ -187,9 +187,11 @@ sequenceDiagram
     M->>H: "审视门6：交付验收"
 ```
 
-逐 skill 手动执行（方式一）时同理：每个 skill 产出后由人审视确认再进下一步；子代理只执行、主代理只编排与测试、人只决策。
+逐子流程手动执行（方式一）时同理：每个子流程产出后由人审视确认再进下一步；子代理只执行、主代理只编排与测试、人只决策。
 
-### 方式一：逐 skill 手动执行（人逐步触发）
+### 方式一：逐子流程手动执行（人逐步触发）
+
+> 下表各步的子流程均可用同名斜杠命令直接触发（如 `初始化 docs 目录骨架` 等价于 `/spec-init`），或说一句人话由对应主 skill 路由命中。
 
 **资产治理阶段**
 
