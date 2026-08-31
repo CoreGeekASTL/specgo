@@ -1,6 +1,6 @@
 # Specgo
 
-面向存量代码仓的四分类资产治理 skill 体系：**7 个独立 skill + 17 个子流程 + 17 个斜杠命令**，无编排层——各 skill 独立执行、按需串联。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应 skill、按 HELP.MD taxonomy 与统一格式产出文档资产到 `docs/0-{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
+面向存量代码仓的四分类资产治理 skill 体系：**7 个独立 skill + 17 个子流程 + 17 个斜杠命令**，无编排层——各 skill 独立执行、按需串联。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应 skill、按四分类资产模型 taxonomy 与统一格式产出文档资产到 `docs/0-{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
 
 > 安装与卸载见 [INSTALL.md](./INSTALL.md)。
 >
