@@ -55,35 +55,31 @@
 | qual/分支规范模板.md | qual-branch-guidelines-analyze | skills/qual-branch-guidelines-analyze/references/branch-guidelines-template.md | branch-guidelines.md 分支规范骨架 |
 | qual/分支规范差距报告模板.md | 同上 | skills/qual-branch-guidelines-analyze/references/gap-report-template.md | 分支规范差距报告 |
 
-## spec 横向编排要素
+## spec 横向要素
 
 | 模板文件 | 来源 Skill | 原文件路径 | 用途 |
 | --- | --- | --- | --- |
-| spec/story设计README模板.md | spec-story-design | skills/spec-story-design/references/story-readme-template.md | story 索引 README |
-| spec/story设计详情模板.md | 同上 | skills/spec-story-design/references/story-template.md | {功能名}-story.md 八类核心要素骨架 |
-| spec/develop-task模板.md | 同上 | skills/spec-story-design/references/develop-task-template.md | {功能名}-develop-task.md 修改清单 + 澄清清单 |
-| spec/功能设计规范模板.md | spec-function-design-audit | skills/spec-function-design-audit/references/functional-design-template.md | 功能设计规范 md（场景 1 审核后可选输出） |
-| spec/建模结果HTML模板.html | 同上 | skills/spec-function-design-audit/assets/model-template.html | 多彩建模结果 HTML |
-| spec/资产审核总览README模板.md | spec-asset-audit | skills/spec-asset-audit/references/overview-readme-template.md | docs/report/README.md 评估总览骨架 |
-| spec/docs域README索引模板.md | spec-index | skills/spec-index/references/domain-readme-template.md | 各域 README 索引骨架 |
-| spec/docs总README索引模板.md | 同上 | skills/spec-index/references/root-readme-template.md | docs/README.md 总索引 + 依赖全景图骨架 |
-| spec/全链路分析报告模板.md | specgo-report | skills/specgo-report/references/report-template.md | {YYYYMMDD}-report.md 全链路报告骨架 |
+| spec/story设计README模板.md | spec-story-design | skills/spec-story-design/references/assets/story-readme-template.md | story 索引 README |
+| spec/story设计详情模板.md | 同上 | skills/spec-story-design/references/assets/story-template.md | {功能名}-story.md 八类核心要素骨架 |
+| spec/develop-task模板.md | 同上 | skills/spec-story-design/references/assets/develop-task-template.md | {功能名}-develop-task.md 修改清单 + 澄清清单 |
+| spec/功能设计规范模板.md | spec-requirement-audit | skills/spec-requirement-audit/references/assets/functional-design-template.md | 规范功能实现设计 md |
+| spec/建模结果HTML模板.html | 同上 | skills/spec-requirement-audit/references/assets/model-template.html | 多彩建模结果 HTML |
+| spec/资产审核总览README模板.md | asset-audit（spec-analyze 子流程） | skills/spec-analyze/references/assets/asset-audit--overview-readme-template.md | docs/report/README.md 评估总览骨架 |
 
 ## 无独立模板的 skill
 
-- **specgo**：全链路编排 skill（按 docs/1-storys/ 下 story 设计文档编码），无文档输出模板。
-- **spec-analyze**：纯编排 skill（子代理派发各 analyze skill），无文档输出模板。
-- **spec-init**：初始化 docs/ 目录骨架，无文档输出模板。
-- **spec-update**：按各 analyze skill 的最新要素定义增量刷新既有文档，无独立模板。
+- **spec-analyze**：路由 + 编排 skill（子代理派发各 analyze 子流程），无文档输出模板。
+- **spec-update**：按各 analyze 子流程的最新要素定义增量刷新既有文档，无独立模板。
+- **spec-pipeline**：查找并执行 pipeline-skill.md 的流水线执行 skill，无文档输出模板（流水线报告不落盘）。
 - **mermaid-validate**：画图指导 skill，无文档输出模板。
 
 ## 不收录的非模板参考文档
 
 下列文件为分类目录、规则底稿、方法论或检查清单（非输出文档骨架），不收录到本目录，使用时直接读对应 skill：
 
-- biz-interface-analyze/references/interface-catalog.md
-- qual-code-standards-analyze/references/rules-catalog.md
-- tech-framework-guidelines-analyze/references/{framework-catalog,analysis-dimensions}.md
-- spec-story-design/references/{color-modeling,orthogonality-principles}.md
-- spec-function-design-audit/references/{color-modeling,gap-checklist,requirement-quality-checklist}.md
-- spec-asset-audit/references/{asset-expression-rules,code-consistency-rules}.md
+- spec-analyze/references/assets/interface--interface-catalog.md
+- spec-analyze/references/assets/code-standards--rules-catalog.md
+- spec-analyze/references/assets/framework-guidelines--{framework-catalog,analysis-dimensions}.md
+- spec-story-design/references/assets/{color-modeling,orthogonality-principles}.md
+- spec-requirement-audit/references/assets/{color-modeling,gap-checklist,requirement-quality-checklist,code-crosscheck-guide}.md
+- spec-analyze/references/assets/asset-audit--{asset-expression-rules,code-consistency-rules}.md

@@ -1,17 +1,19 @@
 ---
-name: spec-asset-audit
+name: asset-audit
 description: >-
-  四类资产质量审核 skill——审核 docs/{arch,biz,tech,qual}/ 资产文档与索引，只做两个维度：表达质量（文字表达连续、人能读懂）与代码一致性（重点：锚点反查、接口/数据结构/出站调用与代码事实比对、mermaid 渲染校验），按 E/C 规则扣分打分（通用分/专项分/总分，0.4/0.6 加权，分级：≥95 已基线 / 80-95 待修订 / <80 重写），报告归档 docs/report/（README.md 打分总览 + 每篇一个 {文档基名}-audit.md，镜像 docs/ 相对路径，同名覆盖）；范围四种模式：指定单篇 / 增量（已实现代码、有 git 变更时默认，只审受影响资产）/ 总览（首次建资产后推荐，全量审核打分但只落盘 README.md，问题清单写在 README 第 3 节）/ 全量（逐篇报告 + README 全量重建，总览的备选）。当用户提到"spec-asset-audit"、"资产质量评估"、"评估 docs 文档质量"、"文档与代码一致性检查"、"资产失实检查"、"审核资产文档"时使用。需求/功能设计文档的审核归 spec-function-design-audit。
+  四类资产质量审核 skill——审核 docs/{arch,biz,tech,qual}/ 资产文档与索引，只做两个维度：表达质量（文字表达连续、人能读懂）与代码一致性（重点：锚点反查、接口/数据结构/出站调用与代码事实比对、mermaid 渲染校验），按 E/C 规则扣分打分（通用分/专项分/总分，0.4/0.6 加权，分级：≥95 已基线 / 80-95 待修订 / <80 重写），报告归档 docs/report/（README.md 打分总览 + 每篇一个 {文档基名}-audit.md，镜像 docs/ 相对路径，同名覆盖）；范围四种模式：指定单篇 / 增量（已实现代码、有 git 变更时默认，只审受影响资产）/ 总览（首次建资产后推荐，全量审核打分但只落盘 README.md，问题清单写在 README 第 3 节）/ 全量（逐篇报告 + README 全量重建，总览的备选）。当用户提到"asset-audit"、"资产质量评估"、"评估 docs 文档质量"、"文档与代码一致性检查"、"资产失实检查"、"审核资产文档"时使用。需求/功能设计文档的审核归 spec-requirement-audit skill。
 ---
 
-# 四类资产质量审核（spec-asset-audit）
+<!-- 子流程：不独立暴露为 skill；由 spec-analyze 主 skill 路由加载，也可由 /asset-audit 命令触发。依赖文件在同级 ../assets/（带 asset-audit-- 前缀） -->
+
+# 四类资产质量审核（asset-audit）
 
 审核对象：`docs/{arch,biz,tech,qual}/` 资产文档与各域索引 README。只做两个维度：
 
-- **表达质量**（文字表达连续、人能读懂）——规则见 [references/asset-expression-rules.md](references/asset-expression-rules.md)（E1 句子完整 / E2 弱表述 / E3 术语一致 / E4 结构连续与导航闭环 / E5 待确认集中登记）
-- **代码一致性**（重点，资产跟着代码走）——规则见 [references/code-consistency-rules.md](references/code-consistency-rules.md)（C1 锚点反查 / C2 接口一致 / C3 数据结构一致 / C4 出站调用一致 / C5 覆盖留痕 / C6 mermaid 校验）
+- **表达质量**（文字表达连续、人能读懂）——规则见 [references/assets/asset-audit--asset-expression-rules.md](../assets/asset-audit--asset-expression-rules.md)（E1 句子完整 / E2 弱表述 / E3 术语一致 / E4 结构连续与导航闭环 / E5 待确认集中登记）
+- **代码一致性**（重点，资产跟着代码走）——规则见 [references/assets/asset-audit--code-consistency-rules.md](../assets/asset-audit--code-consistency-rules.md)（C1 锚点反查 / C2 接口一致 / C3 数据结构一致 / C4 出站调用一致 / C5 覆盖留痕 / C6 mermaid 校验）
 
-**自包含原则**：审核规则全部归档在自身 references/ 下（mermaid 验证脚本除外，全插件共用）。
+**自包含原则**：审核规则全部归档在同级 ../assets/ 下（asset-audit-- 前缀；mermaid 验证脚本除外，全插件共用）。
 
 四步，严格按序。
 
@@ -32,11 +34,11 @@ description: >-
 
 ## 第 2 步：表达质量扫描
 
-逐篇对照 asset-expression-rules.md 的 E1-E5 检出，输出检出表（规则 | 命中数 | 位置清单）。只检出不修改。
+逐篇对照 asset-audit--asset-expression-rules.md 的 E1-E5 检出，输出检出表（规则 | 命中数 | 位置清单）。只检出不修改。
 
 ## 第 3 步：代码一致性核验（重点）
 
-逐篇对照 code-consistency-rules.md 的 C1-C6 执行：
+逐篇对照 asset-audit--code-consistency-rules.md 的 C1-C6 执行：
 
 1. 零容忍项（C1/C2/C3/C4/C6）必须真实执行 grep/文件比对/校验脚本，每条失实附证据（执行了什么、命没命中），禁止目测通过、禁止无证据断言。
 2. 按规则的抽样口径执行并在报告中写明实际抽了哪些样本。
@@ -58,14 +60,14 @@ description: >-
 
 ```
 # {文档名} 质量审核报告
-| 元信息 | 值 |   # 被审文档路径 / 域(arch/biz/tech/qual) / 审核日期 / Skill: spec-asset-audit
+| 元信息 | 值 |   # 被审文档路径 / 域(arch/biz/tech/qual) / 审核日期 / Skill: asset-audit
 ## 1. 结论                  # 总分 + 分级（已基线/待修订/重写）+ 一行理由
 ## 2. 表达质量检出           # E 规则 × 命中数 × 位置 × 扣分（算出通用分）
 ## 3. 代码一致性核验         # C 规则 × 核验方式 × 命中数 × 扣分 × 证据（算出专项分；零容忍命中单列）
-## 4. 改进建议              # 落到具体章节/条目；失实项注明修复入口（spec-update / 重跑对应 analyze skill）
+## 4. 改进建议              # 落到具体章节/条目；失实项注明修复入口（spec-update / 重跑对应 analyze 子流程）
 ```
 
-**`docs/report/README.md` 打分总览**（活文档，三节）：结构见 [references/overview-readme-template.md](references/overview-readme-template.md)——第 1 节总体评分（平均分 + 总数 + 分级分布 + 复评记录）、第 2 节文档打分明细（| 文档 | 通用分 | 专项分 | 总分 | 分级 | 评估日期 | 报告 |）、第 3 节问题清单（仅总览模式保留，承载失实证据与改进建议）；打分口径见上方「打分模型」，模式差异见下方「归档模式」。
+**`docs/report/README.md` 打分总览**（活文档，三节）：结构见 [references/assets/asset-audit--overview-readme-template.md](../assets/asset-audit--overview-readme-template.md)——第 1 节总体评分（平均分 + 总数 + 分级分布 + 复评记录）、第 2 节文档打分明细（| 文档 | 通用分 | 专项分 | 总分 | 分级 | 评估日期 | 报告 |）、第 3 节问题清单（仅总览模式保留，承载失实证据与改进建议）；打分口径见上方「打分模型」，模式差异见下方「归档模式」。
 
 **归档模式**：
 
@@ -73,7 +75,7 @@ description: >-
 - **总览模式**（总览审核）：逐篇重审打分，**只落盘 README.md**——三节全量重建，第 3 节问题清单承载全部失实/待修订证据；不生成、不改动任何单篇 -audit.md（既有单篇报告保留但明细表报告列写 "—（仅总览）"）。
 - **全量模式**（全量审核）：逐篇重审出报告（同名覆盖）；README.md 三节全量重建（第 3 节省略）。
 
-交付回复给摘要：审核范围与模式、总体评分一行（平均分 + 分级分布）、失实/重写项与证据、改进建议清单；并提示：失实修复走 spec-update 或重跑对应 analyze skill。
+交付回复给摘要：审核范围与模式、总体评分一行（平均分 + 分级分布）、失实/重写项与证据、改进建议清单；并提示：失实修复走 spec-update 或重跑对应 analyze 子流程。
 
 ## 输出规范
 
@@ -96,13 +98,13 @@ description: >-
 
 ## 与其它 skill 的关系
 
-- **spec-function-design-audit**：姊妹 skill——它审需求/功能设计文档（编码前），本 skill 审 docs/ 四域资产文档质量（资产治理侧）。
+- **spec-requirement-audit**：姊妹 skill——它审需求/功能设计文档（编码前），本子流程审 docs/ 四域资产文档质量（资产治理侧）。
 - **mermaid-validate**：mermaid 校验脚本提供方。
-- **各 analyze skill**：四类资产的生产方——检出「失实」后的重建入口；其内嵌自检（锚点反查/覆盖留痕/导航闭环）是 C/E 规则的出处。
+- **各 analyze 子流程**：四类资产的生产方——检出「失实」后的重建入口；其内嵌自检（锚点反查/覆盖留痕/导航闭环）是 C/E 规则的出处。
 - **spec-update**：「失实」的增量修复入口（审核只发现问题）。
 
 ## 参考文件索引
 
-- [references/asset-expression-rules.md](references/asset-expression-rules.md) — 资产表达质量规则 E1-E5 + 通用分扣分口径（第 2 步）
-- [references/code-consistency-rules.md](references/code-consistency-rules.md) — 资产代码一致性规则 C1-C6 + 专项分计分与分级（第 3 步）
-- [references/overview-readme-template.md](references/overview-readme-template.md) — docs/report/README.md 打分总览模板（第 4 步）
+- [references/assets/asset-audit--asset-expression-rules.md](../assets/asset-audit--asset-expression-rules.md) — 资产表达质量规则 E1-E5 + 通用分扣分口径（第 2 步）
+- [references/assets/asset-audit--code-consistency-rules.md](../assets/asset-audit--code-consistency-rules.md) — 资产代码一致性规则 C1-C6 + 专项分计分与分级（第 3 步）
+- [references/assets/asset-audit--overview-readme-template.md](../assets/asset-audit--overview-readme-template.md) — docs/report/README.md 打分总览模板（第 4 步）

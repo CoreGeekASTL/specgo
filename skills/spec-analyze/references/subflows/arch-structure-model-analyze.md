@@ -163,6 +163,6 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **业务目录识别靠启发式不靠硬编码**：第 2 步的辅助目录清单是行业共识，可以排除；遇到清单外的可疑辅助目录，单独注明理由排除，保留可追溯性。
 - **实例 slug 从代码标识符派生**：`{module}`/`{dir}`/`{pkg}` 一律取模块目录名/包名转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
 - **活文档覆盖更新**：`docs/0-arch/structure-model/` 下模型文档同名直接覆盖，不保留历史副本、不加日期后缀——差距报告才带日期，模型文档不带。
-- **索引分工**：仓级总览 `README.md` 即本资产目录主文档，由本 skill 产出、活文档同名覆盖；域索引 `docs/0-arch/README.md` 与总索引 `docs/README.md` 由 spec-index skill 统一生成，本 skill 不维护。
+- **索引分工**：仓级总览 `README.md` 即本资产目录主文档，由本 skill 产出、活文档同名覆盖；域索引 `docs/0-arch/README.md` 与总索引 `docs/README.md` 自 v3.0 起不再自动生成（spec-index 已移除），本 skill 不维护。
 - **成品纯净**：最终文档只含成品内容（标题、概览、图、表格）。模板顶部的元说明、写作指令行、占位符说明均为规则，不复制进成品。第 1~4 步的探测过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格，且**证据不得含代码行号**。
 - **文档语言**：输出文档用中文，技术术语（Controller / Service / Repository / Package / Module 等）保留英文。

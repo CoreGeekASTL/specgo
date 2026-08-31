@@ -88,7 +88,7 @@ participant 显示名用模块名/外部方名，participant 对应的代码位�
 - `{flow}` 实例 slug **从代码标识符派生**：取流程入口的代码标识符（入口 handler 函数名 / 路由末段 / 消息 topic 名）转 kebab-case，如 `login`、`check-auth`；禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。用户确认的流程中文名只进文档标题，不进文件名。
 - 同名文件已存在**直接覆盖更新**——模型文档是活文档，固定名、覆盖更新，git diff 即演进史。
 - **资产主文档 `README.md` 必产出**：同目录落 `README.md`（活文档，同名覆盖），内容仅两项——元信息表（分支/更新日期/Skill）+ 流程导航表（流程名 → `interaction-model-{flow}.md` 链接 + 一句话流程说明，从各文档首行标题提取）；单流程模式（用户指明流程）时同样刷新该 README，只增改对应行。
-- 索引分工：本资产目录的 `README.md` 由本 skill 产出；域索引 `docs/0-arch/README.md` 与总索引 `docs/README.md` 由 spec-index 统一生成，本 skill 不维护。
+- 索引分工：本资产目录的 `README.md` 由本 skill 产出；域索引 `docs/0-arch/README.md` 与总索引 `docs/README.md` 自 v3.0 起不再自动生成（spec-index 已移除），本 skill 不维护。
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
 

@@ -142,7 +142,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **成品纯净**：最终文档只含成品内容。扫描过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格。
 - **语言无关**：不预设被分析仓的语言与框架，按第 2 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（HTTP / RPC / gRPC / MQ / SDK / timeout / retry 等）保留英文。
-- **索引分工**：域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
+- **索引分工**：域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 自 v3.0 起不再自动生成（spec-index 已移除），本 skill 不维护。
 - **与相邻资产互补**：入站接口看 biz-interface-analyze 产出的 `docs/0-biz/interface/`；纯故障策略（熔断 / 降级）的专项规范归 tech-resilience-guidelines-analyze，本 skill 只记录调用点的超时/重试/错误码处理事实与合规性。
 
 ## 参考文件索引

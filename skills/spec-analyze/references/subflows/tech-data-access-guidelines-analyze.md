@@ -171,7 +171,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
   3. 证据句尾——证据文件路径放该句/该行末尾的括号内，不与事实混排在句中。
   4. 结论先行——每个子维度开头一句粗体总起句给结论，细节跟在后面。
   5. 示例驱动——每篇文档选一个代表性业务对象（一张表 / 一类 key）作贯穿示例说明访问机制，其余同类访问只归纳机制、不逐一枚举；全量表/字段清单归 biz-data-model-analyze 产出的 docs/0-biz/data-model/，本资产不罗列。
-- **索引分工**：本资产目录的 `README.md`（存储导航主文档，含内存数据/持久化数据分类列）由本 skill 产出，活文档同名覆盖；域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
+- **索引分工**：本资产目录的 `README.md`（存储导航主文档，含内存数据/持久化数据分类列）由本 skill 产出，活文档同名覆盖；域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 自 v3.0 起不再自动生成（spec-index 已移除），本 skill 不维护。
 - **与相邻资产互补**：持久化存储的表结构/字段/生命周期细节看 biz-data-model-analyze 产出的 `docs/0-biz/data-model/`（本资产重"怎么用、什么场景用"，数据模型资产重"字段与关系"）；框架用法骨架（无规范、纯现状）看 tech-framework-guidelines-analyze 产出的 `docs/0-tech/framework-guidelines/`；纯故障策略（熔断/降级/重试）的专项规范归 tech-resilience-guidelines-analyze，本 skill 只记录数据访问点的错误处理事实与合规性。
 - **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 mermaid-validate 的 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
 

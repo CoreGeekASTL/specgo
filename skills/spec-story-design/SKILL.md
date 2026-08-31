@@ -1,13 +1,13 @@
 ---
 name: spec-story-design
-description: 当接收到需求设计文档（SR/特性设计），需要为存量代码仓产出新功能的 story 设计文档时使用——产出 `docs/1-storys/{功能名}/` 目录（每 story 一个目录：`{功能名}-story.md` + `{功能名}-develop-task.md`，后续全链路分析报告也归档同目录）：story 按八类核心要素（对外接口/业务规则/数据模型/对象模型/领域词典/交互流程/外部服务调用/技术要素）组织章节，每类要素明确标注 新增 / 变更（写清对哪个既有要素做了什么更改）/ 不涉及，并附需求概述（多彩建模）、实现方案与修改清单、外部文档引用；同需求重跑同名覆盖。触发场景包括"新增 story 设计"、"根据需求文档生成 story 设计"、"xxx-story 文档"、"docs/1-storys"、"按 story 模板输出新功能设计"等。
+description: 当接收到需求设计文档（SR/特性设计）或 spec-requirement-audit 产出的规范功能实现设计，需要为存量代码仓产出新功能的 story 设计文档时使用——产出 `docs/1-storys/{功能名}/` 目录（每 story 一个目录：`{功能名}-story.md` + `{功能名}-develop-task.md`）：story 按八类核心要素（对外接口/业务规则/数据模型/对象模型/领域词典/交互流程/外部服务调用/技术要素）组织章节，每类要素明确标注 新增 / 变更（写清对哪个既有要素做了什么更改）/ 不涉及，并附需求概述（多彩建模）、实现方案与修改清单、外部文档引用；同需求重跑同名覆盖。触发场景包括"新增 story 设计"、"根据需求文档生成 story 设计"、"xxx-story 文档"、"docs/1-storys"、"按 story 模板输出新功能设计"等。
 ---
-
-<!-- 子流程：不独立暴露为 skill；由 specgo 主 skill 路由加载，也可由 /spec-story-design 命令触发。依赖文件在同级 ../assets/（带短名前缀） -->
 
 # Story 设计：从需求文档到 {功能名}-story 文档
 
-接收一篇需求设计文档，结合存量资产（v1.1 四域资产 + 旧体系素材），产出一个 story 目录 `docs/1-storys/{功能名}/`（内含 `{功能名}-story.md` 与 `{功能名}-develop-task.md`；specgo 第 6 步的全链路分析报告亦归档此目录）。
+接收一篇需求设计文档（或 spec-requirement-audit 产出的规范功能实现设计），结合存量资产（v1.1 四域资产 + 旧体系素材），产出一个 story 目录 `docs/1-storys/{功能名}/`（内含 `{功能名}-story.md` 与 `{功能名}-develop-task.md`）。
+
+**交互双模式（全局条款）**：本 skill 所有询问点**默认使用 ask-human 工具**；若任务开始时用户声明"以报告形式呈现"（或同类意思），则全程**不使用 ask-human**——所有待澄清/待审视内容以报告形式输出，等用户回复后继续。
 
 **核心立意**：一篇 story 文档表达**一个需求给代码仓带来的增量（delta）**——章节由八类核心要素构成，每个要素必须回答两个问题：**哪个要素是新加的？对哪个既有要素做了什么更改？** 不涉及的要素显式标注"不涉及"，不留空白。
 
@@ -51,13 +51,13 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 
 **存量资产缺失时的降级（任一缺失不阻断流程）**：
 
-- `docs/1-storys/` 不存在：第 6 步新建目录并按 ../assets/story-design--story-readme-template.md 生成 README 索引。
+- `docs/1-storys/` 不存在：第 6 步新建目录并按 references/assets/story-readme-template.md 生成 README 索引。
 - 上述任一资产目录不存在：以外部文档引用章节对应行注明"仓内无该类文档"，要素变更前基线以存量代码为准。
-- 全部不存在（全新仓首篇 story）：格式基准仍以 ../assets/story-design--story-template.md、color-modeling.md 为准，产出物形态不变。
+- 全部不存在（全新仓首篇 story）：格式基准仍以 references/assets/story-template.md、color-modeling.md 为准，产出物形态不变。
 
 ### 第 3 步：先完成多彩建模（需求概述）
 
-**必须先完成本节，再进入第 4 步。**按 ../assets/story-design--color-modeling.md 方法论产出 story 文档第 1 节：
+**必须先完成本节，再进入第 4 步。**按 references/assets/color-modeling.md 方法论产出 story 文档第 1 节：
 
 1. **实现逻辑速览**：1~3 句，每句 ≤30 字，概括设计后的实现逻辑（业务语言，禁文件名/函数名）。
 2. **四色建模图**（mermaid flowchart + classDef 固定配色：粉 #ffd1dc / 黄 #fff3b0 / 绿 #c8e6c9 / 蓝 #bbdefb）：粉色事件链来自需求文档的流程机制（主干时序+分支），黄色角色含内外部系统边界，绿色实体标注状态变更（含缓存等内存态实体），蓝色规则挂实体（校验规则/规格上限/逃生策略）。每个粉色事件必须具备 触发者/输入/输出/后继 四要素。
@@ -66,14 +66,14 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 
 ### 第 4 步：核心要素逐节设计（第 2~12 节）
 
-按 ../assets/story-design--story-template.md 骨架产出：
+按 references/assets/story-template.md 骨架产出：
 
 1. **核心要素变更总览（第 2 节）**：八类要素逐行判定三态（新增/变更/不涉及），变更类摘要必须写清"对哪个要素做了什么更改"。
 2. **要素节（第 3~10 节）**：逐要素展开——「新增」小节列全新要素（接口表/规则表/表结构/术语等，字段见模板）；「变更」小节逐条写清**变更对象（既有要素名+文件）+ 更改内容（变更前 → 变更后）+ 影响**；两小节都无内容的要素整节省略。交互流程节：每条新增链路一张 mermaid 时序图 + 实现说明（多句话逐步说明，每句 ≤30 字、业务语言、可落到编码）；变更链路先给变更点表（在哪个环节插入/替换/删除什么），再画变更后主链路时序图。
 3. **实现方案与修改清单（第 11 节）**：mermaid 依赖图 + 承载模块表，模块按变更类型标注——新增标"（规划）"、复用标"（复用，<文件>）"、变更标"（变更：<文件>，改了什么）"；职责边界遵循需求文档的模块职责约束。
 4. **外部文档引用（第 12 节）**：三列表（文档类型 | 引用文档 | 引用点），逐类一行：接口文档（biz/interface 相关子文档）、外部接口文档（external-call-guidelines 相关子文档）、基础框架文档（逐个框架一行链接 usage 真实文档，注明"按该文档 <某约定> 执行"，只列真实需要的框架，禁止按目录全量罗列）、结构模型文档（structure-model*.md）、既有 story（docs/1-storys/ 相关文档）、其它资产（rules/lexicon/data-model 等按需）。链接必须指向仓内真实存在的文件，无死链；某类确无引用须注明"无引用"及原因，禁止整节省略。
 
-产出后按 ../assets/story-design--orthogonality-principles.md 执行**正交四原则自检**：逐条核对实现方案与各要素节是否符合 DRY（无重复实现）、SoC（无错位分层）、最小化依赖（无多余框架/库/字段）、稳定依赖方向（无下层反向依赖、无循环依赖）。违规处直接修改设计；确有理由必须违规的，标注理由提交用户确认，禁止悄悄违规。
+产出后按 references/assets/orthogonality-principles.md 执行**正交四原则自检**：逐条核对实现方案与各要素节是否符合 DRY（无重复实现）、SoC（无错位分层）、最小化依赖（无多余框架/库/字段）、稳定依赖方向（无下层反向依赖、无循环依赖）。违规处直接修改设计；确有理由必须违规的，标注理由提交用户确认，禁止悄悄违规。
 
 ### 第 5 步：生成 develop-task 文档（读源码 → 疑问澄清 → 定稿）
 
@@ -86,7 +86,7 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 - 5.2 提交用户澄清时，不确定的、待选的方案必须**批量抛出、全部向用户问清楚**，且覆盖业务逻辑正确的合理方案——不得只拿最简单方案问用户，由用户在澄清环节拍板。
 - 禁止为省事而引入逻辑缺口的方案，典型反例：绕过既有校验/状态机、破坏事务一致性、忽略并发竞争、吞掉异常分支、为少改文件而错位分层（如业务逻辑塞进 Controller）。
 - 5.3 定稿的修改文件清单按用户澄清结论落地，每条修改点须能对应业务正确性依据（需求章节号 + 存量代码事实），而非仅"改动小/侵入低"。
-- 修改点设计同时受**软件正交四原则**约束（../assets/story-design--orthogonality-principles.md）：5.1 定位修改点时核对目标分层归属符合 SoC 与稳定依赖方向；5.3 每条修改点不得引入重复实现、错位分层、多余依赖、反向/循环依赖。与"业务逻辑正确性第一"冲突时，以业务逻辑正确性为准，并把取舍提交用户确认。
+- 修改点设计同时受**软件正交四原则**约束（references/assets/orthogonality-principles.md）：5.1 定位修改点时核对目标分层归属符合 SoC 与稳定依赖方向；5.3 每条修改点不得引入重复实现、错位分层、多余依赖、反向/循环依赖。与"业务逻辑正确性第一"冲突时，以业务逻辑正确性为准，并把取舍提交用户确认。
 
 #### 5.1 阅读源码，定位修改点
 
@@ -115,7 +115,7 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 
 #### 5.3 用户澄清后，输出完整 develop-task 文档
 
-收到用户澄清回复后，按 ../assets/story-design--develop-task-template.md 模板输出完整文档到 `docs/1-storys/{功能名}/{功能名}-develop-task.md`。文档核心内容须基于 5.1 源码阅读 + 5.2 用户澄清填写，输出格式见模板：
+收到用户澄清回复后，按 references/assets/develop-task-template.md 模板输出完整文档到 `docs/1-storys/{功能名}/{功能名}-develop-task.md`。文档核心内容须基于 5.1 源码阅读 + 5.2 用户澄清填写，输出格式见模板：
 
 - **变更总览（模板第 2 节）**：变更框图（mermaid flowchart，按业务链路分 subgraph、橙色标注变更节点）+ 方案选型约束核对；逻辑链环节与资产/skill 的对应关系是模板侧写作指导，不输出到文档
 - **逐变更点修改清单（模板第 3 节）**：每个变更点按逻辑链五字段展开（功能描述/交互模型定位/对象与数据模型确认/修改方案/参考资产）+ 看护测试；各字段写作模式（功能描述句式、修改方案五段式「变更本质→变更示意图→行为对照表→代码修改方案→边界与约束」、参考资产 ≤30 字表格等）严格按模板执行
@@ -130,7 +130,7 @@ description: 当接收到需求设计文档（SR/特性设计），需要为存�
 **分支 A：新增文档**（docs/1-storys/ 下无同功能名 story 目录）
 
 - 输出到 `docs/1-storys/{功能名}/{功能名}-story.md`（功能名为英文短名 kebab-case）；目录不存在时新建。
-- 更新 `docs/1-storys/README.md`：Story 全景表新增一行（核心要素变更摘要取自 story 第 2 节总览表，文档列链接 `{功能名}/{功能名}-story.md`）；README 不存在时按 ../assets/story-design--story-readme-template.md 从头生成（元信息表 + Story 全景表，导航作用不加其他章节）。
+- 更新 `docs/1-storys/README.md`：Story 全景表新增一行（核心要素变更摘要取自 story 第 2 节总览表，文档列链接 `{功能名}/{功能名}-story.md`）；README 不存在时按 references/assets/story-readme-template.md 从头生成（元信息表 + Story 全景表，导航作用不加其他章节）。
 
 **分支 B：覆盖更新**（同功能名 story 目录已存在——本需求重跑/迭代）
 
@@ -153,6 +153,25 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
 - 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 mermaid-validate skill 的「语法红线」。
 
+### 第 8 步：输出设计报告（不落盘，收尾必做）
+
+对话内输出设计报告全文（不落盘；用户要求时可落盘）：
+
+```
+# story 设计报告（{功能名}）
+1. 八要素覆盖统计：对外接口/业务规则/数据模型/对象模型/领域词典/交互流程/外部服务调用/技术要素 逐类一行（新增 x 项 / 变更 y 项 / 不涉及）
+2. 关键设计决策与依据：每条 = 决策一句话 + 依据（需求章节号 / 存量代码事实）
+3. 修改文件清单摘要：develop-task 逐变更点压缩表（文件 | 操作 | 一句话改动）
+4. 疑问澄清记录：第 5.2 步疑问点 + 用户裁定逐条
+5. 正交四原则自检结论：DRY / SoC / 最小化依赖 / 稳定依赖方向 逐项通过或经确认的违规及理由
+6. 产出文件清单：story / develop-task / docs/1-storys/README.md 索引路径 + mermaid VALID 结论
+7. 下一步建议：可进入 spec-code-generate
+```
+
+- **默认**：报告末尾用 ask-human 询问用户是否审视通过；有意见则整改后重新呈现报告。
+- **报告模式**：仅输出报告，不使用 ask-human。
+- 报告审视通过（或报告模式下用户回复确认）才算本 skill 完成。
+
 ## 质量检查清单
 
 - [ ] 第 3 步多彩建模先于其它设计章节完成，图中每个粉色事件四要素齐全、无文件名/函数名/行号
@@ -170,14 +189,15 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - [ ] develop-task 文档已在第 5 步独立产出：5.1 已实读源码定位修改点；实现方案立足存量代码现状论证，5.2 已将不确定的、待选方案全部向用户问清楚且覆盖业务逻辑正确的合理方案（非只拿最简单方案问，无疑问时已明确回复"无疑问"），无绕过既有校验/事务/并发语义的逻辑缺口；修改点不违反正交四原则，确需违规的取舍已提交用户确认；5.3 按用户澄清定稿六节齐全（变更框图 + 逐变更点逻辑链分析 + 澄清问题列表逐条记录），各字段写作模式符合模板、参考资产链接仓内真实文档
 - [ ] `docs/1-storys/README.md` 索引已同步（新增加行 / 重跑更新对应行），无死链
 - [ ] 产出文档中的 mermaid 图已全部通过本地渲染验证（mermaid-validate 验证脚本全部 VALID）
+- [ ] 设计报告七节齐全（不落盘），已按交互双模式完成用户审视
 
 ## 参考文件索引
 
-- ../assets/story-design--color-modeling.md — 多彩建模方法论（第 3 步用，本目录自包含副本）
-- ../assets/story-design--story-template.md — story 设计文档输出模板（需求概述 + 八类核心要素 + 实现方案 + 外部文档引用，第 4、6 步用）
-- ../assets/story-design--story-readme-template.md — docs/1-storys/README.md 索引模板（第 6 步用）
-- ../assets/story-design--develop-task-template.md — develop-task 抛弃式文档模板（第 5 步用）
-- ../assets/story-design--orthogonality-principles.md — 软件正交四原则（DRY/SoC/最小化依赖/稳定依赖方向）：第 4 步自检与第 5 步修改点设计约束
+- references/assets/color-modeling.md — 多彩建模方法论（第 3 步用，本目录自包含副本）
+- references/assets/story-template.md — story 设计文档输出模板（需求概述 + 八类核心要素 + 实现方案 + 外部文档引用，第 4、6 步用）
+- references/assets/story-readme-template.md — docs/1-storys/README.md 索引模板（第 6 步用）
+- references/assets/develop-task-template.md — develop-task 抛弃式文档模板（第 5 步用）
+- references/assets/orthogonality-principles.md — 软件正交四原则（DRY/SoC/最小化依赖/稳定依赖方向）：第 4 步自检与第 5 步修改点设计约束
 - docs/0-biz/interface/README.md — 对外接口文档索引（第 2、4 步用）
 - docs/0-tech/framework-guidelines/README.md — 框架使用文档索引（第 2、4 步用）
 - docs/0-tech/external-call-guidelines/README.md — 出站调用文档索引（第 2、4 步用）

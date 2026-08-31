@@ -106,7 +106,7 @@ python3 <skill_dir>/../assets/framework-guidelines--scan_frameworks.py <repo_pat
 1. **索引 README.md**：按 ../assets/framework-guidelines--readme-template.md 填充——固定三行元信息表（分支/更新日期/Skill）+ 框架全景清单表（# | 类别 | 框架 | 使用指导文档链接，无死链）。README 只起导航作用，不加其他章节；未命中的类别列一行标注"未发现"，存储/ORM 类命中时标注"归 data-access-guidelines 承载"，证明排查过。
 2. **每框架一篇 `framework-guidelines-{framework}.md`**：按 ../assets/framework-guidelines--framework-guidelines-template.md 填充，只含两节——**用途定位**（该框架在系统中承担什么角色、用在哪些模块）+ **使用模式**（典型调用序列骨架，真实代码片段注明来源文件路径）。
 
-更新策略：目录与文件已存在时，按框架逐篇对比更新（框架被移除则在该篇标注"已下线"），不要整目录覆盖重写；README.md 索引随框架增删同步更新。历史产出若仍位于旧布局 `docs/technical/framework-usage/` 或旧锚点 `docs/0-tech/usage/`，由 spec-init 负责一次性迁移，本 skill 只读写 `docs/0-tech/framework-guidelines/`。
+更新策略：目录与文件已存在时，按框架逐篇对比更新（框架被移除则在该篇标注"已下线"），不要整目录覆盖重写；README.md 索引随框架增删同步更新。历史产出若仍位于旧布局 `docs/technical/framework-usage/` 或旧锚点 `docs/0-tech/usage/`，需人工一次性迁移，本 skill 只读写 `docs/0-tech/framework-guidelines/`。
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
 
@@ -134,7 +134,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **基于实证**：所有结论必须有代码证据支撑，证据为**文件路径**（不带行号——行号随代码变更失效且无跨工具稳定性），禁止臆测；约定从代码事实归纳，不从文档照抄。
 - **实例 slug 从代码标识符派生**：`{framework}` 取依赖清单/代码中的框架名转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
 - **活文档覆盖更新**：`docs/0-tech/framework-guidelines/` 下文档同名直接覆盖（按框架逐篇更新），不保留历史副本、不加日期后缀。
-- **索引分工**：索引 `README.md`（框架全景导航）即本资产目录主文档，由本 skill 产出、活文档同名覆盖；域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 由 spec-index 统一生成，本 skill 不维护。
+- **索引分工**：索引 `README.md`（框架全景导航）即本资产目录主文档，由本 skill 产出、活文档同名覆盖；域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 自 v3.0 起不再自动生成（spec-index 已移除），本 skill 不维护。
 - **只读不改**：只读、只分析、只产出文档，不改动被分析代码仓的任何文件（`docs/` 下产出除外）。
 - **成品纯净**：最终文档只含成品内容；第 2~4 步的探测过程（执行的 grep 命令、扫描脚本输出摘要）仅供自检，绝不写入最终文档——其结论须以文件路径证据形式进入文档。
 - **文档语言**：输出文档用中文，技术术语（RPC / Actor / ORM / ThreadPool / Channel 等）保留英文。

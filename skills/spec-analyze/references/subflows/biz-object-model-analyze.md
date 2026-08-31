@@ -125,7 +125,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **语言无关**：不预设被分析仓的语言/框架，按第 1 步实际探测结果走。
 - **实例 slug 从代码标识符派生**：`{aggregate}` 取聚合根类名/结构体名转 kebab-case，禁止 AI 自由起名，保证重跑产出同名文件、资产不断代。
 - **活文档覆盖更新**：`docs/0-biz/object-model/` 下模型文档同名直接覆盖，不保留历史副本、不加日期后缀——差距报告才带日期，模型文档不带。
-- **索引分工**：本资产目录的 `README.md`（聚合导航主文档）由本 skill 产出，活文档同名覆盖；域索引 `docs/0-biz/README.md` 与总索引 `docs/README.md` 由 spec-index skill 统一生成，本 skill 不维护。
+- **索引分工**：本资产目录的 `README.md`（聚合导航主文档）由本 skill 产出，活文档同名覆盖；域索引 `docs/0-biz/README.md` 与总索引 `docs/README.md` 自 v3.0 起不再自动生成（spec-index 已移除），本 skill 不维护。
 - **成品纯净**：最终文档只含成品内容（标题、概述、图、表格、补充说明）。模板顶部的元说明、写作指令行、占位符说明均为规则，不复制进成品。第 1~2 步的探测过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格，且**证据不得含代码行号**。
 - **文档语言**：输出文档用中文，技术术语（Entity / Value Object / Aggregate Root / Domain Service / Domain Event 等）保留英文。
 

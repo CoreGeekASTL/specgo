@@ -1,5 +1,5 @@
 {
   "name": "specgo",
-  "description": "四分类资产治理体系：5 个主 skill（spec-analyze 资产分析 / specgo 需求到交付编排 / spec-admin 资产体系管理 / spec-asset-audit 资产质量审核 / mermaid-validate 图校验）+ 23 个子流程（主 skill 内 references/subflows/，由主 skill 路由加载，也可用同名 / 命令触发；arch 结构/交互、biz 接口/规则/对象/数据/词典、tech 框架/通信/并发/数据访问/韧性/基础、qual 编码/DT/分支、需求审核/story设计/代码生成/资产刷新/报告/init/index），产出落盘 docs/{域}/{资产}/；session 启动注入 bootstrap，强制 AI 做分析/编码任务前先加载对应主 skill",
-  "version": "2.10.0"
+  "description": "四分类资产治理体系：7 个独立 skill（spec-analyze 资产分析，承载 17 个子流程 / spec-requirement-audit 需求审核（看文档+看代码）/ spec-story-design story 设计 / spec-code-generate 代码生成与测试 / spec-pipeline 流水线执行（查找并执行 pipeline-skill.md）/ spec-update 资产刷新 / mermaid-validate 图校验）+ 17 个斜杠命令（spec-analyze 子流程触发用，顶层 skill 无命令）；产出落盘 docs/0-{域}/{资产}/ 与 docs/1-storys/；session 启动注入 bootstrap，强制 AI 做分析/编码任务前先加载对应 skill",
+  "version": "3.0.0"
 }
