@@ -1,10 +1,12 @@
 ---
 name: spec-update
 description: >-
-  基于 git 变更（工作区未提交改动 / 指定 commit / 分支或 MR diff）识别代码原始内容变化，结合新增代码审视 docs/ 资产体系中对应文档是否需要刷新，并按最新要素定义（arch/biz/tech/qual 各 analyze skill 的目录布局、文件命名、模板骨架、组织规则）增量刷新受影响文档——变更文件映射到资产要素、逐资产判定影响（受影响 / 不受影响 / 资产未建），刷新清单先交人工确认再动笔定稿；索引资产（docs/0-{域}/README.md、docs/README.md）随资产增删按 spec-index 口径收口。当代码提交或 MR 合入后需要评估"这次变更要更新哪些 docs 文档""资产是否过期""按最新定义同步文档"时使用。触发场景包括"spec-update"、"资产刷新"、"刷新 docs"、"代码改了哪些文档要更新"、"变更影响分析"、"文档同步"、"docs 与代码不同步"、"MR 后刷新文档"、"git diff 刷新资产"等。
+  基于 git 变更（工作区未提交改动 / 指定 commit / 分支或 MR diff）识别代码原始内容变化，结合新增代码审视 docs/ 资产体系中对应文档是否需要刷新，并按最新要素定义（arch/biz/tech/qual 各 analyze 子流程的目录布局、文件命名、模板骨架、组织规则）增量刷新受影响文档——变更文件映射到资产要素、逐资产判定影响（受影响 / 不受影响 / 资产未建），刷新清单先交人工确认再动笔定稿。当代码提交或 MR 合入后需要评估"这次变更要更新哪些 docs 文档""资产是否过期""按最新定义同步文档"时使用。触发场景包括"spec-update"、"资产刷新"、"刷新 docs"、"代码改了哪些文档要更新"、"变更影响分析"、"文档同步"、"docs 与代码不同步"、"MR 后刷新文档"、"git diff 刷新资产"等。
 ---
 
 # 资产刷新（spec-update）——git 变更驱动的 docs 资产同步
+
+**交互双模式（全局条款）**：本 skill 所有询问点（含第 3 步刷新清单确认门）**默认使用 ask-human 工具**；若任务开始时用户声明"以报告形式呈现"（或同类意思），则全程**不使用 ask-human**——刷新清单等待确认内容以报告形式输出，等用户回复后继续。
 
 ## 目的
 
@@ -60,7 +62,6 @@ description: >-
 | 编码规范 | `docs/0-qual/code-standards/` | qual-code-standards-analyze | 通常不随单次代码变更刷新；编码约定本身变化时刷新 |
 | DT 规范 | `docs/0-qual/dt-guidelines/` | qual-dt-guidelines-analyze | 测试体系/覆盖率门禁约定变化时刷新 |
 | 分支规范 | `docs/0-qual/branch-guidelines/` | qual-branch-guidelines-analyze | 分支/commit/MR 约定变化时刷新 |
-| 索引 | `docs/0-{域}/README.md`、`docs/README.md` | spec-index | 任何资产文档增删后收口刷新 |
 
 一个变更文件可命中多个要素（如新增 DB 实体同时波及数据模型、对象模型、领域词典）；一个要素被命中至少一次即进入第 3 步判定。
 
@@ -77,11 +78,10 @@ description: >-
 - 逐篇刷新：以代码现状为最终依据，只更新受影响的章节/表格行/图；格式严格对齐对应 analyze skill 的当前模板与组织规则（文件命名、小节顺序、锚点口径、证据不带行号等）。
 - **增量优先**：不重写整篇——除非该资产的要素定义本身就是全量重推导覆盖（如仓级单篇规范类文档）；刷新后文档须独立成立，无"新旧混杂"的矛盾表述。
 - 特殊口径：
-  - **通用**：多文件资产目录的实例文档增删/标题变化时，同步刷新该目录 `README.md` 主文档导航（ HELP.MD v1.1 约定：每多文件资产目录必有 README.md 主文档）；目录缺 README.md 的按对应 analyze skill 口径补建。
+  - **通用**：多文件资产目录的实例文档增删/标题变化时，同步刷新该目录 `README.md` 主文档导航（约定：每多文件资产目录必有 README.md 主文档）；目录缺 README.md 的按对应 analyze skill 口径补建。
   - `0-biz/lexicon`：主文档 + 子域文档拆分口径；功能域增删 → 增删 `lexicon-{子域锚点}.md` 并同步主文档子域导航表；待确认清单始终全仓汇总于主文档。
   - `0-biz/interface`：主文档 README 全景与各功能域子文档同步刷新。
   - 含 mermaid 的文档刷新后必须本地验证全部 VALID（见第 5 步）。
-- **索引收口**：资产文档有增删时，按 spec-index 口径刷新 `docs/0-{域}/README.md` 与 `docs/README.md`（或明确提示用户运行 spec-index）。
 - **只改 `docs/`**；本次变更未波及的文档一字不动；禁止借刷新顺手"改进"无关内容。
 
 ### 第 5 步：自检与交付
@@ -104,7 +104,5 @@ description: >-
 
 ## 与其它 skill 的关系
 
-- **各 analyze skill**：要素定义来源——spec-update 不定义任何资产格式，只引用它们的当前定义做增量刷新。
-- **spec-index**：索引收口——资产文档增删后的 `docs/0-{域}/README.md` 与 `docs/README.md` 刷新遵循 spec-index 口径。
+- **spec-analyze 各 analyze 子流程**：要素定义来源——spec-update 不定义任何资产格式，只引用它们的当前定义做增量刷新。
 - **mermaid-validate**：含 mermaid 的刷新文档按其语法红线绘制，并过其验证脚本。
-- **specgo**：全链路编排第 5 步调用本 skill 完成资产收口。
