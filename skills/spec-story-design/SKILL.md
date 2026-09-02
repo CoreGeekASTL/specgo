@@ -143,15 +143,15 @@ description: 当接收到需求设计文档（SR/特性设计）或 spec-require
 
 ### 第 7 步：验证 mermaid 图可渲染（收尾必做）
 
-产出文档中含 ```mermaid 代码块（四色建模图、交互流程时序图、实现方案依赖图等），交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块（四色建模图、交互流程时序图、实现方案依赖图等），交付前必须运行 mermaid 本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
-- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 mermaid-validate skill 的「语法红线」。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 `<specgo插件目录>/references/mermaid-guide.md` 的「语法红线」。
 
 ### 第 8 步：输出设计报告（不落盘，收尾必做）
 
@@ -188,7 +188,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - [ ] 每条链路时序图下方已补实现说明，多句话逐步说明，每句 ≤30 字
 - [ ] develop-task 文档已在第 5 步独立产出：5.1 已实读源码定位修改点；实现方案立足存量代码现状论证，5.2 已将不确定的、待选方案全部向用户问清楚且覆盖业务逻辑正确的合理方案（非只拿最简单方案问，无疑问时已明确回复"无疑问"），无绕过既有校验/事务/并发语义的逻辑缺口；修改点不违反正交四原则，确需违规的取舍已提交用户确认；5.3 按用户澄清定稿六节齐全（变更框图 + 逐变更点逻辑链分析 + 澄清问题列表逐条记录），各字段写作模式符合模板、参考资产链接仓内真实文档
 - [ ] `docs/1-storys/README.md` 索引已同步（新增加行 / 重跑更新对应行），无死链
-- [ ] 产出文档中的 mermaid 图已全部通过本地渲染验证（mermaid-validate 验证脚本全部 VALID）
+- [ ] 产出文档中的 mermaid 图已全部通过本地渲染验证（validate-mermaid.mjs 全部 VALID）
 - [ ] 设计报告七节齐全（不落盘），已按交互双模式完成用户审视
 
 ## 参考文件索引

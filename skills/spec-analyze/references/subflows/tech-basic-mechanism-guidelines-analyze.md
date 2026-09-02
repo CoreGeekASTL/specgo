@@ -66,15 +66,15 @@ description: 提取存量代码仓的基础规范资产（日志/配置/告警�
 
 ### 第 4 步：验证 mermaid 图可渲染（收尾必做）
 
-产出文档中含 ```mermaid 代码块（如机制调用关系图）时，交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块（如机制调用关系图）时，交付前必须运行 mermaid 本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
-- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 mermaid-validate skill 的「语法红线」。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 `<specgo插件目录>/references/mermaid-guide.md` 的「语法红线」。
 
 ## 输出模板
 
@@ -94,7 +94,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **语言无关**：不预设被分析仓的语言与框架，按第 1 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（DEBUG / INFO / WARN / ERROR / Nacos / SDK / metrics / traceId 等）保留英文。
 - **索引分工**：域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 自 v3.0 起不再自动生成（spec-index 已移除），本 skill 不维护；本资产目录的 README 是资产主文档（机制全景 + 维度导航），非域索引。
-- **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
+- **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
 - **与相邻资产互补**：框架用法骨架（用了什么框架、怎么用）归 tech-framework-guidelines-analyze 的 `docs/0-tech/framework-guidelines/`；超时 / 重试 / 熔断等故障策略归 tech-resilience-guidelines-analyze；跨服务调用规范归 tech-external-call-guidelines-analyze；命名 / 函数长度等"必须"级编码红线归 qual-code-standards-analyze。本 skill 只管日志 / 配置 / 告警等基础编码机制的函数级使用参考。
 
 ## 参考文件索引

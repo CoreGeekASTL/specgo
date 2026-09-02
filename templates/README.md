@@ -71,7 +71,6 @@
 
 - **spec-analyze**：路由 + 编排 skill（子代理派发各 analyze 子流程），无文档输出模板。
 - **spec-update**：按各 analyze 子流程的最新要素定义增量刷新既有文档，无独立模板。
-- **mermaid-validate**：画图指导 skill，无文档输出模板。
 
 ## 不收录的非模板参考文档
 
@@ -83,3 +82,4 @@
 - spec-story-design/references/assets/{color-modeling,orthogonality-principles}.md
 - spec-requirement-audit/references/assets/{color-modeling,gap-checklist,requirement-quality-checklist,code-crosscheck-guide}.md
 - spec-analyze/references/assets/asset-audit--{asset-expression-rules,code-consistency-rules}.md
+- references/mermaid-guide.md（mermaid 编写与本地验证指南，全部 skill 共用的参考文档，非模板、非 skill）

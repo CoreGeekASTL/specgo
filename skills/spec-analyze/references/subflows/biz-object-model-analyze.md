@@ -74,7 +74,7 @@ description: >-
 - **以代码中的结构体/类为准**：类名、属性名取代码标识符原文；DB 表里有而代码对象里没有的字段不画，代码对象里有而表里没有的计算字段照画——表结构归数据模型资产（`docs/0-biz/data-model/`）。
 - **关系符号**：聚合根与内部实体/值对象用组合 `*--`；跨聚合引用用 `-->`（持对象引用）或 `..>`（仅持标识/经 service 间接访问），方向从引用方指向被引用方；领域事件与发布方的关系用 `..>` 并标注"发布"。
 - **stereotype 标注类型**：`<<aggregate root>>` / `<<entity>>` / `<<value object>>` / `<<domain service>>` / `<<domain event>>` / `<<外部聚合>>`。
-- **语法要点**：泛型集合写作 `List~OrderItem~`（尖括号在部分渲染器解析失败）；关系基数加引号（`"1"` / `"many"`）；关系标签（中文）放冒号后；其余红线（裸 `end` 禁用、关键字不做裸 label 等）见 mermaid-validate skill 的「语法红线」。
+- **语法要点**：泛型集合写作 `List~OrderItem~`（尖括号在部分渲染器解析失败）；关系基数加引号（`"1"` / `"many"`）；关系标签（中文）放冒号后；其余红线（裸 `end` 禁用、关键字不做裸 label 等）见 `<specgo插件目录>/references/mermaid-guide.md` 的「语法红线」。
 
 ### 第 4 步：按模板产出对象模型文档
 
@@ -100,10 +100,10 @@ description: >-
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
 
-产出文档中含 ```mermaid 代码块，交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块，交付前必须运行 mermaid 本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。

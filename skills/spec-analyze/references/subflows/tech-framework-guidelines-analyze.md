@@ -110,15 +110,15 @@ python3 <skill_dir>/../assets/framework-guidelines--scan_frameworks.py <repo_pat
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
 
-产出文档中含 ```mermaid 代码块（框架调用关系图、线程模型图等），交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块（框架调用关系图、线程模型图等），交付前必须运行 mermaid 本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
-- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 mermaid-validate skill 的「语法红线」。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 `<specgo插件目录>/references/mermaid-guide.md` 的「语法红线」。
 
 ## 输出模板
 
@@ -141,7 +141,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **排查完备性**：十六类框架全部排查（含未命中的，README 相应类别标注"未发现"；存储/ORM 类标注"归 data-access-guidelines 承载"）；依赖清单版本与代码实际使用交叉核对；自研/内部框架必须识别并纳入分析。
 - **封装层优先**：封装层文件全部精读；文档中明确区分"通过封装层使用"与"直接使用框架原生 API"两类调用点。
 - **统计口径**：IDL 生成代码不计入调用点统计（或单独标注），避免虚增。
-- **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
+- **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
 
 ## 参考文件索引
 

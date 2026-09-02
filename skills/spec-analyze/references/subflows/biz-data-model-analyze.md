@@ -90,15 +90,15 @@ ER 图中的关系分两类，必须区分：
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
 
-产出文档中含 ```mermaid 代码块，交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块，交付前必须运行 mermaid 本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
-- 画图规则（label 一律加引号、裸 `end` 禁用等）见 mermaid-validate skill 的「语法红线」。
+- 画图规则（label 一律加引号、裸 `end` 禁用等）见 `<specgo插件目录>/references/mermaid-guide.md` 的「语法红线」。
 - 全量模式：全部产出文档一次性传入校验；全部 VALID 后在回复中给出汇总——实体清单（实体名 → 文档路径）与排除项清单（表/结构 + 排除理由）。
 
 ## 输出模板
@@ -118,7 +118,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **活文档覆盖更新**：`docs/0-biz/data-model/` 下模型文档同名直接覆盖，不保留历史副本、不加日期后缀——差距报告才带日期，模型文档不带。
 - **成品纯净**：最终文档只含成品内容（标题、概述、图、表格、说明）。模板顶部的元说明、写作指令行、占位符说明均为规则，不复制进成品。第 1~2 步的探测过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格，且**证据不得含代码行号**。
 - **文档语言**：输出文档用中文，技术术语（ORM / TTL / FOREIGN KEY / PRIMARY KEY 等）保留英文。
-- **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 mermaid-validate 的 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
+- **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
 
 ## 参考文件索引
 

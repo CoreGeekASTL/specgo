@@ -43,7 +43,7 @@ description: >-
 
 1. 按用户意图命中路由表一行（多个意图命中多行时逐个执行或询问用户优先级）。
 2. 读取对应子流程文件全文，严格按其步骤、模板与产出约定执行；子流程引用的模板/脚本在 `references/assets/`（`<资产短名>--<文件名>`）。
-3. 产出含 mermaid 时，必须过 mermaid-validate skill 的验证脚本全部 VALID 才交付。
+3. 产出含 mermaid 时，必须过 mermaid 验证脚本全部 VALID 才交付。
 
 ## 全量编排模式
 
@@ -80,7 +80,7 @@ description: >-
 2. **mermaid 验证**：含图文档（structure-model / interaction-model / object-model / data-model）全部过验证脚本，INVALID 打回对应子代理（task_id 续会话）修复后重验：
 
 ```bash
-node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <文档路径>
+node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <文档路径>
 ```
 
 3. **口径抽查**：每域抽 1 篇对照其子流程模板——小节结构、文件命名、证据不带行号等组织规则一致；不符打回整改，主代理不亲自代写。
@@ -117,4 +117,4 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 
 - **spec-update**：变更驱动的 docs 资产增量刷新，独立 skill。
 - **spec-requirement-audit / spec-story-design / spec-code-generate / spec-report**：需求到交付链路的独立 skill，与本 skill 无调用关系（story 设计可读本体系产出的资产作为输入）。
-- **mermaid-validate**：mermaid 验证横切工具，独立 skill，各步贯穿使用。
+- **mermaid 验证**：共用参考 `<specgo插件目录>/references/mermaid-guide.md`（语法红线 + 验证流程），验证脚本 `<specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs`，各步贯穿使用。

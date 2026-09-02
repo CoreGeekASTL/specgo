@@ -78,10 +78,10 @@ description: 提取存量代码仓的韧性规范资产（超时/重试/熔断�
 
 ### 第 4 步：验证 mermaid 图可渲染（有条件必做）
 
-产出文档中含 ```mermaid 代码块时（本资产通常为纯表格与代码片段文档，不含图），交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块时（本资产通常为纯表格与代码片段文档，不含图），交付前必须运行 mermaid 本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
 ```
 
 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。

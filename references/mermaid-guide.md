@@ -1,10 +1,6 @@
----
-name: mermaid-validate
-description: >-
-  指导如何编写可被正确渲染的 mermaid 图，并在本地验证渲染结果。当用户提到"mermaid"、"画图"、"流程图"、"时序图"、"架构图"、"依赖图"、"图渲染失败"、"图渲染不出来"、"验证 mermaid"、"mermaid 报错"时使用；任何产出物（文档/HTML）中包含 ```mermaid 代码块时，必须用本 skill 的验证流程确认每张图可被解析渲染后才能宣称完成。
----
+# Mermaid 图编写与本地验证指南（共用参考，非 skill）
 
-# Mermaid 图编写与本地验证 Skill
+> 本指南是 specgo 全部 skill 的共用参考：任何产出物（文档/HTML）中包含 mermaid 代码块时，必须按本指南的验证流程确认每张图可被解析渲染后才能宣称完成。验证脚本在 `<specgo插件目录>/scripts/mermaid-validate/`。
 
 ## 目的
 
@@ -13,13 +9,13 @@ description: >-
 1. 写出来的 mermaid 图在 GitHub / 文档站 / 编辑器里渲染报错。
 2. 图在交付前从未被验证过，语法错误漏进文档。
 
-核心原则：**凡产出物中含 ```mermaid 代码块，必须本地验证全部 VALID 后才算完成**，禁止凭"看着没问题"直接交付。
+核心原则：**凡产出物中含 mermaid 代码块，必须本地验证全部 VALID 后才算完成**，禁止凭"看着没问题"直接交付。
 
-## 何时触发
+## 何时使用
 
 - 用户要求画任何 mermaid 图（流程图、时序图、类图、ER 图、状态图、架构图等）。
 - 用户反馈某文档里的 mermaid 图渲染失败、报错、显示异常。
-- 任何资产整理/设计类 skill（arch-structure-model-analyze、arch-interaction-model-analyze、biz-object-model-analyze、biz-data-model-analyze、spec-update、spec-analyze、spec-story-design、spec-requirement-audit、asset-audit 等）执行到收尾阶段，产出物中含 mermaid 图。
+- 任何 spec skill / 子流程执行到收尾阶段，产出物中含 mermaid 图。
 
 ## 图类型速查
 
@@ -53,7 +49,7 @@ description: >-
 
 ## 本地验证（必须步骤）
 
-本 skill 自带 `scripts/validate-mermaid.mjs`，支持 `.mmd` 文件与 `.md` 文件（自动提取全部 ```mermaid 代码块并逐块校验，报告每个图的起始行号与解析错误位置）。
+验证脚本 `<specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs`，支持 `.mmd` 文件与 `.md` 文件（自动提取全部 mermaid 代码块并逐块校验，报告每个图的起始行号与解析错误位置）。
 
 **只需跑一条命令，校验级别由脚本自动决定（三级逻辑）**：
 
@@ -65,13 +61,13 @@ description: >-
 
 ```bash
 # 校验整个 markdown 文档里的所有 mermaid 图
-node <本skill目录>/scripts/validate-mermaid.mjs docs/1-storys/xxx/xxx-story.md
+node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs docs/1-storys/xxx/xxx-story.md
 
 # 校验单个 .mmd 文件
-node <本skill目录>/scripts/validate-mermaid.mjs diagram.mmd
+node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs diagram.mmd
 
 # 一次校验多个文件
-node <本skill目录>/scripts/validate-mermaid.mjs a.md b.md c.mmd
+node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs a.md b.md c.mmd
 ```
 
 输出与退出码：
@@ -83,26 +79,26 @@ node <本skill目录>/scripts/validate-mermaid.mjs a.md b.md c.mmd
 一次性准备（联网环境首次）：
 
 ```bash
-cd <本skill目录>/scripts && npm install   # 安装 mermaid + linkedom
+cd <specgo插件目录>/scripts/mermaid-validate && npm install   # 安装 mermaid + linkedom
 ```
 
 ## 工作流程
 
 1. **选类型**：按"图类型速查"表确定图类型。
-2. **编写**：写 `.mmd` 或直接在 md 里写 ```mermaid 块，遵守"语法红线"，label 默认加引号。
-3. **验证**：跑 `node <本skill目录>/scripts/validate-mermaid.mjs <产出文件...>`，必须全部 VALID 或 VALID-LITE。
+2. **编写**：写 `.mmd` 或直接在 md 里写 mermaid 代码块，遵守"语法红线"，label 默认加引号。
+3. **验证**：跑 `node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>`，必须全部 VALID 或 VALID-LITE。
 4. **修复循环**：INVALID / INVALID-LITE 时按错误行号定位修复，重验，直至全部通过。
 5. **交付**：报告验证结果（几张图、校验级别 parsed / syntax-only、全部通过）；syntax-only 级别需标注"联网后需补跑完整解析验证"。
 
-## 与资产整理类 skill 的集成约定
+## 与各 skill 的集成约定
 
-所有产出物可能含 mermaid 图的 skill，在收尾步骤必须执行：
+所有产出物可能含 mermaid 图的 skill / 子流程，在收尾步骤必须执行：
 
-> 对最终产出的每个文档文件运行 `node <mermaid-validate>/scripts/validate-mermaid.mjs <产出文件...>`，全部 VALID 或 VALID-LITE 才算完成；INVALID / INVALID-LITE 必须修复重验，禁止跳过。
+> 对最终产出的每个文档文件运行 `node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>`，全部 VALID 或 VALID-LITE 才算完成；INVALID / INVALID-LITE 必须修复重验，禁止跳过。
 
 ## 关键约束
 
 - **验证前置**：任何含 mermaid 图的产出物，未通过验证（parsed 或 syntax-only）不得宣称完成。
 - **修复基于报错**：INVALID / INVALID-LITE 时按报错给出的行号与规则定位修复，禁止整图重写碰运气。
 - **降级有界**：syntax-only 只覆盖语法红线可机检部分，允许交付但必须标注"联网后补验"；**联网环境禁止主动选择降级**（依赖可用时脚本自动走完整解析，不要绕过）。
-- **脚本依赖一次性安装**：`scripts/` 下的 `node_modules` 不入库（已 gitignore）；脚本在依赖缺失时会自动试装一次（30 秒超时，不重试），失败自动降级 lite 校验，离线环境不会卡死。
+- **脚本依赖一次性安装**：`scripts/mermaid-validate/` 下的 `node_modules` 与 `package-lock.json` 不入库（已 gitignore）；脚本在依赖缺失时会自动试装一次（30 秒超时，不重试），失败自动降级 lite 校验，离线环境不会卡死。

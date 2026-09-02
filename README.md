@@ -1,12 +1,12 @@
 # Specgo
 
-面向存量代码仓的四分类资产治理 skill 体系：**6 个主 skill + 1 个横切工具 skill（mermaid-validate）+ 17 个子流程 + 17 个斜杠命令**，无编排层——各 skill 独立执行、按需串联。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应 skill、按四分类资产模型 taxonomy 与统一格式产出文档资产到 `docs/0-{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。
+面向存量代码仓的四分类资产治理 skill 体系：**6 个主 skill + 17 个子流程 + 17 个斜杠命令**，无编排层——各 skill 独立执行、按需串联。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应 skill、按四分类资产模型 taxonomy 与统一格式产出文档资产到 `docs/0-{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。mermaid 编写与验证不是独立 skill——所有含 mermaid 代码块的产出物统一遵循 [references/mermaid-guide.md](./references/mermaid-guide.md)（语法红线 + `scripts/mermaid-validate/validate-mermaid.mjs` 本地验证全部 VALID 才交付）。
 
 > 安装与卸载见 [INSTALL.md](./INSTALL.md)。
 >
 > **v3.0 breaking change**：specgo 编排层与 spec-admin 已移除（`/spec-init`、`/spec-index` 命令不再存在）；spec-asset-audit 改名 asset-audit 并下放为 spec-analyze 子流程；需求审核改名 spec-requirement-audit 并新增代码对照；specgo-report 重新实现为 spec-report（三节：代码生成准确性 / 资产使用情况 / 用户反馈）；域/总索引（docs/README.md、docs/0-{域}/README.md）不再自动生成。
 
-## 6 个主 skill + 1 个横切工具 skill
+## 6 个主 skill
 
 全部对外暴露（进 skill 列表），**无命令，直接说人话即可触发**；所有 skill 遵循交互双模式——询问点默认用 ask-human 工具，任务开始时声明"以报告形式呈现"则全程只输出报告：
 
@@ -18,7 +18,6 @@
 | `spec-code-generate` | 代码生成与本地自测试：零 TODO 完整实现；子代理只实现代码（按文件分组可并行），主代理执行单测/集成测试/验证命令 | 完整可运行的代码 + 测试（落被分析仓） |
 | `spec-report` | 总结报告：代码生成收口后产出三节报告——代码生成的准确性（对照 develop-task 逐任务核对 + 测试实跑证据）/ 资产使用情况 / 用户反馈（询问用户，不回答则不写入） | `docs/1-storys/{功能名}/{YYYYMMDD}-report.md` |
 | `spec-update` | 资产刷新：基于 git 变更（工作区 diff / commit / MR diff）识别对 docs/ 资产的影响，按最新要素定义增量刷新（刷新清单人工确认后定稿） | 受影响 docs/ 文档就地刷新（同名覆盖） |
-| `mermaid-validate` | mermaid 语法红线 + 本地渲染验证（横切工具，所有含图产出物必过） | 含图产出物跑 validate-mermaid.mjs 全部 VALID |
 
 需求到交付的推荐串联（每步独立执行、收尾报告交人审视）：
 
@@ -29,8 +28,6 @@ flowchart LR
     D3 --> D4["spec-report<br/>总结报告：准确性/资产使用/用户反馈"]
     D4 --> D5["spec-update<br/>资产刷新"]
     SA["spec-analyze<br/>资产分析（存量资产是 story 设计的输入）"] -.-> D2
-    MV["mermaid-validate<br/>图校验（横切）"] -.-> D2
-    MV -.-> D5
 ```
 
 ## 子流程清单（spec-analyze 的 17 个子流程）
@@ -151,7 +148,7 @@ sequenceDiagram
 
 ### 逐项手动执行（人逐步触发）
 
-> 四域 16 个子流程与 asset-audit 可用同名斜杠命令直接触发（如 `提取业务规则` 等价于 `/biz-rules-analyze`）；6 个其余顶层 skill 无命令，直接说人话触发。
+> 四域 16 个子流程与 asset-audit 可用同名斜杠命令直接触发（如 `提取业务规则` 等价于 `/biz-rules-analyze`）；其余 5 个顶层 skill 无命令，直接说人话触发。
 
 **资产治理阶段**
 

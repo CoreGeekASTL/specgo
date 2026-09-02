@@ -59,7 +59,7 @@ description: 代码生成收口总结报告 skill——在需求实现收口后�
 ### 第 4 步：落盘与收尾
 
 - 落盘被分析仓 `docs/1-storys/{功能名}/{YYYYMMDD}-report.md`（与本需求 story/develop-task 同目录；次抛件带日期，同日同需求重跑同名覆盖；不改动 story/develop-task 本体）。
-- 含 ```mermaid 代码块时，用 mermaid-validate 的 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
+- 含 ```mermaid 代码块时，用 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
 - 返回中给出报告一句话结论：任务实现覆盖率、测试通过情况、资产使用篇数、用户反馈是否已收录。
 
 ## 输出模板
@@ -77,4 +77,4 @@ description: 代码生成收口总结报告 skill——在需求实现收口后�
 
 - **spec-story-design / spec-code-generate**：本 skill 的上游，其产出（story、develop-task、实现与测试事实）是本 skill 的输入。
 - **spec-analyze**：本体系产出的 docs/0-{域}/ 资产是第二节「资产使用情况」的统计对象。
-- **mermaid-validate**：报告含 mermaid 时的验证工具。
+- **mermaid 验证**：报告含 mermaid 时按 `<specgo插件目录>/references/mermaid-guide.md` 的语法红线与验证流程，过 `scripts/mermaid-validate/validate-mermaid.mjs` 全部 VALID。

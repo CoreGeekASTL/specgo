@@ -1,6 +1,6 @@
 /**
  * Specgo 的 OpenCode 插件入口。
- * 1. config hook：注册 skills 目录，让 opencode 发现 7 个独立 skill（spec-analyze / spec-requirement-audit / spec-story-design / spec-code-generate / spec-report / spec-update / mermaid-validate，无需软链或手动配置）
+ * 1. config hook：注册 skills 目录，让 opencode 发现 6 个独立 skill（spec-analyze / spec-requirement-audit / spec-story-design / spec-code-generate / spec-report / spec-update，无需软链或手动配置）
  * 2. config hook：把 commands/ 下的子流程命令桩内联注册到 config.command（不落盘、不碰用户配置目录；只 spec-analyze 的 17 个子流程有命令，顶层 skill 无命令）
  * 3. messages.transform hook：把 bootstrap.md 注入第一条 user message
  *

@@ -53,10 +53,10 @@ description: >-
 3. **mermaid 验证**：产出物含 ```mermaid 代码块时，紧接着逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
 ```
 
-全部 VALID 才算产出完成；INVALID 按报错行号修复重验。首次使用先在脚本目录 `npm install`。语法红线见 mermaid-validate skill。
+全部 VALID 才算产出完成；INVALID 按报错行号修复重验。首次使用先在脚本目录 `npm install`。语法红线见 `<specgo插件目录>/references/mermaid-guide.md`。
 
 ## 阶段 5：审核报告（不落盘，收尾必做）
 
@@ -101,7 +101,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 ## 与其它 skill 的关系
 
 - **spec-story-design**：下游——规范功能实现设计 md 与建模 HTML 是 story 设计的输入。
-- **mermaid-validate**：mermaid 校验脚本提供方。
+- **mermaid 验证**：共用参考 `<specgo插件目录>/references/mermaid-guide.md`，验证脚本 `scripts/mermaid-validate/validate-mermaid.mjs`。
 - **spec-analyze / spec-update**：资产分析与刷新侧，与本 skill 无调用关系。
 
 ## 参考文件索引

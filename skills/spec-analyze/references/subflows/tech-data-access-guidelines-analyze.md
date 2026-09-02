@@ -138,15 +138,15 @@ guidelines 形态语义：数据访问规范是**指导性规范**（"应该"遵
 
 ### 第 6 步：验证 mermaid 图可渲染（收尾必做）
 
-产出文档中含 ```mermaid 代码块（访问链路图、缓存读写时序图等）时，交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
+产出文档中含 ```mermaid 代码块（访问链路图、缓存读写时序图等）时，交付前必须运行 mermaid 本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
-- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 mermaid-validate skill 的「语法红线」。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 `<specgo插件目录>/references/mermaid-guide.md` 的「语法红线」。
 
 ## 输出模板
 
@@ -173,7 +173,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
   5. 示例驱动——每篇文档选一个代表性业务对象（一张表 / 一类 key）作贯穿示例说明访问机制，其余同类访问只归纳机制、不逐一枚举；全量表/字段清单归 biz-data-model-analyze 产出的 docs/0-biz/data-model/，本资产不罗列。
 - **索引分工**：本资产目录的 `README.md`（存储导航主文档，含内存数据/持久化数据分类列）由本 skill 产出，活文档同名覆盖；域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 自 v3.0 起不再自动生成（spec-index 已移除），本 skill 不维护。
 - **与相邻资产互补**：持久化存储的表结构/字段/生命周期细节看 biz-data-model-analyze 产出的 `docs/0-biz/data-model/`（本资产重"怎么用、什么场景用"，数据模型资产重"字段与关系"）；框架用法骨架（无规范、纯现状）看 tech-framework-guidelines-analyze 产出的 `docs/0-tech/framework-guidelines/`；纯故障策略（熔断/降级/重试）的专项规范归 tech-resilience-guidelines-analyze，本 skill 只记录数据访问点的错误处理事实与合规性。
-- **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 mermaid-validate 的 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
+- **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
 
 ## 参考文件索引
 

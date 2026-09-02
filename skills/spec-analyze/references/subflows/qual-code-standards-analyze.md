@@ -103,10 +103,10 @@ CI 侧按本 skill 名（`qual-code-standards-analyze` / 资产目录 `code-stan
 产出文档中一般不含 mermaid 图；若因补充说明引入 ```mermaid 代码块，交付前必须逐文件校验：
 
 ```bash
-node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
 ```
 
-全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。画图规则见 mermaid-validate skill 的「语法红线」。
+全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。画图规则见 `<specgo插件目录>/references/mermaid-guide.md` 的「语法红线」。
 
 ## 输出模板
 

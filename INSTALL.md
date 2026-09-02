@@ -1,6 +1,6 @@
 # Specgo 安装指导
 
-本文指导如何将 specgo 插件安装到 OpenCode 或 Claude Code。specgo 是面向存量代码仓的四分类资产治理 skill 体系（6 个主 skill：spec-analyze 资产分析（承载 17 个子流程，含资产质量审核）、spec-update 资产刷新、spec-requirement-audit 需求审核（看文档+看代码）、spec-story-design story 设计、spec-code-generate 代码生成与测试、spec-report 总结报告 + 1 个横切工具 skill：mermaid-validate 图校验 + 17 个斜杠命令），详细功能见 [README.md](./README.md)。
+本文指导如何将 specgo 插件安装到 OpenCode 或 Claude Code。specgo 是面向存量代码仓的四分类资产治理 skill 体系（6 个主 skill：spec-analyze 资产分析（承载 17 个子流程，含资产质量审核）、spec-update 资产刷新、spec-requirement-audit 需求审核（看文档+看代码）、spec-story-design story 设计、spec-code-generate 代码生成与测试、spec-report 总结报告 + 17 个斜杠命令 + 内置 mermaid 编写指南与本地验证脚本），详细功能见 [README.md](./README.md)。
 
 ## 0. 前置要求
 
@@ -50,7 +50,7 @@ git clone https://github.com/CoreGeekASTL/specgo.git
 
 重启后确认两点：
 
-1. **skill 已发现**：OpenCode 查看可用 skill 列表；Claude Code 用 `/plugin` 查看已装插件。应出现 **7 个独立 skill**：`spec-analyze`、`spec-update`、`spec-requirement-audit`、`spec-story-design`、`spec-code-generate`、`spec-report`、`mermaid-validate`（17 个子流程在 spec-analyze 的 `references/subflows/` 下，不出现在 skill 列表属正常）
+1. **skill 已发现**：OpenCode 查看可用 skill 列表；Claude Code 用 `/plugin` 查看已装插件。应出现 **6 个独立 skill**：`spec-analyze`、`spec-update`、`spec-requirement-audit`、`spec-story-design`、`spec-code-generate`、`spec-report`（17 个子流程在 spec-analyze 的 `references/subflows/` 下，不出现在 skill 列表属正常；mermaid 指南在 `references/mermaid-guide.md`，是共用参考不是 skill）
 2. **子流程命令已注册**：输入 `/` 应能看到 17 个子流程命令（如 `/arch-structure-model-analyze`、`/asset-audit`）。Claude Code 由插件 `commands/` 原生提供；OpenCode 由 `opencode.js` 的 config hook 内联注册（`config.command`，不写任何用户配置文件）
 3. **bootstrap 已注入**：直接问 agent "你有哪些资产分析能力"，应能列出 skill 及 spec-analyze 的子流程（如 `arch-structure-model-analyze`、`biz-interface-analyze` 等）
 
@@ -94,7 +94,7 @@ bun scripts/generate-commands.mjs     # 或 node scripts/generate-commands.mjs
 | 问题 | 原因与解决 |
 |------|-----------|
 | OpenCode 装完看不到 skill | 路径写成了 `opencode.js` 文件路径——必须写包目录；或改完配置没重启 |
-| skill 列表只有 7 个、看不到子流程 | 正常现象——子流程不是独立 skill，用 `/子流程名` 命令触发或由 spec-analyze 路由加载；顶层 skill 无命令，直接说人话即可触发 |
+| skill 列表只有 6 个、看不到子流程 | 正常现象——子流程不是独立 skill，用 `/子流程名` 命令触发或由 spec-analyze 路由加载；顶层 skill 无命令，直接说人话即可触发 |
 | 子流程斜杠命令没出现 | Claude Code：确认插件已安装并重启；OpenCode：重启即可（config hook 内联注册），若自定义 opencode.json 里有同名 `command` 条目会以用户定义为准 |
 | bootstrap 没有注入 | 注入发生在会话第一条 user message，开**新会话**验证；检查插件目录下 `bootstrap.md` 存在 |
 | Claude Code Windows 上报 hook 错误 | 缺 bash——安装 Git Bash，并确认 `C:\Program Files\Git\bin\bash.exe` 存在或 bash 在 PATH 中 |

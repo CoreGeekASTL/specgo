@@ -88,7 +88,7 @@ description: >-
 
 1. **映射反查**：抽样 grep 核实刷新后文档引用的代码标识符/文件路径真实存在（不带行号）。
 2. **链接闭环**：导航表/README 与目录内文件一一对应，无游离文件、无死链。
-3. **mermaid 验证**：`node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <刷新文档路径>`，全部 VALID 才算完成；INVALID 按报错修复后重验。
+3. **mermaid 验证**：`node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <刷新文档路径>`，全部 VALID 才算完成；INVALID 按报错修复后重验。
 4. **口径一致**：刷新篇目与对应 analyze skill 模板比对（小节顺序、命名、组织规则一致）。
 5. **交付摘要三清单**：已刷新（文档 + 变化点）/ 未受影响（依据）/ 资产未建（处理结果）。
 
@@ -105,4 +105,4 @@ description: >-
 ## 与其它 skill 的关系
 
 - **spec-analyze 各 analyze 子流程**：要素定义来源——spec-update 不定义任何资产格式，只引用它们的当前定义做增量刷新。
-- **mermaid-validate**：含 mermaid 的刷新文档按其语法红线绘制，并过其验证脚本。
+- **mermaid 验证**：含 mermaid 的刷新文档按 `<specgo插件目录>/references/mermaid-guide.md` 的语法红线绘制，并过 `scripts/mermaid-validate/validate-mermaid.mjs` 全部 VALID。
