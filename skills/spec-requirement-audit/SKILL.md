@@ -50,13 +50,7 @@ description: >-
 
 1. **建模 HTML**：复制 [references/assets/model-template.html](references/assets/model-template.html)，填入建模结果与全部断点卡片（已补齐：绿色边框+裁定内容；仍存疑：红色虚线醒目标记），保存到**源文档所在目录**，文件名 `{功能名}-建模结果.html`。可读性要求：四色图例置顶；主流程→分支/异常分层；每个元素卡片标注颜色类别、原文出处、确认状态（原文明确/人工补齐/仍存疑）。HTML 单文件无外部依赖，浏览器直接打开；配色遵循模板内置色板，不改语义。
 2. **规范功能实现设计 md**：按 [references/assets/functional-design-template.md](references/assets/functional-design-template.md) 章节生成（功能概述/SR 设计/实现设计/接口设计/安全配置/功能规格/DFX/分配需求），保存到**源文档所在目录**，文件名 `{功能名}-规范功能实现设计.md`。内容 = 原文档 + 人工裁定回填 + 代码事实校正；可选章节无内容标"不涉及"裁剪；未覆盖内容标"待确认"，**禁止脑补**；仍存疑项显式标注。本文档是下游 spec-story-design 的权威输入。
-3. **mermaid 验证**：产出物含 ```mermaid 代码块时，紧接着逐文件校验：
-
-```bash
-node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
-```
-
-全部 VALID 才算产出完成；INVALID 按报错行号修复重验。首次使用先在脚本目录 `npm install`。语法红线见 `<specgo插件目录>/references/mermaid-guide.md`。
+3. **mermaid 语法红线自查**：产出物含 mermaid 代码块时，画图必须遵守并逐图自查 `<specgo插件目录>/skills/spec-analyze/references/mermaid-guide.md` 的「语法红线」（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）。本 skill 产出非资产文档，**不跑验证脚本**（脚本校验只适用于 spec-analyze 资产产出与 spec-update 资产刷新）；按红线逐图自查通过即算产出完成。
 
 ## 阶段 5：审核报告（不落盘，收尾必做）
 
@@ -68,7 +62,7 @@ node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出�
 2. 断点清单逐条：编号 | 原文位置（章节+摘录） | 问题类别 | 候选答案 | 推荐做法及代码依据 | 用户裁定 | 状态（已补齐/仍存疑）
 3. 代码对照结论：现状一致性核对结果、存在性核实结果、注入点/复用点初步定位（文件+函数）
 4. 未闭环遗留项：仍存疑清单 + "不建议进入编码"显式警告（如有）
-5. 产出文件清单：建模 HTML 路径、规范功能实现设计 md 路径、mermaid VALID 结论
+5. 产出文件清单：建模 HTML 路径、规范功能实现设计 md 路径、mermaid 红线自查结论
 6. 下一步建议：可进入 spec-story-design / 需先补齐的输入
 ```
 
@@ -88,7 +82,7 @@ node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出�
 - [ ] 澄清符合双模式：默认 ask-human 批量提问（一次抛出、每问 2-4 候选、推荐做法附代码依据、语义多解列全部理解）；报告模式输出待澄清报告；循环追问至无新问题
 - [ ] 全部断点有裁定（或带病记「仍存疑」并在报告中单独列出"不建议进入编码"）
 - [ ] HTML 与规范功能实现设计一次成型、落盘源文档同目录；HTML 图例置顶、元素标注出处与确认状态；定稿未覆盖内容标"待确认"，无脑补
-- [ ] 含 mermaid 产出物全部通过 validate-mermaid.mjs 验证（VALID）
+- [ ] 含 mermaid 产出物已逐图按语法红线自查通过（见 skills/spec-analyze/references/mermaid-guide.md）
 - [ ] 审核报告六节齐全，按双模式完成用户审视
 
 ## 关键约束
@@ -101,7 +95,7 @@ node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出�
 ## 与其它 skill 的关系
 
 - **spec-story-design**：下游——规范功能实现设计 md 与建模 HTML 是 story 设计的输入。
-- **mermaid 验证**：共用参考 `<specgo插件目录>/references/mermaid-guide.md`，验证脚本 `scripts/mermaid-validate/validate-mermaid.mjs`。
+- **mermaid 画图规则**：见 `<specgo插件目录>/skills/spec-analyze/references/mermaid-guide.md` 的「语法红线」（本 skill 产出非资产文档，只按红线自查，不跑验证脚本）。
 - **spec-analyze / spec-update**：资产分析与刷新侧，与本 skill 无调用关系。
 
 ## 参考文件索引

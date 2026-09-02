@@ -80,7 +80,7 @@ description: >-
 2. **mermaid 验证**：含图文档（structure-model / interaction-model / object-model / data-model）全部过验证脚本，INVALID 打回对应子代理（task_id 续会话）修复后重验：
 
 ```bash
-node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <文档路径>
+node <specgo插件目录>/skills/spec-analyze/scripts/validate-mermaid.mjs <文档路径>
 ```
 
 3. **口径抽查**：每域抽 1 篇对照其子流程模板——小节结构、文件命名、证据不带行号等组织规则一致；不符打回整改，主代理不亲自代写。
@@ -117,4 +117,4 @@ node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <文档�
 
 - **spec-update**：变更驱动的 docs 资产增量刷新，独立 skill。
 - **spec-requirement-audit / spec-story-design / spec-code-generate / spec-report**：需求到交付链路的独立 skill，与本 skill 无调用关系（story 设计可读本体系产出的资产作为输入）。
-- **mermaid 验证**：共用参考 `<specgo插件目录>/references/mermaid-guide.md`（语法红线 + 验证流程），验证脚本 `<specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs`，各步贯穿使用。
+- **mermaid 指南与验证脚本**：由本 skill 持有——`references/mermaid-guide.md`（语法红线 + 验证流程，全插件共用参考）与 `scripts/validate-mermaid.mjs`（本地验证脚本）；本 skill 全部含图资产产出必须过脚本全部 VALID，其它 skill 的非资产产出只按指南语法红线自查。

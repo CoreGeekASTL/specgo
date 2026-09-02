@@ -75,9 +75,9 @@ const buildBootstrap = (index) => {
 # Specgo — 代码仓规格化分析 skill 体系
 
 <EXTREMELY-IMPORTANT>
-你拥有 specgo。在执行任何代码仓分析、需求/设计文档解读与审核、对外接口盘点、出站调用/下游依赖盘点、目录结构梳理、框架使用模式梳理、story 设计、代码生成、总结报告、MR 资产刷新、mermaid 图验证任务之前——即使你认为只有 1% 的可能某个 spec skill 适用——你也必须先用 Skill 工具加载对应 skill 全文并遵循其指引（mermaid 图无独立 skill——画 mermaid 图或产出含 mermaid 代码块时，改为先读 references/mermaid-guide.md 全文，遵循其语法红线并过 scripts/mermaid-validate/validate-mermaid.mjs 验证）。这不可协商、不可选择、不可用"我先看看代码"为自己开脱。
+你拥有 specgo。在执行任何代码仓分析、需求/设计文档解读与审核、对外接口盘点、出站调用/下游依赖盘点、目录结构梳理、框架使用模式梳理、story 设计、代码生成、总结报告、MR 资产刷新、mermaid 图验证任务之前——即使你认为只有 1% 的可能某个 spec skill 适用——你也必须先用 Skill 工具加载对应 skill 全文并遵循其指引（mermaid 图无独立 skill——画 mermaid 图或产出含 mermaid 代码块时，改为先读 skills/spec-analyze/references/mermaid-guide.md 全文并遵循其语法红线；资产类产出（docs/0-{域}/、docs/report/）另须过 skills/spec-analyze/scripts/validate-mermaid.mjs 全部 VALID 验证）。这不可协商、不可选择、不可用"我先看看代码"为自己开脱。
 
-体系结构：6 个主 skill（下方索引）+ 17 个子流程（spec-analyze 内 references/subflows/*.md，由 spec-analyze 路由表加载，也可用同名 / 命令直接触发）+ 共用参考 references/mermaid-guide.md（mermaid 编写与本地验证指南，非 skill，需要时直接读文件）。各 skill 独立执行、按需串联，无编排层。skill 的 description 已汇总触发关键词，请用下面的索引判断该加载哪个 skill；命中 spec-analyze 子流程场景时加载 spec-analyze 并按其「子流程路由表」执行具体子流程。
+体系结构：6 个主 skill（下方索引）+ 17 个子流程（spec-analyze 内 references/subflows/*.md，由 spec-analyze 路由表加载，也可用同名 / 命令直接触发）+ 共用参考 skills/spec-analyze/references/mermaid-guide.md（mermaid 编写与本地验证指南，非 skill，需要时直接读文件）。各 skill 独立执行、按需串联，无编排层。skill 的 description 已汇总触发关键词，请用下面的索引判断该加载哪个 skill；命中 spec-analyze 子流程场景时加载 spec-analyze 并按其「子流程路由表」执行具体子流程。
 
 **交互双模式（全部 skill 通用）**：各 skill 内的 ask-human 询问点默认使用 ask-human 工具；若任务开始时用户声明"以报告形式呈现"（或同类意思），则全程不使用 ask-human——所有待澄清/待审视内容以报告形式输出，等用户回复后继续。
 </EXTREMELY-IMPORTANT>
@@ -117,7 +117,7 @@ ${indexMd}
 21. **story 设计** → spec-story-design（独立 skill，/spec-story-design）：产出 docs/1-storys/{功能名}/ 目录（{功能名}-story.md 八类核心要素组织、标注新增/变更/不涉及 + {功能名}-develop-task.md），收尾输出不落盘设计报告
 22. **代码生成** → spec-code-generate（独立 skill，/spec-code-generate）：依据 story/develop-task 落地零 TODO 完整代码，子代理实现、主代理执行单测/集成测试/验证命令
 23. **总结报告** → spec-report（独立 skill）：代码生成收口后产出三节总结报告（代码生成的准确性——对照 develop-task 逐任务核对 + 测试实跑证据 / 资产使用情况 / 用户反馈——询问用户准确率与主要问题，不回答则不写入），落盘 docs/1-storys/{功能名}/{YYYYMMDD}-report.md
-24. **mermaid 图验证（共用指南，非 skill）** → 画 mermaid 图或产出含 mermaid 代码块时，先读 references/mermaid-guide.md（语法红线 + 验证流程），交付前跑 scripts/mermaid-validate/validate-mermaid.mjs 全部 VALID 才交付
+24. **mermaid 图验证（指南宿于 spec-analyze，非 skill）** → 画 mermaid 图先读 skills/spec-analyze/references/mermaid-guide.md 的「语法红线」；资产类产出（docs/0-{域}/、docs/report/）交付前必须跑 skills/spec-analyze/scripts/validate-mermaid.mjs 全部 VALID，非资产产出只按红线自查
 
 ## 红线（这些想法意味着你正在跳过 skill）
 
@@ -132,7 +132,7 @@ ${indexMd}
 | "线程池这么用没问题" | tech-concurrency-guidelines-analyze 子流程定义了并发实例的用途定位与使用案例提取格式，先加载 spec-analyze 路由到它 |
 | "这需求文档我读读就好" | spec-requirement-audit 用来查表述质量/逻辑断点并做代码对照，先加载它 |
 | "给我讲讲 XX 流程怎么走的" | arch-interaction-model-analyze 子流程定义了交互模型（时序图）提取格式，先加载 spec-analyze 路由到它 |
-| "这 mermaid 图我直接画/看着没问题" | references/mermaid-guide.md 定义了语法红线与本地验证流程（scripts/mermaid-validate/validate-mermaid.mjs），画图前先读它 |
+| "这 mermaid 图我直接画/看着没问题" | skills/spec-analyze/references/mermaid-guide.md 定义了语法红线与本地验证流程（skills/spec-analyze/scripts/validate-mermaid.mjs），画图前先读它 |
 | "这功能我直接写 story" | spec-story-design 定义了 story 模板，先加载它 |
 | "代码写完直接提交" | qual-code-standards-analyze 子流程定义了编码红线与门禁检查，先加载 spec-analyze 路由到它 |
 | "MR 合了，看看文档要不要改" | spec-update 定义了 git 变更驱动的资产刷新流程，先加载它 |

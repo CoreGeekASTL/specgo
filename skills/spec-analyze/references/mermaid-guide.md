@@ -1,6 +1,6 @@
 # Mermaid 图编写与本地验证指南（共用参考，非 skill）
 
-> 本指南是 specgo 全部 skill 的共用参考：任何产出物（文档/HTML）中包含 mermaid 代码块时，必须按本指南的验证流程确认每张图可被解析渲染后才能宣称完成。验证脚本在 `<specgo插件目录>/scripts/mermaid-validate/`。
+> 本指南宿于 spec-analyze skill 内部，是 specgo 全部 skill 的共用参考：任何产出物（文档/HTML）中包含 mermaid 代码块时，画图必须遵守本指南「语法红线」。验证脚本在 `<specgo插件目录>/skills/spec-analyze/scripts/`——**脚本校验只适用于资产类产出**（spec-analyze 的 docs/0-{域}/ 资产、spec-update 的资产刷新、asset-audit 审核）：这些产出必须过脚本全部 VALID 才交付；其它 skill 的非资产产出（story/develop-task/建模 HTML/总结报告等）只按「语法红线」逐图自查，不跑脚本。
 
 ## 目的
 
@@ -49,7 +49,7 @@
 
 ## 本地验证（必须步骤）
 
-验证脚本 `<specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs`，支持 `.mmd` 文件与 `.md` 文件（自动提取全部 mermaid 代码块并逐块校验，报告每个图的起始行号与解析错误位置）。
+验证脚本 `<specgo插件目录>/skills/spec-analyze/scripts/validate-mermaid.mjs`，支持 `.mmd` 文件与 `.md` 文件（自动提取全部 mermaid 代码块并逐块校验，报告每个图的起始行号与解析错误位置）。
 
 **只需跑一条命令，校验级别由脚本自动决定（三级逻辑）**：
 
@@ -61,13 +61,13 @@
 
 ```bash
 # 校验整个 markdown 文档里的所有 mermaid 图
-node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs docs/1-storys/xxx/xxx-story.md
+node <specgo插件目录>/skills/spec-analyze/scripts/validate-mermaid.mjs docs/1-storys/xxx/xxx-story.md
 
 # 校验单个 .mmd 文件
-node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs diagram.mmd
+node <specgo插件目录>/skills/spec-analyze/scripts/validate-mermaid.mjs diagram.mmd
 
 # 一次校验多个文件
-node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs a.md b.md c.mmd
+node <specgo插件目录>/skills/spec-analyze/scripts/validate-mermaid.mjs a.md b.md c.mmd
 ```
 
 输出与退出码：
@@ -79,22 +79,21 @@ node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs a.md b.m
 一次性准备（联网环境首次）：
 
 ```bash
-cd <specgo插件目录>/scripts/mermaid-validate && npm install   # 安装 mermaid + linkedom
+cd <specgo插件目录>/skills/spec-analyze/scripts && npm install   # 安装 mermaid + linkedom
 ```
 
 ## 工作流程
 
 1. **选类型**：按"图类型速查"表确定图类型。
 2. **编写**：写 `.mmd` 或直接在 md 里写 mermaid 代码块，遵守"语法红线"，label 默认加引号。
-3. **验证**：跑 `node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>`，必须全部 VALID 或 VALID-LITE。
+3. **验证**：跑 `node <specgo插件目录>/skills/spec-analyze/scripts/validate-mermaid.mjs <产出文件...>`，必须全部 VALID 或 VALID-LITE。
 4. **修复循环**：INVALID / INVALID-LITE 时按错误行号定位修复，重验，直至全部通过。
 5. **交付**：报告验证结果（几张图、校验级别 parsed / syntax-only、全部通过）；syntax-only 级别需标注"联网后需补跑完整解析验证"。
 
 ## 与各 skill 的集成约定
 
-所有产出物可能含 mermaid 图的 skill / 子流程，在收尾步骤必须执行：
-
-> 对最终产出的每个文档文件运行 `node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>`，全部 VALID 或 VALID-LITE 才算完成；INVALID / INVALID-LITE 必须修复重验，禁止跳过。
+- **资产类产出**（spec-analyze 各子流程 / spec-update 刷新 / asset-audit 审核）收尾必须执行：对最终产出的每个文档文件运行 `node <specgo插件目录>/skills/spec-analyze/scripts/validate-mermaid.mjs <产出文件...>`，全部 VALID 或 VALID-LITE 才算完成；INVALID / INVALID-LITE 必须修复重验，禁止跳过。
+- **非资产类产出**（spec-story-design / spec-requirement-audit / spec-report 等）：不跑脚本，画图遵守「语法红线」并逐图自查即可。
 
 ## 关键约束
 

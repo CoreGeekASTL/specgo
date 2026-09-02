@@ -99,7 +99,7 @@ description: >-
 ## 与其它 skill 的关系
 
 - **spec-requirement-audit**：姊妹 skill——它审需求/功能设计文档（编码前），本子流程审 docs/ 四域资产文档质量（资产治理侧）。
-- **mermaid 验证**：共用参考 `<specgo插件目录>/references/mermaid-guide.md`，验证脚本 `scripts/mermaid-validate/validate-mermaid.mjs`。
+- **mermaid 验证**：共用参考 `<specgo插件目录>/skills/spec-analyze/references/mermaid-guide.md`，验证脚本 `skills/spec-analyze/scripts/validate-mermaid.mjs`。
 - **各 analyze 子流程**：四类资产的生产方——检出「失实」后的重建入口；其内嵌自检（锚点反查/覆盖留痕/导航闭环）是 C/E 规则的出处。
 - **spec-update**：「失实」的增量修复入口（审核只发现问题）。
 

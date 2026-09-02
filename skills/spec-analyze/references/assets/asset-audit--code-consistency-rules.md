@@ -34,7 +34,7 @@
 ### C6 mermaid 渲染校验
 
 ```bash
-node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <文档>
+node <specgo插件目录>/skills/spec-analyze/scripts/validate-mermaid.mjs <文档>
 ```
 
 - 文档内全部 mermaid 图 VALID 才算过；任一 INVALID = 失实（图即事实载体，渲染失败等同内容不可信）。

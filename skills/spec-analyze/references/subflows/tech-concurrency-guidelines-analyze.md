@@ -78,12 +78,12 @@ description: 提取存量代码仓的并发规范资产（线程池、锁、chan
 产出文档中含 ```mermaid 代码块时（本资产默认不画图），交付前必须运行 mermaid 本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/skills/spec-analyze/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
-- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 `<specgo插件目录>/references/mermaid-guide.md` 的「语法红线」。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 `<specgo插件目录>/skills/spec-analyze/references/mermaid-guide.md` 的「语法红线」。
 
 ## 输出模板
 
@@ -103,7 +103,7 @@ node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出�
 - **文档语言**：输出文档用中文，技术术语（ThreadPool / Executor / goroutine / Mutex / RWMutex / channel / Actor 等）保留英文。
 - **索引分工**：本资产目录的 `README.md`（实例导航主文档）由本 skill 产出，活文档同名覆盖；域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 自 v3.0 起不再自动生成（spec-index 已移除），本 skill 不维护。
 - **与相邻资产互补**：并发框架使用事实清单看 tech-framework-guidelines-analyze 产出的 `docs/0-tech/framework-guidelines/`；超时/重试/熔断等故障策略归 tech-resilience-guidelines-analyze；跨服务调用指导归 tech-external-call-guidelines-analyze。
-- **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
+- **mermaid 校验**：产出含 ```mermaid 代码块时，收尾必须用 `node <specgo插件目录>/skills/spec-analyze/scripts/validate-mermaid.mjs <产出文件...>` 逐文件校验，全部 VALID 才算完成；INVALID 按报错修复后重验，禁止跳过。
 
 ## 参考文件索引
 

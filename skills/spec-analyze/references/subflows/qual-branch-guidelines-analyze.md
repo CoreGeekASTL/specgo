@@ -122,7 +122,7 @@ guidelines 形态语义：分支与变更规范是**指导性规范**（"应该"
 产出文档中含 ```mermaid 代码块时（分支模型图可选用 mermaid gitGraph / flowchart 呈现，非必需），交付前必须运行 mermaid 本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/skills/spec-analyze/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。

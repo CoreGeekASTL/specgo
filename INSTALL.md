@@ -50,7 +50,7 @@ git clone https://github.com/CoreGeekASTL/specgo.git
 
 重启后确认两点：
 
-1. **skill 已发现**：OpenCode 查看可用 skill 列表；Claude Code 用 `/plugin` 查看已装插件。应出现 **6 个独立 skill**：`spec-analyze`、`spec-update`、`spec-requirement-audit`、`spec-story-design`、`spec-code-generate`、`spec-report`（17 个子流程在 spec-analyze 的 `references/subflows/` 下，不出现在 skill 列表属正常；mermaid 指南在 `references/mermaid-guide.md`，是共用参考不是 skill）
+1. **skill 已发现**：OpenCode 查看可用 skill 列表；Claude Code 用 `/plugin` 查看已装插件。应出现 **6 个独立 skill**：`spec-analyze`、`spec-update`、`spec-requirement-audit`、`spec-story-design`、`spec-code-generate`、`spec-report`（17 个子流程在 spec-analyze 的 `references/subflows/` 下，不出现在 skill 列表属正常；mermaid 指南在 `skills/spec-analyze/references/mermaid-guide.md`，是共用参考不是 skill）
 2. **子流程命令已注册**：输入 `/` 应能看到 17 个子流程命令（如 `/arch-structure-model-analyze`、`/asset-audit`）。Claude Code 由插件 `commands/` 原生提供；OpenCode 由 `opencode.js` 的 config hook 内联注册（`config.command`，不写任何用户配置文件）
 3. **bootstrap 已注入**：直接问 agent "你有哪些资产分析能力"，应能列出 skill 及 spec-analyze 的子流程（如 `arch-structure-model-analyze`、`biz-interface-analyze` 等）
 

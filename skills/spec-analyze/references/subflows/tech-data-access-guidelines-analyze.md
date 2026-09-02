@@ -141,12 +141,12 @@ guidelines 形态语义：数据访问规范是**指导性规范**（"应该"遵
 产出文档中含 ```mermaid 代码块（访问链路图、缓存读写时序图等）时，交付前必须运行 mermaid 本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/skills/spec-analyze/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
-- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 `<specgo插件目录>/references/mermaid-guide.md` 的「语法红线」。
+- 画图规则（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）见 `<specgo插件目录>/skills/spec-analyze/references/mermaid-guide.md` 的「语法红线」。
 
 ## 输出模板
 

@@ -1,6 +1,6 @@
 # Specgo
 
-面向存量代码仓的四分类资产治理 skill 体系：**6 个主 skill + 17 个子流程 + 17 个斜杠命令**，无编排层——各 skill 独立执行、按需串联。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应 skill、按四分类资产模型 taxonomy 与统一格式产出文档资产到 `docs/0-{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。mermaid 编写与验证不是独立 skill——所有含 mermaid 代码块的产出物统一遵循 [references/mermaid-guide.md](./references/mermaid-guide.md)（语法红线 + `scripts/mermaid-validate/validate-mermaid.mjs` 本地验证全部 VALID 才交付）。
+面向存量代码仓的四分类资产治理 skill 体系：**6 个主 skill + 17 个子流程 + 17 个斜杠命令**，无编排层——各 skill 独立执行、按需串联。内置一段 bootstrap 注入指令，让 coding agent 在做代码仓分析类任务前先加载对应 skill、按四分类资产模型 taxonomy 与统一格式产出文档资产到 `docs/0-{域}/{资产}/` 下；并能依据 story 设计文档直接生成代码。mermaid 编写与验证不是独立 skill——指南与验证脚本宿于 spec-analyze 内部：[mermaid-guide.md](./skills/spec-analyze/references/mermaid-guide.md) 的语法红线所有含 mermaid 代码块的产出物必遵守；资产类产出（docs/0-{域}/、docs/report/）另须过 `skills/spec-analyze/scripts/validate-mermaid.mjs` 全部 VALID 才交付，非资产产出按红线自查即可。
 
 > 安装与卸载见 [INSTALL.md](./INSTALL.md)。
 >

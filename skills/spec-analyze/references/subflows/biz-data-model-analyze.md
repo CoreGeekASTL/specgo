@@ -93,12 +93,12 @@ ER 图中的关系分两类，必须区分：
 产出文档中含 ```mermaid 代码块，交付前必须运行 mermaid 本地验证脚本逐文件校验：
 
 ```bash
-node <specgo插件目录>/scripts/mermaid-validate/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/skills/spec-analyze/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
 - 首次使用需先在脚本目录执行 `npm install`（安装 mermaid + linkedom，node_modules 不入库）。
-- 画图规则（label 一律加引号、裸 `end` 禁用等）见 `<specgo插件目录>/references/mermaid-guide.md` 的「语法红线」。
+- 画图规则（label 一律加引号、裸 `end` 禁用等）见 `<specgo插件目录>/skills/spec-analyze/references/mermaid-guide.md` 的「语法红线」。
 - 全量模式：全部产出文档一次性传入校验；全部 VALID 后在回复中给出汇总——实体清单（实体名 → 文档路径）与排除项清单（表/结构 + 排除理由）。
 
 ## 输出模板

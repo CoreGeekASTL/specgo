@@ -82,4 +82,4 @@
 - spec-story-design/references/assets/{color-modeling,orthogonality-principles}.md
 - spec-requirement-audit/references/assets/{color-modeling,gap-checklist,requirement-quality-checklist,code-crosscheck-guide}.md
 - spec-analyze/references/assets/asset-audit--{asset-expression-rules,code-consistency-rules}.md
-- references/mermaid-guide.md（mermaid 编写与本地验证指南，全部 skill 共用的参考文档，非模板、非 skill）
+- skills/spec-analyze/references/mermaid-guide.md（mermaid 编写与本地验证指南，宿于 spec-analyze、全部 skill 共用的参考文档，非模板、非 skill；配套验证脚本在 skills/spec-analyze/scripts/）
