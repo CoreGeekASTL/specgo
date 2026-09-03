@@ -49,10 +49,10 @@ description: >-
 | 结构模型 | `docs/0-arch/structure-model/` | arch-structure-model-analyze | 新增/删除包或目录、模块依赖方向变化、分层调整 |
 | 交互模型 | `docs/0-arch/interaction-model/` | arch-interaction-model-analyze | 主业务流程链路增删环节、消息走向/调用顺序变化、新流程入口 |
 | 对外接口 | `docs/0-biz/interface/` | biz-interface-analyze | 路由注册/IDL 契约/消息订阅增删改；请求响应结构变化；功能域归属变化 |
-| 业务规则 | `docs/0-biz/rules/` | biz-rules-analyze | 条件分支/参数校验/状态迁移/阈值/错误码使用逻辑变化 |
+| 业务规则 | `docs/0-biz/rules/` | biz-rules-analyze | 核心业务分支/状态迁移/业务错误码/事务回滚逻辑变化 |
 | 对象模型 | `docs/0-biz/object-model/` | biz-object-model-analyze | 领域实体/聚合结构、关联关系变化 |
 | 数据模型 | `docs/0-biz/data-model/` | biz-data-model-analyze | 表结构/索引/缓存数据结构/TTL/数据生命周期变化，建表 SQL 变化 |
-| 领域词典 | `docs/0-biz/lexicon/` | biz-lexicon-analyze | 五类来源（请求响应模型、DB 实体、事件模型、错误码、常量）任一变化；功能域增删 |
+| 领域词典 | `docs/0-biz/lexicon/` | biz-lexicon-analyze | 四类来源（请求响应模型、DB 实体、事件模型、错误码）任一变化；功能域增删 |
 | 框架使用 | `docs/0-tech/framework-guidelines/` | tech-framework-guidelines-analyze | 引入/移除框架或基础库（依赖清单变化）、框架用法模式变化 |
 | 通信规范 | `docs/0-tech/external-call-guidelines/` | tech-external-call-guidelines-analyze | 出站调用点增删、被调外部服务变化、协议/封装方式变化 |
 | 并发规范 | `docs/0-tech/concurrency-guidelines/` | tech-concurrency-guidelines-analyze | 线程池/goroutine/锁/channel/定时任务等并发原语增改 |
