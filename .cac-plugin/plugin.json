@@ -1,7 +1,7 @@
 {
   "name": "specgo",
   "description": "四分类资产治理体系：6 个主 skill（spec-analyze 资产分析，承载 17 个子流程 / spec-update 资产刷新 / spec-requirement-audit 需求审核（看文档+看代码）/ spec-story-design story 设计 / spec-code-generate 代码生成与测试 / spec-report 总结报告）+ 17 个斜杠命令（spec-analyze 子流程触发用，顶层 skill 无命令）+ 内置 mermaid 编写指南与本地验证脚本（spec-analyze 内置）；产出落盘 docs/0-{域}/{资产}/ 与 docs/1-storys/；session 启动注入 bootstrap，强制 AI 做分析/编码任务前先加载对应 skill",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "author": {
     "name": "AIAction"
   },
