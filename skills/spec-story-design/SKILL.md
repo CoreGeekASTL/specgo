@@ -1,11 +1,11 @@
 ---
 name: spec-story-design
-description: 当接收到需求设计文档（SR/特性设计）或 spec-requirement-audit 产出的规范功能实现设计，需要为存量代码仓产出新功能的 story 设计文档时使用——产出 `docs/1-storys/{功能名}/` 目录（每 story 一个目录：`{功能名}-story.md` + `{功能名}-develop-task.md`）：story 按八类核心要素（对外接口/业务规则/数据模型/对象模型/领域词典/交互流程/外部服务调用/技术要素）组织章节，每类要素明确标注 新增 / 变更（写清对哪个既有要素做了什么更改）/ 不涉及，并附需求概述（多彩建模）、实现方案与修改清单、外部文档引用；同需求重跑同名覆盖。触发场景包括"新增 story 设计"、"根据需求文档生成 story 设计"、"xxx-story 文档"、"docs/1-storys"、"按 story 模板输出新功能设计"等。
+description: 当接收到需求设计文档（SR/特性设计）或 spec-requirement-audit 产出的规范功能实现设计，需要为存量代码仓产出新功能的 story 设计文档时使用——产出 `docs/1-storys/{功能名}/` 目录（每 story 一个目录：`{功能名}-story.md` + `{功能名}-develop-task.md`）：story 按八类核心要素（对外接口/业务规则/数据模型/对象模型/领域词典/交互流程/外部服务调用/技术要素）组织章节，每类要素明确标注 新增 / 变更（写清对哪个既有要素做了什么更改）/ 不涉及，并附需求概述（多彩建模）、实现方案与修改清单、外部文档引用；story 定稿归档后最后输出 develop-task 施工单（单文档、按相对独立功能块分 Task 章，每 Task 含修改文件清单/逐文件改动详情/测试清单/验证方式，编写指令见 references/assets/develop-task-guide.md）；同需求重跑同名覆盖。触发场景包括"新增 story 设计"、"根据需求文档生成 story 设计"、"xxx-story 文档"、"docs/1-storys"、"按 story 模板输出新功能设计"等。
 ---
 
 # Story 设计：从需求文档到 {功能名}-story 文档
 
-接收一篇需求设计文档（或 spec-requirement-audit 产出的规范功能实现设计），结合存量资产（v1.1 四域资产 + 旧体系素材），产出一个 story 目录 `docs/1-storys/{功能名}/`（内含 `{功能名}-story.md` 与 `{功能名}-develop-task.md`）。
+接收一篇需求设计文档（或 spec-requirement-audit 产出的规范功能实现设计），结合存量资产（v1.1 四域资产 + 旧体系素材），产出一个 story 目录 `docs/1-storys/{功能名}/`（内含 `{功能名}-story.md` 与 `{功能名}-develop-task.md`）。**story 文档先完整产出并归档，develop-task 施工单作为最后一步输出**，不插在 story 流程中间。
 
 **交互双模式（全局条款）**：本 skill 所有询问点**默认使用 ask-human 工具**；若任务开始时用户声明"以报告形式呈现"（或同类意思），则全程**不使用 ask-human**——所有待澄清/待审视内容以报告形式输出，等用户回复后继续。
 
@@ -44,14 +44,14 @@ description: 当接收到需求设计文档（SR/特性设计）或 spec-require
 4. **docs/0-arch/structure-model/**：新模块的分层归属依据。
 5. **docs/0-biz/rules/、docs/0-biz/lexicon/、docs/0-biz/data-model/、docs/0-biz/object-model/、docs/0-arch/interaction-model/**（存在时按需读）：变更类要素的"变更前"基线——写"变更前 → 变更后"必须引用这些资产或存量代码的事实，禁止凭印象写变更前状态。
 6. **docs/1-storys/**：相关功能的既有 story（被注入链路的原始设计参照）；并做**重跑判定**——是否已有同功能名 story：
-   - **已有同功能名 story** → 本需求为其迭代/重跑，第 6 步走「覆盖更新」分支
-   - **无** → 第 6 步走「新增文档」分支
+   - **已有同功能名 story** → 本需求为其迭代/重跑，第 5 步走「覆盖更新」分支
+   - **无** → 第 5 步走「新增文档」分支
 7. **存量代码（按需抽查）**：仅核实复用点/注入点的真实文件路径与分层约定（models/dao/service/controllers/routers），禁止全仓阅读。
 8. 旧体系素材：`docs/business/`（story/key-class/data-structure）存在时可作复用/注入素材引用，不再作为格式基准。
 
 **存量资产缺失时的降级（任一缺失不阻断流程）**：
 
-- `docs/1-storys/` 不存在：第 6 步新建目录并按 references/assets/story-readme-template.md 生成 README 索引。
+- `docs/1-storys/` 不存在：第 5 步新建目录并按 references/assets/story-readme-template.md 生成 README 索引。
 - 上述任一资产目录不存在：以外部文档引用章节对应行注明"仓内无该类文档"，要素变更前基线以存量代码为准。
 - 全部不存在（全新仓首篇 story）：格式基准仍以 references/assets/story-template.md、color-modeling.md 为准，产出物形态不变。
 
@@ -75,55 +75,7 @@ description: 当接收到需求设计文档（SR/特性设计）或 spec-require
 
 产出后按 references/assets/orthogonality-principles.md 执行**正交四原则自检**：逐条核对实现方案与各要素节是否符合 DRY（无重复实现）、SoC（无错位分层）、最小化依赖（无多余框架/库/字段）、稳定依赖方向（无下层反向依赖、无循环依赖）。违规处直接修改设计；确有理由必须违规的，标注理由提交用户确认，禁止悄悄违规。
 
-### 第 5 步：生成 develop-task 文档（读源码 → 疑问澄清 → 定稿）
-
-本步独立于 story 设计文档，产出辅助出代码的抛弃式文档 `docs/1-storys/{功能名}/{功能名}-develop-task.md`（与 story 同目录）。与第 4 步的设计论证不同——本步只回答"代码怎么改"，依据是**实读源码**而非设计推断。**子步骤顺序不可颠倒，5.2 未完成不得进入 5.3。**
-
-**本步实现方案选型原则（业务逻辑正确性第一）**：
-
-- 实现方案必须**立足 5.1 实读到的存量代码现状**（既有分层、既有模式、既有校验与事务边界、并发与边界条件）论证，禁止脱离代码凭空设计。
-- **禁止默认选改动最小、侵入最小的"最简单方案"**。改签名、改调用方、新增中间层等成本较高的方案，只要业务逻辑正确性更优就必须作为待选方案提交用户决策。
-- 5.2 提交用户澄清时，不确定的、待选的方案必须**批量抛出、全部向用户问清楚**，且覆盖业务逻辑正确的合理方案——不得只拿最简单方案问用户，由用户在澄清环节拍板。
-- 禁止为省事而引入逻辑缺口的方案，典型反例：绕过既有校验/状态机、破坏事务一致性、忽略并发竞争、吞掉异常分支、为少改文件而错位分层（如业务逻辑塞进 Controller）。
-- 5.3 定稿的修改文件清单按用户澄清结论落地，每条修改点须能对应业务正确性依据（需求章节号 + 存量代码事实），而非仅"改动小/侵入低"。
-- 修改点设计同时受**软件正交四原则**约束（references/assets/orthogonality-principles.md）：5.1 定位修改点时核对目标分层归属符合 SoC 与稳定依赖方向；5.3 每条修改点不得引入重复实现、错位分层、多余依赖、反向/循环依赖。与"业务逻辑正确性第一"冲突时，以业务逻辑正确性为准，并把取舍提交用户确认。
-
-#### 5.1 阅读源码，定位修改点
-
-基于第 4 步产出的要素变更总览与实现方案，定位存量代码中的复用点 / 注入点 / 新增点，逐一打开相关源码文件阅读：
-
-- 按分层逐一核实：`controllers/`（路由注册方式、Controller 方法签名）、`service/`（接口+实现类+sync.Once 单例）、`dao/`（BaseInterface 继承、EntityType）、`models/`（orm 标签、TableName、init 注册）、`routers/`（路由注册函数）。
-- 复用点：确认待复用的函数 / 结构体 / 工具方法的真实签名与调用方式。
-- 注入点：确认被注入链路的既有代码结构（如登录 Controller 的鉴权调用位置）。
-- 新增点：确认新文件应放置的目录与命名约定（对照存量同类文件）。
-
-禁止全仓通读；只读与修改点直接相关的文件。
-
-#### 5.2 根据需求与源码列出疑问点，提交用户澄清
-
-基于 5.1 源码阅读，对照需求文档，找出歧义 / 多种实现选择 / 需求未覆盖的边界，逐条列出疑问点，**一次性批量抛出全部疑问点提交用户，等待澄清后继续，不逐个打断**。不确定的、待选的方案直接写进问题里全部向用户问清楚，由用户逐条拍板，不做正式的候选方案取舍列举。用户批量答复后逐问核对：未答 / 含糊 / 答案引入新疑问的，再批量追问一轮，直至全部问清。每条疑问点包含：
-
-- **疑问描述**：一句话说清问题（含不确定点）
-- **涉及源码位置**：文件路径 + 函数名 / 行号
-- **需要用户决策的问题**：把待选方案直接写进提问，一句话问清
-
-示例：
-
-> **Q1**：`service/auth_service.go` 的 `CheckAuth` 当前无缓存参数。需求 §3.2 未明确缓存生命周期归属，采用 (a) 改函数签名加 cache 参数（影响所有调用方），还是 (b) 函数内部直接持有 cache 实例（侵入小但耦合）？
-
-无疑问点时也要明确回复"无疑问点，直接定稿"，不得跳过本子步骤。
-
-#### 5.3 用户澄清后，输出完整 develop-task 文档
-
-收到用户澄清回复后，按 references/assets/develop-task-template.md 模板输出完整文档到 `docs/1-storys/{功能名}/{功能名}-develop-task.md`。文档核心内容须基于 5.1 源码阅读 + 5.2 用户澄清填写，输出格式见模板：
-
-- **变更总览（模板第 2 节）**：变更框图（mermaid flowchart，按业务链路分 subgraph、橙色标注变更节点）+ 方案选型约束核对；逻辑链环节与资产/skill 的对应关系是模板侧写作指导，不输出到文档
-- **逐变更点修改清单（模板第 3 节）**：每个变更点按逻辑链五字段展开（功能描述/交互模型定位/对象与数据模型确认/修改方案/参考资产）+ 看护测试；各字段写作模式（功能描述句式、修改方案五段式「变更本质→变更示意图→行为对照表→代码修改方案→边界与约束」、参考资产 ≤30 字表格等）严格按模板执行
-- **澄清问题列表（模板第 6 节）**：5.2 疑问点与用户澄清结论逐条记录（格式见模板）
-
-同名文件已存在时直接覆盖（抛弃式，不维护历史），不进 README 索引。参考资产链接必须指向仓内真实存在的文档；无对应资产时注明"待核实"，禁止臆造链接。
-
-### 第 6 步：归档与索引
+### 第 5 步：归档与索引
 
 按第 2 步的重跑判定结果二选一：
 
@@ -141,12 +93,19 @@ description: 当接收到需求设计文档（SR/特性设计）或 spec-require
 
 - 与既有功能存在注入关系的，在 story 第 12 节"既有 story"行引用被注入功能的 story 文档；无既有 story 时该行注"无引用"。
 
-### 第 7 步：mermaid 图语法红线自查（收尾必做）
+### 第 6 步：mermaid 图语法红线自查（story 收尾必做）
 
 产出文档中含 mermaid 代码块（四色建模图、交互流程时序图、实现方案依赖图等）时，画图必须遵守并逐图自查 `<specgo插件目录>/skills/spec-analyze/references/mermaid-guide.md` 的「语法红线」：
 
 - 节点 label 一律加双引号；时序图消息文本禁 `;`；裸 `end`/`subgraph` 不做 label；flowchart 与 sequence 箭头不混用；subgraph 名称带空格加引号；节点 id 只用字母数字下划线；换行用 `<br/>`。
 - 本 skill 产出非资产文档，**不跑验证脚本**（脚本校验只适用于 spec-analyze 资产产出与 spec-update 资产刷新）；按红线逐图自查通过即算完成。
+
+### 第 7 步：产出 develop-task 施工单（story 定稿后的最后产出）
+
+story 文档完成归档与自查后，产出辅助出代码的抛弃式施工单 `docs/1-storys/{功能名}/{功能名}-develop-task.md`（与 story 同目录，同名覆盖、不进 README 索引）。**本步只回答"代码怎么改"，依据是实读源码而非设计推断**——完整执行指令读取 [references/assets/develop-task-guide.md](references/assets/develop-task-guide.md) 并按其执行（实读源码定位修改点 → task 拆分 → 条件触发澄清 → 按 [references/assets/task-template.md](references/assets/task-template.md) 定稿为单文档多 Task 结构），方案选型遵守两条铁律：
+
+- **业务逻辑正确性第一**：实现方案立足实读到的存量代码现状（既有分层、既有校验与事务边界、并发与边界条件）论证，禁止默认选改动最小的方案；多种候选方案并存且影响业务正确性时必须提交用户拍板；禁止引入绕过既有校验/状态机、破坏事务一致性、忽略并发竞争、吞掉异常分支、错位分层（如业务逻辑塞进 Controller）的逻辑缺口。
+- **正交四原则**（references/assets/orthogonality-principles.md）：每条修改点不得引入重复实现、错位分层、多余依赖、反向/循环依赖；与业务逻辑正确性冲突时以业务逻辑正确性为准，并把取舍提交用户确认。
 
 ### 第 8 步：输出设计报告（不落盘，收尾必做）
 
@@ -156,8 +115,8 @@ description: 当接收到需求设计文档（SR/特性设计）或 spec-require
 # story 设计报告（{功能名}）
 1. 八要素覆盖统计：对外接口/业务规则/数据模型/对象模型/领域词典/交互流程/外部服务调用/技术要素 逐类一行（新增 x 项 / 变更 y 项 / 不涉及）
 2. 关键设计决策与依据：每条 = 决策一句话 + 依据（需求章节号 / 存量代码事实）
-3. 修改文件清单摘要：develop-task 逐变更点压缩表（文件 | 操作 | 一句话改动）
-4. 疑问澄清记录：第 5.2 步疑问点 + 用户裁定逐条
+3. task 拆分与文件清单摘要：任务拆分总览表（Task | 任务名 | 前置 Task | 文件数）+ 各 Task 修改文件压缩表（文件 | 操作 | 一句话改动）
+4. 决策记录：develop-task 条件触发澄清的疑问点 + 用户裁定逐条（未触发写"未触发"）
 5. 正交四原则自检结论：DRY / SoC / 最小化依赖 / 稳定依赖方向 逐项通过或经确认的违规及理由
 6. 产出文件清单：story / develop-task / docs/1-storys/README.md 索引路径 + mermaid 红线自查结论
 7. 下一步建议：可进入 spec-code-generate
@@ -181,7 +140,7 @@ description: 当接收到需求设计文档（SR/特性设计）或 spec-require
 - [ ] 术语表覆盖需求词汇表与全文黑话；需求未明确处标注"需求未明确"而非脑补
 - [ ] 已按重跑判定选择「新增文档」或「覆盖更新」；覆盖更新分支未保留过期内容
 - [ ] 每条链路时序图下方已补实现说明，多句话逐步说明，每句 ≤30 字
-- [ ] develop-task 文档已在第 5 步独立产出：5.1 已实读源码定位修改点；实现方案立足存量代码现状论证，5.2 已将不确定的、待选方案全部向用户问清楚且覆盖业务逻辑正确的合理方案（非只拿最简单方案问，无疑问时已明确回复"无疑问"），无绕过既有校验/事务/并发语义的逻辑缺口；修改点不违反正交四原则，确需违规的取舍已提交用户确认；5.3 按用户澄清定稿六节齐全（变更框图 + 逐变更点逻辑链分析 + 澄清问题列表逐条记录），各字段写作模式符合模板、参考资产链接仓内真实文档
+- [ ] develop-task 施工单已在 story 定稿归档后作为最后一步产出（按 develop-task-guide.md 执行）：已实读源码定位修改点；task 拆分口径合规（同一文件只归属一个 Task、前置依赖已标注、改动单一时未强拆）；条件触发澄清未漏（设计与代码冲突/多方案影响业务正确性已问，未触发直接定稿）；按 task-template.md 定稿——任务拆分总览 + 逐 Task 四小节齐全（修改文件清单/逐文件改动详情含新增完整契约与行为对照穷举/测试清单/验证方式）+ 决策记录；无行号、链接指向仓内真实文件
 - [ ] `docs/1-storys/README.md` 索引已同步（新增加行 / 重跑更新对应行），无死链
 - [ ] 产出文档中的 mermaid 图已逐图按语法红线自查通过（label 一律加引号、时序图消息禁 `;`、裸 `end` 禁用等）
 - [ ] 设计报告七节齐全（不落盘），已按交互双模式完成用户审视
@@ -189,10 +148,11 @@ description: 当接收到需求设计文档（SR/特性设计）或 spec-require
 ## 参考文件索引
 
 - references/assets/color-modeling.md — 多彩建模方法论（第 3 步用，本目录自包含副本）
-- references/assets/story-template.md — story 设计文档输出模板（需求概述 + 八类核心要素 + 实现方案 + 外部文档引用，第 4、6 步用）
-- references/assets/story-readme-template.md — docs/1-storys/README.md 索引模板（第 6 步用）
-- references/assets/develop-task-template.md — develop-task 抛弃式文档模板（第 5 步用）
-- references/assets/orthogonality-principles.md — 软件正交四原则（DRY/SoC/最小化依赖/稳定依赖方向）：第 4 步自检与第 5 步修改点设计约束
+- references/assets/story-template.md — story 设计文档输出模板（需求概述 + 八类核心要素 + 实现方案 + 外部文档引用，第 4、5 步用）
+- references/assets/story-readme-template.md — docs/1-storys/README.md 索引模板（第 5 步用）
+- references/assets/develop-task-guide.md — develop-task 施工单编写执行指令（第 7 步读取执行）
+- references/assets/task-template.md — develop-task 施工单模板（单文档多 Task，第 7 步用）
+- references/assets/orthogonality-principles.md — 软件正交四原则（DRY/SoC/最小化依赖/稳定依赖方向）：第 4 步自检与 develop-task-guide.md 修改点设计约束
 - docs/0-biz/interface/README.md — 对外接口文档索引（第 2、4 步用）
 - docs/0-tech/framework-guidelines/README.md — 框架使用文档索引（第 2、4 步用）
 - docs/0-tech/external-call-guidelines/README.md — 出站调用文档索引（第 2、4 步用）

@@ -61,7 +61,7 @@
 | --- | --- | --- | --- |
 | spec/story设计README模板.md | spec-story-design | skills/spec-story-design/references/assets/story-readme-template.md | story 索引 README |
 | spec/story设计详情模板.md | 同上 | skills/spec-story-design/references/assets/story-template.md | {功能名}-story.md 八类核心要素骨架 |
-| spec/develop-task模板.md | 同上 | skills/spec-story-design/references/assets/develop-task-template.md | {功能名}-develop-task.md 修改清单 + 澄清清单 |
+| spec/develop-task模板.md | 同上 | skills/spec-story-design/references/assets/task-template.md | {功能名}-develop-task.md 单文档多 Task 施工单（任务拆分总览 + 逐 Task 修改文件清单/改动详情/测试清单/验证方式 + 决策记录） |
 | spec/功能设计规范模板.md | spec-requirement-audit | skills/spec-requirement-audit/references/assets/functional-design-template.md | 规范功能实现设计 md |
 | spec/建模结果HTML模板.html | 同上 | skills/spec-requirement-audit/references/assets/model-template.html | 多彩建模结果 HTML |
 | spec/资产审核总览README模板.md | asset-audit（spec-analyze 子流程） | skills/spec-analyze/references/assets/asset-audit--overview-readme-template.md | docs/report/README.md 评估总览骨架 |
