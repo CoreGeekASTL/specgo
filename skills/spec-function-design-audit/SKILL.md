@@ -1,18 +1,18 @@
 ---
 name: spec-function-design-audit
 description: >-
-  需求/功能设计审核 skill——基于多彩建模方法论审核 Spec/需求/功能设计文档的完备性（表述质量扫描：句子成分残缺/弱表述/术语失范/语义多解 + 业务逻辑断裂点 + 设计要素：时序图/验收用例/接口信息），三类问题一次扫描、统一 ask-human 批量澄清补齐，建模结果以 HTML 可视化呈现，审核完成后可选输出规范功能设计 md。当用户提到"spec-function-design-audit"、"审核 spec 业务逻辑完备性"、"多彩建模"、"检查需求逻辑断点"、"需求表述质量检查"、"需求歧义扫描"、"建模结果生成 HTML 并找人确认"、"功能设计文档校验"、"需求审核"时使用。docs/ 四域资产文档的质量审核归 spec-asset-audit。
+  需求/功能设计审核 skill——基于多彩建模方法论审核 Spec/需求/功能设计文档的完备性（表述质量扫描：句子成分残缺/弱表述/术语失范/语义多解 + 业务逻辑断裂点 + 设计要素：时序图/验收用例/接口信息 + 通用知识与公开协议错误校验），四类问题一次扫描、统一 ask-human 批量澄清补齐，建模结果以 HTML 可视化呈现，审核完成后可选输出规范功能设计 md。当用户提到"spec-function-design-audit"、"审核 spec 业务逻辑完备性"、"多彩建模"、"检查需求逻辑断点"、"需求表述质量检查"、"需求歧义扫描"、"建模结果生成 HTML 并找人确认"、"功能设计文档校验"、"需求审核"时使用。docs/ 四域资产文档的质量审核归 spec-asset-audit。
 ---
 
 # 需求/功能设计审核（spec-function-design-audit）
 
 | 输入 | 干什么 | 产出 |
 | --- | --- | --- |
-| 一篇 Spec/需求/功能设计文档 | 多彩建模 + 三类断点扫描 + ask-human 批量澄清，补齐到可供编码 | 源文档同目录：`{功能名}-建模结果.html`；可选 `{功能名}-功能设计.md` |
+| 一篇 Spec/需求/功能设计文档 | 多彩建模 + 四类断点扫描 + ask-human 批量澄清，补齐到可供编码 | 源文档同目录：`{功能名}-建模结果.html`；可选 `{功能名}-功能设计.md` |
 
 **自包含原则**：规则与模板全部归档在自身 references/ 与 assets/ 下（mermaid 验证脚本除外，全插件共用）。
 
-核心思想：把文档翻译成多彩建模图（事件-角色-实体-描述的因果链路），逻辑断裂点在图上自然暴露；同时扫描表述质量问题；三类问题合并为一份断点清单，统一 ask-human 澄清，产出可供编码人员审核的 HTML。
+核心思想：把文档翻译成多彩建模图（事件-角色-实体-描述的因果链路），逻辑断裂点在图上自然暴露；同时扫描表述质量问题与通用知识/公开协议错误；四类问题合并为一份断点清单，统一 ask-human 澄清，产出可供编码人员审核的 HTML。
 
 七阶段，严格按序。
 
@@ -26,8 +26,9 @@ description: >-
 1. **表述质量扫描（必做）**：对照 [references/requirement-quality-checklist.md](references/requirement-quality-checklist.md) 逐句扫描 5 类——成分残缺/弱表述/术语失范/语义多解/带病放行。弱词黑名单：内置词表 ∪ 仓内 `docs/audit/weak-words.txt`（存在则追加）。
 2. **逻辑断裂点扫描（必做）**：对照 [references/gap-checklist.md](references/gap-checklist.md) 断点 1-9。
 3. **设计要素校验（含实现设计章节的文档必做，纯需求文档跳过）**：对照 gap-checklist.md 断点 10/11/12（时序图/验收用例/接口信息）。
-4. 术语失范与断点 9 重叠的命中合并为一个断点。
-5. 复制 [assets/model-template.html](assets/model-template.html)，填入建模结果与全部断点卡片（红色虚线高亮），保存到**源文档所在目录**，文件名 `{功能名}-建模结果.html`。
+4. **通用知识与公开协议错误校验（必做）**：对照 gap-checklist.md 断点 13，检出文档中与通用知识/公开协议标准矛盾的事实性错误（只报有公认标准答案的，须给出权威依据与原文摘录）。
+5. 术语失范与断点 9 重叠的命中合并为一个断点。
+6. 复制 [assets/model-template.html](assets/model-template.html)，填入建模结果与全部断点卡片（红色虚线高亮），保存到**源文档所在目录**，文件名 `{功能名}-建模结果.html`。
 
 本阶段只检出、不提问。
 
@@ -72,7 +73,7 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 
 ## 质量检查清单
 
-- [ ] 三类检出全部执行，断点清单分级编号完整
+- [ ] 四类检出全部执行（表述质量/逻辑断裂点/设计要素/通用知识与公开协议错误），断点清单分级编号完整
 - [ ] ask-human 批量澄清：一次抛出、每问 2-4 个候选、语义多解列全部理解；循环追问至无新问题
 - [ ] 全部断点有裁定（或带病记「仍存疑」并单独列出"不建议进入编码"）
 - [ ] HTML 落盘源文档同目录，图例置顶、元素标注出处与确认状态
@@ -95,6 +96,6 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 
 - [references/color-modeling.md](references/color-modeling.md) — 多彩建模方法论（阶段 1）
 - [references/requirement-quality-checklist.md](references/requirement-quality-checklist.md) — 需求表述质量清单 5 类 + 弱词黑名单（阶段 2）
-- [references/gap-checklist.md](references/gap-checklist.md) — 逻辑断裂点清单 12 类 + 严重程度分级 + ask-human 规范（阶段 2/3）
+- [references/gap-checklist.md](references/gap-checklist.md) — 逻辑断裂点清单 13 类（含通用知识与公开协议错误校验）+ 严重程度分级 + ask-human 规范（阶段 2/3）
 - [assets/model-template.html](assets/model-template.html) — 建模 HTML 模板（阶段 2/4）
 - [references/functional-design-template.md](references/functional-design-template.md) — 功能设计模板（阶段 6）
