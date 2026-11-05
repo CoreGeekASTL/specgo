@@ -22,9 +22,9 @@
 | 逻辑链环节 | 写作口径 | 依据资产目录 | 对应 skill |
 | --- | --- | --- | --- |
 | 功能描述 | 「在新增 xxx 功能时，需进行 xxx，采用修改/增加 xxx 函数实现 xxx 逻辑」——人话、一眼看懂，句尾括注需求章节号与裁定编号；内容必须来自需求设计文档，禁止凭印象写 | 需求设计文档章节 + 本文档澄清问题列表 | spec-story-design（第 5.2 步澄清） |
-| 交互模型定位 | 「新增 xxx 交互模型」或「在 xxx 交互模型的基础上增加/修改 xxx 环节」——只写清在哪个流程的哪个环节改，不展开论证；分支/异常逻辑归 rules 资产，一句话指明 | docs/0-arch/interaction-model/、docs/0-biz/rules/ | arch-interaction-model-analyze / biz-rules-analyze |
+| 交互模型定位 | 「新增 xxx 交互模型」或「在 xxx 交互模型的基础上增加/修改 xxx 环节」——只写清在哪个流程的哪个环节改，不展开论证；分支/异常逻辑归业务知识表与需求文档，一句话指明 | docs/0-arch/interaction-model/、docs/0-biz/knowledge/ | arch-interaction-model-analyze |
 | 对象/数据模型确认 | 「新增 xxx 对象/数据」或「采用 xx 对象/数据，实现 xxx 功能」——结构不变时必须明说"不变" | docs/0-biz/object-model/、docs/0-biz/data-model/ | biz-object-model-analyze / biz-data-model-analyze |
-| 修改方案 | 行为优先、禁止代码化描述，五段式（顺序不可变、缺一不可）：① 变更本质——一句话"什么变了、什么没变"，只用业务语言（接口/响应/状态/结论），禁止任何代码符号（函数名/类名/变量名/方法调用）；② 变更示意图——mermaid flowchart LR 表达本次变更方案，让人一眼看懂改了什么：节点 ≤6 个，变更节点橙色（`fill:#ffe4b5,stroke:#d4930d`），不变分支标注"（不变）"，变更分支用"原 → 新"对比表述；③ 行为对照表——`\| 场景 \| 现状行为 \| 变更后行为 \|` 穷举所有受影响分支不得遗漏，含成功路径（不变须标注"不变"）；④ 代码修改方案——表格呈现，列固定为 `\| 操作 \| 逻辑 \| 通过 \| 实现 \|`，对应统一模型「增加/修改 xxx 逻辑：通过 xxx（函数/手段），实现 xxx（效果）」（逻辑名用业务语言）；⑤ 边界与约束——不变项、口径注意、看护边界。读者不读源码也能完整理解"什么场景下、原来怎样、改成怎样、边界在哪" | docs/0-biz/interface/、docs/0-tech/{framework,concurrency,data-access,resilience}-guidelines/、docs/0-biz/lexicon/、docs/0-tech/external-call-guidelines/ | biz-interface-analyze / tech-framework-guidelines-analyze / tech-concurrency-guidelines-analyze / biz-lexicon-analyze / tech-external-call-guidelines-analyze |
+| 修改方案 | 行为优先、禁止代码化描述，五段式（顺序不可变、缺一不可）：① 变更本质——一句话"什么变了、什么没变"，只用业务语言（接口/响应/状态/结论），禁止任何代码符号（函数名/类名/变量名/方法调用）；② 变更示意图——mermaid flowchart LR 表达本次变更方案，让人一眼看懂改了什么：节点 ≤6 个，变更节点橙色（`fill:#ffe4b5,stroke:#d4930d`），不变分支标注"（不变）"，变更分支用"原 → 新"对比表述；③ 行为对照表——`\| 场景 \| 现状行为 \| 变更后行为 \|` 穷举所有受影响分支不得遗漏，含成功路径（不变须标注"不变"）；④ 代码修改方案——表格呈现，列固定为 `\| 操作 \| 逻辑 \| 通过 \| 实现 \|`，对应统一模型「增加/修改 xxx 逻辑：通过 xxx（函数/手段），实现 xxx（效果）」（逻辑名用业务语言）；⑤ 边界与约束——不变项、口径注意、看护边界。读者不读源码也能完整理解"什么场景下、原来怎样、改成怎样、边界在哪" | docs/0-biz/interface/、docs/0-tech/{framework,concurrency,data-access,resilience}-guidelines/、docs/0-tech/external-call-guidelines/ | biz-interface-analyze / tech-framework-guidelines-analyze / tech-concurrency-guidelines-analyze / / tech-external-call-guidelines-analyze |
 | 参考资产 | 两列表格（参考文件 \| 引用内容），每条引用内容 ≤30 字、只写该文件被引用的那点内容；链接必须指向仓内真实存在的文件，无死链 | 同上行逐条列取实际引用者 | — |
 
 ## 模板正文
@@ -100,7 +100,7 @@ flowchart LR
 | 参考文件 | 引用内容 |
 | --- | --- |
 | [interface-auth.md](../../0-biz/interface/interface-auth.md) | authIMEI 三档 code（200/401/-2）响应契约 |
-| [rules-auth.md](../../0-biz/rules/rules-auth.md) | 鉴权拒绝与参数错误的分支规则口径 |
+| [knowledge/README.md](../../0-biz/knowledge/README.md) | 鉴权拒绝与参数错误的业务知识条目 |
 | [framework-guidelines-beego.md](../../0-tech/framework-guidelines/framework-guidelines-beego.md) | BaseController.OK/Failed 统一响应出口约定 |
 
 **看护测试**：testsuit/TC_002.py（三档 HTTP 200 + body code 断言）。

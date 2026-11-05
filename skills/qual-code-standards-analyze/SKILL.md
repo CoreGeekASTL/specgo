@@ -101,7 +101,7 @@ CI 侧按本 skill 名（`qual-code-standards-analyze` / 资产目录 `code-stan
 产出文档中一般不含 mermaid 图；若因补充说明引入 ```mermaid 代码块，交付前必须逐文件校验：
 
 ```bash
-node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。画图规则见 mermaid-validate skill 的「语法红线」。
@@ -114,6 +114,24 @@ node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-
 
 只填占位符与表格行；写作规则见上文各步骤与「关键约束」。
 
+## 交付前自检（决定落盘位置，过程不落盘）
+
+对本篇每条规则逐项执行；任一项不过 → 整篇写入 `docs/_review/0-qual/code-standards/`，并在文末「裁剪说明」留一行待确认（每条 ≤1 行）。
+
+| # | 检查 | 不通过的表现 |
+|---|---|---|
+| 1 | 一句话说清该规则约束什么、为什么存在 | 只能复述编号或"按规范" |
+| 2 | 来源可指认：仓内既有规范/工具配置，或明确标注"自拟" | 来源不明 |
+| 3 | 违反后果可预测：说出会出什么问题 | 说不出；或只能说"可能/大概" |
+| 4 | 有证据：引用类给文件路径，参数类给现状数据 | 无证据 |
+| 5 | 边界清楚：不与 DT/分支规范重叠 | 说不清归属 |
+
+- **本类追加**：含任何自拟约定（新红线、新阈值、自定义编号条目）即必审；全部条目都能指向仓内既有明文才免审。
+- **结论句禁用**：可能 / 大概 / 应该是 / 暂不确定 / 推测——出现即判不过。
+- **自检过程不进文档、不进回复**；回复只说"已进待审"。
+
+样例：自拟"函数不超过 50 行"红线 → 必审；引用仓内 CONTRIBUTING 既有命名约定 → 免审。
+
 ## 关键约束
 
 - **基于实证**：所有"合规/违反/豁免"结论必须有代码支撑，证据形式为 `文件路径`，**不得出现代码行号**（行号随代码变更失效）。读不到就写「未识别（原因：xxx）」，禁止凭经验臆造违规或合规结论。
@@ -124,7 +142,6 @@ node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-
 - **成品纯净**：最终文档只含成品内容。扫描过程（执行的 grep/rg/linter 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格。
 - **语言无关**：不预设被分析仓的语言与框架，按第 2 步实际探测结果选取语言特则。
 - **文档语言**：输出文档用中文，技术术语（lint / CI / error / defer / mutex / RAII 等）保留英文。
-- **索引分工**：域索引 `docs/0-qual/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
 - **与相邻资产互补**：本 skill 治理的是仓级规范基线本身及其全量差距；代码变更后 docs 资产是否需要刷新走 spec-update。日志/配置/告警等编码指导归 tech-basic-mechanism-guidelines-analyze，DT/测试规范归 qual-dt-guidelines-analyze。
 
 ## 参考文件索引

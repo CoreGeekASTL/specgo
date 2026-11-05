@@ -73,7 +73,7 @@ flowchart LR
 | 参考文件 | 引用内容 |
 | --- | --- |
 | [interface-auth.md](../../0-biz/interface/interface-auth.md) | authIMEI 三档 code（200/401/-2）响应契约 |
-| [rules-auth.md](../../0-biz/rules/rules-auth.md) | 鉴权拒绝与参数错误的分支规则口径 |
+| [knowledge/README.md](../../0-biz/knowledge/README.md) | 鉴权拒绝与参数错误的业务知识条目 |
 | [framework-guidelines-beego.md](../../0-tech/framework-guidelines/framework-guidelines-beego.md) | BaseController.OK/Failed 统一响应出口约定 |
 
 **看护测试**：testsuit/TC_002.py（三档 HTTP 200 + body code 断言）。

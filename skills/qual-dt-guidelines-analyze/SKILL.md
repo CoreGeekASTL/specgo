@@ -106,7 +106,7 @@ description: 治理存量代码仓的 DT 规范资产（开发者测试规范：
 产出文档中含 ```mermaid 代码块（测试金字塔图等）时，交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
 
 ```bash
-node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 - 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
@@ -120,6 +120,24 @@ node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-
 
 只填占位符、表格行、图；写作规则见上文各步骤与「关键约束」。
 
+## 交付前自检（决定落盘位置，过程不落盘）
+
+对本篇每条要求逐项执行；任一项不过 → 整篇写入 `docs/_review/0-qual/dt-guidelines/`，并在文末「附注」留一行待确认（每条 ≤1 行）。
+
+| # | 检查 | 不通过的表现 |
+|---|---|---|
+| 1 | 一句话说清该要求约束什么、为什么存在 | 只能复述章节名或"按规范" |
+| 2 | 来源可指认：实测值/既有 CI 配置，或明确标注"建议值" | 来源不明 |
+| 3 | 违反后果可预测：说出会漏什么风险 | 说不出；或只能说"可能/大概" |
+| 4 | 有证据：实测命令与日期，或报告文件路径 | 无证据 |
+| 5 | 边界清楚：不与编码/分支规范重叠 | 说不清归属 |
+
+- **本类追加**：门禁线、金字塔基线若为自拟建议值即必审；全部取自仓内实测或既有 CI 配置才免审。
+- **结论句禁用**：可能 / 大概 / 应该是 / 暂不确定 / 推测——出现即判不过。
+- **自检过程不进文档、不进回复**；回复只说"已进待审"。
+
+样例：自拟"新增代码覆盖率 ≥80%"门禁 → 必审；仓内 CI 已配置覆盖率阈值并原样引用 → 免审。
+
 ## 关键约束
 
 - **基于实证**：所有"有哪些测试、用什么框架、覆盖率多少、是否合规"的结论必须有代码、配置或命令实测支撑，证据形式为 `文件路径`，**不得出现代码行号**（行号随代码变更失效）。读不到就写「未识别（原因：xxx）」/「未能实测（原因：xxx）」，禁止凭经验臆造框架名、层级归属或覆盖率数字。
@@ -130,7 +148,6 @@ node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-
 - **成品纯净**：最终文档只含成品内容。扫描过程（执行的 grep/rg 命令、命中输出摘要、覆盖率命令原始输出）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据或「实测值+命令」形式进入相关表格。
 - **语言无关**：不预设被分析仓的语言与框架，按第 2 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（unit test / integration test / E2E / Mock / coverage / diff coverage / CI 等）保留英文。
-- **索引分工**：域索引 `docs/0-qual/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
 - **与相邻资产互补**：编码层面的命名/注释/函数长度等红线归 qual-code-standards-analyze 的 `docs/0-qual/code-standards/`；分支模型与 MR 评审要求归 qual-branch-guidelines-analyze 的 `docs/0-qual/branch-guidelines/`；本 skill 只管测试维度（金字塔、用例设计、自测报告、覆盖率门禁）。
 - **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 mermaid-validate 的 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
 

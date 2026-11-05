@@ -20,11 +20,8 @@
 | --- | --- | --- | --- |
 | biz/对外接口README模板.md | biz-interface-analyze | skills/biz-interface-analyze/references/readme-template.md | 接口全景导航主文档 README |
 | biz/对外接口子文档模板.md | 同上 | skills/biz-interface-analyze/references/subdoc-template.md | interface-{feature}.md 每功能域子文档 |
-| biz/业务规则模板.md | biz-rules-analyze | skills/biz-rules-analyze/references/rules-template.md | rules-{feature}.md 规则条目骨架 |
 | biz/对象模型模板.md | biz-object-model-analyze | skills/biz-object-model-analyze/references/object-model-template.md | object-model-{aggregate}.md 类图骨架 |
 | biz/数据模型模板.md | biz-data-model-analyze | skills/biz-data-model-analyze/references/data-model-template.md | data-model-{entity}.md ER 图 + 字段表骨架 |
-| biz/领域词典README模板.md | biz-lexicon-analyze | skills/biz-lexicon-analyze/references/lexicon-template.md | 词典主文档 README |
-| biz/领域词典子域模板.md | 同上 | skills/biz-lexicon-analyze/references/lexicon-subdomain-template.md | lexicon-{子域}.md 每子域词典文档 |
 
 ## tech 技术要素
 
@@ -60,20 +57,16 @@
 | 模板文件 | 来源 Skill | 原文件路径 | 用途 |
 | --- | --- | --- | --- |
 | spec/story设计README模板.md | spec-story-design | skills/spec-story-design/references/story-readme-template.md | story 索引 README |
-| spec/story设计详情模板.md | 同上 | skills/spec-story-design/references/story-template.md | {功能名}-story.md 八类核心要素骨架 |
+| spec/story设计详情模板.md | 同上 | skills/spec-story-design/references/story-template.md | {功能名}-story.md 七类核心要素骨架 |
 | spec/develop-task模板.md | 同上 | skills/spec-story-design/references/develop-task-template.md | {功能名}-develop-task.md 修改清单 + 澄清清单 |
 | spec/功能设计规范模板.md | spec-function-design-audit | skills/spec-function-design-audit/references/functional-design-template.md | 功能设计规范 md（场景 1 审核后可选输出） |
 | spec/建模结果HTML模板.html | 同上 | skills/spec-function-design-audit/assets/model-template.html | 多彩建模结果 HTML |
-| spec/资产审核总览README模板.md | spec-asset-audit | skills/spec-asset-audit/references/overview-readme-template.md | docs/report/README.md 评估总览骨架 |
-| spec/docs域README索引模板.md | spec-index | skills/spec-index/references/domain-readme-template.md | 各域 README 索引骨架 |
-| spec/docs总README索引模板.md | 同上 | skills/spec-index/references/root-readme-template.md | docs/README.md 总索引 + 依赖全景图骨架 |
-| spec/全链路分析报告模板.md | specgo-report | skills/specgo-report/references/report-template.md | {YYYYMMDD}-report.md 全链路报告骨架 |
+| spec/全链路分析报告模板.md | specgo | specgo/SKILL.md 第 6 步（内联三节结构） | {YYYYMMDD}-report.md 全链路报告骨架 |
 
 ## 无独立模板的 skill
 
 - **specgo**：全链路编排 skill（按 docs/1-storys/ 下 story 设计文档编码），无文档输出模板。
 - **spec-analyze**：纯编排 skill（子代理派发各 analyze skill），无文档输出模板。
-- **spec-init**：初始化 docs/ 目录骨架，无文档输出模板。
 - **spec-update**：按各 analyze skill 的最新要素定义增量刷新既有文档，无独立模板。
 - **mermaid-validate**：画图指导 skill，无文档输出模板。
 
@@ -86,4 +79,3 @@
 - tech-framework-guidelines-analyze/references/{framework-catalog,analysis-dimensions}.md
 - spec-story-design/references/{color-modeling,orthogonality-principles}.md
 - spec-function-design-audit/references/{color-modeling,gap-checklist,requirement-quality-checklist}.md
-- spec-asset-audit/references/{asset-expression-rules,code-consistency-rules}.md

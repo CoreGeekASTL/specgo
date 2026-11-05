@@ -1,6 +1,6 @@
 # Specgo 安装指导
 
-本文指导如何将 specgo 插件安装到 OpenCode 或 Claude Code。specgo 是面向存量代码仓的四分类资产治理 skill 体系（arch / biz / tech / qual 四域 16 个 analyze skill + spec 系列 10 个 + mermaid-validate，共 27 个），详细功能见 [README.md](./README.md)。
+本文指导如何将 specgo 插件安装到 OpenCode 或 Claude Code。specgo 是面向存量代码仓的四分类资产治理 skill 体系（arch / biz / tech / qual 四域 14 个 analyze skill + spec 系列 6 个 + mermaid-validate，共 21 个），详细功能见 [README.md](./README.md)。
 
 ## 0. 前置要求
 
@@ -50,7 +50,7 @@ git clone https://github.com/CoreGeekASTL/specgo.git
 
 重启后确认两点：
 
-1. **skill 已发现**：OpenCode 查看可用 skill 列表；Claude Code 用 `/plugin` 查看已装插件。应出现 27 个 skill：26 个 `spec-`/`arch-`/`biz-`/`tech-`/`qual-` 开头的 skill + `specgo` 编排 skill + `mermaid-validate`
+1. **skill 已发现**：OpenCode 查看可用 skill 列表；Claude Code 用 `/plugin` 查看已装插件。应出现 21 个 skill：19 个 `spec-`/`arch-`/`biz-`/`tech-`/`qual-` 开头的 skill + `specgo` 编排 skill + `mermaid-validate`
 2. **bootstrap 已注入**：直接问 agent "你有哪些资产分析 skill"，应能列出 README「内含 skill」表格中的条目（如 `arch-structure-model-analyze`、`biz-interface-analyze` 等）
 
 ## 5. 更新插件

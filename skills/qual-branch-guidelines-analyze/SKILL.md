@@ -120,7 +120,7 @@ guidelines 形态语义：分支与变更规范是**指导性规范**（"应该"
 产出文档中含 ```mermaid 代码块时（分支模型图可选用 mermaid gitGraph / flowchart 呈现，非必需），交付前必须运行 mermaid-validate skill 的本地验证脚本逐文件校验：
 
 ```bash
-node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
+node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <产出文件...>
 ```
 
 全部 VALID 才算完成；INVALID 按报错行号定位修复后重验，禁止跳过。
@@ -132,6 +132,24 @@ node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-
 
 只填占位符、表格行、图；写作规则见上文各步骤与「关键约束」。
 
+## 交付前自检（决定落盘位置，过程不落盘）
+
+对本篇每条约定逐项执行；任一项不过 → 整篇写入 `docs/_review/0-qual/branch-guidelines/`，并在文末「附注」留一行待确认（每条 ≤1 行）。
+
+| # | 检查 | 不通过的表现 |
+|---|---|---|
+| 1 | 一句话说清该约定约束什么、为什么存在 | 只能复述章节名或"按规范" |
+| 2 | 来源可指认：仓内既有明文，或从 git 现状归纳 | 来源不明 |
+| 3 | 违反后果可预测：说出会导致什么协作问题 | 说不出；或只能说"可能/大概" |
+| 4 | 有证据：文件路径，或分支名/commit 短 hash | 无证据 |
+| 5 | 边界清楚：不与编码/DT 规范重叠 | 说不清归属 |
+
+- **本类追加**：约定来自现状归纳（非仓内明文）即必审；全部约定都能指向 CODEOWNERS/CONTRIBUTING/PR 模板等既有文件才免审。
+- **结论句禁用**：可能 / 大概 / 应该是 / 暂不确定 / 推测——出现即判不过。
+- **自检过程不进文档、不进回复**；回复只说"已进待审"。
+
+样例：自拟"统一 squash 合入" → 必审；引用仓内 CONTRIBUTING 既有分支命名约定 → 免审。
+
 ## 关键约束
 
 - **基于实证**：所有"分支命名形态、merge 策略、commit message 分布、评审痕迹、是否合规"的结论必须有 git 历史或仓内文件支撑。证据两类——git 对象标识（分支名 / commit 短 hash / tag 名）与仓内文件路径（**不带行号**，行号随代码变更失效）。读不到就写「未识别（原因：xxx）」，禁止凭经验臆造团队约定、评审要求或合规结论。
@@ -142,7 +160,6 @@ node /Users/sunhe/2026/yunshouji/AIAction/.claude/plugins/specgo/skills/mermaid-
 - **成品纯净**：最终文档只含成品内容。探测过程（执行的 git 命令、原始输出摘要）仅供自检，绝不写入最终文档——其结论须以 git 对象或 `文件路径` 证据形式进入相关表格。
 - **语言无关、平台无关**：不预设被分析仓的语言、框架与托管平台；平台 CLI（gh / glab）不可用时降级为纯 git 历史痕迹分析并如实标注。
 - **文档语言**：输出文档用中文，技术术语（merge commit / squash / rebase / fast-forward / conventional commits / MR / PR / CODEOWNERS / trailer 等）保留英文。
-- **索引分工**：域索引 `docs/0-qual/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护。
 - **与相邻资产边界**：代码本身写到什么程度算合格归 qual-code-standards-analyze 产出的 `docs/0-qual/code-standards/`；测试与覆盖要求归 qual-dt-guidelines-analyze 产出的 `docs/0-qual/dt-guidelines/`。本 skill 只记录"变更怎么进仓"的协作规矩事实与合规性，越界内容不写入本文档。
 - **mermaid 收尾校验**：产出含 ```mermaid 代码块时，必须用 validate-mermaid.mjs 逐文件校验全部 VALID 后才算完成。
 

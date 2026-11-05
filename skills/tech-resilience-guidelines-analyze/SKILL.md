@@ -91,6 +91,13 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 
 只填占位符、表格行、真实代码片段；写作规则见上文各步骤与「关键约束」。
 
+## 交付前检查（免人审）
+
+- **本类要求**：每个条目必须说清"防什么故障"，不能只列函数名与参数。
+- 读不到显式设置记「未设置」或「框架默认」，不臆造取值与代码案例。
+- **本类不进入 `docs/_review/`**：读不到只在文中标注，不转人审。
+- 自检过程不进文档、不进回复。
+
 ## 关键约束
 
 - **基于实证**：所有"超时怎么设、重试怎么调、吞错案例在哪"的结论必须有代码或配置支撑，证据形式为 `文件路径`，**不得出现代码行号**（行号随代码变更失效）。读不到就写「未设置」/「框架默认」/「未识别（原因：xxx）」，禁止凭经验臆造函数签名、配置 key 或代码案例。
@@ -101,7 +108,6 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 - **成品纯净**：最终文档只含成品内容。探测过程（执行的 grep/rg 命令、命中输出摘要）仅供自检，绝不写入最终文档——其结论须以 `文件路径` 证据形式进入相关表格。
 - **语言无关**：不预设被分析仓的语言与框架，按第 1 步实际探测结果走。
 - **文档语言**：输出文档用中文，技术术语（HTTP / RPC / MQ / SDK / timeout / retry / circuit breaker / fallback / panic / recover 等）保留英文。
-- **索引分工**：域索引 `docs/0-tech/README.md` 与总索引 `docs/README.md` 由 spec-index 生成，本 skill 不维护；本资产目录的 README 是资产主文档（维度导航），非域索引。
 - **与相邻资产边界**：通信协议与封装方式归 tech-external-call-guidelines-analyze 产出的 `docs/0-tech/external-call-guidelines/`；线程池选型、隔离、拒绝策略归 tech-concurrency-guidelines-analyze 产出的 `docs/0-tech/concurrency-guidelines/`。本 skill 只记录故障策略的使用方式与代码案例，越界内容不写入本文档。
 
 ## 参考文件索引

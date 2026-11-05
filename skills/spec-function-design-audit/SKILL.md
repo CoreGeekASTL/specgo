@@ -1,7 +1,7 @@
 ---
 name: spec-function-design-audit
 description: >-
-  需求/功能设计审核 skill——基于多彩建模方法论审核 Spec/需求/功能设计文档的完备性（表述质量扫描：句子成分残缺/弱表述/术语失范/语义多解 + 业务逻辑断裂点 + 设计要素：时序图/验收用例/接口信息 + 通用知识与公开协议错误校验），四类问题一次扫描、统一 ask-human 批量澄清补齐，建模结果以 HTML 可视化呈现，审核完成后可选输出规范功能设计 md。当用户提到"spec-function-design-audit"、"审核 spec 业务逻辑完备性"、"多彩建模"、"检查需求逻辑断点"、"需求表述质量检查"、"需求歧义扫描"、"建模结果生成 HTML 并找人确认"、"功能设计文档校验"、"需求审核"时使用。docs/ 四域资产文档的质量审核归 spec-asset-audit。
+  需求/功能设计审核 skill——基于多彩建模方法论审核 Spec/需求/功能设计文档的完备性（表述质量扫描：句子成分残缺/弱表述/术语失范/语义多解 + 业务逻辑断裂点 + 设计要素：时序图/验收用例/接口信息 + 通用知识与公开协议错误校验），四类问题一次扫描、统一 ask-human 批量澄清补齐，建模结果以 HTML 可视化呈现，审核完成后可选输出规范功能设计 md。当用户提到"spec-function-design-audit"、"审核 spec 业务逻辑完备性"、"多彩建模"、"检查需求逻辑断点"、"需求表述质量检查"、"需求歧义扫描"、"建模结果生成 HTML 并找人确认"、"功能设计文档校验"、"需求审核"时使用。
 ---
 
 # 需求/功能设计审核（spec-function-design-audit）
@@ -88,7 +88,6 @@ node <specgo插件目录>/skills/mermaid-validate/scripts/validate-mermaid.mjs <
 
 ## 与其它 skill 的关系
 
-- **spec-asset-audit**：姊妹 skill——本 skill 审需求/功能设计文档（编码前），spec-asset-audit 审 docs/ 四域资产文档质量（资产治理侧）。
 - **mermaid-validate**：mermaid 校验脚本提供方。
 - **specgo**：全链路编排第 2 步（需求审核）调用本 skill。
 
